@@ -60,7 +60,24 @@ function FloatingElement({
 /* ──────────────────────────────────────────────────────────────────────────
    بخش اصلی کامپوننت هیرو (Hero Section - Premium Software Agency Edition)
    ────────────────────────────────────────────────────────────────────────── */
-export function HeroSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function HeroSection({
+  locale,
+  dict,
+  meta,
+  stats,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  /** متن‌های صفحهٔ اصلی از جدول PageMeta (بک‌اند) — fallback: دیکشنری i18n */
+  meta?: { eyebrow?: string; title?: string; subtitle?: string };
+  /** ارقام صفحهٔ اصلی (جدول SiteSetting) — fallback: siteConfig */
+  stats?: { yearsActive: number; projects: number };
+}) {
+  const eyebrow = meta?.eyebrow?.trim() || dict.hero.eyebrow;
+  const title = meta?.title?.trim() || dict.hero.title;
+  const subtitle = meta?.subtitle?.trim() || dict.hero.subtitle;
+  const yearsActive = stats?.yearsActive ?? 15;
+  const projects = stats?.projects ?? 326;
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.15 });
 
@@ -243,7 +260,7 @@ export function HeroSection({ locale, dict }: { locale: Locale; dict: Dictionary
                 </div>
                 <div>
                   <p className="text-xl font-black text-slate-900 leading-none">
-                    {formatNumber(326, locale)}
+                    {formatNumber(projects, locale)}
                   </p>
                   <p className="mt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                     {dict.stats.projects}

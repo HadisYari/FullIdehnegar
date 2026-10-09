@@ -22,6 +22,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
+  type LucideIcon,
 } from "lucide-react";
 
 const stepConfig = [
@@ -34,11 +35,28 @@ const stepConfig = [
   { icon: Headphones, color: "from-indigo-500 to-blue-500", accent: "#6366f1" },
 ];
 
+/** نام آیکون lucide ↔ کامپوننت — آیکون‌هایapu جدول ProcessSteps */
+const iconMap: Record<string, LucideIcon> = {
+  MessagesSquare,
+  FileSearch,
+  PencilRuler,
+  Code2,
+  TestTube2,
+  Rocket,
+  Headphones,
+};
+
 /* ──────────────── کارت هر مرحله ──────────────── */
 interface StepItem {
   title: string;
   desc: string;
   duration?: string;
+  /** نام آیکون lucide (ستون Icon جدول ProcessSteps) */
+  icon?: string;
+  /** کلاس گرادیان کارت (ستون Color) */
+  color?: string;
+  /** رنگ اکسانت کارت (ستون Accent) */
+  accent?: string;
 }
 
 function StepCard({
@@ -56,8 +74,11 @@ function StepCard({
   isDone: boolean;
   onHover: () => void;
 }) {
-  const config = stepConfig[index % stepConfig.length];
-  const Icon = config.icon;
+  const fallback = stepConfig[index % stepConfig.length];
+  // استایل/آیکون از API (ستون‌های Icon/Color/Accent) — fallback: stepConfig
+  const Icon = (step.icon ? iconMap[step.icon] : undefined) ?? fallback.icon;
+  const color = step.color || fallback.color;
+  const accent = step.accent || fallback.accent;
 
   return (
     <motion.div
@@ -73,15 +94,15 @@ function StepCard({
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className="relative flex h-full flex-col overflow-hidden rounded-3xl border bg-white p-6 transition-all duration-500"
         style={{
-          borderColor: isActive ? `${config.accent}60` : "rgb(226 232 240)",
+          borderColor: isActive ? `${accent}60` : "rgb(226 232 240)",
           boxShadow: isActive
-            ? `0 20px 50px -15px ${config.accent}40`
+            ? `0 20px 50px -15px ${accent}40`
             : "0 4px 20px -8px rgb(15 23 42 / 0.08)",
         }}
       >
         <div className="absolute inset-x-0 top-0 h-1 bg-slate-100">
           <motion.div
-            className={`h-full bg-gradient-to-r ${config.color}`}
+            className={`h-full bg-gradient-to-r ${color}`}
             initial={false}
             animate={{ width: isActive || isDone ? "100%" : "0%" }}
             transition={{ duration: isActive ? 3 : 0.4, ease: "linear" }}
@@ -89,11 +110,11 @@ function StepCard({
         </div>
         <div
           className="pointer-events-none absolute -end-16 -top-16 h-40 w-40 rounded-full blur-3xl transition-opacity duration-700"
-          style={{ backgroundColor: config.accent, opacity: isActive ? 0.15 : 0.04 }}
+          style={{ backgroundColor: accent, opacity: isActive ? 0.15 : 0.04 }}
         />
         <span
           className="pointer-events-none absolute -bottom-4 end-2 select-none font-mono text-8xl font-black leading-none transition-colors duration-500"
-          style={{ color: isActive ? `${config.accent}18` : "rgb(241 245 249)" }}
+          style={{ color: isActive ? `${accent}18` : "rgb(241 245 249)" }}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -102,15 +123,15 @@ function StepCard({
           <motion.div
             animate={isActive ? { rotate: [0, -8, 8, 0], scale: [1, 1.1, 1] } : { rotate: 0, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${config.color} transition-transform duration-300 group-hover:scale-110`}
-            style={{ boxShadow: `0 8px 20px -6px ${config.accent}60` }}
+            className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${color} transition-transform duration-300 group-hover:scale-110`}
+            style={{ boxShadow: `0 8px 20px -6px ${accent}60` }}
           >
             <Icon className="h-5 w-5 text-white" strokeWidth={2} />
           </motion.div>
           {step.duration && (
             <span
               className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold"
-              style={{ backgroundColor: `${config.accent}12`, color: config.accent }}
+              style={{ backgroundColor: `${accent}12`, color: accent }}
             >
               <Clock className="h-3 w-3" />
               {step.duration}
@@ -124,14 +145,14 @@ function StepCard({
         <div className="relative mt-auto flex items-center gap-2 pt-5">
           <span
             className="font-mono text-[11px] font-black"
-            style={{ color: isActive || isDone ? config.accent : "rgb(148 163 184)" }}
+            style={{ color: isActive || isDone ? accent : "rgb(148 163 184)" }}
           >
             {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
           </span>
           <div className="h-px flex-1 bg-slate-100" />
           {isDone && (
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-              <CheckCircle2 className="h-4 w-4" style={{ color: config.accent }} />
+              <CheckCircle2 className="h-4 w-4" style={{ color: accent }} />
             </motion.div>
           )}
         </div>
@@ -344,8 +365,15 @@ function LiquidWaveBottom() {
 }
 
 /* ──────────────── کامپوننت اصلی ──────────────── */
-export function ProcessSection({ dict }: { dict: Dictionary }) {
-  const steps = dict.process.steps as StepItem[];
+export function ProcessSection({
+  dict,
+  steps: stepsProp,
+}: {
+  dict: Dictionary;
+  /** مراحل از /api/public/process-steps — fallback: دیکشنری i18n */
+  steps?: StepItem[];
+}) {
+  const steps = stepsProp && stepsProp.length > 0 ? stepsProp : (dict.process.steps as StepItem[]);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [isRtl, setIsRtl] = useState(false);

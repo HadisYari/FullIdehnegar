@@ -4,9 +4,9 @@ import { Container } from "@/components/container";
 import { PortfolioFilterGrid } from "@/components/portfolio-filter-grid";
 import { JsonLd } from "@/components/json-ld";
 import { getPortfolioItems } from "@/lib/portfolio";
-import { withPageMeta } from "@/lib/cms";
+import { loadCategories, loadSiteConfig, withPageMeta } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
-import { siteConfig } from "@/lib/site-config";
+import { categories as localCategories } from "@/lib/categories";
 import { Sparkles } from "lucide-react";
 
 export function generateStaticParams() {
@@ -80,7 +80,11 @@ export default async function PortfolioPage({
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
   const isFa = locale === "fa";
-  const items = await getPortfolioItems();
+  const [items, config] = await Promise.all([getPortfolioItems(), loadSiteConfig()]);
+
+  // دسته‌بندی‌ها از /api/public/categories — fallback: lib/categories
+  const remoteCategories = await loadCategories();
+  const categoryList = remoteCategories.length > 0 ? remoteCategories : localCategories;
 
   const listLd = {
     "@context": "https://schema.org",
@@ -88,7 +92,7 @@ export default async function PortfolioPage({
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${siteConfig.url}${locale === "en" ? "/en" : ""}/portfolio/${item.slug}`,
+      url: `${config.url}${locale === "en" ? "/en" : ""}/portfolio/${item.slug}`,
       name: item.title[locale],
     })),
   };
@@ -155,6 +159,7 @@ export default async function PortfolioPage({
           <PortfolioFilterGrid
             items={items}
             locale={locale}
+            categories={categoryList}
             viewLabel={dict.portfolio.viewProject}
             allLabel={dict.common.allCategories}
             emptyLabel={dict.portfolio.empty}

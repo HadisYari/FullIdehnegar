@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, type SiteConfig } from "@/lib/site-config";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import {
   Phone,
@@ -31,6 +31,7 @@ import {
   CalendarCheck,
   ArrowUpRight,
   Lock,
+  type LucideIcon,
 } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────
@@ -129,14 +130,95 @@ function WaveNavyToWhite({ bg = "bg-[#0f0f52]" }: { bg?: string }) {
   );
 }
 
+/* ──────────────────────────────────────────────────────────
+   ViewModelهای این صفحه — دادهٔ اصلی از بک‌اند می‌آید
+   (/api/public/inquiry-types و /api/public/faqs) و fallback
+   آنها همین داده‌های همراه این فایل است.
+   ────────────────────────────────────────────────────────── */
+type InquiryTypeView = { id: string; label: string; icon?: string | null };
+type FaqView = { q: string; a: string };
+
+/** نگاشت نام آیکون (ستون Icon جدول InquiryTypes) به کامپوننت lucide */
+const inquiryTypeIcons: Record<string, LucideIcon> = {
+  Code2,
+  Layers,
+  Building2,
+  Cpu,
+  Search,
+};
+
+const fallbackInquiryTypesFa: InquiryTypeView[] = [
+  { id: "web", label: "طراحی وب اختصاصی", icon: "Code2" },
+  { id: "portal", label: "پرتال سازمانی و ERP", icon: "Layers" },
+  { id: "ecommerce", label: "فروشگاه اینترنتی", icon: "Building2" },
+  { id: "cloud", label: "دواپس و کلاود", icon: "Cpu" },
+  { id: "seo", label: "سئو تکنیکال", icon: "Search" },
+];
+
+const fallbackInquiryTypesEn: InquiryTypeView[] = [
+  { id: "web", label: "Custom Web", icon: "Code2" },
+  { id: "portal", label: "Enterprise Portal", icon: "Layers" },
+  { id: "ecommerce", label: "E-Commerce", icon: "Building2" },
+  { id: "cloud", label: "DevOps & Cloud", icon: "Cpu" },
+  { id: "seo", label: "SEO & Speed", icon: "Search" },
+];
+
+const fallbackFaqsFa: FaqView[] = [
+  {
+    q: "در چه روزها و ساعاتی امکان ارتباط مستقیم و مشاوره فنی وجود دارد؟",
+    a: "تیم معماری نرم‌افزار و مشاوره در روزهای شنبه تا چهارشنبه از ساعت ۹:۰۰ الی ۱۸:۰۰ و پنج‌شنبه‌ها از ساعت ۹:۰۰ الی ۱۳:۰۰ به صورت تلفنی و حضوری پاسخگوی شما هستند. همچنین سیستم ثبت فرم آنلاین ۲۴ ساعته پایش می‌شود.",
+  },
+  {
+    q: "بررسی نیازمندی‌ها و ارائه پروپوزال اولیه چقدر زمان می‌برد؟",
+    a: "پس از ثبت درخواست، حداکثر ظرف مدت ۲ الی ۴ ساعت کاری جهت بررسی اولیه با شما تماس گرفته می‌شود. پروپوزال فنی دقیق، ساختار فازبندی اسپرینت‌ها و برآورد شفاف بودجه نیز ظرف ۴۸ ساعت تقدیم شما خواهد شد.",
+  },
+  {
+    q: "آیا فرآیند مشاوره اولیه و امکان‌سنجی سیستم شامل هزینه است؟",
+    a: "خیر، جلسه اولیه اکتشاف نیازها و ارزیابی فنی به‌صورت کاملاً رایگان برگزار می‌شود تا با دیدی شفاف و خاطری آسوده درباره همکاری تصمیم‌گیری نمایید.",
+  },
+  {
+    q: "آیا امکان تنظیم جلسه حضوری در دفتر مرکزی ایده‌نگار وجود دارد؟",
+    a: "بله، با هماهنگی قبلی مشتاقانه میزبان شما در دفتر مرکزی جهت برگزاری جلسات فنی، بررسی پروتوتایپ‌ها و آشنایی حضوری با معماران پروژه خواهیم بود.",
+  },
+];
+
+const fallbackFaqsEn: FaqView[] = [
+  {
+    q: "What are your business operating hours?",
+    a: "Our software engineering leads are available Saturday through Wednesday from 9:00 AM to 6:00 PM, and Thursdays from 9:00 AM to 1:00 PM. Inquiries submitted via this portal are monitored 24/7.",
+  },
+  {
+    q: "How fast do you respond to incoming project proposals?",
+    a: "All project scoping forms are reviewed within 2 to 4 business hours. Formal architectural roadmaps and estimates are delivered within 48 hours.",
+  },
+  {
+    q: "Is the preliminary architecture discovery session free?",
+    a: "Yes, the initial technical consultation and feasibility review are completely complimentary.",
+  },
+  {
+    q: "Can we schedule an in-person workshop at your headquarters?",
+    a: "Absolutely. We welcome in-person technical workshops and sprint planning sessions at our campus upon appointment.",
+  },
+];
+
 export function ContactPageCanvas({
   locale,
   dict,
+  config,
+  faqs: faqsProp,
+  inquiryTypes,
 }: {
   locale: Locale;
   dict: Dictionary;
+  /** تنظیمات تماس از جدول SiteSetting — fallback: siteConfig */
+  config?: SiteConfig;
+  /** سوالات متداول از /api/public/faqs — fallback: دادهٔ محلی */
+  faqs?: FaqView[];
+  /** حوزه‌های پروژه از /api/public/inquiry-types — fallback: دادهٔ محلی */
+  inquiryTypes?: InquiryTypeView[];
 }) {
   const isFa = locale === "fa";
+  const cfg = config ?? siteConfig;
 
   // ساعت زنده دفتر
   const [timeString, setTimeString] = useState("");
@@ -171,72 +253,69 @@ export function ContactPageCanvas({
     }
   };
 
-  // حوزه‌های پروژه‌های نرم‌افزاری
-  const projectCategories = [
-    { id: "web", label: isFa ? "طراحی وب اختصاصی" : "Custom Web", icon: Code2 },
-    { id: "portal", label: isFa ? "پرتال سازمانی و ERP" : "Enterprise Portal", icon: Layers },
-    { id: "ecommerce", label: isFa ? "فروشگاه اینترنتی" : "E-Commerce", icon: Building2 },
-    { id: "cloud", label: isFa ? "دواپس و کلاود" : "DevOps & Cloud", icon: Cpu },
-    { id: "seo", label: isFa ? "سئو تکنیکال" : "SEO & Speed", icon: Search },
-  ];
+  // حوزه‌های پروژه‌های نرم‌افزاری — از API (ستون Icon) با fallback داخلی
+  const projectCategories = (
+    inquiryTypes && inquiryTypes.length > 0
+      ? inquiryTypes
+      : isFa
+        ? fallbackInquiryTypesFa
+        : fallbackInquiryTypesEn
+  ).map((type) => ({
+    id: type.id,
+    label: type.label,
+    icon: (type.icon ? inquiryTypeIcons[type.icon] : undefined) ?? Code2,
+  }));
 
-  const [selectedCategory, setSelectedCategory] = useState("web");
+  const [selectedCategory, setSelectedCategory] = useState(projectCategories[0]?.id ?? "web");
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
     email: "",
     subject: "",
     message: "",
+    company: "", // هانی‌پات — برای ربات‌ها
   });
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const faqs = isFa
-    ? [
-        {
-          q: "در چه روزها و ساعاتی امکان ارتباط مستقیم و مشاوره فنی وجود دارد؟",
-          a: "تیم معماری نرم‌افزار و مشاوره در روزهای شنبه تا چهارشنبه از ساعت ۹:۰۰ الی ۱۸:۰۰ و پنج‌شنبه‌ها از ساعت ۹:۰۰ الی ۱۳:۰۰ به صورت تلفنی و حضوری پاسخگوی شما هستند. همچنین سیستم ثبت فرم آنلاین ۲۴ ساعته پایش می‌شود.",
-        },
-        {
-          q: "بررسی نیازمندی‌ها و ارائه پروپوزال اولیه چقدر زمان می‌برد؟",
-          a: "پس از ثبت درخواست، حداکثر ظرف مدت ۲ الی ۴ ساعت کاری جهت بررسی اولیه با شما تماس گرفته می‌شود. پروپوزال فنی دقیق، ساختار فازبندی اسپرینت‌ها و برآورد شفاف بودجه نیز ظرف ۴۸ ساعت تقدیم شما خواهد شد.",
-        },
-        {
-          q: "آیا فرآیند مشاوره اولیه و امکان‌سنجی سیستم شامل هزینه است؟",
-          a: "خیر، جلسه اولیه اکتشاف نیازها و ارزیابی فنی به‌صورت کاملاً رایگان برگزار می‌شود تا با دیدی شفاف و خاطری آسوده درباره همکاری تصمیم‌گیری نمایید.",
-        },
-        {
-          q: "آیا امکان تنظیم جلسه حضوری در دفتر مرکزی ایده‌نگار وجود دارد؟",
-          a: "بله، با هماهنگی قبلی مشتاقانه میزبان شما در دفتر مرکزی جهت برگزاری جلسات فنی، بررسی پروتوتایپ‌ها و آشنایی حضوری با معماران پروژه خواهیم بود.",
-        },
-      ]
-    : [
-        {
-          q: "What are your business operating hours?",
-          a: "Our software engineering leads are available Saturday through Wednesday from 9:00 AM to 6:00 PM, and Thursdays from 9:00 AM to 1:00 PM. Inquiries submitted via this portal are monitored 24/7.",
-        },
-        {
-          q: "How fast do you respond to incoming project proposals?",
-          a: "All project scoping forms are reviewed within 2 to 4 business hours. Formal architectural roadmaps and estimates are delivered within 48 hours.",
-        },
-        {
-          q: "Is the preliminary architecture discovery session free?",
-          a: "Yes, the initial technical consultation and feasibility review are completely complimentary.",
-        },
-        {
-          q: "Can we schedule an in-person workshop at your headquarters?",
-          a: "Absolutely. We welcome in-person technical workshops and sprint planning sessions at our campus upon appointment.",
-        },
-      ];
+  const faqs = faqsProp && faqsProp.length > 0 ? faqsProp : isFa ? fallbackFaqsFa : fallbackFaqsEn;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ارسال واقعی فرم به /api/contact → بک‌اند (POST /api/public/contact)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setFormData({ fullName: "", phone: "", email: "", subject: "", message: "" });
-    }, 4000);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setSubmitError(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName,
+          phone: formData.phone,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          inquiryType: selectedCategory,
+          locale,
+          company: formData.company,
+        }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setFormSubmitted(true);
+      setTimeout(() => {
+        setFormSubmitted(false);
+        setFormData({ fullName: "", phone: "", email: "", subject: "", message: "", company: "" });
+      }, 4000);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -338,7 +417,7 @@ export function ContactPageCanvas({
 
                 <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                   <div
-                    onClick={() => copyToClipboard(siteConfig.phones[0], "phone")}
+                    onClick={() => copyToClipboard(cfg.phones[0], "phone")}
                     dir="ltr"
                     className="group cursor-pointer flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 px-5 py-3 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-[#e6304c] hover:bg-white/15"
                   >
@@ -347,7 +426,7 @@ export function ContactPageCanvas({
                         {isFa ? "تماس تلفنی مستقیم (کلیک برای کپی)" : "Direct Line (Click to copy)"}
                       </span>
                       <span className="font-mono text-sm sm:text-base font-black text-white group-hover:text-rose-300 transition-colors">
-                        {siteConfig.phones[0]}
+                        {cfg.phones[0]}
                       </span>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-[#e6304c] transition-all">
@@ -356,7 +435,7 @@ export function ContactPageCanvas({
                   </div>
 
                   <div
-                    onClick={() => copyToClipboard(siteConfig.email, "email")}
+                    onClick={() => copyToClipboard(cfg.email, "email")}
                     dir="ltr"
                     className="group cursor-pointer flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 px-5 py-3 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-cyan-400 hover:bg-white/15"
                   >
@@ -365,7 +444,7 @@ export function ContactPageCanvas({
                         {isFa ? "مکاتبات رسمی و پروپوزال" : "Official Proposals"}
                       </span>
                       <span className="font-mono text-xs sm:text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
-                        {siteConfig.email}
+                        {cfg.email}
                       </span>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-cyan-600 transition-all">
@@ -505,7 +584,7 @@ export function ContactPageCanvas({
                   <div className="mt-5 grid grid-cols-2 gap-2.5">
                     {/* تلگرام */}
                     <a
-                      href={siteConfig.social?.telegram || "#"}
+                      href={cfg.social?.telegram || "#"}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-sky-50/70 border border-sky-100 hover:bg-sky-500 hover:text-white transition-all duration-300 shadow-xs"
@@ -519,7 +598,7 @@ export function ContactPageCanvas({
 
                     {/* واتس‌اپ */}
                     <a
-                      href={`https://wa.me/${siteConfig.phones[0].replace(/[^0-9]/g, "")}`}
+                      href={`https://wa.me/${cfg.phones[0].replace(/[^0-9]/g, "")}`}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-emerald-50/70 border border-emerald-100 hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-xs"
@@ -533,7 +612,7 @@ export function ContactPageCanvas({
 
                     {/* لینکدین */}
                     <a
-                      href={siteConfig.social?.linkedin || "#"}
+                      href={cfg.social?.linkedin || "#"}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-blue-50/70 border border-blue-100 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-xs"
@@ -547,7 +626,7 @@ export function ContactPageCanvas({
 
                     {/* اینستاگرام */}
                     <a
-                      href={siteConfig.social?.instagram || "#"}
+                      href={cfg.social?.instagram || "#"}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-rose-50/70 border border-rose-100 hover:bg-rose-500 hover:text-white transition-all duration-300 shadow-xs"
@@ -654,7 +733,7 @@ export function ContactPageCanvas({
             <div className="absolute inset-0 opacity-40 mix-blend-luminosity pointer-events-none">
               <iframe
                 title="Office Map Coordinates"
-                src={siteConfig.mapEmbedSrc}
+                src={cfg.mapEmbedSrc}
                 className="h-full w-full grayscale contrast-125 pointer-events-none"
                 loading="lazy"
               />
@@ -688,7 +767,7 @@ export function ContactPageCanvas({
                       Physical Location
                     </span>
                     <p className="text-xs sm:text-sm text-white mt-1 leading-relaxed">
-                      {isFa ? siteConfig.addressFa : siteConfig.addressEn}
+                      {isFa ? cfg.addressFa : cfg.addressEn}
                     </p>
                   </div>
                 </div>
@@ -820,13 +899,43 @@ export function ContactPageCanvas({
                         />
                       </div>
 
+                      {/* Honeypot — ربات‌ها پرش می‌کنند، کاربر واقعی هرگز نمی‌بیند */}
+                      <div className="hidden" aria-hidden="true">
+                        <label htmlFor="company">Company</label>
+                        <input
+                          id="company"
+                          name="company"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          value={formData.company}
+                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        />
+                      </div>
+
                       <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#e6304c] py-3 text-xs font-bold text-white shadow-lg shadow-[#e6304c]/25 hover:bg-[#ff3b59] transition-all"
+                        disabled={isSubmitting}
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#e6304c] py-3 text-xs font-bold text-white shadow-lg shadow-[#e6304c]/25 hover:bg-[#ff3b59] transition-all disabled:opacity-60 disabled:hover:bg-[#e6304c]"
                       >
-                        <span>{isFa ? "ثبت و ارسال پیشنهاد همکاری" : "Submit Scoping Request"}</span>
+                        <span>
+                          {isSubmitting
+                            ? isFa
+                              ? "در حال ارسال..."
+                              : "Sending..."
+                            : isFa
+                              ? "ثبت و ارسال پیشنهاد همکاری"
+                              : "Submit Scoping Request"}
+                        </span>
                         <Send className={`h-3.5 w-3.5 ${isFa ? "rotate-180" : ""}`} />
                       </button>
+
+                      {submitError && (
+                        <p className="text-[11px] font-bold text-red-600 text-center">
+                          {isFa
+                            ? "ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید یا مستقیم تماس بگیرید."
+                            : "Submission failed. Please try again or contact us directly."}
+                        </p>
+                      )}
                     </form>
                   )}
                 </div>

@@ -7,11 +7,11 @@ import { PortfolioCard } from "@/components/portfolio-card";
 import { DeviceShowcase, LaptopMockup, PhoneMockup } from "@/components/device-mockup";
 import { JsonLd } from "@/components/json-ld";
 import { getPortfolioItem, getPortfolioItems } from "@/lib/portfolio";
+import { loadCategories, loadSiteConfig } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import { localeHref } from "@/lib/i18n/paths";
-import { categoryLabel } from "@/lib/categories";
+import { categories as localCategories, categoryLabel } from "@/lib/categories";
 import { formatNumber } from "@/lib/format";
-import { siteConfig } from "@/lib/site-config";
 
 export async function generateStaticParams() {
   const items = await getPortfolioItems();
@@ -56,7 +56,15 @@ export default async function PortfolioDetailPage({
   const item = await getPortfolioItem(slug);
   if (!item) notFound();
 
-  const allItems = await getPortfolioItems();
+  const [allItems, config, remoteCategories] = await Promise.all([
+    getPortfolioItems(),
+    loadSiteConfig(),
+    loadCategories(),
+  ]);
+
+  // دسته‌بندی‌ها از /api/public/categories — fallback: lib/categories
+  const categoryList = remoteCategories.length > 0 ? remoteCategories : localCategories;
+
   const related = allItems
     .filter((i) => i.slug !== slug && i.category === item.category)
     .slice(0, 3);
@@ -70,8 +78,8 @@ export default async function PortfolioDetailPage({
     "@type": "SoftwareApplication",
     name: item.title[locale],
     description: item.description[locale],
-    image: `${siteConfig.url}${item.image}`,
-    creator: { "@type": "Organization", name: siteConfig.nameEn },
+    image: `${config.url}${item.image}`,
+    creator: { "@type": "Organization", name: config.nameEn },
   };
 
   const isFa = locale === "fa";
@@ -111,7 +119,7 @@ export default async function PortfolioDetailPage({
             <div className="flex items-center gap-2.5">
               <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 border border-blue-100">
                 <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
-                {categoryLabel(item.category, locale)}
+                {categoryLabel(item.category, locale, categoryList)}
               </span>
               <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-xs text-slate-500 shadow-sm">
                 {formatNumber(item.year, locale)}
@@ -197,7 +205,7 @@ export default async function PortfolioDetailPage({
                       {locale === "fa" ? "دسته‌بندی" : "Category"}
                     </span>
                     <span className="font-bold text-blue-600">
-                      {categoryLabel(item.category, locale)}
+                      {categoryLabel(item.category, locale, categoryList)}
                     </span>
                   </div>
                 </div>
@@ -299,6 +307,7 @@ export default async function PortfolioDetailPage({
                   key={r.slug}
                   item={r}
                   locale={locale}
+                  categories={categoryList}
                 //  viewLabel={dict.portfolio.viewProject}
                 />
               ))}

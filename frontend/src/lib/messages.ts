@@ -10,6 +10,8 @@ export type ContactMessage = {
   subject: string;
   message: string;
   locale: string;
+  /** کد دستهٔ پروژه انتخاب‌شده در فرم تماس (جدول InquiryTypes بک‌اند). */
+  inquiryType?: string;
   createdAt: string;
   emailSent: boolean;
 };

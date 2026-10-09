@@ -1,10 +1,10 @@
 // app/[locale]/services/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadServices, withPageMeta, type ServiceDto } from "@/lib/cms";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
- 
+  
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 
 export function generateStaticParams() {
@@ -406,6 +406,34 @@ const serviceHighlights: Record<Locale, string[][]> = {
   ],
 };
 
+/* ──────────────────────────────────────────────────────────
+   ViewModel خدمات — داده از /api/public/services (بک‌اند)
+   ────────────────────────────────────────────────────────── */
+interface ServiceViewItem {
+  title: string;
+  desc: string;
+  highlights: string[];
+  visualIndex: number;
+}
+
+function toViewItems(remote: ServiceDto[], locale: Locale, dict: ReturnType<typeof getDictionary>): ServiceViewItem[] {
+  if (remote.length === 0) {
+    // fallback: دیکشنری i18n + serviceHighlights
+    return dict.services.items.map((item, i) => ({
+      title: item.title,
+      desc: item.desc,
+      highlights: serviceHighlights[locale][i] ?? [],
+      visualIndex: i,
+    }));
+  }
+  return remote.map((service, i) => ({
+    title: service.title[locale] || service.title.fa,
+    desc: service.desc[locale] || service.desc.fa,
+    highlights: service.highlights[locale]?.length > 0 ? service.highlights[locale] : service.highlights.fa,
+    visualIndex: Number.isInteger(service.visualIndex) ? service.visualIndex : i,
+  }));
+}
+
 export default async function ServicesPage({
   params,
 }: {
@@ -415,6 +443,9 @@ export default async function ServicesPage({
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
   const isFa = locale === "fa";
+
+  const remoteServices = await loadServices();
+  const serviceItems = toViewItems(remoteServices, locale, dict);
 
   return (
     <div className="relative w-full overflow-hidden bg-white text-slate-900">

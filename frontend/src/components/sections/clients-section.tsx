@@ -9,78 +9,39 @@ import { LiquidWaveTop } from "../LiquidWaveTop";
    موج نرم و دایره‌ای بالای بخش (مخصوص پس‌زمینه سرمه‌ای)
    ────────────────────────────────────────────────────────── */
  
-// مونوگرام‌های تجاری (آپدیت شده برای تم تاریک)
-const clientLogos = {
-  governorate: (
+// کارت مونوگرام مشتری (تم تاریک) — متن مونوگرام از API می‌آید
+function MonogramTile({ text }: { text: string }) {
+  return (
     <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      GOV
+      {text}
       <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
     </div>
-  ),
-  municipality: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      MUN
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-  medical: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      MED
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-  techPark: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      STP
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-  emergency: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      NEM
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-  tourism: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      CHTO
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-  cartographic: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      NCC
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-  agriculture: (
-    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 font-mono text-[9px] font-black text-white/70 shadow-inner transition-colors duration-300 group-hover:bg-[#e6304c]/20 group-hover:text-[#e6304c]">
-      AJO
-      <span className="absolute bottom-0.5 right-0.5 h-1 w-1 rounded-full bg-[#e6304c]" />
-    </div>
-  ),
-};
+  );
+}
 
-const clientsFa = [
-  { name: "استانداری کرمانشاه", key: "governorate" },
-  { name: "شهرداری کرمانشاه", key: "municipality" },
-  { name: "دانشگاه علوم پزشکی", key: "medical" },
-  { name: "پارک علم و فناوری", key: "techPark" },
-  { name: "سازمان فوریت‌های پزشکی", key: "emergency" },
-  { name: "میراث فرهنگی و گردشگری", key: "tourism" },
-  { name: "سازمان نقشه‌برداری ایران", key: "cartographic" },
-  { name: "جهاد کشاورزی کرمانشاه", key: "agriculture" },
+export type ClientItem = { name: string; monogram?: string | null };
+
+/** دادهٔ همراه مخزن — fallback وقتی بک‌اند در دسترس نیست. */
+const clientsFa: ClientItem[] = [
+  { name: "استانداری کرمانشاه", monogram: "GOV" },
+  { name: "شهرداری کرمانشاه", monogram: "MUN" },
+  { name: "دانشگاه علوم پزشکی", monogram: "MED" },
+  { name: "پارک علم و فناوری", monogram: "STP" },
+  { name: "سازمان فوریت‌های پزشکی", monogram: "NEM" },
+  { name: "میراث فرهنگی و گردشگری", monogram: "CHTO" },
+  { name: "سازمان نقشه‌برداری ایران", monogram: "NCC" },
+  { name: "جهاد کشاورزی کرمانشاه", monogram: "AJO" },
 ];
 
-const clientsEn = [
-  { name: "Kermanshah Governorate", key: "governorate" },
-  { name: "Kermanshah Municipality", key: "municipality" },
-  { name: "Univ. of Medical Sciences", key: "medical" },
-  { name: "Science & Tech Park", key: "techPark" },
-  { name: "National Emergency Org", key: "emergency" },
-  { name: "Cultural Heritage Org", key: "tourism" },
-  { name: "National Cartographic Center", key: "cartographic" },
-  { name: "Agricultural Organization", key: "agriculture" },
+const clientsEn: ClientItem[] = [
+  { name: "Kermanshah Governorate", monogram: "GOV" },
+  { name: "Kermanshah Municipality", monogram: "MUN" },
+  { name: "Univ. of Medical Sciences", monogram: "MED" },
+  { name: "Science & Tech Park", monogram: "STP" },
+  { name: "National Emergency Org", monogram: "NEM" },
+  { name: "Cultural Heritage Org", monogram: "CHTO" },
+  { name: "National Cartographic Center", monogram: "NCC" },
+  { name: "Agricultural Organization", monogram: "AJO" },
 ];
 
 // تامین طول کافی جهت جلوگیری از فضای خالی
@@ -92,8 +53,17 @@ function fillArray<T>(arr: T[], minLength = 16): T[] {
   return output;
 }
 
-export function ClientsSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-  const list = locale === "fa" ? clientsFa : clientsEn;
+export function ClientsSection({
+  locale,
+  dict,
+  clients,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  /** مشتریان از /api/public/clients — fallback: دادهٔ همراه مخزن */
+  clients?: ClientItem[];
+}) {
+  const list = clients && clients.length > 0 ? clients : locale === "fa" ? clientsFa : clientsEn;
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
@@ -151,12 +121,12 @@ export function ClientsSection({ locale, dict }: { locale: Locale; dict: Diction
               <div className="flex gap-3 sm:gap-4 shrink-0 mr-3 sm:mr-4">
                 {baseList.map((item, idx) => (
                   <div
-                    key={`${item.key}-t1-${idx}`}
+                    key={`client-t1-${idx}`}
                     dir={isRtl ? "rtl" : "ltr"}
                     className="group relative flex w-[170px] sm:w-[220px] shrink-0 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-md shadow-sm transition-all duration-300 hover:border-[#e6304c]/40 hover:bg-white/[0.08] hover:shadow-lg hover:shadow-[#e6304c]/10"
                   >
                     <div className="absolute inset-y-0 left-0 w-[2.5px] bg-[#e6304c]/30 transition-all duration-300 group-hover:bg-[#e6304c] rtl:left-auto rtl:right-0 rounded-l-md rtl:rounded-l-none rtl:rounded-r-md" />
-                    {clientLogos[item.key as keyof typeof clientLogos]}
+                    <MonogramTile text={item.monogram ?? ""} />
                     <div className="min-w-0 flex-1 min-h-[32px] flex flex-col justify-center">
                       <h3 className="text-[10px] sm:text-[11.5px] font-bold text-white/90 transition-colors duration-300 group-hover:text-white truncate">
                         {item.name}
@@ -173,12 +143,12 @@ export function ClientsSection({ locale, dict }: { locale: Locale; dict: Diction
               <div className="flex gap-3 sm:gap-4 shrink-0 mr-3 sm:mr-4" aria-hidden="true">
                 {baseList.map((item, idx) => (
                   <div
-                    key={`${item.key}-t2-${idx}`}
+                    key={`client-t2-${idx}`}
                     dir={isRtl ? "rtl" : "ltr"}
                     className="group relative flex w-[170px] sm:w-[220px] shrink-0 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-md shadow-sm transition-all duration-300 hover:border-[#e6304c]/40 hover:bg-white/[0.08] hover:shadow-lg hover:shadow-[#e6304c]/10"
                   >
                     <div className="absolute inset-y-0 left-0 w-[2.5px] bg-[#e6304c]/30 transition-all duration-300 group-hover:bg-[#e6304c] rtl:left-auto rtl:right-0 rounded-l-md rtl:rounded-l-none rtl:rounded-r-md" />
-                    {clientLogos[item.key as keyof typeof clientLogos]}
+                    <MonogramTile text={item.monogram ?? ""} />
                     <div className="min-w-0 flex-1 min-h-[32px] flex flex-col justify-center">
                       <h3 className="text-[10px] sm:text-[11.5px] font-bold text-white/90 transition-colors duration-300 group-hover:text-white truncate">
                         {item.name}
