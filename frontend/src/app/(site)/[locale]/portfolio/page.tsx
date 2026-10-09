@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { PortfolioFilterGrid } from "@/components/portfolio-filter-grid";
 import { JsonLd } from "@/components/json-ld";
 import { getPortfolioItems } from "@/lib/portfolio";
+import { withPageMeta } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import { siteConfig } from "@/lib/site-config";
 import { Sparkles } from "lucide-react";
@@ -19,16 +20,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isFa = locale === "fa";
-  return {
+  return withPageMeta("portfolio", locale === "fa" ? "fa" : "en", {
+    path: "/portfolio",
     title: isFa ? "نمونه‌کارها و پروژه‌های شاخص" : "Portfolio & Case Studies",
     description: isFa
       ? "پرتال‌های سازمانی، سامانه‌های نرم‌افزاری و وب‌سایت‌های اجرا شده توسط استودیو ایده‌نگار."
       : "Enterprise portals, custom web systems, and digital platforms crafted by Idehnegar.",
-    alternates: {
-      canonical: isFa ? "/portfolio" : "/en/portfolio",
-      languages: { fa: "/portfolio", en: "/en/portfolio" },
-    },
-  };
+  });
 }
 
 /* ──────────────────────────────────────────────────────────

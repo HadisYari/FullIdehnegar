@@ -1,8 +1,10 @@
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, type SiteConfig } from "@/lib/site-config";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-export function MobileCtaBar({ dict }: { dict: Dictionary }) {
-  const phone = siteConfig.phones[0];
+export function MobileCtaBar({ dict, config }: { dict: Dictionary; config?: SiteConfig }) {
+  // مقدار از layout (دیتابیس) و در غیر این صورت دادهٔ همراه مخزن.
+  const cfg = config ?? siteConfig;
+  const phone = cfg.phones[0];
   return (
     <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]">
       <div className="grid grid-cols-2 gap-px bg-border">
@@ -20,7 +22,7 @@ export function MobileCtaBar({ dict }: { dict: Dictionary }) {
           {dict.common.callUs}
         </a>
         <a
-          href={`https://wa.me/${siteConfig.whatsapp}`}
+          href={`https://wa.me/${cfg.whatsapp}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 bg-accent-500 py-3.5 text-sm font-semibold text-white"

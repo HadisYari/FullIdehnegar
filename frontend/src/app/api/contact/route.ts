@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import { addMessage } from "@/lib/messages";
 import { sendContactEmail } from "@/lib/mailer";
 import { isRateLimited, recordFailedAttempt } from "@/lib/auth";
+import { submitContact } from "@/lib/cms";
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -43,6 +44,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Field too long" }, { status: 400 });
   }
 
+  // ۱) ترجیحاً بک‌اند: ثبت در SQL Server، ایمیل و نمایش در صندوق پنل مدیریت.
+  const cmsResult = await submitContact({ name, email, phone, subject, message, locale });
+  if (cmsResult) {
+    return NextResponse.json({ ok: true, emailSent: cmsResult.emailSent === true, stored: "cms" });
+  }
+
+  // ۲) حالت محلی (بدون بک‌اند): فایل دادهٔ مخزن + SMTP مستقل.
   let emailSent = false;
   try {
     emailSent = await sendContactEmail({ name, email, phone, subject, message });

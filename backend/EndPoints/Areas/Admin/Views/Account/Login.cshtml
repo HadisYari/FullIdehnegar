@@ -1,0 +1,77 @@
+@model EndPoints.Areas.Admin.Controllers.LoginViewModel
+@{
+    Layout = null;
+    var notConfigured = ViewData["PanelNotConfigured"] as string;
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>ورود به پنل | پیشگامان ایده‌نگار</title>
+    <link rel="icon" type="image/png" href="~/Panel/brand/favicon.png" />
+    <link rel="stylesheet" href="~/Panel/assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="~/Panel/assets/vendor/css/theme-default.css" />
+    <link rel="stylesheet" href="~/Panel/assets/css/rtl.css" />
+    <link rel="stylesheet" href="~/Panel/assets/vendor/fonts/tabler-icons.css" />
+    <link rel="stylesheet" href="~/Panel/assets/fonts/farsi-fonts/font.css" />
+    <link rel="stylesheet" href="~/admin/admin.css" asp-append-version="true" />
+</head>
+<body class="admin-login-body">
+<main class="admin-login-wrap">
+    <div class="card admin-login-card">
+        <div class="card-body p-4 p-sm-5">
+            <div class="text-center mb-4">
+                <img src="~/Panel/brand/logo.png" alt="پیشگامان ایده‌نگار" class="admin-login-logo" />
+                <h1 class="h4 mt-3 mb-1">پنل مدیریت محتوا</h1>
+                <p class="text-muted mb-0">برای وارد شدن به بخش مدیریت، وارد شوید.</p>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(notConfigured))
+            {
+                <div class="alert alert-warning small" role="alert">@notConfigured</div>
+            }
+
+            <form method="post" action="/admin/account/login" autocomplete="off">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+
+                <div class="mb-3">
+                    <label class="form-label" for="loginUsername">نام کاربری</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="ti ti-user"></i></span>
+                        <input id="loginUsername" name="Username" type="text" class="form-control"
+                               value="@Model.Username" autocomplete="username" required maxlength="60" autofocus />
+                    </div>
+                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.Username)</span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="loginPassword">رمز عبور</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text"><i class="ti ti-lock"></i></span>
+                        <input id="loginPassword" name="Password" type="password" class="form-control"
+                               autocomplete="current-password" required />
+                    </div>
+                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.Password)</span>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="loginRemember" name="RememberMe" value="true" />
+                    <label class="form-check-label" for="loginRemember">مرا به خاطر بسپار</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3">
+                    <i class="ti ti-login-2"></i> ورود به پنل
+                </button>
+
+                <p class="text-center text-muted small mb-0">
+                    این صفحه فقط برای مدیران سایت است و در نتایج جست‌وجو نمایش داده نمی‌شود.
+                </p>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

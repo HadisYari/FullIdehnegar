@@ -1,0 +1,127 @@
+@model EndPoints.Areas.Admin.Models.AdminFieldModel
+@{
+    var inputId = "fld_" + Model.Property;
+    var dir = Model.IsLatinInput ? "ltr" : "rtl";
+    var css = Model.IsLatinInput ? "form-control admin-latin" : "form-control";
+}
+<div class="@Model.Column">
+    @if (Model.Kind == AdminFieldKind.Checkbox)
+    {
+        <div class="form-check form-switch pt-3">
+            <input class="form-check-input" type="checkbox" role="switch" id="@inputId"
+                   name="@Model.Property" value="true" checked="@(Model.Value == "true")" />
+            <label class="form-check-label" for="@inputId">@Model.Label</label>
+            @* Submitted after the checkbox, so an unchecked box wins with "false". *@
+            <input type="hidden" name="@Model.Property" value="false" />
+            @if (!string.IsNullOrEmpty(Model.Help))
+            {
+                <div class="form-text">@Model.Help</div>
+            }
+        </div>
+    }
+    else if (Model.Kind == AdminFieldKind.Select)
+    {
+        <label class="form-label" for="@inputId">@Model.Label
+        @if (Model.Required)
+        {
+            <span class="text-danger" title="پر کردن این فیلد الزامی است">*</span>
+        }
+    </label>
+        <select class="form-select" id="@inputId" name="@Model.Property" required="@Model.Required">
+            @foreach (var option in Model.Options)
+            {
+                <option value="@option.Value" selected="@(string.Equals(option.Value, Model.Value, StringComparison.OrdinalIgnoreCase))">
+                    @option.Label
+                </option>
+            }
+        </select>
+        @if (!string.IsNullOrEmpty(Model.Help))
+        {
+            <div class="form-text">@Model.Help</div>
+        }
+    }
+    else if (Model.Kind == AdminFieldKind.Image)
+    {
+        <label class="form-label" for="@inputId">@Model.Label</label>
+        <partial name="_FileUploader" model="@Model" />
+        @if (!string.IsNullOrEmpty(Model.Help))
+        {
+            <div class="form-text">@Model.Help</div>
+        }
+    }
+    else if (Model.Kind == AdminFieldKind.Repeater)
+    {
+        var repeaterJson = Json.Serialize(Model.Columns.Select(column => new { property = column.Property, label = column.Label, kind = column.Kind.ToString().ToLowerInvariant(), maxLength = column.MaxLength }));
+        <label class="form-label">@Model.Label
+        @if (Model.Required)
+        {
+            <span class="text-danger" title="پر کردن این فیلد الزامی است">*</span>
+        }
+    </label>
+        <div class="admin-repeater"
+             data-repeater
+             data-repeater-columns='@repeaterJson'>
+            <div class="admin-repeater-rows" data-repeater-rows></div>
+            <div class="d-flex align-items-center gap-2 mt-2">
+                <button type="button" class="btn btn-sm btn-label-primary" data-repeater-add>
+                    <i class="ti ti-plus"></i> افزودن مورد
+                </button>
+                <span class="text-muted small">برای حذف، دکمه × هر ردیف را بزنید.</span>
+            </div>
+            @* The canonical value: a JSON array. Editable without JavaScript here. *@
+            <details class="admin-json-fallback">
+                <summary>ویرایش مستقیم JSON</summary>
+                <textarea class="form-control admin-latin font-monospace small mt-2" id="@inputId" name="@Model.Property"
+                          rows="5" dir="ltr" spellcheck="false" data-repeater-json>@Model.Value</textarea>
+            </details>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Help))
+        {
+            <div class="form-text">@Model.Help</div>
+        }
+    }
+    else if (Model.Kind is AdminFieldKind.Textarea or AdminFieldKind.LineList)
+    {
+        <label class="form-label" for="@inputId">@Model.Label
+        @if (Model.Required)
+        {
+            <span class="text-danger" title="پر کردن این فیلد الزامی است">*</span>
+        }
+    </label>
+        <textarea class="@css" id="@inputId" name="@Model.Property" rows="@(Model.Kind == AdminFieldKind.LineList ? 6 : 4)"
+                  maxlength="@Model.MaxLength" dir="@dir" required="@Model.Required" placeholder="@(Model.Kind == AdminFieldKind.LineList ? "هر خط یک مورد" : null)">@Model.Value</textarea>
+        @if (!string.IsNullOrEmpty(Model.Help))
+        {
+            <div class="form-text">@Model.Help</div>
+        }
+        else if (Model.Kind == AdminFieldKind.LineList)
+        {
+            <div class="form-text">هر خط در سایت به‌صورت یک مورد مستقل نمایش داده می‌شود.</div>
+        }
+    }
+    else
+    {
+        <label class="form-label" for="@inputId">@Model.Label
+        @if (Model.Required)
+        {
+            <span class="text-danger" title="پر کردن این فیلد الزامی است">*</span>
+        }
+    </label>
+        var type = Model.Kind switch
+        {
+            AdminFieldKind.Number => "number",
+            AdminFieldKind.Decimal => "number",
+            _ => "text",
+        };
+        <input class="@css" id="@inputId" name="@Model.Property" type="@type"
+               value="@Model.Value" maxlength="@Model.MaxLength" dir="@dir"
+               required="@Model.Required"
+               step="@(Model.Kind == AdminFieldKind.Decimal ? "0.01" : null)"
+               inputmode="@(Model.Kind is AdminFieldKind.Number or AdminFieldKind.Decimal ? "numeric" : null)"
+               spellcheck="false" />
+        @if (!string.IsNullOrEmpty(Model.Help))
+        {
+            <div class="form-text">@Model.Help</div>
+        }
+    }
+</div>
