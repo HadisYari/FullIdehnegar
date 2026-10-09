@@ -1,36 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth-edge";
 
 const PUBLIC_FILE = /\.[^/]+$/;
 
-export async function proxy(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // --- Admin area protection ---
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    const token = request.cookies.get(SESSION_COOKIE)?.value;
-    if (!(await verifySessionToken(token))) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("next", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-    return NextResponse.next();
+  // The MVC admin is mounted at /Admin on the backend. Normalize old lowercase
+  // links once, then allow the Next rewrite to proxy them to the same host.
+  if (pathname === "/admin/login") {
+    return NextResponse.redirect(new URL("/Admin/Authentication/Login", request.url), 308);
+  }
+  if (pathname === "/admin/messages") {
+    return NextResponse.redirect(new URL("/Admin/Contacts", request.url), 308);
+  }
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    const normalizedUrl = request.nextUrl.clone();
+    normalizedUrl.pathname = `/Admin${pathname.slice("/admin".length)}`;
+    return NextResponse.redirect(normalizedUrl, 308);
   }
 
-  if (pathname.startsWith("/api/admin") && !pathname.startsWith("/api/admin/login")) {
-    const token = request.cookies.get(SESSION_COOKIE)?.value;
-    if (!(await verifySessionToken(token))) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    return NextResponse.next();
-  }
-
-  // --- Locale routing for public pages ---
-  // Skip Next internals, API routes, admin, and anything that looks like a static file.
+  // Skip backend-mounted admin pages, Panel assets, uploaded media, Next files,
+  // and API routes from locale rewriting. next.config proxies backend paths.
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
-    pathname.startsWith("/admin") ||
+    pathname.startsWith("/Admin") ||
+    pathname.startsWith("/Panel") ||
     pathname.startsWith("/images") ||
     pathname.startsWith("/uploads") ||
     pathname === "/favicon.ico" ||
@@ -41,13 +36,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (pathname.startsWith("/en")) {
-    // Already locale-prefixed; app/[locale] handles it directly.
-    return NextResponse.next();
-  }
+  if (pathname.startsWith("/en")) return NextResponse.next();
 
-  // Default locale (Persian) is served without a URL prefix: rewrite
-  // internally to /fa/* while keeping the address bar clean.
+  // Persian remains the default locale without a visible URL prefix.
   const url = request.nextUrl.clone();
   url.pathname = `/fa${pathname}`;
   return NextResponse.rewrite(url);

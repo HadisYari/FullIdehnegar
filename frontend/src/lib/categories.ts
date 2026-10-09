@@ -1,3 +1,9 @@
+export interface Category {
+  slug: string;
+  fa: string;
+  en: string;
+}
+
 export const categories = [
   { slug: "enterprise-software", fa: "نرم‌افزار سازمانی", en: "Enterprise Software" },
   { slug: "website", fa: "وب‌سایت شرکتی", en: "Corporate Website" },

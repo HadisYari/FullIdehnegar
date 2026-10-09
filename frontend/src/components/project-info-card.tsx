@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import { localeHref } from "@/lib/i18n/paths";
 import { categoryLabel } from "@/lib/categories";
 import { formatNumber } from "@/lib/format";
-import type { Locale } from "@/lib/i18n/dictionaries";
+import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 
 interface ProjectInfoProps {
   item: {
@@ -18,7 +18,7 @@ interface ProjectInfoProps {
     link?: string;
   };
   locale: Locale;
-  dict: Record<string, any>;
+  dict: Dictionary;
 }
 
 export function ProjectInfoCard({ item, locale, dict }: ProjectInfoProps) {

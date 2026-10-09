@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
-import { siteConfig } from "@/lib/site-config";
+import { getSiteConfigForLocale, type LocalizedSiteConfig } from "@/lib/site-config";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import {
   Phone,
@@ -132,10 +132,13 @@ function WaveNavyToWhite({ bg = "bg-[#0f0f52]" }: { bg?: string }) {
 export function ContactPageCanvas({
   locale,
   dict,
+  site: cmsSite,
 }: {
   locale: Locale;
   dict: Dictionary;
+  site?: LocalizedSiteConfig;
 }) {
+  const site = cmsSite ?? getSiteConfigForLocale(locale);
   const isFa = locale === "fa";
 
   // ساعت زنده دفتر
@@ -182,6 +185,8 @@ export function ContactPageCanvas({
 
   const [selectedCategory, setSelectedCategory] = useState("web");
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -230,13 +235,36 @@ export function ContactPageCanvas({
         },
       ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormSubmitted(false);
+    setIsSubmitting(true);
+    setFormError("");
+    const category = projectCategories.find((item) => item.id === selectedCategory)?.label ?? selectedCategory;
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject || category,
+          message: formData.message,
+          locale,
+        }),
+      });
+      if (!response.ok) throw new Error("contact request failed");
+      setFormSubmitted(true);
       setFormData({ fullName: "", phone: "", email: "", subject: "", message: "" });
-    }, 4000);
+      setTimeout(() => setFormSubmitted(false), 5000);
+    } catch {
+      setFormError(isFa
+        ? "ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید یا مستقیم تماس بگیرید."
+        : "We could not send your message. Please try again or contact us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -338,7 +366,7 @@ export function ContactPageCanvas({
 
                 <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                   <div
-                    onClick={() => copyToClipboard(siteConfig.phones[0], "phone")}
+                    onClick={() => copyToClipboard(site.phones[0], "phone")}
                     dir="ltr"
                     className="group cursor-pointer flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 px-5 py-3 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-[#e6304c] hover:bg-white/15"
                   >
@@ -347,7 +375,7 @@ export function ContactPageCanvas({
                         {isFa ? "تماس تلفنی مستقیم (کلیک برای کپی)" : "Direct Line (Click to copy)"}
                       </span>
                       <span className="font-mono text-sm sm:text-base font-black text-white group-hover:text-rose-300 transition-colors">
-                        {siteConfig.phones[0]}
+                        {site.phones[0]}
                       </span>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-[#e6304c] transition-all">
@@ -356,7 +384,7 @@ export function ContactPageCanvas({
                   </div>
 
                   <div
-                    onClick={() => copyToClipboard(siteConfig.email, "email")}
+                    onClick={() => copyToClipboard(site.email, "email")}
                     dir="ltr"
                     className="group cursor-pointer flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 px-5 py-3 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-cyan-400 hover:bg-white/15"
                   >
@@ -365,7 +393,7 @@ export function ContactPageCanvas({
                         {isFa ? "مکاتبات رسمی و پروپوزال" : "Official Proposals"}
                       </span>
                       <span className="font-mono text-xs sm:text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
-                        {siteConfig.email}
+                        {site.email}
                       </span>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-cyan-600 transition-all">
@@ -505,7 +533,7 @@ export function ContactPageCanvas({
                   <div className="mt-5 grid grid-cols-2 gap-2.5">
                     {/* تلگرام */}
                     <a
-                      href={siteConfig.social?.telegram || "#"}
+                      href={site.social?.telegram || "#"}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-sky-50/70 border border-sky-100 hover:bg-sky-500 hover:text-white transition-all duration-300 shadow-xs"
@@ -519,7 +547,7 @@ export function ContactPageCanvas({
 
                     {/* واتس‌اپ */}
                     <a
-                      href={`https://wa.me/${siteConfig.phones[0].replace(/[^0-9]/g, "")}`}
+                      href={`https://wa.me/${site.whatsapp}`}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-emerald-50/70 border border-emerald-100 hover:bg-emerald-500 hover:text-white transition-all duration-300 shadow-xs"
@@ -533,7 +561,7 @@ export function ContactPageCanvas({
 
                     {/* لینکدین */}
                     <a
-                      href={siteConfig.social?.linkedin || "#"}
+                      href={site.social?.linkedin || "#"}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-blue-50/70 border border-blue-100 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-xs"
@@ -547,7 +575,7 @@ export function ContactPageCanvas({
 
                     {/* اینستاگرام */}
                     <a
-                      href={siteConfig.social?.instagram || "#"}
+                      href={site.social?.instagram || "#"}
                       target="_blank"
                       rel="noreferrer"
                       className="group/item flex flex-col justify-between p-3 rounded-2xl bg-rose-50/70 border border-rose-100 hover:bg-rose-500 hover:text-white transition-all duration-300 shadow-xs"
@@ -654,7 +682,7 @@ export function ContactPageCanvas({
             <div className="absolute inset-0 opacity-40 mix-blend-luminosity pointer-events-none">
               <iframe
                 title="Office Map Coordinates"
-                src={siteConfig.mapEmbedSrc}
+                src={site.mapEmbedSrc}
                 className="h-full w-full grayscale contrast-125 pointer-events-none"
                 loading="lazy"
               />
@@ -688,7 +716,7 @@ export function ContactPageCanvas({
                       Physical Location
                     </span>
                     <p className="text-xs sm:text-sm text-white mt-1 leading-relaxed">
-                      {isFa ? siteConfig.addressFa : siteConfig.addressEn}
+                      {site.address}
                     </p>
                   </div>
                 </div>
@@ -813,6 +841,7 @@ export function ContactPageCanvas({
                         <textarea
                           rows={3}
                           required
+                          minLength={10}
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                           placeholder={isFa ? "امکانات کلیدی، زمان‌بندی مد نظر یا مقیاس تخمینی کاربران..." : "Key features, timeline, target user scale..."}
@@ -820,11 +849,13 @@ export function ContactPageCanvas({
                         />
                       </div>
 
+                      {formError && <p role="alert" className="text-rose-600" dir={isFa ? "rtl" : "ltr"}>{formError}</p>}
                       <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#e6304c] py-3 text-xs font-bold text-white shadow-lg shadow-[#e6304c]/25 hover:bg-[#ff3b59] transition-all"
+                        disabled={isSubmitting}
+                        className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#e6304c] py-3 text-xs font-bold text-white shadow-lg shadow-[#e6304c]/25 hover:bg-[#ff3b59] transition-all disabled:cursor-not-allowed disabled:opacity-60"
                       >
-                        <span>{isFa ? "ثبت و ارسال پیشنهاد همکاری" : "Submit Scoping Request"}</span>
+                        <span>{isSubmitting ? (isFa ? "در حال ارسال..." : "Sending...") : (isFa ? "ثبت و ارسال پیشنهاد همکاری" : "Submit Scoping Request")}</span>
                         <Send className={`h-3.5 w-3.5 ${isFa ? "rotate-180" : ""}`} />
                       </button>
                     </form>

@@ -1,25 +1,33 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   ArrowUpRight,
-  Code2,
   Cpu,
-  Layers,
   Sparkles,
   Zap,
-  Globe,
-  Compass,
-  Maximize2,
+  type LucideIcon,
 } from "lucide-react";
 
 import { Container } from "../container";
 import { Reveal } from "../reveal";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import { localeHref } from "@/lib/i18n/paths";
-import { LiquidWaveTop } from "../LiquidWaveTop";
+
+type ServiceHighlight = {
+  code: string;
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+  color: string;
+  softColor: string;
+  glowColor: string;
+  featureTitle: string;
+  featureValue: string;
+  progress: string;
+  tags: string[];
+};
 
 // کارت تعاملی با افکت عمق سه‌بعدی و واکنش به حرکت ماوس
 function InteractiveCard({
@@ -27,7 +35,7 @@ function InteractiveCard({
   index,
   locale,
 }: {
-  item: any;
+  item: ServiceHighlight;
   index: number;
   locale: Locale;
 }) {
@@ -127,7 +135,7 @@ function InteractiveCard({
         </div>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {item.tags.map((tag: string) => (
+          {item.tags.map((tag) => (
             <span
               key={tag}
               className="rounded-lg border border-white/80 bg-white/80 px-2.5 py-1 text-[11px] font-bold text-slate-600 shadow-sm"
@@ -143,7 +151,7 @@ function InteractiveCard({
         style={{ transform: "translateZ(30px)" }}
         className="relative z-10 mt-6 flex items-center justify-between pt-4 border-t border-slate-200/60"
       >
-        <span className="text-xs font-bold text-slate-500">جزئیات و نمونه‌کارها</span>
+        <span className="text-xs font-bold text-slate-500">{locale === "fa" ? "جزئیات و نمونه‌کارها" : "Explore services and projects"}</span>
         <Link
           href={localeHref(locale, "/services")}
           className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-rose-600"
@@ -162,47 +170,50 @@ export function ServicesSection({
   locale: Locale;
   dict: Dictionary;
 }) {
-  const services = [
+  const isFa = locale === "fa";
+  const presets = [
     {
       code: "EXP // 01",
-      title: "طراحی وب تعاملی و ۳D",
-      desc: "پیاده‌سازی وب‌سایت‌های خلاق با تجربه‌های دیداری عمیق، وب‌جی‌ال (WebGL)، میکرواینترکشن‌ها و هویت انحصاری برند.",
       icon: Sparkles,
       color: "#e6304c",
       softColor: "#ffe5e9",
       glowColor: "rgba(230, 48, 76, 0.4)",
-      featureTitle: "نرخ ماندگاری مخاطب (Dwell Time)",
-      featureValue: "3.4x بالاتر",
+      featureTitle: isFa ? "نرخ ماندگاری مخاطب" : "Audience engagement",
+      featureValue: isFa ? "۳٫۴ برابر بیشتر" : "3.4x higher",
       progress: "92%",
       tags: ["Creative UI/UX", "Three.js", "Framer Motion", "Lenis Scroll"],
     },
     {
       code: "ENG // 02",
-      title: "معماری نرم‌افزار و سامانه‌ها",
-      desc: "توسعه سامانه‌های ابری یکپارچه، داشبوردهای تحلیل داده و وب‌اپلیکیشن‌های چند کاربره با پایداری حداکثری.",
       icon: Cpu,
       color: "#6366f1",
       softColor: "#e0e7ff",
       glowColor: "rgba(99, 102, 241, 0.4)",
-      featureTitle: "پایداری بدون خطا (Uptime)",
+      featureTitle: isFa ? "دسترس‌پذیری سامانه" : "Platform uptime",
       featureValue: "99.98%",
       progress: "98%",
-      tags: ["TypeScript", "Next.js", "PostgreSQL", "Scalable APIs"],
+      tags: ["TypeScript", "Next.js", "SQL Server", "Scalable APIs"],
     },
     {
       code: "SPD // 03",
-      title: "مهندسی سرعت و رتبه‌گیری",
-      desc: "لود آنی بدون تأخیر در تمامی دستگاه‌ها، کسب بهترین امتیازها در الگوریتم Core Web Vitals و سئوی ساختاریافته محتوا.",
       icon: Zap,
       color: "#059669",
       softColor: "#d1fae5",
       glowColor: "rgba(5, 150, 105, 0.4)",
-      featureTitle: "نمره بهینه‌سازی گوگل",
+      featureTitle: isFa ? "امتیاز عملکرد گوگل" : "Google performance score",
       featureValue: "100 / 100",
       progress: "100%",
-      tags: ["SSR / SSG", "Edge Cache", "LightHouse", "Zero Bloat"],
+      tags: ["SSR / SSG", "Edge Cache", "Lighthouse", "Core Web Vitals"],
     },
   ];
+  const services: ServiceHighlight[] = presets.map((preset, index) => {
+    const content = dict.services.items[index];
+    return {
+      ...preset,
+      title: content?.title ?? "",
+      desc: content?.desc ?? "",
+    };
+  });
 
   return (
     <section
@@ -256,19 +267,23 @@ export function ServicesSection({
       />
 
       <Container className="relative z-10">
-        {/* سربرگ دینامیک با فونت حجیم و شیشه‌ای */}
+        {/* Dynamic bilingual heading backed by the shared CMS dictionary. */}
         <div className="flex flex-col items-center text-center">
-          
-
+          <Reveal delay={50}>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-rose-600">
+              {dict.services.eyebrow}
+            </p>
+          </Reveal>
           <Reveal delay={100}>
-            <h2 className="mt-7 max-w-4xl text-balance text-2xl font-black tracking-tight text-slate-950 sm:text-2xl lg:text-4xl">
-              طراحی فراتر از تصویر؛{" "}
+            <h2 className="mt-4 max-w-4xl text-balance text-2xl font-black tracking-tight text-slate-950 sm:text-3xl lg:text-4xl">
               <span className="bg-gradient-to-r from-rose-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                خلق تجربه زنده
+                {dict.services.title}
               </span>
             </h2>
           </Reveal>
- 
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+            {dict.services.subtitle}
+          </p>
         </div>
 
         {/* گرید ۳تایی کارت‌های شناور فضایی */}

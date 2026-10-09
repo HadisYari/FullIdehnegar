@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
  
-import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
+import { locales, type Locale } from "@/lib/i18n/dictionaries";
+import { getDictionaryForLocale, getPageContent } from "@/lib/cms";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -16,15 +17,22 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const isFa = locale === "fa";
+  const typedLocale = locale as Locale;
+  const isFa = typedLocale === "fa";
+  const page = await getPageContent("services", typedLocale);
   return {
-    title: isFa ? "معماری نرم‌افزار و پلتفرم‌های وب | استودیو ایده‌نگار" : "Web Platforms & Software Architecture | Ideh Negar",
-    description: isFa
+    title: page?.metaTitle || (isFa ? "معماری نرم‌افزار و پلتفرم‌های وب | استودیو ایده‌نگار" : "Web Platforms & Software Architecture | Ideh Negar"),
+    description: page?.metaDescription || (isFa
       ? "توسعه نرم‌افزارهای مدرن، پرتال‌های سازمانی، فروشگاه‌های آنلاین مقیاس‌پذیر و طراحی وب اختصاصی."
-      : "High-performance web applications, scalable enterprise platforms, and bespoke digital experiences.",
+      : "High-performance web applications, scalable enterprise platforms, and bespoke digital experiences."),
     alternates: {
-      canonical: isFa ? "/services" : "/en/services",
+      canonical: page?.canonicalUrl || (isFa ? "/services" : "/en/services"),
       languages: { fa: "/services", en: "/en/services" },
+    },
+    openGraph: {
+      title: page?.openGraphTitle || page?.metaTitle || undefined,
+      description: page?.openGraphDescription || page?.metaDescription || undefined,
+      images: page?.imagePath ? [{ url: page.imagePath }] : undefined,
     },
   };
 }
@@ -414,7 +422,7 @@ export default async function ServicesPage({
 }) {
   const { locale: rawLocale } = await params;
   const locale = rawLocale as Locale;
-  const dict = getDictionary(locale);
+  const dict = await getDictionaryForLocale(locale);
   const isFa = locale === "fa";
 
   return (
@@ -505,7 +513,7 @@ export default async function ServicesPage({
 
                   <div className="mt-4 space-y-3 font-mono text-xs">
                     <div className="rounded-xl bg-black/50 p-3.5 text-slate-300 border border-white/5 leading-relaxed overflow-x-auto text-[11px]">
-                      <div className="text-white/40">// Enterprise Software Blueprint</div>
+                      <div className="text-white/40">{"// Enterprise Software Blueprint"}</div>
                       <div className="text-rose-400">export const <span className="text-white">Solution</span> = () =&gt; &#123;</div>
                       <div className="ps-3 text-cyan-300">architecture: <span className="text-amber-300">&apos;Clean-Modular&apos;</span>,</div>
                       <div className="ps-3 text-cyan-300">performance: <span className="text-emerald-400">&apos;99.9% Zero-Lag&apos;</span>,</div>

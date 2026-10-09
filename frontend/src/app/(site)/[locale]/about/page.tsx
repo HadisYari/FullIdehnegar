@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
  
-import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
+import { locales, type Locale } from "@/lib/i18n/dictionaries";
+import { getPageContent } from "@/lib/cms";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -16,17 +17,24 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const isFa = locale === "fa";
+  const typedLocale = locale as Locale;
+  const isFa = typedLocale === "fa";
+  const page = await getPageContent("about", typedLocale);
   return {
-    title: isFa
+    title: page?.metaTitle || (isFa
       ? "درباره ما | پیشگامان مهندسی نرم‌افزار ایده‌نگار"
-      : "About Us | Idehnegar Software Studio",
-    description: isFa
+      : "About Us | Idehnegar Software Studio"),
+    description: page?.metaDescription || (isFa
       ? "روایت ما در خلق پلتفرم‌های مقیاس‌پذیر، پرتال‌های سازمانی مدرن و همگرایی هنر دیزاین با مهندسی روز دنیا."
-      : "Our story of architecting resilient digital platforms, enterprise software, and human-centered design.",
+      : "Our story of architecting resilient digital platforms, enterprise software, and human-centered design."),
     alternates: {
-      canonical: isFa ? "/about" : "/en/about",
+      canonical: page?.canonicalUrl || (isFa ? "/about" : "/en/about"),
       languages: { fa: "/about", en: "/en/about" },
+    },
+    openGraph: {
+      title: page?.openGraphTitle || page?.metaTitle || undefined,
+      description: page?.openGraphDescription || page?.metaDescription || undefined,
+      images: page?.imagePath ? [{ url: page.imagePath }] : undefined,
     },
   };
 }
@@ -143,7 +151,6 @@ export default async function AboutPage({
 }) {
   const { locale: rawLocale } = await params;
   const locale = rawLocale as Locale;
-  const dict = getDictionary(locale);
   const isFa = locale === "fa";
 
   return (

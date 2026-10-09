@@ -1,0 +1,45 @@
+@model LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "ورود مدیر";
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ورود به پنل مدیریت ایده‌نگار</title>
+    <link rel="icon" href="/Panel/assets/img/favicon/favicon.ico" />
+    <link rel="stylesheet" href="/Panel/assets/vendor/css/rtl/core.css" />
+    <link rel="stylesheet" href="/Panel/assets/vendor/css/rtl/theme-default.css" />
+    <link rel="stylesheet" href="/Panel/assets/css/rtl.css" />
+</head>
+<body>
+    <main class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
+        <div class="row w-100 justify-content-center">
+            <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+                <div class="card w-100">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <img src="/Panel/brand/logo.png" alt="ایده‌نگار" width="72" height="72" class="mb-3" />
+                            <h4 class="mb-1">ورود به پنل مدیریت</h4>
+                            <p class="text-muted mb-0">نام کاربری و رمز عبور مدیر را وارد کنید.</p>
+                        </div>
+                        <form asp-area="Admin" asp-controller="Authentication" asp-action="Login" method="post">
+                            @Html.AntiForgeryToken()
+                            <input asp-for="ReturnUrl" type="hidden" />
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                            <div class="mb-3"><label asp-for="Username" class="form-label">نام کاربری</label><input asp-for="Username" class="form-control" autocomplete="username" autofocus /><span asp-validation-for="Username" class="text-danger"></span></div>
+                            <div class="mb-3"><label asp-for="Password" class="form-label">رمز عبور</label><input asp-for="Password" class="form-control" type="password" autocomplete="current-password" /><span asp-validation-for="Password" class="text-danger"></span></div>
+                            <div class="form-check mb-3"><input asp-for="RememberMe" class="form-check-input" /><label asp-for="RememberMe" class="form-check-label">مرا به خاطر بسپار</label></div>
+                            <button type="submit" class="btn btn-primary w-100">ورود</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/Panel/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/Panel/assets/vendor/js/bootstrap.js"></script>
+</body>
+</html>

@@ -4,8 +4,9 @@ import { Container } from "@/components/container";
 import { PortfolioFilterGrid } from "@/components/portfolio-filter-grid";
 import { JsonLd } from "@/components/json-ld";
 import { getPortfolioItems } from "@/lib/portfolio";
-import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
-import { siteConfig } from "@/lib/site-config";
+import { locales, type Locale } from "@/lib/i18n/dictionaries";
+import { getDictionaryForLocale, getPageContent, getSiteSettings, getCmsCategories } from "@/lib/cms";
+import { categories as fallbackCategories, type Category } from "@/lib/categories";
 import { Sparkles } from "lucide-react";
 
 export function generateStaticParams() {
@@ -18,15 +19,22 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const isFa = locale === "fa";
+  const typedLocale = locale as Locale;
+  const isFa = typedLocale === "fa";
+  const page = await getPageContent("portfolio", typedLocale);
   return {
-    title: isFa ? "نمونه‌کارها و پروژه‌های شاخص" : "Portfolio & Case Studies",
-    description: isFa
+    title: page?.metaTitle || (isFa ? "نمونه‌کارها و پروژه‌های شاخص" : "Portfolio & Case Studies"),
+    description: page?.metaDescription || (isFa
       ? "پرتال‌های سازمانی، سامانه‌های نرم‌افزاری و وب‌سایت‌های اجرا شده توسط استودیو ایده‌نگار."
-      : "Enterprise portals, custom web systems, and digital platforms crafted by Idehnegar.",
+      : "Enterprise portals, custom web systems, and digital platforms crafted by Idehnegar."),
     alternates: {
-      canonical: isFa ? "/portfolio" : "/en/portfolio",
+      canonical: page?.canonicalUrl || (isFa ? "/portfolio" : "/en/portfolio"),
       languages: { fa: "/portfolio", en: "/en/portfolio" },
+    },
+    openGraph: {
+      title: page?.openGraphTitle || page?.metaTitle || undefined,
+      description: page?.openGraphDescription || page?.metaDescription || undefined,
+      images: page?.imagePath ? [{ url: page.imagePath }] : undefined,
     },
   };
 }
@@ -80,9 +88,14 @@ export default async function PortfolioPage({
 }) {
   const { locale: rawLocale } = await params;
   const locale = rawLocale as Locale;
-  const dict = getDictionary(locale);
+  const [dict, site, items, cmsCategories] = await Promise.all([
+    getDictionaryForLocale(locale),
+    getSiteSettings(locale),
+    getPortfolioItems(),
+    getCmsCategories(locale),
+  ]);
+  const categoryOptions: Category[] = cmsCategories ?? [...fallbackCategories];
   const isFa = locale === "fa";
-  const items = await getPortfolioItems();
 
   const listLd = {
     "@context": "https://schema.org",
@@ -90,7 +103,7 @@ export default async function PortfolioPage({
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${siteConfig.url}${locale === "en" ? "/en" : ""}/portfolio/${item.slug}`,
+      url: `${site.url}${locale === "en" ? "/en" : ""}/portfolio/${item.slug}`,
       name: item.title[locale],
     })),
   };
@@ -157,6 +170,7 @@ export default async function PortfolioPage({
           <PortfolioFilterGrid
             items={items}
             locale={locale}
+            categories={categoryOptions}
             viewLabel={dict.portfolio.viewProject}
             allLabel={dict.common.allCategories}
             emptyLabel={dict.portfolio.empty}

@@ -69,10 +69,7 @@ function useAutoPlay(distance: number, duration: number) {
   }, []);
 
   useEffect(() => {
-    if (!isTouch || !inView || distance <= 4) {
-      setAuto(false);
-      return;
-    }
+    if (!isTouch || !inView || distance <= 4) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
 
@@ -93,7 +90,7 @@ function useAutoPlay(distance: number, duration: number) {
     };
   }, [isTouch, inView, distance, duration]);
 
-  return { wrapRef, isTouch, auto };
+  return { wrapRef, isTouch, auto: auto && isTouch && inView && distance > 4 };
 }
 
 /* ═══════════════════════════════════════════════════════════════

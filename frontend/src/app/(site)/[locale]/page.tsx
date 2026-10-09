@@ -7,7 +7,8 @@ import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ClientsSection } from "@/components/sections/clients-section";
 import { HomeCtaSection } from "@/components/sections/home-cta-section";
 import { getFeaturedPortfolioItems } from "@/lib/portfolio";
-import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
+import { locales, type Locale } from "@/lib/i18n/dictionaries";
+import { getDictionaryForLocale, getSiteSettings } from "@/lib/cms";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -20,13 +21,16 @@ export default async function HomePage({
 }) {
   const { locale: rawLocale } = await params;
   const locale = rawLocale as Locale;
-  const dict = getDictionary(locale);
-  const featured = await getFeaturedPortfolioItems(8);
+  const [dict, site, featured] = await Promise.all([
+    getDictionaryForLocale(locale),
+    getSiteSettings(locale),
+    getFeaturedPortfolioItems(8),
+  ]);
 
   return (
     <main className="relative flex flex-col overflow-hidden">
       <HeroSection locale={locale} dict={dict} />
-      <StatsSection locale={locale} dict={dict} />
+      <StatsSection locale={locale} dict={dict} site={site} />
       <ServicesSection locale={locale} dict={dict} />
       <PortfolioPreviewSection items={featured} locale={locale} dict={dict} />
       <ProcessSection dict={dict} />

@@ -1,0 +1,45 @@
+@model ContactListViewModel
+@{
+    ViewData["Title"] = "پیام‌های تماس";
+}
+<div class="col-12">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+        <div><h4 class="mb-1">پیام‌های فرم تماس</h4><p class="text-muted mb-0">آخرین ۵۰۰ پیام ثبت‌شده</p></div>
+        <a href="/Admin" class="btn btn-label-secondary">داشبورد</a>
+    </div>
+    <div class="card"><div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead><tr><th>نام</th><th>ایمیل / تلفن</th><th>موضوع و پیام</th><th>زبان</th><th>تاریخ</th><th>وضعیت</th><th></th></tr></thead>
+            <tbody>
+            @if (Model.Messages.Count == 0)
+            {
+                <tr><td colspan="7" class="text-center text-muted py-4">پیامی ثبت نشده است.</td></tr>
+            }
+            else
+            {
+                @foreach (var item in Model.Messages)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td><a href="mailto:@item.Email">@item.Email</a><br /><small>@item.Phone</small></td>
+                        <td><strong>@item.Subject</strong><div class="text-muted small text-break">@item.Message</div></td>
+                        <td>@item.Locale.ToUpperInvariant()</td>
+                        <td>@item.CreatedAtUtc.ToString("yyyy/MM/dd HH:mm")</td>
+                        <td><span class="badge @(item.IsRead ? "bg-label-secondary" : "bg-label-warning")">@(item.IsRead ? "خوانده‌شده" : "جدید")</span></td>
+                        <td>
+                            @if (!item.IsRead)
+                            {
+                                <form asp-action="MarkRead" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button class="btn btn-sm btn-label-primary" type="submit">علامت‌گذاری</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div></div>
+</div>

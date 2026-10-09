@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { Container } from "./container";
-import { siteConfig } from "@/lib/site-config";
+import { getSiteConfigForLocale, type LocalizedSiteConfig } from "@/lib/site-config";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import { localeHref } from "@/lib/i18n/paths";
 import { LiquidWaveTop } from "./LiquidWaveTop";
@@ -33,7 +33,8 @@ const SocialIcons = {
   )
 };
 
-export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function SiteFooter({ locale, dict, site: cmsSite }: { locale: Locale; dict: Dictionary; site?: LocalizedSiteConfig }) {
+  const site = cmsSite ?? getSiteConfigForLocale(locale);
   const year = new Date().getFullYear();
 
   const quickLinks = [
@@ -77,9 +78,9 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
           {/* شبکه‌های اجتماعی با آیکون واقعی */}
           <div className="mt-6 flex items-center gap-3">
             {[
-              { href: siteConfig.social.telegram, label: "Telegram", icon: SocialIcons.Telegram },
-              { href: siteConfig.social.linkedin, label: "LinkedIn", icon: SocialIcons.LinkedIn },
-              { href: siteConfig.social.instagram, label: "Instagram", icon: SocialIcons.Instagram },
+              { href: site.social.telegram, label: "Telegram", icon: SocialIcons.Telegram },
+              { href: site.social.linkedin, label: "LinkedIn", icon: SocialIcons.LinkedIn },
+              { href: site.social.instagram, label: "Instagram", icon: SocialIcons.Instagram },
             ].map((s) => (
               <a
                 key={s.label}
@@ -142,7 +143,7 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
                 <MapPin className="h-3.5 w-3.5" />
               </div>
               <p className="text-sm leading-relaxed text-white/80">
-                {locale === "fa" ? siteConfig.addressFa : siteConfig.addressEn}
+                {site.address}
               </p>
             </li>
             
@@ -152,8 +153,8 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
                 <Phone className="h-3.5 w-3.5" />
               </div>
               <div dir="ltr" className={`flex-1 text-sm font-semibold text-white/90 ${isRtl ? 'text-end' : 'text-start'}`}>
-                <a href={`tel:${siteConfig.phones[0]}`} className="hover:text-[#e6304c] transition-colors">
-                  {siteConfig.phones.join(" / ")}
+                <a href={`tel:${site.phones[0]}`} className="hover:text-[#e6304c] transition-colors">
+                  {site.phones.join(" / ")}
                 </a>
               </div>
             </li>
@@ -164,8 +165,8 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
                 <Mail className="h-3.5 w-3.5" />
               </div>
               <div dir="ltr" className={`flex-1 text-sm font-semibold text-white/90 ${isRtl ? 'text-end' : 'text-start'}`}>
-                <a href={`mailto:${siteConfig.email}`} className="hover:text-[#e6304c] transition-colors">
-                  {siteConfig.email}
+                <a href={`mailto:${site.email}`} className="hover:text-[#e6304c] transition-colors">
+                  {site.email}
                 </a>
               </div>
             </li>
@@ -176,7 +177,7 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
                 <Clock className="h-3.5 w-3.5" />
               </div>
               <p className="text-sm text-white/70">
-                {locale === "fa" ? siteConfig.hoursFa : siteConfig.hoursEn}
+                {site.hours}
               </p>
             </li>
           </ul>
@@ -187,7 +188,7 @@ export function SiteFooter({ locale, dict }: { locale: Locale; dict: Dictionary 
       <div className="relative z-10 border-t border-white/10 bg-black/10 backdrop-blur-sm">
         <Container className="py-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50 font-medium">
           <p>
-            © {year} {locale === "fa" ? siteConfig.nameFa : siteConfig.nameEn}. {dict.footer.rights}
+            © {year} {site.name}. {dict.footer.rights}
           </p>
           <p className="flex items-center gap-1.5">
             {dict.footer.madeWith}

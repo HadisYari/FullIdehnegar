@@ -4,7 +4,7 @@ import { motion, useInView, useSpring, useTransform } from "framer-motion";
 import { Users, Briefcase, Calendar, Award, type LucideIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Container } from "../container";
-import { siteConfig } from "@/lib/site-config";
+import { getSiteConfigForLocale, type LocalizedSiteConfig } from "@/lib/site-config";
 import { formatNumber } from "@/lib/format";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import { LiquidWaveTop } from "../LiquidWaveTop";
@@ -37,15 +37,16 @@ function Counter({ value, locale }: { value: number; locale: Locale }) {
    ────────────────────────────────────────────────────────── */
  
 
-export function StatsSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+export function StatsSection({ locale, dict, site: cmsSite }: { locale: Locale; dict: Dictionary; site?: LocalizedSiteConfig }) {
+  const site = cmsSite ?? getSiteConfigForLocale(locale);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   const stats: StatItem[] = [
-    { value: siteConfig.stats.clients, suffix: "+", label: dict.stats.clients, icon: Users },
-    { value: siteConfig.stats.projects, suffix: "+", label: dict.stats.projects, icon: Briefcase },
-    { value: siteConfig.stats.yearsActive, suffix: "+", label: dict.stats.years, icon: Calendar },
-    { value: siteConfig.stats.awards, suffix: "+", label: dict.stats.awards, icon: Award },
+    { value: site.stats.clients, suffix: "+", label: dict.stats.clients, icon: Users },
+    { value: site.stats.projects, suffix: "+", label: dict.stats.projects, icon: Briefcase },
+    { value: site.stats.yearsActive, suffix: "+", label: dict.stats.years, icon: Calendar },
+    { value: site.stats.awards, suffix: "+", label: dict.stats.awards, icon: Award },
   ];
 
   return (

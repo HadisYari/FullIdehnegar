@@ -38,3 +38,45 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+export interface LocalizedSiteConfig {
+  domain: string;
+  url: string;
+  name: string;
+  alternateName: string;
+  shortName: string;
+  tagline: string;
+  foundedJalali: number;
+  foundedGregorian: number;
+  email: string;
+  phones: string[];
+  telegram: string;
+  whatsapp: string;
+  address: string;
+  hours: string;
+  mapEmbedSrc: string;
+  social: { telegram: string; linkedin: string; instagram: string };
+  stats: { clients: number; projects: number; yearsActive: number; awards: number };
+}
+
+export function getSiteConfigForLocale(locale: "fa" | "en"): LocalizedSiteConfig {
+  return {
+    domain: siteConfig.domain,
+    url: siteConfig.url,
+    name: locale === "fa" ? siteConfig.nameFa : siteConfig.nameEn,
+    alternateName: locale === "fa" ? siteConfig.nameEn : siteConfig.nameFa,
+    shortName: locale === "fa" ? siteConfig.shortNameFa : siteConfig.shortNameEn,
+    tagline: locale === "fa" ? siteConfig.taglineFa : siteConfig.taglineEn,
+    foundedJalali: siteConfig.foundedJalali,
+    foundedGregorian: siteConfig.foundedGregorian,
+    email: siteConfig.email,
+    phones: [...siteConfig.phones],
+    telegram: siteConfig.telegram,
+    whatsapp: siteConfig.whatsapp,
+    address: locale === "fa" ? siteConfig.addressFa : siteConfig.addressEn,
+    hours: locale === "fa" ? siteConfig.hoursFa : siteConfig.hoursEn,
+    mapEmbedSrc: siteConfig.mapEmbedSrc,
+    social: { ...siteConfig.social },
+    stats: { ...siteConfig.stats },
+  };
+}

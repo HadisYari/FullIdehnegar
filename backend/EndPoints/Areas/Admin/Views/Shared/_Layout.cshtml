@@ -130,10 +130,13 @@
 								 
 
 									<li>
-										<a class="dropdown-item" href="/Authentication/SignOut" target="_blank">
-											<i class="ti ti-logout me-2 ti-sm"></i>
-											<span class="align-middle">خروج از حساب</span>
-										</a>
+										<form action="/Admin/Authentication/Logout" method="post">
+											@Html.AntiForgeryToken()
+											<button class="dropdown-item" type="submit">
+												<i class="ti ti-logout me-2 ti-sm"></i>
+												<span class="align-middle">خروج از حساب</span>
+											</button>
+										</form>
 									</li>
 								</ul>
 							</li>
@@ -152,37 +155,12 @@
 					<aside class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0" id="layout-menu">
 						<div class="container-xxl d-flex h-100">
 							<ul class="menu-inner">
-								<li class="menu-item">
-									<a class="menu-link fs-8" href="/Admin/Dashboard/">
-										<i class="menu-icon tf-icons ti ti-smart-home"></i>
-										<div>داشبورد</div>
-									</a>
-								</li>
-
-								<li class="menu-item">
-									<a class="menu-link fs-8 menu-toggle">
-										<i class="menu-icon tf-icons ti ti-settings"></i>
-										<div>تنظیمات  </div>
-									</a>
-									<ul class="menu-sub">
-										<li class="menu-item">
-											<a class="menu-link fs-8" href="#">
-												<i class="menu-icon tf-icons ti ti-building"></i>
-												<div>   </div>
-											</a>
-										</li>
-										<li class="menu-item">
-											<a class="menu-link fs-8" href="#">
-												<i class="menu-icon tf-icons ti ti-phone"></i>
-												<div>     </div>
-											</a>
-										</li>
-										 
-									</ul>
-								</li>
-
-							 
-							 
+								<li class="menu-item"><a class="menu-link fs-8" href="/Admin"><i class="menu-icon tf-icons ti ti-smart-home"></i><div>داشبورد</div></a></li>
+								<li class="menu-item"><a class="menu-link fs-8" href="/Admin/Content"><i class="menu-icon tf-icons ti ti-files"></i><div>مدیریت محتوا</div></a></li>
+								<li class="menu-item"><a class="menu-link fs-8" href="/Admin/Content?type=portfolio"><i class="menu-icon tf-icons ti ti-briefcase"></i><div>نمونه‌کارها</div></a></li>
+								<li class="menu-item"><a class="menu-link fs-8" href="/Admin/Content?type=testimonial"><i class="menu-icon tf-icons ti ti-message-circle"></i><div>دیدگاه‌ها</div></a></li>
+								<li class="menu-item"><a class="menu-link fs-8" href="/Admin/Contacts"><i class="menu-icon tf-icons ti ti-mail"></i><div>پیام‌های تماس</div></a></li>
+								<li class="menu-item"><a class="menu-link fs-8" href="/" target="_blank" rel="noopener"><i class="menu-icon tf-icons ti ti-world"></i><div>مشاهده سایت</div></a></li>
 							</ul>
 						</div>
 					</aside>

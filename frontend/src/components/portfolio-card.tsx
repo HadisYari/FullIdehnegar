@@ -6,19 +6,22 @@ import Link from "next/link";
 import type { PortfolioItem } from "@/lib/portfolio";
 import type { Locale } from "@/lib/i18n/dictionaries";
 import { localeHref } from "@/lib/i18n/paths";
-import { categoryLabel } from "@/lib/categories";
+import { categoryLabel, type Category } from "@/lib/categories";
 import { cn } from "@/lib/cn";
 
 interface PortfolioCardProps {
   item: PortfolioItem;
   locale: Locale;
   index?: number;
+  categories?: Category[];
+  viewLabel?: string;
 }
 
-export function PortfolioCard({ item, locale, index = 0 }: PortfolioCardProps) {
+export function PortfolioCard({ item, locale, index = 0, categories, viewLabel }: PortfolioCardProps) {
   const titleText = typeof item.title === "object" ? item.title[locale] : item.title;
   const clientText = typeof item.client === "object" ? item.client[locale] : "";
-  const category = categoryLabel(item.category, locale);
+  const category = categories?.find((entry) => entry.slug === item.category)?.[locale]
+    ?? categoryLabel(item.category, locale);
   const imageSrc = item.image || "/images/placeholder.jpg";
 
   /* ── Smooth scroll logic ── */
@@ -70,6 +73,7 @@ export function PortfolioCard({ item, locale, index = 0 }: PortfolioCardProps) {
   return (
     <Link
       href={localeHref(locale, `/portfolio/${item.slug}`)}
+      aria-label={viewLabel ? `${viewLabel}: ${titleText}` : titleText}
       prefetch={true}
       className="group flex flex-col items-center gap-4 select-none outline-none"
       onMouseEnter={() => setHovered(true)}

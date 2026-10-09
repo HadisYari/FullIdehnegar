@@ -1,0 +1,80 @@
+@model ContentFormModel
+@{
+    ViewData["Title"] ??= Model.Id == 0 ? "محتوای جدید" : "ویرایش محتوا";
+}
+<div class="col-12">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+        <div><h4 class="mb-1">@ViewData["Title"]</h4><p class="text-muted mb-0">اطلاعات هر دو زبان و تنظیمات SEO را از همین فرم مدیریت کنید.</p></div>
+        <a asp-action="Index" class="btn btn-label-secondary">بازگشت به فهرست</a>
+    </div>
+    @if (TempData["Success"] is string success)
+    {
+        <div class="alert alert-success">@success</div>
+    }
+    <form asp-action="Save" method="post" class="card">
+        @Html.AntiForgeryToken()
+        <input asp-for="Id" type="hidden" />
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="row g-3 mb-4">
+                <div class="col-md-5"><label asp-for="ContentKey" class="form-label">کلید یکتا</label><input asp-for="ContentKey" class="form-control" dir="ltr" placeholder="page:about" /><span asp-validation-for="ContentKey" class="text-danger"></span></div>
+                <div class="col-md-3"><label asp-for="ContentType" class="form-label">نوع محتوا</label><input asp-for="ContentType" class="form-control" dir="ltr" placeholder="page / portfolio / site / testimonial" /><span asp-validation-for="ContentType" class="text-danger"></span></div>
+                <div class="col-md-2"><label asp-for="SortOrder" class="form-label">ترتیب نمایش</label><input asp-for="SortOrder" class="form-control" type="number" min="0" /></div>
+                <div class="col-md-2 d-flex flex-column justify-content-end gap-2">
+                    <div class="form-check"><input asp-for="IsPublished" class="form-check-input" /><label asp-for="IsPublished" class="form-check-label">منتشرشده</label></div>
+                    <div class="form-check"><input asp-for="IsFeatured" class="form-check-input" /><label asp-for="IsFeatured" class="form-check-label">ویژه</label></div>
+                </div>
+                <div class="col-md-4"><label asp-for="Slug" class="form-label">Slug مشترک</label><input asp-for="Slug" class="form-control" dir="ltr" /></div>
+                <div class="col-md-4"><label asp-for="SlugFa" class="form-label">Slug فارسی (اختیاری)</label><input asp-for="SlugFa" class="form-control" dir="ltr" /></div>
+                <div class="col-md-4"><label asp-for="SlugEn" class="form-label">Slug انگلیسی (اختیاری)</label><input asp-for="SlugEn" class="form-control" dir="ltr" /></div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">محتوای فارسی و انگلیسی</h5>
+            <div class="row g-3">
+                <div class="col-lg-6"><label asp-for="TitleFa" class="form-label">عنوان فارسی</label><input asp-for="TitleFa" class="form-control" dir="rtl" /><span asp-validation-for="TitleFa" class="text-danger"></span></div>
+                <div class="col-lg-6"><label asp-for="TitleEn" class="form-label">English title</label><input asp-for="TitleEn" class="form-control" dir="ltr" /></div>
+                <div class="col-lg-6"><label asp-for="SummaryFa" class="form-label">خلاصه فارسی</label><textarea asp-for="SummaryFa" class="form-control" rows="3" dir="rtl"></textarea><span asp-validation-for="SummaryFa" class="text-danger"></span></div>
+                <div class="col-lg-6"><label asp-for="SummaryEn" class="form-label">English summary</label><textarea asp-for="SummaryEn" class="form-control" rows="3" dir="ltr"></textarea></div>
+                <div class="col-lg-6"><label asp-for="BodyFa" class="form-label">متن / توضیحات فارسی</label><textarea asp-for="BodyFa" class="form-control" rows="7" dir="rtl"></textarea></div>
+                <div class="col-lg-6"><label asp-for="BodyEn" class="form-label">English body / description</label><textarea asp-for="BodyEn" class="form-control" rows="7" dir="ltr"></textarea></div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">SEO و تصویر</h5>
+            <div class="row g-3">
+                <div class="col-lg-6"><label asp-for="MetaTitleFa" class="form-label">عنوان متای فارسی</label><input asp-for="MetaTitleFa" class="form-control" dir="rtl" /><span asp-validation-for="MetaTitleFa" class="text-danger"></span></div>
+                <div class="col-lg-6"><label asp-for="MetaTitleEn" class="form-label">English meta title</label><input asp-for="MetaTitleEn" class="form-control" dir="ltr" /></div>
+                <div class="col-lg-6"><label asp-for="MetaDescriptionFa" class="form-label">توضیحات متای فارسی</label><textarea asp-for="MetaDescriptionFa" class="form-control" rows="2" dir="rtl"></textarea><span asp-validation-for="MetaDescriptionFa" class="text-danger"></span></div>
+                <div class="col-lg-6"><label asp-for="MetaDescriptionEn" class="form-label">English meta description</label><textarea asp-for="MetaDescriptionEn" class="form-control" rows="2" dir="ltr"></textarea></div>
+                <div class="col-lg-6"><label asp-for="KeywordsFa" class="form-label">کلیدواژه‌های فارسی</label><input asp-for="KeywordsFa" class="form-control" dir="rtl" /></div>
+                <div class="col-lg-6"><label asp-for="KeywordsEn" class="form-label">English keywords</label><input asp-for="KeywordsEn" class="form-control" dir="ltr" /></div>
+                <div class="col-lg-6"><label asp-for="CanonicalUrlFa" class="form-label">Canonical فارسی</label><input asp-for="CanonicalUrlFa" class="form-control" dir="ltr" placeholder="/about یا https://example.com/about" /><span asp-validation-for="CanonicalUrlFa" class="text-danger"></span></div>
+                <div class="col-lg-6"><label asp-for="CanonicalUrlEn" class="form-label">English canonical</label><input asp-for="CanonicalUrlEn" class="form-control" dir="ltr" placeholder="/en/about" /><span asp-validation-for="CanonicalUrlEn" class="text-danger"></span></div>
+                <div class="col-lg-6"><label asp-for="OpenGraphTitleFa" class="form-label">عنوان Open Graph فارسی</label><input asp-for="OpenGraphTitleFa" class="form-control" dir="rtl" /></div>
+                <div class="col-lg-6"><label asp-for="OpenGraphTitleEn" class="form-label">English Open Graph title</label><input asp-for="OpenGraphTitleEn" class="form-control" dir="ltr" /></div>
+                <div class="col-lg-6"><label asp-for="OpenGraphDescriptionFa" class="form-label">توضیحات Open Graph فارسی</label><textarea asp-for="OpenGraphDescriptionFa" class="form-control" rows="2" dir="rtl"></textarea></div>
+                <div class="col-lg-6"><label asp-for="OpenGraphDescriptionEn" class="form-label">English Open Graph description</label><textarea asp-for="OpenGraphDescriptionEn" class="form-control" rows="2" dir="ltr"></textarea></div>
+                <div class="col-12">
+                    @await Html.PartialAsync("~/Areas/Admin/Views/Shared/_FileUploader.cshtml", new FileUploaderViewModel { Name = "ImagePath", Label = "تصویر اصلی / Open Graph", Value = Model.ImagePath, Accept = ".jpg,.jpeg,.png,.webp", MaxSizeMB = 8 })
+                    <span asp-validation-for="ImagePath" class="text-danger"></span>
+                </div>
+                <div class="col-lg-6"><label asp-for="ImageAltFa" class="form-label">Alt تصویر فارسی</label><input asp-for="ImageAltFa" class="form-control" dir="rtl" /></div>
+                <div class="col-lg-6"><label asp-for="ImageAltEn" class="form-label">Image alt text (English)</label><input asp-for="ImageAltEn" class="form-control" dir="ltr" /></div>
+            </div>
+
+            <hr />
+            <h5 class="mb-2">داده‌های ساختاریافته</h5>
+            <p class="text-muted small">برای محتوای صفحه، دیکشنری سایت، نمونه‌کارها یا هر داده ساختاریافته از JSON معتبر استفاده کنید. هر بخش به زبان مربوطه برمی‌گردد؛ فیلد مشترک برای داده‌های بدون زبان است.</p>
+            <div class="row g-3">
+                <div class="col-lg-4"><label asp-for="DataFaJson" class="form-label">JSON فارسی</label><textarea asp-for="DataFaJson" class="form-control font-monospace" rows="14" dir="ltr" spellcheck="false"></textarea><span asp-validation-for="DataFaJson" class="text-danger"></span></div>
+                <div class="col-lg-4"><label asp-for="DataEnJson" class="form-label">JSON انگلیسی</label><textarea asp-for="DataEnJson" class="form-control font-monospace" rows="14" dir="ltr" spellcheck="false"></textarea><span asp-validation-for="DataEnJson" class="text-danger"></span></div>
+                <div class="col-lg-4"><label asp-for="SharedJson" class="form-label">JSON مشترک</label><textarea asp-for="SharedJson" class="form-control font-monospace" rows="14" dir="ltr" spellcheck="false"></textarea><span asp-validation-for="SharedJson" class="text-danger"></span></div>
+            </div>
+        </div>
+        <div class="card-footer d-flex gap-2 flex-wrap">
+            <button type="submit" class="btn btn-primary">ذخیره</button>
+            <a asp-action="Index" class="btn btn-label-secondary">انصراف</a>
+        </div>
+    </form>
+</div>

@@ -348,16 +348,12 @@ export function ProcessSection({ dict }: { dict: Dictionary }) {
   const steps = dict.process.steps as StepItem[];
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [isRtl, setIsRtl] = useState(false);
+  const isRtl = dict.dir === "rtl";
   const sliderRef = useRef<HTMLDivElement>(null);
   const [mobileIndex, setMobileIndex] = useState(0);
   const mobileTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const touchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const totalSlides = steps.length + 1;
-
-  useEffect(() => {
-    setIsRtl(document.documentElement.getAttribute("dir") === "rtl");
-  }, []);
 
   useEffect(() => {
     if (paused) return;

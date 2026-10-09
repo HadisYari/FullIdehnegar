@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
-import { siteConfig } from "@/lib/site-config";
 
 const content = {
   fa: {
@@ -110,7 +109,6 @@ function GridBackground() {
 }
 
 export function AboutHero({ locale }: { locale: Locale }) {
-  const isFa = locale === "fa";
   const t = content[locale];
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({

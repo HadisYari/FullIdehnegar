@@ -6,8 +6,13 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { JsonLd } from "@/components/json-ld";
-import { locales, getDictionary, type Locale } from "@/lib/i18n/dictionaries";
-import { siteConfig } from "@/lib/site-config";
+import { locales, type Locale } from "@/lib/i18n/dictionaries";
+import { getDictionaryForLocale, getPageContent, getSiteSettings } from "@/lib/cms";
+
+// Pull CMS-managed text and metadata on every request so Admin edits go live
+// without rebuilding the Next.js frontend.
+export const dynamic = "force-dynamic";
+import { getSiteConfigForLocale } from "@/lib/site-config";
 
 // Self-hosted variable fonts (no runtime dependency on Google Fonts).
 const vazirmatn = localFont({
@@ -36,32 +41,39 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) return {};
-  const dict = getDictionary(locale as Locale);
-  const isFa = locale === "fa";
+  const typedLocale = locale as Locale;
+  const isFa = typedLocale === "fa";
+  const [site, homePage] = await Promise.all([
+    getSiteSettings(typedLocale),
+    getPageContent("home", typedLocale),
+  ]);
 
-  const title = isFa
-    ? `${siteConfig.nameFa} | طراحی سایت و نرم‌افزار سازمانی در کرمانشاه`
-    : `${siteConfig.nameEn} | Web & Enterprise Software Development`;
-  const description = isFa
+  const fallback = getSiteConfigForLocale(typedLocale);
+  const title = homePage?.metaTitle || (isFa
+    ? `${site.name || fallback.name} | طراحی سایت و نرم‌افزار سازمانی در کرمانشاه`
+    : `${site.name || fallback.name} | Web & Enterprise Software Development`);
+  const description = homePage?.metaDescription || (isFa
     ? "شرکت دانش‌بنیان پیشگامان ایده‌نگار؛ طراحی وب‌سایت، پرتال سازمانی، فروشگاه اینترنتی و نرم‌افزار تحت وب با بیش از ۱۵ سال تجربه در کرمانشاه."
-    : "Idehnegar Pioneers is a certified knowledge-based company delivering websites, enterprise portals, online stores, and web software — 15+ years of experience.";
+    : "Idehnegar Pioneers is a certified knowledge-based company delivering websites, enterprise portals, online stores, and web software — 15+ years of experience.");
+  const canonical = homePage?.canonicalUrl || (isFa ? "/" : "/en");
+  const image = homePage?.imagePath || "/images/portfolio/smartexport-ai.jpg";
 
   return {
-    metadataBase: new URL(siteConfig.url),
-    title: { default: title, template: `%s | ${isFa ? siteConfig.nameFa : siteConfig.nameEn}` },
+    metadataBase: new URL(site.url || fallback.url),
+    title: { default: title, template: `%s | ${site.name || fallback.name}` },
     description,
     alternates: {
-      canonical: isFa ? "/" : "/en",
+      canonical,
       languages: { fa: "/", en: "/en", "x-default": "/" },
     },
     openGraph: {
       type: "website",
       locale: isFa ? "fa_IR" : "en_US",
-      url: isFa ? siteConfig.url : `${siteConfig.url}/en`,
-      siteName: isFa ? siteConfig.nameFa : siteConfig.nameEn,
+      url: new URL(canonical, site.url || fallback.url).toString(),
+      siteName: site.name || fallback.name,
       title,
       description,
-      images: [{ url: "/images/portfolio/smartexport-ai.jpg", width: 1200, height: 630 }],
+      images: [{ url: image, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
@@ -85,24 +97,27 @@ export default async function LocaleLayout({
   const { locale: rawLocale } = await params;
   if (!locales.includes(rawLocale as Locale)) notFound();
   const locale = rawLocale as Locale;
-  const dict = getDictionary(locale);
+  const [dict, site] = await Promise.all([
+    getDictionaryForLocale(locale),
+    getSiteSettings(locale),
+  ]);
 
   const organizationLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.nameEn,
-    alternateName: siteConfig.nameFa,
-    url: siteConfig.url,
-    logo: `${siteConfig.url}/images/brand/logo-mark.png`,
-    email: siteConfig.email,
-    telephone: siteConfig.phones[0],
+    name: locale === "en" ? site.name : site.alternateName,
+    alternateName: locale === "en" ? site.alternateName : site.name,
+    url: site.url,
+    logo: `${site.url}/images/brand/logo-mark.png`,
+    email: site.email,
+    telephone: site.phones[0],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "22 Bahman Intersection, Fanavari Tower, Floor 7, Unit 11",
+      streetAddress: site.address,
       addressLocality: "Kermanshah",
       addressCountry: "IR",
     },
-    sameAs: [siteConfig.social.telegram, siteConfig.social.linkedin, siteConfig.social.instagram],
+    sameAs: [site.social.telegram, site.social.linkedin, site.social.instagram],
   };
 
   return (
@@ -119,8 +134,8 @@ export default async function LocaleLayout({
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <SiteFooter locale={locale} dict={dict} />
-        <MobileCtaBar dict={dict} />
+        <SiteFooter locale={locale} dict={dict} site={site} />
+        <MobileCtaBar dict={dict} site={site} locale={locale} />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import { addMessage } from "@/lib/messages";
 import { sendContactEmail } from "@/lib/mailer";
 import { isRateLimited, recordFailedAttempt } from "@/lib/auth";
+import { getCmsApiBaseUrl } from "@/lib/cms";
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
   const message = String(body.message || "").trim();
   const locale = String(body.locale || "fa");
 
-  if (!name || !email || !phone || !message) {
+  if (!name || !email || !phone || !message || name.length < 2 || message.length < 10) {
     recordFailedAttempt(rateLimitKey);
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
@@ -39,13 +40,56 @@ export async function POST(request: NextRequest) {
   if (!emailPattern.test(email)) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
-  if (name.length > 200 || subject.length > 300 || message.length > 5000) {
+  if (locale !== "fa" && locale !== "en") {
+    return NextResponse.json({ error: "Invalid locale" }, { status: 400 });
+  }
+  if (name.length > 120 || email.length > 254 || phone.length > 40 || subject.length > 200 || message.length > 5000) {
     return NextResponse.json({ error: "Field too long" }, { status: 400 });
+  }
+
+  const normalizedSubject = subject || (locale === "fa" ? "پیام از فرم تماس سایت" : "Website contact request");
+  const cmsBaseUrl = getCmsApiBaseUrl();
+  if (cmsBaseUrl) {
+    try {
+      const cmsResponse = await fetch(`${cmsBaseUrl}/api/v1/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          subject: normalizedSubject,
+          message,
+          locale,
+          website: typeof body.company === "string" ? body.company : "",
+        }),
+        cache: "no-store",
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (!cmsResponse.ok) {
+        const errorBody = await cmsResponse.json().catch(() => null) as { message?: string; title?: string } | null;
+        return NextResponse.json(
+          { error: errorBody?.message || errorBody?.title || "Failed to save message" },
+          { status: cmsResponse.status === 429 ? 429 : cmsResponse.status === 400 ? 400 : 502 },
+        );
+      }
+    } catch (error) {
+      console.error("Failed to submit contact message to the CMS API", error);
+      return NextResponse.json({ error: "Contact service is temporarily unavailable" }, { status: 502 });
+    }
+
+    let emailSent = false;
+    try {
+      emailSent = await sendContactEmail({ name, email, phone, subject: normalizedSubject, message });
+    } catch (err) {
+      console.error("Failed to send contact email", err);
+    }
+    return NextResponse.json({ ok: true, emailSent });
   }
 
   let emailSent = false;
   try {
-    emailSent = await sendContactEmail({ name, email, phone, subject, message });
+    emailSent = await sendContactEmail({ name, email, phone, subject: normalizedSubject, message });
   } catch (err) {
     console.error("Failed to send contact email", err);
   }
@@ -56,7 +100,7 @@ export async function POST(request: NextRequest) {
       name,
       email,
       phone,
-      subject,
+      subject: normalizedSubject,
       message,
       locale,
       createdAt: new Date().toISOString(),

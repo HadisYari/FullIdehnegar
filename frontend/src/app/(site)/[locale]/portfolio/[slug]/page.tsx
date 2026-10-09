@@ -7,11 +7,11 @@ import { PortfolioCard } from "@/components/portfolio-card";
 import { DeviceShowcase, LaptopMockup, PhoneMockup } from "@/components/device-mockup";
 import { JsonLd } from "@/components/json-ld";
 import { getPortfolioItem, getPortfolioItems } from "@/lib/portfolio";
-import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
+import { locales, type Locale } from "@/lib/i18n/dictionaries";
+import { fetchCmsJson, getCmsCategories, getDictionaryForLocale, getSiteSettings, type CmsEntry } from "@/lib/cms";
 import { localeHref } from "@/lib/i18n/paths";
-import { categoryLabel } from "@/lib/categories";
+import { categories as fallbackCategories } from "@/lib/categories";
 import { formatNumber } from "@/lib/format";
-import { siteConfig } from "@/lib/site-config";
 
 export async function generateStaticParams() {
   const items = await getPortfolioItems();
@@ -27,20 +27,27 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: rawLocale, slug } = await params;
   const locale = rawLocale as Locale;
-  const item = await getPortfolioItem(slug);
+  const [item, cmsEntry] = await Promise.all([
+    getPortfolioItem(slug),
+    fetchCmsJson<CmsEntry>(`/portfolio/${encodeURIComponent(slug)}?locale=${locale}`),
+  ]);
   if (!item) return {};
   const path = `/portfolio/${slug}`;
+  const canonical = cmsEntry?.canonicalUrl || (locale === "fa" ? path : `/en${path}`);
+  const title = cmsEntry?.metaTitle || item.title[locale] || item.title.fa;
+  const description = cmsEntry?.metaDescription || item.summary[locale] || item.summary.fa;
+  const image = cmsEntry?.imagePath || item.image;
   return {
-    title: item.title[locale],
-    description: item.summary[locale],
+    title,
+    description,
     alternates: {
-      canonical: locale === "fa" ? path : `/en${path}`,
+      canonical,
       languages: { fa: path, en: `/en${path}` },
     },
     openGraph: {
-      title: item.title[locale],
-      description: item.summary[locale],
-      images: [{ url: item.image, width: 1200, height: 750 }],
+      title: cmsEntry?.openGraphTitle || title,
+      description: cmsEntry?.openGraphDescription || description,
+      images: [{ url: image, alt: cmsEntry?.imageAlt || item.title[locale], width: 1200, height: 750 }],
     },
   };
 }
@@ -52,11 +59,17 @@ export default async function PortfolioDetailPage({
 }) {
   const { locale: rawLocale, slug } = await params;
   const locale = rawLocale as Locale;
-  const dict = getDictionary(locale);
-  const item = await getPortfolioItem(slug);
+  const [dict, site, item, cmsEntry, cmsCategories, allItems] = await Promise.all([
+    getDictionaryForLocale(locale),
+    getSiteSettings(locale),
+    getPortfolioItem(slug),
+    fetchCmsJson<CmsEntry>(`/portfolio/${encodeURIComponent(slug)}?locale=${locale}`),
+    getCmsCategories(locale),
+    getPortfolioItems(),
+  ]);
   if (!item) notFound();
-
-  const allItems = await getPortfolioItems();
+  const categoryOptions = cmsCategories ?? [...fallbackCategories];
+  const currentCategoryLabel = categoryOptions.find((category) => category.slug === item.category)?.[locale] ?? item.category;
   const related = allItems
     .filter((i) => i.slug !== slug && i.category === item.category)
     .slice(0, 3);
@@ -70,8 +83,8 @@ export default async function PortfolioDetailPage({
     "@type": "SoftwareApplication",
     name: item.title[locale],
     description: item.description[locale],
-    image: `${siteConfig.url}${item.image}`,
-    creator: { "@type": "Organization", name: siteConfig.nameEn },
+    image: new URL(cmsEntry?.imagePath || item.image, site.url).toString(),
+    creator: { "@type": "Organization", name: locale === "en" ? site.name : site.alternateName },
   };
 
   const isFa = locale === "fa";
@@ -111,7 +124,7 @@ export default async function PortfolioDetailPage({
             <div className="flex items-center gap-2.5">
               <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 border border-blue-100">
                 <span className="h-1.5 w-1.5 rounded-full bg-blue-600 animate-pulse" />
-                {categoryLabel(item.category, locale)}
+                {currentCategoryLabel}
               </span>
               <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-xs text-slate-500 shadow-sm">
                 {formatNumber(item.year, locale)}
@@ -197,7 +210,7 @@ export default async function PortfolioDetailPage({
                       {locale === "fa" ? "دسته‌بندی" : "Category"}
                     </span>
                     <span className="font-bold text-blue-600">
-                      {categoryLabel(item.category, locale)}
+                      {currentCategoryLabel}
                     </span>
                   </div>
                 </div>
@@ -299,7 +312,8 @@ export default async function PortfolioDetailPage({
                   key={r.slug}
                   item={r}
                   locale={locale}
-                //  viewLabel={dict.portfolio.viewProject}
+                  categories={categoryOptions}
+                  viewLabel={dict.portfolio.viewProject}
                 />
               ))}
             </div>

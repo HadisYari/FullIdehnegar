@@ -5,18 +5,20 @@ import { useMemo, useState } from "react";
 import { PortfolioCard } from "./portfolio-card";
 import type { PortfolioItem } from "@/lib/portfolio";
 import type { Locale } from "@/lib/i18n/dictionaries";
-import { categories } from "@/lib/categories";
+import type { Category } from "@/lib/categories";
 import { cn } from "@/lib/cn";
 
 export function PortfolioFilterGrid({
   items,
   locale,
+  categories,
   viewLabel,
   allLabel,
   emptyLabel,
 }: {
   items: PortfolioItem[];
   locale: Locale;
+  categories: Category[];
   viewLabel: string;
   allLabel: string;
   emptyLabel: string;
@@ -27,7 +29,7 @@ export function PortfolioFilterGrid({
   const usedCategories = useMemo(() => {
     const set = new Set(items.map((i) => i.category));
     return categories.filter((c) => set.has(c.slug));
-  }, [items]);
+  }, [items, categories]);
 
   const filtered =
     active === "all" ? items : items.filter((i) => i.category === active);
@@ -88,7 +90,7 @@ export function PortfolioFilterGrid({
               style={{ animationDelay: `${i * 40}ms` }}
             >
               {/* بازخوانی دقیق کارت تبلتی اصلی شما */}
-              <PortfolioCard item={item} locale={locale} index={i} />
+              <PortfolioCard item={item} locale={locale} index={i} categories={categories} viewLabel={viewLabel} />
             </div>
           ))}
         </div>

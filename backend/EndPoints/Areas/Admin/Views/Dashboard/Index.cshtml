@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "داشبورد";
+    var latestMessages = ViewBag.LatestMessages as IEnumerable<ContactSubmission> ?? [];
+}
+<div class="col-12">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+        <div>
+            <h4 class="mb-1">داشبورد مدیریت محتوا</h4>
+            <p class="text-muted mb-0">مدیریت محتوای فارسی و انگلیسی سایت ایده‌نگار</p>
+        </div>
+        <a class="btn btn-primary" href="/Admin/Content/Edit">افزودن محتوا</a>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-xl-3"><div class="card h-100"><div class="card-body"><span class="text-muted">کل محتوا</span><h3 class="mb-0 mt-2">@ViewBag.ContentCount</h3></div></div></div>
+        <div class="col-sm-6 col-xl-3"><div class="card h-100"><div class="card-body"><span class="text-muted">محتوای منتشرشده</span><h3 class="mb-0 mt-2">@ViewBag.PublishedCount</h3></div></div></div>
+        <div class="col-sm-6 col-xl-3"><div class="card h-100"><div class="card-body"><span class="text-muted">نمونه‌کارها</span><h3 class="mb-0 mt-2">@ViewBag.PortfolioCount</h3></div></div></div>
+        <div class="col-sm-6 col-xl-3"><div class="card h-100"><div class="card-body"><span class="text-muted">پیام‌های خوانده‌نشده</span><h3 class="mb-0 mt-2">@ViewBag.UnreadMessages</h3></div></div></div>
+    </div>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <h5 class="mb-0">پیام‌های اخیر</h5>
+            <a href="/Admin/Contacts" class="btn btn-sm btn-label-primary">مشاهده همه پیام‌ها</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>نام</th><th>موضوع</th><th>زبان</th><th>تاریخ دریافت</th><th>وضعیت</th></tr></thead>
+                <tbody>
+                @if (!latestMessages.Any())
+                {
+                    <tr><td colspan="5" class="text-center text-muted py-4">پیامی ثبت نشده است.</td></tr>
+                }
+                else
+                {
+                    @foreach (var item in latestMessages)
+                    {
+                        <tr><td>@item.Name</td><td>@item.Subject</td><td>@item.Locale.ToUpperInvariant()</td><td>@item.CreatedAtUtc.ToString("yyyy/MM/dd HH:mm")</td><td>@(item.IsRead ? "خوانده‌شده" : "جدید")</td></tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

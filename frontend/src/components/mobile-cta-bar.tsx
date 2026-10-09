@@ -1,8 +1,9 @@
-import { siteConfig } from "@/lib/site-config";
-import type { Dictionary } from "@/lib/i18n/dictionaries";
+import { getSiteConfigForLocale, type LocalizedSiteConfig } from "@/lib/site-config";
+import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 
-export function MobileCtaBar({ dict }: { dict: Dictionary }) {
-  const phone = siteConfig.phones[0];
+export function MobileCtaBar({ dict, site: cmsSite, locale = "fa" }: { dict: Dictionary; site?: LocalizedSiteConfig; locale?: Locale }) {
+  const site = cmsSite ?? getSiteConfigForLocale(locale);
+  const phone = site.phones[0] ?? "";
   return (
     <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]">
       <div className="grid grid-cols-2 gap-px bg-border">
@@ -20,7 +21,7 @@ export function MobileCtaBar({ dict }: { dict: Dictionary }) {
           {dict.common.callUs}
         </a>
         <a
-          href={`https://wa.me/${siteConfig.whatsapp}`}
+          href={`https://wa.me/${site.whatsapp}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 bg-accent-500 py-3.5 text-sm font-semibold text-white"
