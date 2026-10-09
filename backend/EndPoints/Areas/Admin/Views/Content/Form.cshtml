@@ -1,0 +1,64 @@
+@model EndPoints.Areas.Admin.Models.AdminFormModel
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Entity"] = "/admin/" + Model.RouteName;
+    var saveUrl = ViewData["SaveUrl"] as string ?? $"/admin/{Model.RouteName}/save";
+    var backUrl = ViewData["BackUrl"] as string ?? $"/admin/{Model.RouteName}";
+}
+
+<div class="admin-page-head">
+    <div>
+        <h1 class="admin-page-title">@Model.Title</h1>
+        <p class="admin-page-subtitle">فیلدهای فارسی و انگلیسی هر دو پر شوند؛ فیلد خالی از سایت حذف می‌شود.</p>
+    </div>
+    <a class="btn btn-label-secondary" href="@backUrl"><i class="ti ti-arrow-right"></i> بازگشت به لیست</a>
+</div>
+
+@Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+
+<form id="adminEntityForm" name="adminEntityForm" method="post" action="@saveUrl"
+      enctype="multipart/form-data" autocomplete="off">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@(Model.Id?.ToString() ?? string.Empty)" />
+
+    <div class="card mb-4">
+        <div class="card-header"><h2 class="card-title mb-0">محتوا</h2></div>
+        <div class="card-body row g-4">
+            @foreach (var field in Model.Fields.Where(item => !item.IsTechnical))
+            {
+                <partial name="_Field" model="@field" />
+            }
+        </div>
+    </div>
+
+    @{
+        var technical = Model.Fields.Where(item => item.IsTechnical).ToList();
+    }
+    @if (technical.Count > 0)
+    {
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h2 class="card-title mb-0">نمایش و ترتیب</h2>
+                <span class="text-muted small">کنترل می‌کند این رکورد کجا و آیا در سایت دیده شود.</span>
+            </div>
+            <div class="card-body row g-4">
+                @foreach (var field in technical)
+                {
+                    <partial name="_Field" model="@field" />
+                }
+            </div>
+        </div>
+    }
+
+    <div class="admin-sticky-actions">
+        <button type="submit" class="btn btn-primary" name="saveAndClose" value="0">
+            <i class="ti ti-device-floppy"></i> ذخیره
+        </button>
+        <button type="submit" class="btn btn-label-success" name="saveAndClose" value="1">
+            <i class="ti ti-check"></i> ذخیره و بازگشت به لیست
+        </button>
+        <a class="btn btn-label-secondary" href="@backUrl">انصراف</a>
+    </div>
+</form>
+
+@* The repeater/JSON editors are wired up by admin.js (single include in the layout). *@

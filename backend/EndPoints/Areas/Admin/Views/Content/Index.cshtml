@@ -1,0 +1,124 @@
+@model EndPoints.Areas.Admin.Models.AdminIndexModel
+@{
+    ViewData["Title"] = Model.TitleFa;
+    ViewData["Entity"] = "/admin/" + Model.RouteName;
+    var baseUrl = $"/admin/{Model.RouteName}";
+    var search = Context.Request.Query["q"].ToString();
+}
+
+<div class="admin-page-head">
+    <div>
+        <h1 class="admin-page-title"><i class="@Model.Icon"></i> @Model.TitleFa</h1>
+        <p class="admin-page-subtitle">@Model.Rows.Count @Model.SingularFa — ترتیب نمایش در سایت با دکمه‌های بالا/پایین تنظیم می‌شود.</p>
+    </div>
+    <a class="btn btn-primary" href="@(baseUrl)/create">
+        <i class="ti ti-plus"></i> افزودن @Model.SingularFa
+    </a>
+</div>
+
+@if (Model.Searchable)
+{
+    <form method="get" action="@baseUrl" class="admin-search">
+        <div class="input-group">
+            <input type="search" class="form-control" name="q" value="@search" placeholder="جست‌وجو در @Model.TitleFa…" aria-label="جست‌وجو" />
+            <button class="btn btn-label-secondary" type="submit"><i class="ti ti-search"></i></button>
+            @if (!string.IsNullOrWhiteSpace(search))
+            {
+                <a class="btn btn-link text-muted" href="@baseUrl">پاک‌سازی</a>
+            }
+        </div>
+    </form>
+}
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0 admin-table">
+            <thead>
+            <tr>
+                <th scope="col" class="admin-col-order">ترتیب</th>
+                @foreach (var column in Model.Columns)
+                {
+                    <th scope="col">@column.Label</th>
+                }
+                <th scope="col" class="admin-col-status">وضعیت</th>
+                <th scope="col" class="admin-col-actions">عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model.Rows.Count == 0)
+            {
+                <tr>
+                    <td colspan="@(Model.Columns.Count + 3)" class="text-center text-muted py-4">
+                        هنوز @Model.SingularFa ای ثبت نشده است.
+                        <a href="@(baseUrl)/create">اولین مورد را اضافه کنید</a>.
+                    </td>
+                </tr>
+            }
+            @foreach (var row in Model.Rows)
+            {
+                <tr class="@(row.IsPublished ? "" : "table-warning")">
+                    <td class="admin-col-order">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="جابه‌جایی">
+                            <form method="post" action="@(baseUrl)/@(row.Id)/move?direction=up">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-icon btn-outline-secondary" title="یک ردیف بالا"><i class="ti ti-arrow-up"></i></button>
+                            </form>
+                            <form method="post" action="@(baseUrl)/@(row.Id)/move?direction=down">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-icon btn-outline-secondary" title="یک ردیف پایین"><i class="ti ti-arrow-down"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                    @foreach (var cell in row.Cells)
+                    {
+                        <td>
+                            @if (cell.IsImage && string.IsNullOrWhiteSpace(cell.Value))
+                            {
+                                <span class="text-muted small">—</span>
+                            }
+                            else if (cell.IsImage)
+                            {
+                                <img src="@cell.Value" alt="@cell.Label" loading="lazy" class="admin-thumb" />
+                            }
+                            else if (cell.IsBool && cell.Value == "true")
+                            {
+                                <i class="ti ti-check text-success" title="بله"></i>
+                            }
+                            else if (cell.IsBool)
+                            {
+                                <i class="ti ti-x text-muted" title="خیر"></i>
+                            }
+                            else
+                            {
+                                <span class="admin-cell-text" title="@cell.Value">@cell.Value</span>
+                            }
+                        </td>
+                    }
+                    <td class="admin-col-status">
+                        <form method="post" action="@(baseUrl)/@(row.Id)/toggle">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="badge @(row.IsPublished ? "bg-label-success" : "bg-label-secondary") border-0"
+                                    title="برای تغییر وضعیت کلیک کنید">
+                                @(row.IsPublished ? "منتشر شده" : "پیش‌نویس")
+                            </button>
+                        </form>
+                    </td>
+                    <td class="admin-col-actions">
+                        <div class="d-flex gap-1">
+                            <a class="btn btn-sm btn-icon btn-label-primary" href="@(baseUrl)/@(row.Id)/edit" title="ویرایش">
+                                <i class="ti ti-pencil"></i>
+                            </a>
+                            <form method="post" action="@(baseUrl)/@(row.Id)/delete" data-confirm="«@row.Title» حذف شود؟ این عمل قابل بازگشت نیست.">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-icon btn-label-danger" title="حذف">
+                                    <i class="ti ti-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

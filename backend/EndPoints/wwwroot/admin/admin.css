@@ -1,0 +1,425 @@
+/*
+ * admin.css — چیدمان اختصاصی پنل مدیریت ایده‌نگار
+ * روی استایل‌های Sneat (core.css + rtl.css) می‌نشیند و فقط ساختار
+ * «منوی کناری + فضای محتوا» و اجزای فرم‌های عمومی را تعریف می‌کند.
+ */
+
+:root {
+	--admin-sidebar-width: 268px;
+	--admin-topbar-height: 62px;
+	--admin-border: #e7e9ee;
+	--admin-surface: #f8f8fa;
+}
+
+.admin-body {
+	background-color: var(--admin-surface);
+	min-height: 100vh;
+}
+
+/* ─────────────────────────── اسکلت صفحه ─────────────────────────── */
+.admin-shell {
+	display: flex;
+	align-items: stretch;
+	min-height: 100vh;
+}
+
+.admin-sidebar {
+	width: var(--admin-sidebar-width);
+	flex: 0 0 var(--admin-sidebar-width);
+	background: #fff;
+	border-inline-start: 1px solid var(--admin-border);
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: .75rem;
+	padding: 1rem .85rem;
+	transition: width .2s ease, margin .2s ease;
+}
+
+.admin-shell.sidebar-collapsed .admin-sidebar {
+	width: 0;
+	flex-basis: 0;
+	padding-inline: 0;
+	overflow: hidden;
+	border: 0;
+}
+
+.admin-brand {
+	display: flex;
+	align-items: center;
+	gap: .6rem;
+	padding-bottom: .75rem;
+	border-bottom: 1px dashed var(--admin-border);
+}
+
+.admin-brand img {
+	width: 38px;
+	height: 38px;
+	object-fit: contain;
+}
+
+.admin-brand-title {
+	display: block;
+	font-weight: 700;
+	font-size: .95rem;
+	line-height: 1.3;
+}
+
+.admin-brand-sub {
+	display: block;
+	font-size: .72rem;
+	color: #8a90a2;
+}
+
+.admin-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.admin-nav-group {
+	font-size: .7rem;
+	font-weight: 700;
+	letter-spacing: .02em;
+	color: #9aa0b4;
+	padding: .85rem .5rem .25rem;
+}
+
+.admin-nav-link {
+	display: flex;
+	align-items: center;
+	gap: .55rem;
+	padding: .48rem .6rem;
+	border-radius: .45rem;
+	color: #4a5066;
+	font-size: .875rem;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.admin-nav-link i {
+	font-size: 1.05rem;
+	line-height: 1;
+	color: #7b819a;
+}
+
+.admin-nav-link:hover {
+	background: #f3f4f8;
+	color: #161616;
+}
+
+.admin-nav-link.active {
+	background: rgba(115, 103, 240, .1);
+	color: #7367f0;
+	font-weight: 600;
+}
+
+.admin-nav-link.active i {
+	color: #7367f0;
+}
+
+.admin-main {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.admin-topbar {
+	height: var(--admin-topbar-height);
+	background: #fff;
+	border-bottom: 1px solid var(--admin-border);
+	display: flex;
+	align-items: center;
+	gap: .85rem;
+	padding: 0 1.25rem;
+	position: sticky;
+	top: 0;
+	z-index: 1030;
+}
+
+.admin-topbar-title {
+	font-weight: 600;
+	font-size: .95rem;
+	margin-inline-end: auto;
+}
+
+.admin-content {
+	padding: 1.35rem 1.25rem 3rem;
+	flex: 1 1 auto;
+}
+
+.admin-footer {
+	border-top: 1px solid var(--admin-border);
+	background: #fff;
+	padding: .7rem 1.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem 1.5rem;
+	justify-content: space-between;
+	font-size: .78rem;
+	color: #8a90a2;
+}
+
+.admin-flash {
+	margin-bottom: 1rem;
+}
+
+/* ─────────────────────────── سرتیتر صفحات ─────────────────────────── */
+.admin-page-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: .75rem;
+	margin-bottom: 1rem;
+}
+
+.admin-page-title {
+	font-size: 1.3rem;
+	font-weight: 700;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: .45rem;
+}
+
+.admin-page-title i {
+	color: #7367f0;
+	font-size: 1.35rem;
+}
+
+.admin-page-subtitle {
+	margin: .25rem 0 0;
+	font-size: .8rem;
+	color: #8a90a2;
+}
+
+.admin-search {
+	margin-bottom: .9rem;
+	max-width: 430px;
+}
+
+/* ─────────────────────────── جدول محتوا ─────────────────────────── */
+.admin-table th {
+	font-size: .76rem;
+	font-weight: 600;
+	color: #8a90a2;
+	background: #fbfbfd;
+	border-top: 0;
+	white-space: nowrap;
+}
+
+.admin-table td {
+	font-size: .845rem;
+	vertical-align: middle;
+}
+
+.admin-table form {
+	display: inline-block;
+	margin: 0;
+}
+
+.admin-col-order {
+	width: 92px;
+}
+
+.admin-col-status {
+	width: 118px;
+}
+
+.admin-col-actions {
+	width: 104px;
+}
+
+.admin-cell-text {
+	display: inline-block;
+	max-width: 340px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	vertical-align: bottom;
+}
+
+.admin-thumb {
+	width: 56px;
+	height: 38px;
+	object-fit: cover;
+	border-radius: .3rem;
+	border: 1px solid var(--admin-border);
+	background: #fff;
+}
+
+/* ─────────────────────────── فرم عمومی ─────────────────────────── */
+.admin-sticky-actions {
+	position: sticky;
+	bottom: 0;
+	background: rgba(255, 255, 255, .92);
+	backdrop-filter: blur(4px);
+	border: 1px solid var(--admin-border);
+	border-radius: .55rem;
+	padding: .75rem 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+	box-shadow: 0 -8px 22px rgba(32, 38, 46, .05);
+	z-index: 5;
+}
+
+.admin-latin {
+	direction: ltr;
+	text-align: start;
+	font-family: ui-monospace, SFMono-Regular, "Segoe UI", sans-serif;
+}
+
+.admin-counter {
+	font-size: .72rem;
+	color: #9aa0b4;
+}
+
+.admin-inline-thumb {
+	display: inline-block;
+	height: 42px;
+	border-radius: .3rem;
+	border: 1px solid var(--admin-border);
+	margin-top: .35rem;
+	background: #fff;
+	object-fit: cover;
+}
+
+/* ─────────────────────────── ردیف‌های تکرارشدنی ─────────────────────────── */
+.admin-repeater {
+	border: 1px solid var(--admin-border);
+	border-radius: .55rem;
+	background: #fff;
+	padding: .75rem;
+}
+
+.admin-repeater.has-error {
+	border-color: #ea5455;
+}
+
+.admin-repeater-rows {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+
+.admin-repeater-row {
+	margin-inline: 0;
+	padding: .6rem .6rem .35rem;
+	border: 1px dashed var(--admin-border);
+	border-radius: .5rem;
+	background: #fcfcfe;
+}
+
+.admin-repeater-row .form-label {
+	margin-bottom: .15rem;
+}
+
+.admin-json-fallback summary {
+	font-size: .76rem;
+	color: #8a90a2;
+	cursor: pointer;
+	margin-top: .6rem;
+}
+
+.file-uploader-sm .fu-dropzone {
+	min-height: 74px;
+	padding: .45rem;
+}
+
+.file-uploader-sm .fu-preview-img {
+	max-height: 58px;
+}
+
+.file-uploader .fu-open {
+	display: inline-block;
+	margin-top: .3rem;
+	color: #8a90a2;
+	text-decoration: none;
+}
+
+.file-uploader .fu-open:hover {
+	text-decoration: underline;
+}
+
+/* ─────────────────────────── پیش‌خوان ─────────────────────────── */
+.admin-tile {
+	text-decoration: none;
+	color: inherit;
+	border: 1px solid var(--admin-border);
+	transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.admin-tile:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px rgba(32, 38, 46, .07);
+}
+
+.admin-guide {
+	padding-inline-start: 1.1rem;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+	font-size: .84rem;
+}
+
+.admin-inbox-body {
+	white-space: pre-wrap;
+	font-size: .9rem;
+	margin-bottom: 1rem;
+}
+
+/* ─────────────────────────── صفحه ورود ─────────────────────────── */
+.admin-login-body {
+	background: linear-gradient(135deg, #f4f3ff 0%, #eef1f8 100%);
+	min-height: 100vh;
+}
+
+.admin-login-wrap {
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+	padding: 1.25rem;
+}
+
+.admin-login-card {
+	width: 100%;
+	max-width: 420px;
+	border: 0;
+	box-shadow: 0 22px 48px rgba(32, 38, 46, .12);
+}
+
+.admin-login-logo {
+	height: 46px;
+	object-fit: contain;
+}
+
+/* ─────────────────────────── سازگاری موبایل ─────────────────────────── */
+@media (max-width: 991.98px) {
+	.admin-shell {
+		flex-direction: column;
+	}
+
+	.admin-sidebar {
+		position: static;
+		width: 100%;
+		flex: 0 0 auto;
+		height: auto;
+		border-inline: 0;
+		border-bottom: 1px solid var(--admin-border);
+	}
+
+	.admin-shell.sidebar-collapsed .admin-sidebar {
+		display: none;
+	}
+
+	.admin-cell-text {
+		max-width: 190px;
+	}
+}

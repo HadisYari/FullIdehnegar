@@ -1,0 +1,126 @@
+@model List<EndPoints.Areas.Admin.Models.AdminInboxModel>
+@{
+    var kind = ViewData["Kind"] as string ?? "messages";
+    var isOrders = kind == "orders";
+    var status = ViewData["Status"] as string;
+    var archived = ViewData["Archived"] is true;
+    var query = ViewData["Query"] as string;
+
+    ViewData["Title"] = isOrders ? "سفارش‌های فروشگاه‌ساز" : "پیام‌های تماس";
+    ViewData["Entity"] = isOrders ? "/admin/inbox/orders" : "/admin/inbox/messages";
+
+    var statuses = new (string Value, string Label)[]
+    {
+        ("pending", "در انتظار پرداخت"),
+        ("paid", "پرداخت شده"),
+        ("cancelled", "لغو شده"),
+    };
+}
+
+<div class="admin-page-head">
+    <div>
+        <h1 class="admin-page-title">@ViewData["Title"]</h1>
+        <p class="admin-page-subtitle">@(isOrders ? "سفارش‌هایی که از صفحه فروشگاه‌ساز ثبت شده‌اند." : "پیام‌هایی که از فرم تماس با ما ارسال شده‌اند.")</p>
+    </div>
+    <div class="d-flex gap-2">
+        @if (isOrders)
+        {
+            <a class="btn @(string.IsNullOrEmpty(status) ? "btn-primary" : "btn-label-secondary")" href="/admin/inbox/orders">همه</a>
+            @foreach (var item in statuses)
+            {
+                <a class="btn @(status == item.Value ? "btn-primary" : "btn-label-secondary")" href="/admin/inbox/orders?status=@item.Value">@item.Label</a>
+            }
+        }
+        else
+        {
+            <a class="btn @(!archived ? "btn-primary" : "btn-label-secondary")" href="/admin/inbox/messages">خوانده‌نشده</a>
+            <a class="btn @(archived ? "btn-primary" : "btn-label-secondary")" href="/admin/inbox/messages?archived=true">بایگانی</a>
+        }
+    </div>
+</div>
+
+@if (!isOrders)
+{
+    <form method="get" action="/admin/inbox/messages" class="admin-search">
+        <input type="hidden" name="archived" value="@(archived ? "true" : "false")" />
+        <div class="input-group">
+            <input type="search" class="form-control" name="q" value="@query" placeholder="جست‌وجو در نام، ایمیل یا موضوع…" aria-label="جست‌وجو" />
+            <button class="btn btn-label-secondary" type="submit"><i class="ti ti-search"></i></button>
+        </div>
+    </form>
+}
+
+<div class="card">
+    @if (Model.Count == 0)
+    {
+        <div class="text-center text-muted py-5">موردی برای نمایش وجود ندارد.</div>
+    }
+    else
+    {
+        <div class="accordion accordion-flush" id="inboxList">
+            @foreach (var item in Model)
+            {
+                var tone = "info";
+                if (isOrders)
+                {
+                    tone = item.Status switch
+                    {
+                        "paid" => "success",
+                        "cancelled" => "danger",
+                        _ => "warning",
+                    };
+                }
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#row_@item.Id" aria-expanded="false" aria-controls="row_@item.Id">
+                            <span class="d-flex flex-wrap align-items-center gap-2 flex-grow-1 ms-2">
+                                <span class="fw-semibold">@item.Title</span>
+                                <span class="text-muted small">@item.Subtitle</span>
+                                <span class="badge bg-label-secondary ms-auto admin-latin" dir="ltr">@item.CreatedAtUtc.ToString("yyyy/MM/dd HH:mm")</span>
+                                <span class="badge bg-label-@tone">@item.Status</span>
+                            </span>
+                        </button>
+                    </h2>
+                    <div id="row_@item.Id" class="accordion-collapse collapse" data-bs-parent="#inboxList">
+                        <div class="accordion-body">
+                            <p class="admin-inbox-body">@item.Body</p>
+
+                            <div class="d-flex flex-wrap gap-2">
+                                @if (isOrders)
+                                {
+                                    foreach (var option in statuses)
+                                    {
+                                        <form method="post" action="/admin/inbox/orders/@(item.Id)/status?status=@option.Value">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm @(item.Status == option.Value ? "btn-primary" : "btn-label-secondary")">
+                                                @option.Label
+                                            </button>
+                                        </form>
+                                    }
+                                }
+                                else
+                                {
+                                    <form method="post" action="/admin/inbox/messages/@(item.Id)/archive?archived=@(!archived)">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-label-primary">
+                                            <i class="ti ti-archive"></i> @(archived ? "بازگردانی به صندوق" : "بایگانی")
+                                        </button>
+                                    </form>
+                                    <form method="post" action="/admin/inbox/messages/@(item.Id)/delete"
+                                          data-confirm="این پیام حذف شود؟">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-label-danger">
+                                            <i class="ti ti-trash"></i> حذف
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

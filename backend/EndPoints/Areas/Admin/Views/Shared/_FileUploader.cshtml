@@ -1,34 +1,33 @@
-@model Admin.Areas.Admin.Models.FileUploaderViewModel
+@model EndPoints.Areas.Admin.Models.AdminFieldModel
 @{
-	var hint = Model.Hint ?? ("فرمت‌های مجاز: " + Model.Accept + " | حداکثر حجم: " + Model.MaxSizeMB + " مگابایت");
+    // Mirrors the contract of wwwroot/Panel/custome/js/file-uploader.js.
+    var accept = ".jpg,.jpeg,.png,.webp,.svg,.ico,.gif";
+    var maxSize = 6 * 1024 * 1024;
 }
-<div class="file-uploader" data-fu-accept="@Model.Accept" data-fu-max-size="@(Model.MaxSizeMB * 1024 * 1024)">
-	<label class="form-label">
-		@Model.Label
-		@if (Model.Required)
-		{
-			<span class="text-danger">*</span>
-		}
-	</label>
-	<input type="hidden" class="fu-value" name="@Model.Name" id="@Model.Name" value="@Model.Value" />
-	<div class="fu-dropzone">
-		<input type="file" class="fu-input" accept="@Model.Accept" hidden />
-		<div class="fu-empty">
-			<i class="ti ti-cloud-up"></i>
-			<span>فایل را اینجا رها کنید یا برای انتخاب کلیک کنید</span>
-			<small class="fu-hint" dir="ltr">@hint</small>
-		</div>
-		<div class="fu-preview d-none">
-			<img class="fu-preview-img" alt="پیش‌نمایش" />
-			<span class="fu-path"></span>
-			<div class="fu-actions">
-				<button type="button" class="btn btn-sm btn-label-primary fu-change">
-					<i class="ti ti-refresh"></i> تغییر
-				</button>
-				<button type="button" class="btn btn-sm btn-label-danger fu-remove">
-					<i class="ti ti-trash"></i> حذف
-				</button>
-			</div>
-		</div>
-	</div>
+<div class="file-uploader" data-fu-accept="@accept" data-fu-max-size="@maxSize">
+    <input type="hidden" class="fu-value" name="@Model.Property" id="fld_@Model.Property" value="@Model.Value" />
+
+    <div class="fu-dropzone">
+        <div class="fu-empty">
+            <i class="ti ti-cloud-up"></i>
+            <span>تصویر را اینجا رها کنید یا برای انتخاب کلیک کنید</span>
+            <small class="fu-hint" dir="ltr">فرمت‌های مجاز: @accept | حداکثر حجم: ۶ مگابایت</small>
+        </div>
+
+        <div class="fu-preview d-none">
+            <img class="fu-preview-img" alt="پیش‌نمایش تصویر انتخاب‌شده" loading="lazy" />
+            <div class="fu-path small text-muted text-truncate" dir="ltr"></div>
+            <div class="fu-actions">
+                <button type="button" class="btn btn-sm btn-label-primary fu-change">تغییر تصویر</button>
+                <button type="button" class="btn btn-sm btn-label-danger fu-remove">حذف</button>
+            </div>
+        </div>
+
+        <input class="fu-input d-none" type="file" accept="@accept" />
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Value))
+    {
+        <a class="fu-open small" href="@Model.Value" target="_blank" rel="noopener">مشاهده تصویر در سایت</a>
+    }
 </div>

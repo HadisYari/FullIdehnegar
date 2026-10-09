@@ -1,0 +1,1723 @@
+{
+  "siteSettings": [
+    {
+      "domain": "idehnegar.co",
+      "siteUrl": "https://idehnegar.co",
+      "nameFa": "پیشگامان ایده‌نگار",
+      "nameEn": "Idehnegar Pioneers",
+      "shortNameFa": "ایده‌نگار",
+      "shortNameEn": "Idehnegar",
+      "taglineFa": "شرکت دانش‌بنیان توسعه نرم‌افزار و تحول دیجیتال",
+      "taglineEn": "Knowledge-Based Software & Digital Transformation Company",
+      "foundedJalali": 1389,
+      "foundedGregorian": 2010,
+      "email": "info@idehnegar.co",
+      "phones": [
+        "083-38254060",
+        "083-38100506"
+      ],
+      "telegramId": "09034120744",
+      "whatsAppNumber": "989034120744",
+      "addressFa": "کرمانشاه، سه‌راه ۲۲ بهمن، برج فناوری، طبقه هفتم، واحد ۱۱",
+      "addressEn": "7th Floor, Unit 11, Fanavari Tower, 22 Bahman Intersection, Kermanshah, Iran",
+      "hoursFa": "شنبه تا چهارشنبه ۹ الی ۱۷ - پنجشنبه ۹ الی ۱۳",
+      "hoursEn": "Sat–Wed 9:00–17:00, Thu 9:00–13:00",
+      "mapEmbedSrc": "https://www.openstreetmap.org/export/embed.html?bbox=47.045%2C34.305%2C47.075%2C34.325&layer=mapnik&marker=34.315%2C47.06",
+      "social": [
+        {
+          "key": "telegram",
+          "value": "https://t.me/idehnegar"
+        },
+        {
+          "key": "linkedin",
+          "value": "https://www.linkedin.com/company/idehnegar"
+        },
+        {
+          "key": "instagram",
+          "value": "https://instagram.com/idehnegar"
+        }
+      ],
+      "stats": [
+        {
+          "key": "clients",
+          "value": "65"
+        },
+        {
+          "key": "projects",
+          "value": "326"
+        },
+        {
+          "key": "yearsActive",
+          "value": "15"
+        },
+        {
+          "key": "awards",
+          "value": "15"
+        }
+      ],
+      "defaultOgImage": "/images/portfolio/smartexport-ai.jpg"
+    }
+  ],
+  "pageMetas": [
+    {
+      "pageKey": "home",
+      "path": "/",
+      "titleFa": "پیشگامان ایده‌نگار | طراحی سایت و نرم‌افزار سازمانی در کرمانشاه",
+      "titleEn": "Idehnegar Pioneers | Web & Enterprise Software Development",
+      "descriptionFa": "شرکت دانش‌بنیان پیشگامان ایده‌نگار؛ طراحی وب‌سایت، پرتال سازمانی، فروشگاه اینترنتی و نرم‌افزار تحت وب با بیش از ۱۵ سال تجربه در کرمانشاه.",
+      "descriptionEn": "Idehnegar Pioneers is a certified knowledge-based company delivering websites, enterprise portals, online stores, and web software — 15+ years of experience.",
+      "keywordsFa": "طراحی سایت کرمانشاه, نرم افزار سازمانی, پرتال اداری, فروشگاه اینترنتی, سئو",
+      "keywordsEn": "web design Kermanshah, enterprise software, corporate portal, e-commerce, SEO",
+      "eyebrowFa": "شرکت دانش‌بنیان توسعه نرم‌افزار",
+      "eyebrowEn": "Knowledge-Based Software Company",
+      "headingFa": "طراحی سایت و نرم‌افزار سازمانی، حرفه‌ای و نتیجه‌محور",
+      "headingEn": "Professional, Results-Driven Web & Software Development",
+      "subheadingFa": "بیش از ۱۵ سال تجربه در طراحی وب‌سایت، پرتال‌های سازمانی، فروشگاه اینترنتی و نرم‌افزارهای تحت وب برای کسب‌وکارها، نهادهای دولتی و صنایع بزرگ کشور.",
+      "subheadingEn": "15+ years of experience building websites, enterprise portals, online stores, and web software for businesses, government bodies, and major industries.",
+      "ctaPrimaryFa": "درخواست مشاوره رایگان",
+      "ctaPrimaryEn": "Get a Free Consultation",
+      "ctaSecondaryFa": "مشاهده نمونه‌کارها",
+      "ctaSecondaryEn": "View Our Work",
+      "ogImage": "/images/portfolio/smartexport-ai.jpg",
+      "noIndex": false,
+      "changeFrequency": "weekly",
+      "priority": 1,
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "about",
+      "path": "/about",
+      "titleFa": "درباره ما | پیشگامان مهندسی نرم‌افزار ایده‌نگار",
+      "titleEn": "About Us | Idehnegar Software Studio",
+      "descriptionFa": "روایت ما در خلق پلتفرم‌های مقیاس‌پذیر، پرتال‌های سازمانی مدرن و همگرایی هنر دیزاین با مهندسی روز دنیا.",
+      "descriptionEn": "Our story of architecting resilient digital platforms, enterprise software, and human-centered design.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "",
+      "eyebrowEn": "",
+      "headingFa": "",
+      "headingEn": "",
+      "subheadingFa": "",
+      "subheadingEn": "",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": false,
+      "changeFrequency": "monthly",
+      "priority": 0.8,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "services",
+      "path": "/services",
+      "titleFa": "معماری نرم‌افزار و پلتفرم‌های وب | استودیو ایده‌نگار",
+      "titleEn": "Web Platforms & Software Architecture | Ideh Negar",
+      "descriptionFa": "توسعه نرم‌افزارهای مدرن، پرتال‌های سازمانی، فروشگاه‌های آنلاین مقیاس‌پذیر و طراحی وب اختصاصی.",
+      "descriptionEn": "High-performance web applications, scalable enterprise platforms, and bespoke digital experiences.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "خدمات",
+      "eyebrowEn": "Services",
+      "headingFa": "چطور می‌توانیم کمک کنیم؟",
+      "headingEn": "How can we help?",
+      "subheadingFa": "از طراحی وب‌سایت شرکتی گرفته تا سامانه‌های سازمانی پیچیده و راهکارهای هوش مصنوعی.",
+      "subheadingEn": "From corporate websites to complex enterprise systems and AI-driven solutions.",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": false,
+      "changeFrequency": "monthly",
+      "priority": 0.9,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "pageKey": "portfolio",
+      "path": "/portfolio",
+      "titleFa": "نمونه‌کارها و پروژه‌های شاخص",
+      "titleEn": "Portfolio & Case Studies",
+      "descriptionFa": "پرتال‌های سازمانی، سامانه‌های نرم‌افزاری و وب‌سایت‌های اجرا شده توسط استودیو ایده‌نگار.",
+      "descriptionEn": "Enterprise portals, custom web systems, and digital platforms crafted by Idehnegar.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "نمونه‌کارها",
+      "eyebrowEn": "Portfolio",
+      "headingFa": "پروژه‌هایی که ساخته‌ایم",
+      "headingEn": "Projects we've built",
+      "subheadingFa": "بخشی از سامانه‌ها، پرتال‌ها و وب‌سایت‌هایی که برای مشتریان طراحی و اجرا کرده‌ایم.",
+      "subheadingEn": "A selection of the systems, portals, and websites we've designed and delivered for our clients.",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": false,
+      "changeFrequency": "monthly",
+      "priority": 0.9,
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "path": "/contact",
+      "titleFa": "تماس با ما | پیشگامان ایده‌نگار",
+      "titleEn": "Contact Us | Idehnegar Studio",
+      "descriptionFa": "برای مشاوره فنی رایگان و برآورد پروژه نرم‌افزاری با تیم پیشگامان ایده‌نگار در تماس باشید.",
+      "descriptionEn": "Connect with the Idehnegar engineering team for architecture consultations and project roadmaps.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "تماس با ما",
+      "eyebrowEn": "Contact",
+      "headingFa": "بیایید پروژه بعدی‌تان را شروع کنیم",
+      "headingEn": "Let's start your next project",
+      "subheadingFa": "برای مشاوره رایگان و برآورد پروژه، فرم زیر را پر کنید یا مستقیم تماس بگیرید.",
+      "subheadingEn": "Fill out the form for a free consultation and project estimate, or reach out directly.",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": false,
+      "changeFrequency": "monthly",
+      "priority": 0.8,
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "pageKey": "store-builder",
+      "path": "/store-builder",
+      "titleFa": "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار",
+      "titleEn": "Cloud Store Builder | Subscriptions with Instant Delivery",
+      "descriptionFa": "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال به درگاه شاپرک.",
+      "descriptionEn": "Pick a storefront template with full warehouse management or the lightweight plan — activated instantly after payment on Shaparak.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "",
+      "eyebrowEn": "",
+      "headingFa": "",
+      "headingEn": "",
+      "subheadingFa": "",
+      "subheadingEn": "",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": false,
+      "changeFrequency": "monthly",
+      "priority": 0.9,
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "path": "/gold-app",
+      "titleFa": "اپلیکیشن و تابلوی نرخ لحظه‌ای طلا و سکه | ایده‌نگار",
+      "titleEn": "Live Gold & Coin Rate App and Shop Display | Idehnegar",
+      "descriptionFa": "نرم‌افزار نرخ لحظه‌ای طلا، سکه و ارز با نمایشگر مخصوص مغازه‌های طلا و جواهر؛ به‌روزرسانی خودکار از اطلاعیه‌های رسمی اتحادیه.",
+      "descriptionEn": "Real-time gold, coin and currency rates for Android and shop TVs, synced with official union announcements.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "",
+      "eyebrowEn": "",
+      "headingFa": "",
+      "headingEn": "",
+      "subheadingFa": "",
+      "subheadingEn": "",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": false,
+      "changeFrequency": "monthly",
+      "priority": 0.8,
+      "sortOrder": 6,
+      "isPublished": true
+    },
+    {
+      "pageKey": "payment",
+      "path": "/payment",
+      "titleFa": "تسویه حساب و فعال‌سازی اشتراک",
+      "titleEn": "Checkout & Subscription Activation",
+      "descriptionFa": "تکمیل اطلاعات و پرداخت امن اشتراک فروشگاه‌ساز ایده‌نگار.",
+      "descriptionEn": "Complete your details and pay securely to activate your store subscription.",
+      "keywordsFa": "",
+      "keywordsEn": "",
+      "eyebrowFa": "",
+      "eyebrowEn": "",
+      "headingFa": "",
+      "headingEn": "",
+      "subheadingFa": "",
+      "subheadingEn": "",
+      "ctaPrimaryFa": "",
+      "ctaPrimaryEn": "",
+      "ctaSecondaryFa": "",
+      "ctaSecondaryEn": "",
+      "ogImage": null,
+      "noIndex": true,
+      "changeFrequency": "monthly",
+      "priority": 0.8,
+      "sortOrder": 7,
+      "isPublished": true
+    }
+  ],
+  "portfolioCategories": [
+    {
+      "slug": "enterprise-software",
+      "nameFa": "نرم‌افزار سازمانی",
+      "nameEn": "Enterprise Software",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "slug": "website",
+      "nameFa": "وب‌سایت شرکتی",
+      "nameEn": "Corporate Website",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "slug": "ecommerce",
+      "nameFa": "فروشگاه اینترنتی",
+      "nameEn": "E-commerce",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "slug": "portal",
+      "nameFa": "پرتال سازمانی/دولتی",
+      "nameEn": "Government Portal",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "slug": "ai",
+      "nameFa": "هوش مصنوعی",
+      "nameEn": "AI Solution",
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "slug": "industrial",
+      "nameFa": "اتوماسیون صنعتی",
+      "nameEn": "Industrial Automation",
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "slug": "international",
+      "nameFa": "پروژه بین‌المللی",
+      "nameEn": "International Project",
+      "sortOrder": 6,
+      "isPublished": true
+    }
+  ],
+  "portfolioProjects": [
+    {
+      "slug": "municipality-budget-system",
+      "titleFa": "فروشگاه اینترنتی لوازم شکار و طبیعت‌گردی قوچ",
+      "titleEn": "Integrated Municipal Budgeting System",
+      "summaryFa": "پوشش کامل فرآیند تصویب بودجه، ارجاعات، مصوبات و اتوماسیون بودجه‌بندی شهرداری.",
+      "summaryEn": "End-to-end coverage of budget approval, referrals, resolutions, and municipal budgeting automation.",
+      "descriptionFa": "این نرم‌افزار کلیه فرآیند تصویب بودجه، ارجاعات، مصوبات و اتوماسیون فرآیندی بودجه‌بندی شهرداری را پوشش می‌دهد و تمامی نیازمندی‌های بودجه‌ریزی سازمانی را در قالب یک سامانه یکپارچه و تحت وب مدیریت می‌کند.",
+      "descriptionEn": "This software covers the entire municipal budget-approval workflow — referrals, resolutions, and process automation — managing every organizational budgeting need through a single, unified web platform.",
+      "clientFa": "فروشگاه اینترنتی لوازم شکار و طبیعت‌گردی قوچ",
+      "clientEn": "Kermanshah Municipality",
+      "category": "enterprise-software",
+      "image": "/images/portfolio/ghooch.com.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Budget Management",
+        "Workflow",
+        "Government"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1394,
+      "link": null,
+      "featured": true,
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "slug": "municipality-project-control",
+      "titleFa": "سامانه کنترل پروژه شهرداری",
+      "titleEn": "Municipal Project Control System",
+      "summaryFa": "پایش لحظه‌ای پیشرفت پروژه‌های عمرانی شهرداری با گزارش‌گیری چندسطحی.",
+      "summaryEn": "Real-time progress tracking for municipal construction projects with multi-level reporting.",
+      "descriptionFa": "سامانه‌ای برای نظارت بر عملکرد و روند پیشرفت پروژه‌های عمرانی شهرداری کرمانشاه که مراحل بررسی هر پروژه بر پایه SDI و بر اساس موافقتنامه‌های صورت‌گرفته ایجاد شده است. مدیران ارشد شهرداری (شهرداران مناطق، شهردار، مدیران سامانه ۱۳۷ و ...) می‌توانند گزارش‌گیری لحظه‌ای در سطوح مختلف داشته باشند و نمودارهای مقایسه عملکرد مناطق و سازمان‌ها را مشاهده کنند.",
+      "descriptionEn": "A monitoring system for tracking the progress of Kermanshah Municipality's construction projects, staged review by review based on signed agreements and mapped on an SDI foundation. Senior officials — district mayors, the city mayor, and system administrators — get real-time reporting at every level, including comparison charts across districts and departments.",
+      "clientFa": "شهرداری کرمانشاه",
+      "clientEn": "Kermanshah Municipality",
+      "category": "enterprise-software",
+      "image": "/images/portfolio/agreement.idehnegar.co.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Project Control",
+        "Dashboard",
+        "Government"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1394,
+      "link": null,
+      "featured": false,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "slug": "cyberometrics",
+      "titleFa": "وب‌سایت شرکت Cyberometrics",
+      "titleEn": "Cyberometrics Website",
+      "summaryFa": "طراحی وب‌سایت شرکتی برای یک آژانس هوش مصنوعی فعال در کانادا.",
+      "summaryEn": "Corporate website for an AI automation agency based in Canada.",
+      "descriptionFa": "بخشی از همکاری‌های بین‌المللی ایده‌نگار، طراحی و توسعه وب‌سایت رسمی Cyberometrics، آژانس ارائه‌دهنده خدمات هوش مصنوعی و اتوماسیون برای کسب‌وکارهای کوچک و متوسط در کانادا بوده است.",
+      "descriptionEn": "As part of Idehnegar's international collaborations, we designed and built the official website for Cyberometrics, an AI automation agency serving SMEs in Canada.",
+      "clientFa": "Cyberometrics (کانادا)",
+      "clientEn": "Cyberometrics (Canada)",
+      "category": "international",
+      "image": "/images/portfolio/cyberometrics.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "International",
+        "AI Agency",
+        "Website"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1403,
+      "link": null,
+      "featured": false,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "slug": "modalal-holding",
+      "titleFa": "وب‌سایت رسمی هلدینگ صنعتی مدلل",
+      "titleEn": "Modalal Industrial Holding Website",
+      "summaryFa": "طراحی وب‌سایت گروه مدلل و ۱۱ شرکت زیرمجموعه با تمرکز بر یکپارچگی برند و سئو.",
+      "summaryEn": "Corporate site for the Modalal group and its 11 subsidiaries, focused on brand consistency and SEO.",
+      "descriptionFa": "از سال ۱۳۹۹ تاکنون با گروه سرمایه و صنعت مدلل و ۱۱ شرکت زیرمجموعه آن در پروژه‌هایی چون طراحی وب‌سایت‌های شرکتی، فروشگاه‌های آنلاین و توسعه نرم‌افزارهای اختصاصی همکاری داشته‌ایم؛ با تمرکز بر یکپارچگی برند، تجربه کاربری بهینه و زیرساخت سئو-محور.",
+      "descriptionEn": "Since 2020 we've partnered with the Modalal Capital & Industry Group and its 11 subsidiaries on corporate websites, online stores, and custom software — with a focus on brand consistency, optimized UX, and SEO-first infrastructure.",
+      "clientFa": "گروه سرمایه و صنعت مدلل",
+      "clientEn": "Modalal Capital & Industry Group",
+      "category": "website",
+      "image": "/images/portfolio/modalalgroup.com.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Corporate Website",
+        "Branding",
+        "SEO"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1399,
+      "link": null,
+      "featured": true,
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "slug": "faratech-modalal",
+      "titleFa": "وب‌سایت فراتک مدلل",
+      "titleEn": "Faratech Modalal Website",
+      "summaryFa": "وب‌سایت شرکتی برای تولیدکننده سوله‌های صنعتی و سازه‌های فلزی.",
+      "summaryEn": "Corporate website for an industrial hangar and steel-structure manufacturer.",
+      "descriptionFa": "طراحی و اجرای وب‌سایت شرکتی فراتک مدلل، فعال در طراحی و اجرای سوله‌های صنعتی، سازه‌های فلزی و تجهیزات فرآیندی، با معرفی خدمات و نمونه‌کارهای صنعتی شرکت.",
+      "descriptionEn": "Design and build of the Faratech Modalal corporate site — a company specializing in industrial hangars, steel structures, and process equipment — showcasing its services and industrial project gallery.",
+      "clientFa": "فراتک مدلل",
+      "clientEn": "Faratech Modalal",
+      "category": "website",
+      "image": "/images/portfolio/faratech-modalal.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Industrial",
+        "Corporate Website"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1399,
+      "link": null,
+      "featured": false,
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "slug": "offcard-store",
+      "titleFa": "نرم‌افزار و وب‌سایت فروشگاهی آف‌کارت",
+      "titleEn": "OffCard E-commerce Platform",
+      "summaryFa": "فروشگاه اینترنتی بلیت و تخفیف با پنل مدیریت اختصاصی.",
+      "summaryEn": "An online ticketing & discount store with a dedicated management panel.",
+      "descriptionFa": "طراحی و توسعه نرم‌افزار و وب‌سایت فروشگاهی آف‌کارت، شامل فروش بلیت و کدهای تخفیف رویدادهای شهربازی و سرگرمی، همراه با پنل مدیریت محصولات و سفارش‌ها.",
+      "descriptionEn": "Design and development of the OffCard storefront and back-office — selling tickets and discount codes for amusement and entertainment venues, with a full product and order management panel.",
+      "clientFa": "آف‌کارت",
+      "clientEn": "OffCard",
+      "category": "ecommerce",
+      "image": "/images/portfolio/offcardco.com.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "E-commerce",
+        "Ticketing"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1401,
+      "link": null,
+      "featured": true,
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "slug": "chap-sanaye-kermanshah",
+      "titleFa": "وب‌سایت شرکت توسعه صنایع چاپ و بسته‌بندی کرمانشاه",
+      "titleEn": "Kermanshah Packaging Industries Website",
+      "summaryFa": "وب‌سایت معرفی محصولات و دریافت استعلام قیمت آنلاین برای صنایع بسته‌بندی.",
+      "summaryEn": "A product showcase and online price-inquiry site for a packaging manufacturer.",
+      "descriptionFa": "طراحی وب‌سایت شرکتی برای معرفی محصولات بسته‌بندی اختصاصی (از جمله جعبه‌های پیتزا و بسته‌بندی مواد غذایی)، همراه با فرم استعلام آنلاین قیمت برای مشتریان B2B.",
+      "descriptionEn": "Corporate website showcasing custom packaging products — including pizza boxes and food packaging — with an online price-inquiry form for B2B customers.",
+      "clientFa": "صنایع چاپ و بسته‌بندی کرمانشاه (KPPID)",
+      "clientEn": "Kermanshah Printing & Packaging Industries (KPPID)",
+      "category": "website",
+      "image": "/images/portfolio/kppid.com.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Corporate Website",
+        "B2B"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1400,
+      "link": null,
+      "featured": true,
+      "sortOrder": 6,
+      "isPublished": true
+    },
+    {
+      "slug": "college-zaban",
+      "titleFa": "وب‌سایت آموزشگاه کالج زبان",
+      "titleEn": "Ta K Language College Website",
+      "summaryFa": "وب‌سایت معرفی دوره‌های آموزش زبان برای گروه‌های سنی مختلف.",
+      "summaryEn": "A course catalog site for an English-language school, spanning multiple age groups.",
+      "descriptionFa": "طراحی وب‌سایت آموزشگاه زبان کالج زبان با معرفی دوره‌های بزرگسالان، نوجوانان، کودکان و خانه انگلیسی، ثبت‌نام آنلاین و اطلاع‌رسانی رویدادها.",
+      "descriptionEn": "Website design for Ta K Language College, presenting adult, teen, kids, and immersion (\"English House\") programs, with online enrollment and event announcements.",
+      "clientFa": "کالج زبان (Ta K Language College)",
+      "clientEn": "Ta K Language College",
+      "category": "website",
+      "image": "/images/portfolio/kengcollege.com.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Education",
+        "Corporate Website"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1400,
+      "link": null,
+      "featured": true,
+      "sortOrder": 7,
+      "isPublished": true
+    },
+    {
+      "slug": "sardaftaran-kermanshah",
+      "titleFa": "وب‌سایت کانون سردفتران و دفتریاران استان کرمانشاه",
+      "titleEn": "Kermanshah Notaries Association Portal",
+      "summaryFa": "پرتال رسمی خدمات الکترونیک و اطلاع‌رسانی برای اسناد رسمی استان.",
+      "summaryEn": "An official e-services and information portal for the province's notary offices.",
+      "descriptionFa": "طراحی پرتال رسمی کانون سردفتران و دفتریاران استان کرمانشاه شامل استعلام شناسه اشخاص حقوقی، فهرست دفاتر اسناد رسمی، خدمات الکترونیک ثبت اسناد و اخبار و اطلاعیه‌های کانون.",
+      "descriptionEn": "Design of the official portal for the Kermanshah Notaries & Registrars Association, including legal-entity ID lookups, a directory of notary offices, e-registration services, and association news.",
+      "clientFa": "کانون سردفتران و دفتریاران استان کرمانشاه",
+      "clientEn": "Kermanshah Notaries & Registrars Association",
+      "category": "portal",
+      "image": "/images/portfolio/kshnotary.ir.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Government Portal",
+        "e-Services"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1399,
+      "link": null,
+      "featured": true,
+      "sortOrder": 8,
+      "isPublished": true
+    },
+    {
+      "slug": "tagh-shib-construction",
+      "titleFa": "وب‌سایت گروه ساختمانی طاق شیب",
+      "titleEn": "Tagh Shib Construction Group Website",
+      "summaryFa": "معرفی پروژه‌های سازه‌های فلزی صنعتی و بندری.",
+      "summaryEn": "Showcasing industrial and port steel-structure projects.",
+      "descriptionFa": "طراحی وب‌سایت شرکتی گروه ساختمانی طاق شیب با معرفی پروژه‌های اجرا‌شده، از جمله سازه‌های فلزی ترمینال غلات بندر ماهشهر و سایر پروژه‌های عمرانی و صنعتی.",
+      "descriptionEn": "Corporate website for Tagh Shib Construction Group, showcasing completed projects including steel structures for the Mahshahr grain terminal and other industrial and civil works.",
+      "clientFa": "گروه ساختمانی طاق شیب",
+      "clientEn": "Tagh Shib Construction Group",
+      "category": "website",
+      "image": "/images/portfolio/taaghsheebgroup.com.png",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Construction",
+        "Corporate Website"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1402,
+      "link": null,
+      "featured": true,
+      "sortOrder": 9,
+      "isPublished": true
+    },
+    {
+      "slug": "ako-modalal",
+      "titleFa": "وب‌سایت شرکت آکو مدلل",
+      "titleEn": "Ako Modalal Website",
+      "summaryFa": "وب‌سایت معرفی محصولات سازه‌های دیوار خشک.",
+      "summaryEn": "A product site for drywall structural systems.",
+      "descriptionFa": "طراحی وب‌سایت شرکتی آکو مدلل با معرفی محصولات سازه‌های دیوار خشک و خدمات فنی-مهندسی وابسته به گروه صنعتی مدلل.",
+      "descriptionEn": "Corporate website for Ako Modalal, presenting drywall structural products and related engineering services under the Modalal industrial group.",
+      "clientFa": "آکو مدلل",
+      "clientEn": "Ako Modalal",
+      "category": "website",
+      "image": "/images/portfolio/ako-modalal.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Industrial",
+        "Corporate Website"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1400,
+      "link": null,
+      "featured": false,
+      "sortOrder": 10,
+      "isPublished": true
+    },
+    {
+      "slug": "hipglobal",
+      "titleFa": "اپلیکیشن دریافت گرنت و وام HIP Global",
+      "titleEn": "HIP Global Grant & Loan Application",
+      "summaryFa": "برنامه کاربردی وب برای دریافت گرنت و وام، توسعه‌یافته برای مشتری برزیلی.",
+      "summaryEn": "A web application for grant and loan applications, built for a Brazil-based client.",
+      "descriptionFa": "توسعه بخشی از پلتفرم وب HIP Global (Hub for Incentives & Partnerships)، که به کسب‌وکارها در برزیل برای دسترسی به گرنت‌ها و تسهیلات مالی کمک می‌کند؛ یکی دیگر از پروژه‌های برون‌مرزی تیم ایده‌نگار.",
+      "descriptionEn": "Development work on part of the HIP Global (Hub for Incentives & Partnerships) web platform, which helps Brazilian businesses access grants and financial incentives — another of Idehnegar's cross-border engagements.",
+      "clientFa": "HIP Global (برزیل)",
+      "clientEn": "HIP Global (Brazil)",
+      "category": "international",
+      "image": "/images/portfolio/hipglobal.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "International",
+        "Fintech",
+        "Web App"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1403,
+      "link": null,
+      "featured": true,
+      "sortOrder": 11,
+      "isPublished": true
+    },
+    {
+      "slug": "sanatgostar-automation",
+      "titleFa": "سیستم ERP اختصاصی خط تولید ریخته‌گری دقیق",
+      "titleEn": "Custom ERP for a Precision Casting Production Line",
+      "summaryFa": "طراحی و پیاده‌سازی ERP سفارشی با ماژول‌های تولید، کنترل کیفیت، ردیابی قطعه و داشبورد مدیریتی.",
+      "summaryEn": "Custom ERP covering production, quality control, part tracking, and management dashboards.",
+      "descriptionFa": "از سال ۱۳۹۸ همکاری مستمری با این شرکت در حوزه‌های مختلف داشته‌ایم: طراحی و پیاده‌سازی سیستم ERP اختصاصی، نرم‌افزار برنامه‌ریزی و زمان‌بندی تولید (APS)، مدیریت قطعات و BOM، کنترل کیفیت، ردیابی تولید، و نرم‌افزار نگهداری و تعمیرات ماشین‌آلات (CMMS) متناسب با نیازهای خاص صنعت ریخته‌گری دقیق.",
+      "descriptionEn": "We've worked continuously with this manufacturer since 2019 across a custom ERP build, production planning & scheduling software (APS), parts/BOM management, quality control, production tracking, and a CMMS for machinery maintenance — all tailored to the specific needs of precision casting.",
+      "clientFa": "شرکت ریخته‌گری دقیق صنعت گستر",
+      "clientEn": "Sanat Gostar Precision Casting Co.",
+      "category": "industrial",
+      "image": "/images/portfolio/sanatgostar-automation.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "ERP",
+        "Manufacturing",
+        "CMMS",
+        "APS"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1398,
+      "link": null,
+      "featured": true,
+      "sortOrder": 12,
+      "isPublished": true
+    },
+    {
+      "slug": "ghooch-project",
+      "titleFa": "فروشگاه اینترنتی لوازم شکار قوچ",
+      "titleEn": "Example Online Store",
+      "summaryFa": "طراحی و توسعه فروشگاه اینترنتی",
+      "summaryEn": "Design and development of online store",
+      "descriptionFa": "این پروژه شامل طراحی و توسعه یک فروشگاه اینترنتی کامل با سیستم پرداخت آنلاین، مدیریت موجودی و پنل مدیریت پیشرفته بود.",
+      "descriptionEn": "This project included designing and developing a complete online store with payment integration, inventory management and advanced admin panel.",
+      "clientFa": "قوچ  ",
+      "clientEn": "Example Corp",
+      "category": "ecommerce",
+      "image": "/images/portfolio/ghoch-store.jpg",
+      "desktopScreenshot": "/images/portfolio/desk - ghooch.com.png",
+      "mobileScreenshot": "/images/portfolio/ghooch.com.png",
+      "gallery": [],
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Tailwind CSS"
+      ],
+      "features": [
+        {
+          "titleFa": "پرداخت آنلاین",
+          "titleEn": "Online Payment",
+          "descriptionFa": "اتصال به درگاه‌های پرداخت بانکی",
+          "descriptionEn": "Integration with bank payment gateways"
+        },
+        {
+          "titleFa": "پنل مدیریت",
+          "titleEn": "Admin Panel",
+          "descriptionFa": "مدیریت کامل محصولات و سفارشات",
+          "descriptionEn": "Complete product and order management"
+        }
+      ],
+      "stats": [
+        {
+          "labelFa": "کاربر فعال",
+          "labelEn": "Active Users",
+          "valueFa": "۱۰,۰۰۰+",
+          "valueEn": "10,000+",
+          "iconPath": null,
+          "color": "bg-blue-100 text-blue-600"
+        },
+        {
+          "labelFa": "سرعت لود",
+          "labelEn": "Load Speed",
+          "valueFa": "۰.۸ ثانیه",
+          "valueEn": "0.8s",
+          "iconPath": null,
+          "color": "bg-green-100 text-green-600"
+        }
+      ],
+      "year": 2024,
+      "link": "https://example.com",
+      "featured": true,
+      "sortOrder": 13,
+      "isPublished": true
+    },
+    {
+      "slug": "gold-price-system",
+      "titleFa": "سامانه اعلام نرخ لحظه‌ای طلا و ارز",
+      "titleEn": "Real-Time Gold & Currency Price System",
+      "summaryFa": "نمایش لحظه‌ای نرخ طلا، سکه و ارز برای اعضای اتحادیه طلافروشان.",
+      "summaryEn": "Live gold, coin, and currency price feed for jewelry union members.",
+      "descriptionFa": "طراحی سامانه اعلام نرخ لحظه‌ای طلا، سکه (تمام، نیم، ربع، امامی) و ارز برای اتحادیه صنفی طلا و جواهر کرمانشاه، با به‌روزرسانی آنی قیمت‌ها و پشتیبانی از تصمیم‌گیری خرید و فروش اعضا.",
+      "descriptionEn": "A real-time price board for gold, coins (full, half, quarter, Emami), and currencies for the Kermanshah Gold & Jewelry Union — with instant price updates supporting members' buy/sell decisions.",
+      "clientFa": "اتحادیه طلا و جواهر کرمانشاه",
+      "clientEn": "Kermanshah Gold & Jewelry Union",
+      "category": "enterprise-software",
+      "image": "/images/portfolio/gold-price-system.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "Fintech",
+        "Real-time Data"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1400,
+      "link": null,
+      "featured": false,
+      "sortOrder": 14,
+      "isPublished": true
+    },
+    {
+      "slug": "smartexport-ai",
+      "titleFa": "دستیار هوشمند صادرات (SmartExport)",
+      "titleEn": "SmartExport – AI Export Assistant",
+      "summaryFa": "پلتفرم هوش مصنوعی برای اتوماسیون کامل فروش و بازاریابی صادراتی کسب‌وکارهای کوچک و متوسط.",
+      "summaryEn": "An AI platform that automates export sales & marketing end-to-end for SMEs.",
+      "descriptionFa": "Idehnegar SmartExport یک پلتفرم نرم‌افزاری مبتنی بر هوش مصنوعی است که به‌عنوان «دستیار هوشمند فروش و صادرات» عمل می‌کند و زنجیره کامل فعالیت‌های بازاریابی و فروش را از مرحله تولید لید تا ارائه پروپوزال و رزرو جلسه، به‌صورت خودکار و ۲۴ ساعته انجام می‌دهد. این پلتفرم شامل بیش از ۱۰ ماژول هوشمند برای مدیریت لید، تولید محتوا، مدیریت کمپین، تحلیل داده و گزارش‌دهی KPI است. شرکت‌ها تنها کافی‌ست اطلاعات مربوط به سازمان، محصولات و خدمات خود را ثبت کنند؛ سامانه به‌صورت کاملاً هوشمند بازارهای هدف را تحلیل می‌کند، کاتالوگ‌های معرفی محصول تولید می‌کند و با مشتریان بالقوه ارتباط برقرار می‌کند.",
+      "descriptionEn": "Idehnegar SmartExport is an AI-powered platform that acts as an intelligent export sales & marketing assistant, automating the full funnel from lead generation to proposal delivery and meeting booking — around the clock. It ships with 10+ smart modules covering lead management, content generation, campaign management, analytics, and KPI reporting. Companies only need to describe their organization, products, and services; the platform intelligently analyzes target markets, generates product catalogs, and engages potential customers on its own.",
+      "clientFa": "پروژه داخلی ایده‌نگار",
+      "clientEn": "Idehnegar In-house Product",
+      "category": "ai",
+      "image": "/images/portfolio/smartexport-ai.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "AI",
+        "Lead Generation",
+        "SaaS",
+        "Automation"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1404,
+      "link": null,
+      "featured": true,
+      "sortOrder": 15,
+      "isPublished": true
+    },
+    {
+      "slug": "national-hazard-management",
+      "titleFa": "سامانه ملی مدیریت مخاطرات و منابع اورژانس کشور",
+      "titleEn": "National Emergency Resource & Hazard Management System",
+      "summaryFa": "سامانه مکان‌محور شناسایی و مدیریت منابع بحران در سطح استان‌های کشور، دارای تاییدیه دانش‌بنیان.",
+      "summaryEn": "A GIS-based platform for identifying and managing crisis-response resources nationwide, certified as a knowledge-based product.",
+      "descriptionFa": "این سامانه به‌منظور مدیریت و شناسایی منابع در زمان بحران طراحی شده و به استان‌ها (دانشگاه‌های علوم پزشکی، آتش‌نشانی، هلال‌احمر و پلیس) امکان می‌دهد منابع در دسترس خود را شناسایی و در صورت نیاز از سایر استان‌ها و شهرها درخواست کنند. از طریق سیستم اتوماسیون، این درخواست‌ها بررسی و پس از تایید، نیرو یا منابع اورژانس اعزام می‌شوند. کاربران هر استان می‌توانند منابع خود را روی نقشه معرفی کرده و با ابزارهای ارزیابی، منابع مورد نظر را فیلتر کنند.",
+      "descriptionEn": "Built to identify and manage resources during crises, this system lets provincial bodies (medical universities, fire departments, Red Crescent, police) register their available resources and request additional ones from other provinces when needed. Requests are automatically routed, reviewed, and — once approved — resources are dispatched. Each province can plot its own resources on a live map and filter them with built-in evaluation tools.",
+      "clientFa": "دانشگاه‌های علوم پزشکی سراسر کشور",
+      "clientEn": "National Medical Universities Network",
+      "category": "portal",
+      "image": "/images/portfolio/national-hazard-management.jpg",
+      "desktopScreenshot": null,
+      "mobileScreenshot": null,
+      "gallery": [],
+      "tags": [
+        "GIS",
+        "Crisis Management",
+        "Government"
+      ],
+      "features": [],
+      "stats": [],
+      "year": 1395,
+      "link": null,
+      "featured": true,
+      "sortOrder": 16,
+      "isPublished": true
+    }
+  ],
+  "services": [
+    {
+      "icon": "Globe",
+      "titleFa": "طراحی وب‌سایت و پرتال سازمانی",
+      "titleEn": "Website & Enterprise Portal Design",
+      "descriptionFa": "طراحی مدرن، واکنش‌گرا و سئو-محور، متناسب با هویت برند و نیاز کسب‌وکار شما.",
+      "descriptionEn": "Modern, responsive, SEO-first design tailored to your brand and business needs.",
+      "highlightsFa": [
+        "طراحی تجربه کاربری (UI/UX) منطبق با ترندهای روز دنیا",
+        "پرفورمنس ۹۸+ و معماری سرورلس برای بالاترین سرعت لود",
+        "سئو تکنیکال از خشت اول و رعایت کامل اصول Semantic Web"
+      ],
+      "highlightsEn": [
+        "Custom UI/UX designed in accordance with global trends",
+        "98+ Performance and edge rendering for blazing load times",
+        "Semantic SEO foundation built-in from line one"
+      ],
+      "visualIndex": 0,
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "icon": "Server",
+      "titleFa": "نرم‌افزارهای تحت وب و سازمانی",
+      "titleEn": "Web & Enterprise Software",
+      "descriptionFa": "توسعه سامانه‌های مدیریت فرآیند، داشبورد مدیریتی و اتوماسیون اداری با فناوری‌های روز.",
+      "descriptionEn": "Process management systems, management dashboards, and back-office automation built on modern stacks.",
+      "highlightsFa": [
+        "طراحی ماژولار با Clean Architecture و الگوهای مقیاس‌پذیر",
+        "داشبوردهای تحلیلی بلادرنگ با کنترل دقیق دسترسی کاربران",
+        "یکپارچه‌سازی بی‌درز با دیتابیس‌ها و سیستم‌های مدیریت مالی و ERP"
+      ],
+      "highlightsEn": [
+        "Modular Clean Architecture ready for enterprise scale",
+        "Real-time analytics dashboards with fine-grained RBAC",
+        "Seamless integration with databases, financial systems & ERPs"
+      ],
+      "visualIndex": 1,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "icon": "ShoppingCart",
+      "titleFa": "فروشگاه اینترنتی و تجارت الکترونیک",
+      "titleEn": "E-commerce & Online Stores",
+      "descriptionFa": "راه‌اندازی فروشگاه آنلاین اختصاصی با درگاه پرداخت امن و تجربه خرید روان.",
+      "descriptionEn": "Custom online stores with secure payment gateways and a smooth shopping experience.",
+      "highlightsFa": [
+        "زیرساخت اختصاصی برای مدیریت بارهای سنگین ترافیک و فروش ویژه",
+        "سیستم جامع انبارداری، حسابداری و اتصال به چندین درگاه بانکی",
+        "طراحی فرآیند تسویه‌حساب سریع برای کمینه‌سازی انصراف از خرید"
+      ],
+      "highlightsEn": [
+        "Dedicated infrastructure built for high-concurrency flash sales",
+        "Integrated inventory, accounting, and multi-gateway billing",
+        "Frictionless checkout flow minimizing cart abandonment"
+      ],
+      "visualIndex": 2,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "icon": "Search",
+      "titleFa": "سئو و افزایش رتبه در گوگل",
+      "titleEn": "SEO & Google Ranking",
+      "descriptionFa": "بهینه‌سازی فنی، محتوایی و ساختاری برای دیده‌شدن در نتایج جستجو و جذب مشتری واقعی.",
+      "descriptionEn": "Technical, content, and structural optimization to get found in search and win real customers.",
+      "highlightsFa": [
+        "بهینه‌سازی عمیق شاخص‌های سرعت و Core Web Vitals گوگل",
+        "پیاده‌سازی خودکار کدهای نشانه‌گذاری ساختاریافته (Schema Markup)",
+        "تحلیل جامع رقبا، کی‌ورد ریسرچ و تدوین استراتژی ترافیک ارگانیک"
+      ],
+      "highlightsEn": [
+        "Deep optimization of Google Core Web Vitals and TTFB",
+        "Automated Semantic Schema implementation for rich snippets",
+        "Competitor audits, keyword mapping, and sustainable search growth"
+      ],
+      "visualIndex": 3,
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "icon": "Cloud",
+      "titleFa": "DevOps و زیرساخت ابری",
+      "titleEn": "DevOps & Cloud Infrastructure",
+      "descriptionFa": "استقرار، مانیتورینگ و مقیاس‌پذیری زیرساخت روی AWS، Azure و سرورهای اختصاصی.",
+      "descriptionEn": "Deployment, monitoring, and scaling on AWS, Azure, and dedicated servers.",
+      "highlightsFa": [
+        "پایپ‌لاین خودکار CI/CD برای استقرار سریع و بدون توقف سرویس",
+        "مدیریت کانتینرها روی سرورهای ابری با Docker و Kubernetes",
+        "مانیتورینگ ۲۴/۷، سیستم هشدار بحران و بازیابی خودکار داده‌ها"
+      ],
+      "highlightsEn": [
+        "Automated CI/CD pipelines enabling zero-downtime deployment",
+        "Cloud-native container orchestration with Docker & Kubernetes",
+        "24/7 observability, incident alerts, and disaster recovery"
+      ],
+      "visualIndex": 4,
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "icon": "BrainCircuit",
+      "titleFa": "راهکارهای مبتنی بر هوش مصنوعی",
+      "titleEn": "AI-Powered Solutions",
+      "descriptionFa": "اتوماسیون فروش و بازاریابی، چت‌بات هوشمند و تحلیل داده با آخرین ابزارهای AI.",
+      "descriptionEn": "Sales & marketing automation, intelligent chatbots, and data analysis with the latest AI tools.",
+      "highlightsFa": [
+        "طراحی چت‌بات‌ها و همیارهای هوشمند مبتنی بر پایگاه دانش سازمان (RAG)",
+        "اتوماسیون پاسخ‌گویی به مشتریان و تحلیل کیفی لیدهای فروش",
+        "استخراج و دسته‌بندی هوشمندانه اسناد و گزارش‌گیری خودکار"
+      ],
+      "highlightsEn": [
+        "Custom enterprise RAG copilots integrated with company knowledge",
+        "Automated customer inquiry handling and intelligent lead scoring",
+        "Smart document processing and automated management reports"
+      ],
+      "visualIndex": 5,
+      "sortOrder": 5,
+      "isPublished": true
+    }
+  ],
+  "processSteps": [
+    {
+      "icon": "MessagesSquare",
+      "color": "from-blue-500 to-cyan-500",
+      "accent": "#3b82f6",
+      "titleFa": "مشاوره و کشف نیازها",
+      "titleEn": "Discovery & Consultation",
+      "durationFa": "۱ تا ۲ هفته",
+      "durationEn": "1-2 Weeks",
+      "descriptionFa": "با جلسات مشاوره تخصصی، عمیقاً وارد اهداف کسب‌وکار، چالش‌ها و چشم‌انداز شما می‌شویم تا نیازهای شما را کاملاً درک کنیم.",
+      "descriptionEn": "We dive deep into your business goals, challenges, and vision through in-depth consultation sessions to fully understand your requirements.",
+      "deliverablesFa": [
+        "تحلیل نیازمندی‌های کسب‌وکار",
+        "مصاحبه با ذینفعان پروژه",
+        "مطالعه امکان‌سنجی پروژه"
+      ],
+      "deliverablesEn": [
+        "Business Requirement Analysis",
+        "Stakeholder Interviews",
+        "Project Feasibility Study"
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "icon": "FileSearch",
+      "color": "from-violet-500 to-purple-500",
+      "accent": "#8b5cf6",
+      "titleFa": "ارائه پروپوزال و برنامه‌ریزی",
+      "titleEn": "Proposal & Planning",
+      "durationFa": "۱ هفته",
+      "durationEn": "1 Week",
+      "descriptionFa": "یک پروپوزال جامع شامل محدوده پروژه، زمان‌بندی، استک تکنولوژی و برآورد دقیق هزینه‌ها متناسب با نیازهای شما ارائه می‌شود.",
+      "descriptionEn": "A comprehensive proposal including project scope, timeline, technology stack, and detailed cost estimation tailored to your needs.",
+      "deliverablesFa": [
+        "سند پروپوزال فنی",
+        "نقشه راه و زمان‌بندی پروژه",
+        "برآورد هزینه و منابع"
+      ],
+      "deliverablesEn": [
+        "Technical Proposal Document",
+        "Project Roadmap & Timeline",
+        "Cost & Resource Estimation"
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "icon": "PencilRuler",
+      "color": "from-pink-500 to-rose-500",
+      "accent": "#ec4899",
+      "titleFa": "طراحی رابط و تجربه کاربری",
+      "titleEn": "UI/UX Design",
+      "durationFa": "۲ تا ۳ هفته",
+      "durationEn": "2-3 Weeks",
+      "descriptionFa": "خلق وایرفریم‌های زیبا، پروتوتایپ‌های تعاملی و طراحی‌های دقیق که تجربه کاربری استثنایی را ارائه می‌دهند.",
+      "descriptionEn": "Creating stunning wireframes, interactive prototypes, and pixel-perfect designs that deliver exceptional user experiences.",
+      "deliverablesFa": [
+        "وایرفریم و جریان کاربری",
+        "پروتوتایپ تعاملی",
+        "سیستم طراحی نهایی"
+      ],
+      "deliverablesEn": [
+        "Wireframes & User Flows",
+        "Interactive Prototypes",
+        "Final UI Design System"
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "icon": "Code2",
+      "color": "from-[#e6304c] to-red-600",
+      "accent": "#e6304c",
+      "titleFa": "توسعه و کدنویسی",
+      "titleEn": "Development & Coding",
+      "durationFa": "۴ تا ۱۲ هفته",
+      "durationEn": "4-12 Weeks",
+      "descriptionFa": "توسعه‌دهندگان متخصص ما با استفاده از تکنولوژی‌های روز و اصول کدنویسی تمیز، طراحی‌ها را به واقعیت تبدیل می‌کنند.",
+      "descriptionEn": "Our expert developers bring designs to life using cutting-edge technologies, following best practices and clean code principles.",
+      "deliverablesFa": [
+        "توسعه فرانت‌اند و بک‌اند",
+        "معماری پایگاه داده",
+        "توسعه و یکپارچه‌سازی API"
+      ],
+      "deliverablesEn": [
+        "Frontend & Backend Development",
+        "Database Architecture",
+        "API Integration & Development"
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "icon": "TestTube2",
+      "color": "from-amber-500 to-orange-500",
+      "accent": "#f59e0b",
+      "titleFa": "تست و تضمین کیفیت",
+      "titleEn": "Testing & Quality Assurance",
+      "durationFa": "۱ تا ۲ هفته",
+      "durationEn": "1-2 Weeks",
+      "descriptionFa": "تست‌های دقیق در محیط‌های مختلف برای اطمینان از عملکرد بی‌نقص، امنیت بالا و کارایی نرم‌افزار در هر شرایطی.",
+      "descriptionEn": "Rigorous testing across multiple environments to ensure your software is bug-free, secure, and performs flawlessly under any load.",
+      "deliverablesFa": [
+        "تست واحد و یکپارچگی",
+        "ممیزی عملکرد و امنیت",
+        "تست پذیرش کاربر"
+      ],
+      "deliverablesEn": [
+        "Unit & Integration Testing",
+        "Performance & Security Audits",
+        "User Acceptance Testing"
+      ],
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "icon": "Rocket",
+      "color": "from-emerald-500 to-teal-500",
+      "accent": "#10b981",
+      "titleFa": "استقرار و راه‌اندازی",
+      "titleEn": "Deployment & Launch",
+      "durationFa": "۳ تا ۵ روز",
+      "durationEn": "3-5 Days",
+      "descriptionFa": "استقرار بی‌وقفه روی سرورهای عملیاتی بدون قطعی، تا اطمینان حاصل شود نرم‌افزار شما با موفقیت راه‌اندازی می‌شود.",
+      "descriptionEn": "Seamless deployment to production servers with zero downtime, ensuring your software goes live smoothly and successfully.",
+      "deliverablesFa": [
+        "راه‌اندازی سرورهای عملیاتی",
+        "پیکربندی CI/CD",
+        "راه‌اندازی و مانیتورینگ"
+      ],
+      "deliverablesEn": [
+        "Production Server Setup",
+        "CI/CD Pipeline Configuration",
+        "Go-Live & Monitoring"
+      ],
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "icon": "Headphones",
+      "color": "from-indigo-500 to-blue-500",
+      "accent": "#6366f1",
+      "titleFa": "پشتیبانی و نگهداری",
+      "titleEn": "Support & Maintenance",
+      "durationFa": "مستمر",
+      "durationEn": "Ongoing",
+      "descriptionFa": "پشتیبانی مداوم، به‌روزرسانی‌های منظم و نگهداری فعالانه برای اطمینان از اجرای همیشگی نرم‌افزار با بهترین عملکرد.",
+      "descriptionEn": "Continuous support, regular updates, and proactive maintenance to keep your software running at peak performance always.",
+      "deliverablesFa": [
+        "پشتیبانی فنی ۲۴/۷",
+        "به‌روزرسانی و پچ‌های منظم",
+        "مانیتورینگ عملکرد"
+      ],
+      "deliverablesEn": [
+        "24/7 Technical Support",
+        "Regular Updates & Patches",
+        "Performance Monitoring"
+      ],
+      "sortOrder": 6,
+      "isPublished": true
+    }
+  ],
+  "clients": [
+    {
+      "nameFa": "استانداری کرمانشاه",
+      "nameEn": "Kermanshah Governorate",
+      "monogram": "GOV",
+      "logoUrl": null,
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "nameFa": "شهرداری کرمانشاه",
+      "nameEn": "Kermanshah Municipality",
+      "monogram": "MUN",
+      "logoUrl": null,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "nameFa": "دانشگاه علوم پزشکی",
+      "nameEn": "Univ. of Medical Sciences",
+      "monogram": "MED",
+      "logoUrl": null,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "nameFa": "پارک علم و فناوری",
+      "nameEn": "Science & Tech Park",
+      "monogram": "STP",
+      "logoUrl": null,
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "nameFa": "سازمان فوریت‌های پزشکی",
+      "nameEn": "National Emergency Org",
+      "monogram": "NEM",
+      "logoUrl": null,
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "nameFa": "میراث فرهنگی و گردشگری",
+      "nameEn": "Cultural Heritage Org",
+      "monogram": "CHTO",
+      "logoUrl": null,
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "nameFa": "سازمان نقشه‌برداری ایران",
+      "nameEn": "National Cartographic Center",
+      "monogram": "NCC",
+      "logoUrl": null,
+      "sortOrder": 6,
+      "isPublished": true
+    },
+    {
+      "nameFa": "جهاد کشاورزی کرمانشاه",
+      "nameEn": "Agricultural Organization",
+      "monogram": "AJO",
+      "logoUrl": null,
+      "sortOrder": 7,
+      "isPublished": true
+    }
+  ],
+  "testimonials": [
+    {
+      "nameFa": "سازمان مدیریت حوادث و فوریت‌های پزشکی کشور",
+      "nameEn": "National Emergency Medical Management Organization",
+      "quoteFa": "طراحی سامانه کشوری سازمان مدیریت حوادث و فوریت‌های پزشکی کشور و همکاری چندساله با این سازمان.",
+      "quoteEn": "Idehnegar built our nationwide emergency-management system and has been a multi-year technical partner ever since.",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "nameFa": "دانشگاه علوم پزشکی کرمانشاه",
+      "nameEn": "Kermanshah University of Medical Sciences",
+      "quoteFa": "طراحی سایت رسمی مرکز آموزش مداوم دانشگاه علوم پزشکی کرمانشاه.",
+      "quoteEn": "They designed the official website for our Continuing Medical Education Center.",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "nameFa": "استانداری کرمانشاه",
+      "nameEn": "Kermanshah Governorate",
+      "quoteFa": "تاییدیه رسمی و رضایت‌نامه از استانداری کرمانشاه برای طراحی سایت مرکز آمار سازمان مدیریت و برنامه‌ریزی.",
+      "quoteEn": "Officially certified by the Kermanshah Governorate for building the statistics center site of the Management & Planning Organization.",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "nameFa": "شرکت ریخته‌گری دقیق صنعت‌گستر",
+      "nameEn": "Sanat Gostar Precision Casting Co.",
+      "quoteFa": "از سال ۱۳۹۸ همکاری مستمری در حوزه‌های مختلف داشته‌ایم؛ از جمله ERP اختصاصی، APS، مدیریت قطعات و BOM، کنترل کیفیت، ردیابی تولید و CMMS.",
+      "quoteEn": "A continuous partnership since 2019 — a custom ERP, APS, parts/BOM management, quality control, production tracking, and CMMS.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "nameFa": "گروه سرمایه و صنعت مدلل",
+      "nameEn": "Modalal Capital & Industry Group",
+      "quoteFa": "از سال ۱۳۹۹ تاکنون با این گروه و ۱۱ شرکت زیرمجموعه آن در طراحی وب‌سایت، فروشگاه آنلاین و توسعه نرم‌افزار اختصاصی همکاری داشته‌ایم.",
+      "quoteEn": "Since 2020 we've partnered with this group and its 11 subsidiaries on websites, online stores, and custom software.",
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "nameFa": "پارک علم و فناوری کرمانشاه",
+      "nameEn": "Kermanshah Science & Technology Park",
+      "quoteFa": "تاییدیه و مجوز فعالیت رسمی پارک علم و فناوری کرمانشاه برای طراحی سایت و سامانه پذیرش.",
+      "quoteEn": "Officially certified by the Science & Technology Park for building their website and admission system.",
+      "sortOrder": 5,
+      "isPublished": true
+    }
+  ],
+  "milestones": [
+    {
+      "year": "۱۴۰۳",
+      "titleFa": "عصر هوش مصنوعی و معماری توزیع‌شده",
+      "titleEn": "AI Integration & Global Edge",
+      "descriptionFa": "توسعه راه‌حل‌های هوشمند مبتنی بر RAG، میکروسرویس‌های پایدار و ثبت ۵۰+ پروژه لایو با پرفورمنس سبز.",
+      "descriptionEn": "RAG enterprise assistants, resilient microservices, and 50+ live platforms with sub-second speeds.",
+      "glow": "border-[#e6304c] shadow-[#e6304c]/20",
+      "gradient": "from-[#e6304c] to-rose-700",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "year": "۱۴۰۲",
+      "titleFa": "توسعه پرتال‌های پرترافیک سازمانی",
+      "titleEn": "High-Throughput Enterprise Portals",
+      "descriptionFa": "معماری سامانه‌های مقیاس‌پذیر برای مدیریت صدها هزار تراکنش بدون وقفه با استانداردهای Zero-Trust.",
+      "descriptionEn": "Architecting high-concurrency systems handling peak transactional loads with zero downtime.",
+      "glow": "border-blue-500 shadow-blue-500/20",
+      "gradient": "from-blue-600 to-[#0f0f52]",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "year": "۱۴۰۱",
+      "titleFa": "خلق سیستم دیزاین اختصاصی استودیو",
+      "titleEn": "Bespoke Design System Evolution",
+      "descriptionFa": "شکل‌گیری زبان بصری منحصربه‌فرد ایده‌نگار با کامپوننت‌های ۶۰ فریم و ساختار مدرن بر پایه Next.js.",
+      "descriptionEn": "Formulating Idehnegar's distinct design grammar with fluid 60fps micro-interactions on Next.js.",
+      "glow": "border-indigo-400 shadow-indigo-400/20",
+      "gradient": "from-indigo-600 to-slate-900",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "year": "۱۴۰۰",
+      "titleFa": "پایه‌گذاری با مانیفست کیفیت مطلق",
+      "titleEn": "Foundation & The Quality Pact",
+      "descriptionFa": "شروع مسیر با یک باور بنیادین: حذف کامل کدهای قالب‌های آماده و بازتعریف استانداردهای نرم‌افزار سفارشی.",
+      "descriptionEn": "Launching with a core manifesto: eradicating template-based web and building custom software art.",
+      "glow": "border-slate-500 shadow-slate-500/20",
+      "gradient": "from-slate-700 to-slate-900",
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "teamDisciplines": [
+    {
+      "roleEn": "Software Architect",
+      "labelFa": "معمار ارشد نرم‌افزار",
+      "span": "sm:col-span-2",
+      "background": "bg-[#e6304c]/20 border-[#e6304c]/40 text-[#ff4d68]",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "roleEn": "Product & UI/UX Lead",
+      "labelFa": "رهبر طراحی محصول",
+      "span": "sm:col-span-1",
+      "background": "bg-white/10 border-white/15 text-white",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "roleEn": "DevOps & Cloud Engineer",
+      "labelFa": "مهندس زیرساخت ابری",
+      "span": "sm:col-span-1",
+      "background": "bg-white/10 border-white/15 text-white",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "roleEn": "Full-Stack Engineers",
+      "labelFa": "مهندسان فرانت و بک‌اند",
+      "span": "sm:col-span-2",
+      "background": "bg-blue-500/20 border-blue-400/30 text-cyan-300",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "roleEn": "AI & Data Engineer",
+      "labelFa": "توسعه‌دهنده هوش مصنوعی",
+      "span": "sm:col-span-2",
+      "background": "bg-purple-500/20 border-purple-400/30 text-purple-300",
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "roleEn": "QA & Performance Lead",
+      "labelFa": "تضمین کیفیت و سرعت",
+      "span": "sm:col-span-1",
+      "background": "bg-white/10 border-white/15 text-white",
+      "sortOrder": 5,
+      "isPublished": true
+    }
+  ],
+  "faqItems": [
+    {
+      "questionFa": "در چه روزها و ساعاتی امکان ارتباط مستقیم و مشاوره فنی وجود دارد؟",
+      "questionEn": "What are your business operating hours?",
+      "answerFa": "تیم معماری نرم‌افزار و مشاوره در روزهای شنبه تا چهارشنبه از ساعت ۹:۰۰ الی ۱۸:۰۰ و پنج‌شنبه‌ها از ساعت ۹:۰۰ الی ۱۳:۰۰ به صورت تلفنی و حضوری پاسخگوی شما هستند. همچنین سیستم ثبت فرم آنلاین ۲۴ ساعته پایش می‌شود.",
+      "answerEn": "Our software engineering leads are available Saturday through Wednesday from 9:00 AM to 6:00 PM, and Thursdays from 9:00 AM to 1:00 PM. Inquiries submitted via this portal are monitored 24/7.",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "questionFa": "بررسی نیازمندی‌ها و ارائه پروپوزال اولیه چقدر زمان می‌برد؟",
+      "questionEn": "How fast do you respond to incoming project proposals?",
+      "answerFa": "پس از ثبت درخواست، حداکثر ظرف مدت ۲ الی ۴ ساعت کاری جهت بررسی اولیه با شما تماس گرفته می‌شود. پروپوزال فنی دقیق، ساختار فازبندی اسپرینت‌ها و برآورد شفاف بودجه نیز ظرف ۴۸ ساعت تقدیم شما خواهد شد.",
+      "answerEn": "All project scoping forms are reviewed within 2 to 4 business hours. Formal architectural roadmaps and estimates are delivered within 48 hours.",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "questionFa": "آیا فرآیند مشاوره اولیه و امکان‌سنجی سیستم شامل هزینه است؟",
+      "questionEn": "Is the preliminary architecture discovery session free?",
+      "answerFa": "خیر، جلسه اولیه اکتشاف نیازها و ارزیابی فنی به‌صورت کاملاً رایگان برگزار می‌شود تا با دیدی شفاف و خاطری آسوده درباره همکاری تصمیم‌گیری نمایید.",
+      "answerEn": "Yes, the initial technical consultation and feasibility review are completely complimentary.",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "questionFa": "آیا امکان تنظیم جلسه حضوری در دفتر مرکزی ایده‌نگار وجود دارد؟",
+      "questionEn": "Can we schedule an in-person workshop at your headquarters?",
+      "answerFa": "بله، با هماهنگی قبلی مشتاقانه میزبان شما در دفتر مرکزی جهت برگزاری جلسات فنی، بررسی پروتوتایپ‌ها و آشنایی حضوری با معماران پروژه خواهیم بود.",
+      "answerEn": "Absolutely. We welcome in-person technical workshops and sprint planning sessions at our campus upon appointment.",
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "inquiryTypes": [
+    {
+      "code": "web",
+      "labelFa": "طراحی وب اختصاصی",
+      "labelEn": "Custom Web",
+      "icon": "Code2",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "code": "portal",
+      "labelFa": "پرتال سازمانی و ERP",
+      "labelEn": "Enterprise Portal",
+      "icon": "Layers",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "code": "ecommerce",
+      "labelFa": "فروشگاه اینترنتی",
+      "labelEn": "E-Commerce",
+      "icon": "Building2",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "code": "cloud",
+      "labelFa": "دواپس و کلاود",
+      "labelEn": "DevOps & Cloud",
+      "icon": "Cpu",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "code": "seo",
+      "labelFa": "سئو تکنیکال",
+      "labelEn": "SEO & Speed",
+      "icon": "Search",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "storeTemplates": [
+    {
+      "code": "wh-1",
+      "name": "مگاشاپ اینترپرایز (MegaShop Pro)",
+      "category": "warehouse",
+      "tag": "سامانه انبارداری چندشعبه‌ای",
+      "planName": "پلن سازمانی مگاشاپ",
+      "priceMonthly": 1850000,
+      "priceYearly": 17760000,
+      "discountBadge": "۲۰٪ تخفیف سالانه",
+      "description": "طراحی شده برای هایپرمارکت‌ها، کالای دیجیتال و برندهای با بیش از ۵۰ هزار قلم کالا، چند شعبه انبار فیزیکی و فاکتور رسمی.",
+      "features": [
+        "کنترل موجودی چندانبار همزمان",
+        "حواله ورود و خروج بارکدی",
+        "اتصال به سیستم‌های مالی و سپیدار",
+        "هاست اختصاصی ابری و SSL رایگان"
+      ],
+      "desktopScreens": [
+        {
+          "label": "صفحه اصلی و کاتالوگ",
+          "src": "/images/templates/wh1-desk-1.jpg"
+        },
+        {
+          "label": "داشبورد انباردار و بارکدخوان",
+          "src": "/images/templates/wh1-desk-2.jpg"
+        },
+        {
+          "label": "صفحه تسویه و فاکتور",
+          "src": "/images/templates/wh1-desk-3.jpg"
+        }
+      ],
+      "mobileScreens": [
+        {
+          "label": "نسخه خریدار (PWA)",
+          "src": "/images/templates/wh1-mob-1.jpg"
+        },
+        {
+          "label": "پنل تحویل سریع",
+          "src": "/images/templates/wh1-mob-2.jpg"
+        }
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "code": "wh-2",
+      "name": "ماتریسی استایل (Moda Matrix)",
+      "category": "warehouse",
+      "tag": "انبارداری سایزبندی و رنگ",
+      "planName": "پلن پیشرفته مد و پوشاک",
+      "priceMonthly": 1450000,
+      "priceYearly": 13920000,
+      "discountBadge": "۲۰٪ تخفیف سالانه",
+      "description": "ویژه فروشگاه‌های پوشاک و کفش با ماتریس چندبُعدی انبار بر اساس سایز، رنگ، بچ تولید و هشدار اتمام سریع.",
+      "features": [
+        "انبارداری ماتریسی رنگ/سایز",
+        "رزرو موقت کالا در سبد خرید",
+        "هشدار کاهش موجودی بحرانی",
+        "سیستم کد تخفیف پیشرفته"
+      ],
+      "desktopScreens": [
+        {
+          "label": "ویترین کالکشن فصلی",
+          "src": "/images/templates/wh2-desk-1.jpg"
+        },
+        {
+          "label": "پنل کنترل سایز و متریال",
+          "src": "/images/templates/wh2-desk-2.jpg"
+        }
+      ],
+      "mobileScreens": [
+        {
+          "label": "انتخاب سایز و رنگ",
+          "src": "/images/templates/wh2-mob-1.jpg"
+        },
+        {
+          "label": "پیگیری لحظه‌ای مرسوله",
+          "src": "/images/templates/wh2-mob-2.jpg"
+        }
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "code": "wh-3",
+      "name": "صنعتی و ابزارآلات (Techno Ware)",
+      "category": "warehouse",
+      "tag": "انبارداری سریالی و قطعات",
+      "planName": "پلن شرکتی B2B",
+      "priceMonthly": 1650000,
+      "priceYearly": 15840000,
+      "discountBadge": "۲۰٪ تخفیف سالانه",
+      "description": "مناسب توزیع‌کنندگان لوازم یدکی و قطعات با شماره سریال مجزا، انبار قفسه‌بندی‌شده و صدور پیش‌فاکتور رسمی B2B.",
+      "features": [
+        "ثبت بارنامه و سریال فنی قطعه",
+        "صدور آنی پیش‌فاکتور با مالیات",
+        "تفکیک انبار اصلی از امانی",
+        "پنل حسابداری همگام"
+      ],
+      "desktopScreens": [
+        {
+          "label": "جستجوی شماره فنی کالا",
+          "src": "/images/templates/wh3-desk-1.jpg"
+        },
+        {
+          "label": "فاکتور رسمی سازمانی",
+          "src": "/images/templates/wh3-desk-2.jpg"
+        }
+      ],
+      "mobileScreens": [
+        {
+          "label": "استعلام موجودی قطعه",
+          "src": "/images/templates/wh3-mob-1.jpg"
+        },
+        {
+          "label": "ثبت فاکتور اعتباری",
+          "src": "/images/templates/wh3-mob-2.jpg"
+        }
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "code": "wh-4",
+      "name": "مارکت‌پلیس هاب (Market Central)",
+      "category": "warehouse",
+      "tag": "انبار مرکزی چندتأمینی",
+      "planName": "پلن مارکت‌پلیس چندفروشندگی",
+      "priceMonthly": 2200000,
+      "priceYearly": 21120000,
+      "discountBadge": "۲۰٪ تخفیف سالانه",
+      "description": "طراحی هاب لجستیک با امکان نگهداری کالای تأمین‌کنندگان گوناگون در انبار متمرکز و ارسال خودکار به باربری.",
+      "features": [
+        "تفکیک انبار به ازای فروشنده",
+        "تخصیص اتوماتیک نزدیک‌ترین شعبه",
+        "ارزش‌گذاری ریالی راکد",
+        "تسویه حساب خودکار چندتأمینی"
+      ],
+      "desktopScreens": [
+        {
+          "label": "پنل تأمین‌کننده و شارژ انبار",
+          "src": "/images/templates/wh4-desk-1.jpg"
+        },
+        {
+          "label": "مانیتورینگ سفارشات خروجی",
+          "src": "/images/templates/wh4-desk-2.jpg"
+        }
+      ],
+      "mobileScreens": [
+        {
+          "label": "پنل تحویل انباردار",
+          "src": "/images/templates/wh4-mob-1.jpg"
+        },
+        {
+          "label": "سبد خرید چندفروشگاهی",
+          "src": "/images/templates/wh4-mob-2.jpg"
+        }
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "code": "light-1",
+      "name": "فلش چابک (Flash Direct)",
+      "category": "light",
+      "tag": "بدون انبارداری • خرید فوری",
+      "planName": "پلن سبک و دانلودی (لایت)",
+      "priceMonthly": 790000,
+      "priceYearly": 7580000,
+      "discountBadge": "۲۵٪ تخفیف سالانه",
+      "description": "برای بیزینس‌هایی که دغدغه انبار و موجودی فیزیکی ندارند (محصولات دیجیتال، خدماتی، تک‌محصولی یا تأمین آنی). بدون کدهای سنگین انبارداری با سرعت فوق‌العاده.",
+      "features": [
+        "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
+        "بدون لودینگ لاگ انبارداری",
+        "امتیاز ۱۰۰ در تست سرعت",
+        "اتصال سریع به درگاه بانکی"
+      ],
+      "desktopScreens": [
+        {
+          "label": "صفحه فرود متمرکز خرید",
+          "src": "/images/templates/light-desk-1.jpg"
+        },
+        {
+          "label": "فرم تسویه حساب سریع",
+          "src": "/images/templates/light-desk-2.jpg"
+        }
+      ],
+      "mobileScreens": [
+        {
+          "label": "خرید با یک کلیک",
+          "src": "/images/templates/light-mob-1.jpg"
+        },
+        {
+          "label": "فاکتور پیامکی آنی",
+          "src": "/images/templates/light-mob-2.jpg"
+        }
+      ],
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "storePlans": [
+    {
+      "code": "light-direct",
+      "name": "نسخه چابک و فوری (Light)",
+      "badge": "تک‌محصولی و خدمات",
+      "tagline": "ایده‌آل برای فایل دانلودی، اشتراک آموزشی و بیزینس‌های بدون انبار فیزیکی",
+      "isPopular": false,
+      "monthlyPrice": 1590000,
+      "yearlyPrice": 17580000,
+      "setupTime": "تحویل آنی پس از پرداخت",
+      "features": [
+        "تسویه حساب تک‌مرحله‌ای (خرید در ۳۰ ثانیه)",
+        "سرعت لود زیر ۱ ثانیه (بدون سربار انبارداری)",
+        "اتصال به درگاه زرین‌پال، زیبال و شاپرک",
+        "سیستم صدور فاکتور و ارسال پیامک خودکار",
+        "هاست ابری استاندارد + دامنه .ir رایگان"
+      ],
+      "limitations": [
+        "فاقد انبارداری ماتریسی و چندشعبه‌ای",
+        "فاقد اتصال به حسابداری سپیدار"
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "code": "retail-smart",
+      "name": "نسخه مد و ریتیل (Fashion & Matrix)",
+      "badge": "ماتریسی رنگ و سایز",
+      "tagline": "ویژه فروشگاه‌های پوشاک، کفش و اکسسوری با نیاز به کنترل ویژگی‌های چندگانه",
+      "isPopular": false,
+      "monthlyPrice": 2450000,
+      "yearlyPrice": 28920000,
+      "setupTime": "تحویل و نصب در ۳۰ دقیقه",
+      "features": [
+        "مدیریت ابعاد چندگانه (رنگ، سایز، قد، نوع پارچه)",
+        "رزرو موقت کالا در سبد خرید مشتری تا پایان مهلت",
+        "هشدار پیامکی کاهش موجودی و نقطه سفارش بحرانی",
+        "تعریف کدهای تخفیف درصدی، مبلغی و ارسال رایگان",
+        "پشتیبانی تیکتی VIP + وب‌سرویس پیامکی اختصاصی"
+      ],
+      "limitations": [
+        "حداکثر تا ۵ شعبه فیزیکی همزمان"
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "code": "b2b-techno",
+      "name": "نسخه قطعات و صنعتی (Techno B2B)",
+      "badge": "فاکتور رسمی و شماره فنی",
+      "tagline": "مناسب توزیع‌کنندگان لوازم یدکی، ابزارآلات و بنکداران کالای سنگین",
+      "isPopular": false,
+      "monthlyPrice": 4650000,
+      "yearlyPrice": 45840000,
+      "setupTime": "تحویل و کانفیگ اختصاصی ۱ ساعته",
+      "features": [
+        "جستجوی پیشرفته بر پایه شماره سریال و کد فنی",
+        "صدور آنی پیش‌فاکتور رسمی شرکتی با احتساب مالیات ارزش‌افزوده",
+        "تعریف سطوح قیمتی مجزا برای همکار و مصرف‌کننده نهایی",
+        "امکان تفکیک انبار اصلی شرکت از امانی نمایندگی‌ها",
+        "گزارش‌گیری فصلی فروش استاندارد دارایی"
+      ],
+      "limitations": [
+        "پنل تأمین‌کننده مستقل مارکت‌پلیس ندارد"
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "code": "enterprise-omni",
+      "name": "نسخه جامع مگاشاپ و مارکت‌پلیس (Enterprise)",
+      "badge": "چندانبارداری و هایپرمارکت",
+      "tagline": "قدرتمندترین نسخه برای برندهای بالای ۵۰ هزار قلم کالا و فروشگاه‌های چندفروشندگی",
+      "isPopular": true,
+      "monthlyPrice": 6200000,
+      "yearlyPrice": 89120000,
+      "setupTime": "نصب ابری و اتصال دیتابیس در کمتر از ۲ ساعت",
+      "features": [
+        "انبارداری نامحدود چندشعبه‌ای و حواله انتقال بین‌انباری با بارکد",
+        "اتصال مستقیم API به نرم‌افزارهای مالی (سپیدار، هلو و...)",
+        "پنل اختصاصی چندتأمینی (Marketplace Hub) با تسویه مجزا",
+        "تخصیص خودکار سفارش به نزدیک‌ترین انبار بر اساس موقعیت کاربر",
+        "سرور اختصاصی ایزوله پرسرعت + گواهی SSL حرفه‌ای و پشتیبانی ۲۴/۷"
+      ],
+      "limitations": [],
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "appDownloadLinks": [
+    {
+      "titleFa": "کافه بازار",
+      "titleEn": "کافه بازار",
+      "captionFa": "🛒",
+      "captionEn": "🛒",
+      "href": "https://cafebazaar.ir",
+      "emoji": "🛒",
+      "variant": "bazaar",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "titleFa": "نسخه مستقیم اندروید (APK)",
+      "titleEn": "نسخه مستقیم اندروید (APK)",
+      "captionFa": "📥",
+      "captionEn": "📥",
+      "href": "/downloads/gold-app.apk",
+      "emoji": "📥",
+      "variant": "direct",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "titleFa": "📺 تابلوی مغازه",
+      "titleEn": "📺 تابلوی مغازه",
+      "captionFa": "",
+      "captionEn": "",
+      "href": "#display-section",
+      "emoji": null,
+      "variant": "anchor",
+      "sortOrder": 2,
+      "isPublished": true
+    }
+  ]
+}

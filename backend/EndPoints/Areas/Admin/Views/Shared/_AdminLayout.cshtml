@@ -1,0 +1,126 @@
+@inject AdminRegistry Registry
+@{
+    var flash = TempData["Admin:Flash"] as string;
+    var userName = User.Identity?.Name ?? "admin";
+    var currentEntity = ViewData["Entity"] as string ?? Context.Request.Path.Value ?? string.Empty;
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>@(ViewData["Title"] ?? "پنل مدیریت محتوا") | پیشگامان ایده‌نگار</title>
+    <link rel="icon" type="image/png" href="~/Panel/brand/favicon.png" />
+
+    <link rel="stylesheet" href="~/Panel/assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="~/Panel/assets/vendor/css/theme-default.css" />
+    <link rel="stylesheet" href="~/Panel/assets/css/rtl.css" />
+    <link rel="stylesheet" href="~/Panel/assets/vendor/fonts/tabler-icons.css" />
+    <link rel="stylesheet" href="~/Panel/assets/fonts/farsi-fonts/font.css" />
+    <link rel="stylesheet" href="~/Panel/assets/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="~/Panel/custome/css/file-uploader.css" />
+    <link rel="stylesheet" href="~/admin/admin.css" asp-append-version="true" />
+</head>
+<body class="layout-wrapper admin-body">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <div class="admin-brand">
+            <img src="~/Panel/brand/logo.png" alt="پیشگامان ایده‌نگار" />
+            <div>
+                <span class="admin-brand-title">پنل ایده‌نگار</span>
+                <span class="admin-brand-sub">مدیریت محتوای سایت</span>
+            </div>
+        </div>
+
+        <nav class="admin-nav" aria-label="منوی پنل">
+            <a class="admin-nav-link @(currentEntity == "/admin" || currentEntity.StartsWith("/admin/dashboard") ? "active" : "")"
+               href="/admin">
+                <i class="ti ti-dashboard"></i> پیش‌خوان
+            </a>
+
+            @foreach (var group in Registry.Groups)
+            {
+                <div class="admin-nav-group">@group.Key</div>
+                @foreach (var definition in group.OrderBy(item => item.TitleFa, StringComparer.CurrentCulture))
+                {
+                    <a class="admin-nav-link @(currentEntity.Contains(definition.RouteName, StringComparison.OrdinalIgnoreCase) ? "active" : "")"
+                       href="/admin/@definition.RouteName">
+                        <i class="@definition.Icon"></i> @definition.TitleFa
+                    </a>
+                }
+            }
+
+            <div class="admin-nav-group">دریافت‌ها</div>
+            <a class="admin-nav-link @(currentEntity.Contains("inbox/messages", StringComparison.OrdinalIgnoreCase) ? "active" : "")" href="/admin/inbox/messages">
+                <i class="ti ti-mail-incoming"></i> پیام‌های تماس
+            </a>
+            <a class="admin-nav-link @(currentEntity.Contains("inbox/orders", StringComparison.OrdinalIgnoreCase) ? "active" : "")" href="/admin/inbox/orders">
+                <i class="ti ti-receipt"></i> سفارش‌های فروشگاه‌ساز
+            </a>
+
+            <div class="admin-nav-group">تنظیمات</div>
+            <a class="admin-nav-link @(currentEntity.Contains("site-settings", StringComparison.OrdinalIgnoreCase) ? "active" : "")" href="/admin/site-settings">
+                <i class="ti ti-settings"></i> اطلاعات شرکت و سئو
+            </a>
+        </nav>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <button type="button" class="btn btn-icon btn-label-secondary btn-sm" id="adminSidebarToggle" aria-label="باز و بسته کردن منو">
+                <i class="ti ti-menu-2"></i>
+            </button>
+            <div class="admin-topbar-title">
+                @(ViewData["Title"] ?? "پیش‌خوان")
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a class="btn btn-sm btn-label-primary" href="/" target="_blank" rel="noopener">
+                    <i class="ti ti-external-link"></i> مشاهده سایت
+                </a>
+                <span class="text-muted small">@userName</span>
+                <form method="post" asp-area="Admin" asp-controller="Account" asp-action="Logout" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">خروج</button>
+                </form>
+            </div>
+        </header>
+
+        <main class="admin-content">
+            @if (!string.IsNullOrWhiteSpace(flash))
+            {
+                <div class="alert alert-success alert-dismissible admin-flash" role="status">
+                    @flash
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+                </div>
+            }
+
+            @if (ViewData["PanelWarning"] is string warning)
+            {
+                <div class="alert alert-warning" role="alert">@warning</div>
+            }
+
+            @RenderBody()
+        </main>
+
+        <footer class="admin-footer">
+            <span>© @DateTime.UtcNow.Year پیشگامان ایده‌نگار — پنل مدیریت محتوا</span>
+            <span class="text-muted">داده‌ها به‌صورت زنده روی سایت اعمال می‌شوند.</span>
+        </footer>
+    </div>
+</div>
+
+<script src="~/Panel/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="~/Panel/assets/vendor/libs/popper/popper.js"></script>
+<script src="~/Panel/assets/vendor/js/bootstrap.js"></script>
+<script src="~/Panel/assets/vendor/js/helpers.js"></script>
+<script src="~/Panel/assets/js/config.js"></script>
+<script src="~/Panel/assets/vendor/js/menu.js"></script>
+<script src="~/Panel/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/Panel/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="~/Panel/custome/js/api-client.js"></script>
+<script src="~/Panel/custome/js/file-uploader.js"></script>
+<script src="~/admin/admin.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
