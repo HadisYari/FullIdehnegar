@@ -1,0 +1,34 @@
+@model Admin.Areas.Admin.Models.FileUploaderViewModel
+@{
+	var hint = Model.Hint ?? ("فرمت‌های مجاز: " + Model.Accept + " | حداکثر حجم: " + Model.MaxSizeMB + " مگابایت");
+}
+<div class="file-uploader" data-fu-accept="@Model.Accept" data-fu-max-size="@(Model.MaxSizeMB * 1024 * 1024)">
+	<label class="form-label">
+		@Model.Label
+		@if (Model.Required)
+		{
+			<span class="text-danger">*</span>
+		}
+	</label>
+	<input type="hidden" class="fu-value" name="@Model.Name" id="@Model.Name" value="@Model.Value" />
+	<div class="fu-dropzone">
+		<input type="file" class="fu-input" accept="@Model.Accept" hidden />
+		<div class="fu-empty">
+			<i class="ti ti-cloud-up"></i>
+			<span>فایل را اینجا رها کنید یا برای انتخاب کلیک کنید</span>
+			<small class="fu-hint" dir="ltr">@hint</small>
+		</div>
+		<div class="fu-preview d-none">
+			<img class="fu-preview-img" alt="پیش‌نمایش" />
+			<span class="fu-path"></span>
+			<div class="fu-actions">
+				<button type="button" class="btn btn-sm btn-label-primary fu-change">
+					<i class="ti ti-refresh"></i> تغییر
+				</button>
+				<button type="button" class="btn btn-sm btn-label-danger fu-remove">
+					<i class="ti ti-trash"></i> حذف
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,128 @@
+﻿ 
+.fs-7 {
+    font-size: 0.82rem !important;
+}
+
+.fs-8 {
+    font-size: 0.76rem !important;
+}
+
+.fs-9 {
+    font-size: 0.68rem !important;
+}
+
+.btn-xs {
+    padding: 2px 6px;
+    font-size: 0.72rem;
+    border-radius: 4px;
+}
+
+.btn-purple {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+    .btn-purple:hover {
+        background-color: #59339d;
+        border-color: #543093;
+    }
+
+.text-purple {
+    color: #6f42c1 !important;
+}
+
+.border-purple {
+    border-color: #6f42c1 !important;
+}
+
+.style-coin-box {
+    min-width: 82px;
+    background-color: #fffdf5;
+    border-color: #e4e0d2 !important;
+}
+
+.style-book-card {
+    background-color: #f4faf4;
+}
+
+.style-pay-card {
+    background-color: #fffaf0;
+}
+
+.hover-row:hover {
+    background-color: rgba(0,0,0,0.03) !important;
+    padding-right: 4px !important;
+}
+
+.hover-elevate {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .hover-elevate:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+    }
+
+/* سیستم استایل هوشمند موعد سررسید بنکداری */
+.status-critical {
+    background-color: #fff5f5;
+    border-left: 4px solid #de3545 !important;
+}
+
+.status-warning {
+    background-color: #fff9f0;
+    border-left: 4px solid #ffc107 !important;
+}
+
+.status-safe {
+    background-color: #f4faf4;
+    border-left: 4px solid #198754 !important;
+}
+
+/* انیمیشن پالس برای المان‌های بحرانی زیر ۳ روز */
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* شخصی‌سازی اسکرول‌بار مرورگر در صورت ازدیاد داده‌ها */
+.dynamic-scroll-box::-webkit-scrollbar {
+    width: 4px;
+}
+
+.dynamic-scroll-box::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 4px;
+}
+
+.row-cols-lg-7 > * {
+    flex: 0 0 auto;
+    width: 14.2857142857%;
+}
+
+@media (max-width: 992px) {
+    .row-cols-lg-7 > * {
+        width: 25%;
+    }
+}
+
+@media (max-width: 576px) {
+    .row-cols-lg-7 > * {
+        width: 50%;
+    }
+}
+
+ 

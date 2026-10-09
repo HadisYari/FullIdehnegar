@@ -1,0 +1,506 @@
+[
+ 
+  {
+    "slug": "municipality-budget-system",
+    "category": "enterprise-software",
+    "client": {
+      "fa": "فروشگاه اینترنتی لوازم شکار و طبیعت‌گردی قوچ",
+      "en": "Kermanshah Municipality"
+    },
+    "year": 1394,
+    "featured": true,
+    "image": "/images/portfolio/ghooch.com.png",
+    "tags": [
+      "Budget Management",
+      "Workflow",
+      "Government"
+    ],
+    "link": "",
+    "title": {
+      "fa":"فروشگاه اینترنتی لوازم شکار و طبیعت‌گردی قوچ",
+      "en": "Integrated Municipal Budgeting System"
+    },
+    "summary": {
+      "fa": "پوشش کامل فرآیند تصویب بودجه، ارجاعات، مصوبات و اتوماسیون بودجه‌بندی شهرداری.",
+      "en": "End-to-end coverage of budget approval, referrals, resolutions, and municipal budgeting automation."
+    },
+    "description": {
+      "fa": "این نرم‌افزار کلیه فرآیند تصویب بودجه، ارجاعات، مصوبات و اتوماسیون فرآیندی بودجه‌بندی شهرداری را پوشش می‌دهد و تمامی نیازمندی‌های بودجه‌ریزی سازمانی را در قالب یک سامانه یکپارچه و تحت وب مدیریت می‌کند.",
+      "en": "This software covers the entire municipal budget-approval workflow — referrals, resolutions, and process automation — managing every organizational budgeting need through a single, unified web platform."
+    }
+  },
+  {
+    "slug": "municipality-project-control",
+    "category": "enterprise-software",
+    "client": {
+      "fa": "شهرداری کرمانشاه",
+      "en": "Kermanshah Municipality"
+    },
+    "year": 1394,
+    "featured": false,
+    "image": "/images/portfolio/agreement.idehnegar.co.png",
+    "tags": [
+      "Project Control",
+      "Dashboard",
+      "Government"
+    ],
+    "link": "",
+    "title": {
+      "fa": "سامانه کنترل پروژه شهرداری",
+      "en": "Municipal Project Control System"
+    },
+    "summary": {
+      "fa": "پایش لحظه‌ای پیشرفت پروژه‌های عمرانی شهرداری با گزارش‌گیری چندسطحی.",
+      "en": "Real-time progress tracking for municipal construction projects with multi-level reporting."
+    },
+    "description": {
+      "fa": "سامانه‌ای برای نظارت بر عملکرد و روند پیشرفت پروژه‌های عمرانی شهرداری کرمانشاه که مراحل بررسی هر پروژه بر پایه SDI و بر اساس موافقتنامه‌های صورت‌گرفته ایجاد شده است. مدیران ارشد شهرداری (شهرداران مناطق، شهردار، مدیران سامانه ۱۳۷ و ...) می‌توانند گزارش‌گیری لحظه‌ای در سطوح مختلف داشته باشند و نمودارهای مقایسه عملکرد مناطق و سازمان‌ها را مشاهده کنند.",
+      "en": "A monitoring system for tracking the progress of Kermanshah Municipality's construction projects, staged review by review based on signed agreements and mapped on an SDI foundation. Senior officials — district mayors, the city mayor, and system administrators — get real-time reporting at every level, including comparison charts across districts and departments."
+    }
+  },
+ 
+  {
+    "slug": "cyberometrics",
+    "category": "international",
+    "client": {
+      "fa": "Cyberometrics (کانادا)",
+      "en": "Cyberometrics (Canada)"
+    },
+    "year": 1403,
+    "featured": false,
+    "image": "/images/portfolio/cyberometrics.jpg",
+    "tags": [
+      "International",
+      "AI Agency",
+      "Website"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت شرکت Cyberometrics",
+      "en": "Cyberometrics Website"
+    },
+    "summary": {
+      "fa": "طراحی وب‌سایت شرکتی برای یک آژانس هوش مصنوعی فعال در کانادا.",
+      "en": "Corporate website for an AI automation agency based in Canada."
+    },
+    "description": {
+      "fa": "بخشی از همکاری‌های بین‌المللی ایده‌نگار، طراحی و توسعه وب‌سایت رسمی Cyberometrics، آژانس ارائه‌دهنده خدمات هوش مصنوعی و اتوماسیون برای کسب‌وکارهای کوچک و متوسط در کانادا بوده است.",
+      "en": "As part of Idehnegar's international collaborations, we designed and built the official website for Cyberometrics, an AI automation agency serving SMEs in Canada."
+    }
+  },
+
+  {
+    "slug": "modalal-holding",
+    "category": "website",
+    "client": {
+      "fa": "گروه سرمایه و صنعت مدلل",
+      "en": "Modalal Capital & Industry Group"
+    },
+    "year": 1399,
+    "featured": true,
+    "image": "/images/portfolio/modalalgroup.com.png",
+    "tags": [
+      "Corporate Website",
+      "Branding",
+      "SEO"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت رسمی هلدینگ صنعتی مدلل",
+      "en": "Modalal Industrial Holding Website"
+    },
+    "summary": {
+      "fa": "طراحی وب‌سایت گروه مدلل و ۱۱ شرکت زیرمجموعه با تمرکز بر یکپارچگی برند و سئو.",
+      "en": "Corporate site for the Modalal group and its 11 subsidiaries, focused on brand consistency and SEO."
+    },
+    "description": {
+      "fa": "از سال ۱۳۹۹ تاکنون با گروه سرمایه و صنعت مدلل و ۱۱ شرکت زیرمجموعه آن در پروژه‌هایی چون طراحی وب‌سایت‌های شرکتی، فروشگاه‌های آنلاین و توسعه نرم‌افزارهای اختصاصی همکاری داشته‌ایم؛ با تمرکز بر یکپارچگی برند، تجربه کاربری بهینه و زیرساخت سئو-محور.",
+      "en": "Since 2020 we've partnered with the Modalal Capital & Industry Group and its 11 subsidiaries on corporate websites, online stores, and custom software — with a focus on brand consistency, optimized UX, and SEO-first infrastructure."
+    }
+  },
+  {
+    "slug": "faratech-modalal",
+    "category": "website",
+    "client": {
+      "fa": "فراتک مدلل",
+      "en": "Faratech Modalal"
+    },
+    "year": 1399,
+    "featured": false,
+    "image": "/images/portfolio/faratech-modalal.jpg",
+    "tags": [
+      "Industrial",
+      "Corporate Website"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت فراتک مدلل",
+      "en": "Faratech Modalal Website"
+    },
+    "summary": {
+      "fa": "وب‌سایت شرکتی برای تولیدکننده سوله‌های صنعتی و سازه‌های فلزی.",
+      "en": "Corporate website for an industrial hangar and steel-structure manufacturer."
+    },
+    "description": {
+      "fa": "طراحی و اجرای وب‌سایت شرکتی فراتک مدلل، فعال در طراحی و اجرای سوله‌های صنعتی، سازه‌های فلزی و تجهیزات فرآیندی، با معرفی خدمات و نمونه‌کارهای صنعتی شرکت.",
+      "en": "Design and build of the Faratech Modalal corporate site — a company specializing in industrial hangars, steel structures, and process equipment — showcasing its services and industrial project gallery."
+    }
+  },
+  {
+    "slug": "offcard-store",
+    "category": "ecommerce",
+    "client": {
+      "fa": "آف‌کارت",
+      "en": "OffCard"
+    },
+    "year": 1401,
+    "featured": true,
+    "image": "/images/portfolio/offcardco.com.png",
+    "tags": [
+      "E-commerce",
+      "Ticketing"
+    ],
+    "link": "",
+    "title": {
+      "fa": "نرم‌افزار و وب‌سایت فروشگاهی آف‌کارت",
+      "en": "OffCard E-commerce Platform"
+    },
+    "summary": {
+      "fa": "فروشگاه اینترنتی بلیت و تخفیف با پنل مدیریت اختصاصی.",
+      "en": "An online ticketing & discount store with a dedicated management panel."
+    },
+    "description": {
+      "fa": "طراحی و توسعه نرم‌افزار و وب‌سایت فروشگاهی آف‌کارت، شامل فروش بلیت و کدهای تخفیف رویدادهای شهربازی و سرگرمی، همراه با پنل مدیریت محصولات و سفارش‌ها.",
+      "en": "Design and development of the OffCard storefront and back-office — selling tickets and discount codes for amusement and entertainment venues, with a full product and order management panel."
+    }
+  },
+  {
+    "slug": "chap-sanaye-kermanshah",
+    "category": "website",
+    "client": {
+      "fa": "صنایع چاپ و بسته‌بندی کرمانشاه (KPPID)",
+      "en": "Kermanshah Printing & Packaging Industries (KPPID)"
+    },
+    "year": 1400,
+    "featured": true,
+    "image": "/images/portfolio/kppid.com.png",
+    "tags": [
+      "Corporate Website",
+      "B2B"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت شرکت توسعه صنایع چاپ و بسته‌بندی کرمانشاه",
+      "en": "Kermanshah Packaging Industries Website"
+    },
+    "summary": {
+      "fa": "وب‌سایت معرفی محصولات و دریافت استعلام قیمت آنلاین برای صنایع بسته‌بندی.",
+      "en": "A product showcase and online price-inquiry site for a packaging manufacturer."
+    },
+    "description": {
+      "fa": "طراحی وب‌سایت شرکتی برای معرفی محصولات بسته‌بندی اختصاصی (از جمله جعبه‌های پیتزا و بسته‌بندی مواد غذایی)، همراه با فرم استعلام آنلاین قیمت برای مشتریان B2B.",
+      "en": "Corporate website showcasing custom packaging products — including pizza boxes and food packaging — with an online price-inquiry form for B2B customers."
+    }
+  },
+  {
+    "slug": "college-zaban",
+    "category": "website",
+    "client": {
+      "fa": "کالج زبان (Ta K Language College)",
+      "en": "Ta K Language College"
+    },
+    "year": 1400,
+    "featured": true,
+    "image": "/images/portfolio/kengcollege.com.png",
+    "tags": [
+      "Education",
+      "Corporate Website"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت آموزشگاه کالج زبان",
+      "en": "Ta K Language College Website"
+    },
+    "summary": {
+      "fa": "وب‌سایت معرفی دوره‌های آموزش زبان برای گروه‌های سنی مختلف.",
+      "en": "A course catalog site for an English-language school, spanning multiple age groups."
+    },
+    "description": {
+      "fa": "طراحی وب‌سایت آموزشگاه زبان کالج زبان با معرفی دوره‌های بزرگسالان، نوجوانان، کودکان و خانه انگلیسی، ثبت‌نام آنلاین و اطلاع‌رسانی رویدادها.",
+      "en": "Website design for Ta K Language College, presenting adult, teen, kids, and immersion (\"English House\") programs, with online enrollment and event announcements."
+    }
+  },
+ 
+  {
+    "slug": "sardaftaran-kermanshah",
+    "category": "portal",
+    "client": {
+      "fa": "کانون سردفتران و دفتریاران استان کرمانشاه",
+      "en": "Kermanshah Notaries & Registrars Association"
+    },
+    "year": 1399,
+    "featured": true,
+    "image": "/images/portfolio/kshnotary.ir.png",
+    "tags": [
+      "Government Portal",
+      "e-Services"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت کانون سردفتران و دفتریاران استان کرمانشاه",
+      "en": "Kermanshah Notaries Association Portal"
+    },
+    "summary": {
+      "fa": "پرتال رسمی خدمات الکترونیک و اطلاع‌رسانی برای اسناد رسمی استان.",
+      "en": "An official e-services and information portal for the province's notary offices."
+    },
+    "description": {
+      "fa": "طراحی پرتال رسمی کانون سردفتران و دفتریاران استان کرمانشاه شامل استعلام شناسه اشخاص حقوقی، فهرست دفاتر اسناد رسمی، خدمات الکترونیک ثبت اسناد و اخبار و اطلاعیه‌های کانون.",
+      "en": "Design of the official portal for the Kermanshah Notaries & Registrars Association, including legal-entity ID lookups, a directory of notary offices, e-registration services, and association news."
+    }
+  },
+  {
+    "slug": "tagh-shib-construction",
+    "category": "website",
+    "client": {
+      "fa": "گروه ساختمانی طاق شیب",
+      "en": "Tagh Shib Construction Group"
+    },
+    "year": 1402,
+    "featured": true,
+    "image": "/images/portfolio/taaghsheebgroup.com.png",
+    "tags": [
+      "Construction",
+      "Corporate Website"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت گروه ساختمانی طاق شیب",
+      "en": "Tagh Shib Construction Group Website"
+    },
+    "summary": {
+      "fa": "معرفی پروژه‌های سازه‌های فلزی صنعتی و بندری.",
+      "en": "Showcasing industrial and port steel-structure projects."
+    },
+    "description": {
+      "fa": "طراحی وب‌سایت شرکتی گروه ساختمانی طاق شیب با معرفی پروژه‌های اجرا‌شده، از جمله سازه‌های فلزی ترمینال غلات بندر ماهشهر و سایر پروژه‌های عمرانی و صنعتی.",
+      "en": "Corporate website for Tagh Shib Construction Group, showcasing completed projects including steel structures for the Mahshahr grain terminal and other industrial and civil works."
+    }
+  },
+  {
+    "slug": "ako-modalal",
+    "category": "website",
+    "client": {
+      "fa": "آکو مدلل",
+      "en": "Ako Modalal"
+    },
+    "year": 1400,
+    "featured": false,
+    "image": "/images/portfolio/ako-modalal.jpg",
+    "tags": [
+      "Industrial",
+      "Corporate Website"
+    ],
+    "link": "",
+    "title": {
+      "fa": "وب‌سایت شرکت آکو مدلل",
+      "en": "Ako Modalal Website"
+    },
+    "summary": {
+      "fa": "وب‌سایت معرفی محصولات سازه‌های دیوار خشک.",
+      "en": "A product site for drywall structural systems."
+    },
+    "description": {
+      "fa": "طراحی وب‌سایت شرکتی آکو مدلل با معرفی محصولات سازه‌های دیوار خشک و خدمات فنی-مهندسی وابسته به گروه صنعتی مدلل.",
+      "en": "Corporate website for Ako Modalal, presenting drywall structural products and related engineering services under the Modalal industrial group."
+    }
+  },
+    {
+    "slug": "hipglobal",
+    "category": "international",
+    "client": {
+      "fa": "HIP Global (برزیل)",
+      "en": "HIP Global (Brazil)"
+    },
+    "year": 1403,
+    "featured": true,
+    "image": "/images/portfolio/hipglobal.jpg",
+    "tags": [
+      "International",
+      "Fintech",
+      "Web App"
+    ],
+    "link": "",
+    "title": {
+      "fa": "اپلیکیشن دریافت گرنت و وام HIP Global",
+      "en": "HIP Global Grant & Loan Application"
+    },
+    "summary": {
+      "fa": "برنامه کاربردی وب برای دریافت گرنت و وام، توسعه‌یافته برای مشتری برزیلی.",
+      "en": "A web application for grant and loan applications, built for a Brazil-based client."
+    },
+    "description": {
+      "fa": "توسعه بخشی از پلتفرم وب HIP Global (Hub for Incentives & Partnerships)، که به کسب‌وکارها در برزیل برای دسترسی به گرنت‌ها و تسهیلات مالی کمک می‌کند؛ یکی دیگر از پروژه‌های برون‌مرزی تیم ایده‌نگار.",
+      "en": "Development work on part of the HIP Global (Hub for Incentives & Partnerships) web platform, which helps Brazilian businesses access grants and financial incentives — another of Idehnegar's cross-border engagements."
+    }
+  },
+   {
+    "slug": "sanatgostar-automation",
+    "category": "industrial",
+    "client": {
+      "fa": "شرکت ریخته‌گری دقیق صنعت گستر",
+      "en": "Sanat Gostar Precision Casting Co."
+    },
+    "year": 1398,
+    "featured": true,
+    "image": "/images/portfolio/sanatgostar-automation.jpg",
+    "tags": [
+      "ERP",
+      "Manufacturing",
+      "CMMS",
+      "APS"
+    ],
+    "link": "",
+    "title": {
+      "fa": "سیستم ERP اختصاصی خط تولید ریخته‌گری دقیق",
+      "en": "Custom ERP for a Precision Casting Production Line"
+    },
+    "summary": {
+      "fa": "طراحی و پیاده‌سازی ERP سفارشی با ماژول‌های تولید، کنترل کیفیت، ردیابی قطعه و داشبورد مدیریتی.",
+      "en": "Custom ERP covering production, quality control, part tracking, and management dashboards."
+    },
+    "description": {
+      "fa": "از سال ۱۳۹۸ همکاری مستمری با این شرکت در حوزه‌های مختلف داشته‌ایم: طراحی و پیاده‌سازی سیستم ERP اختصاصی، نرم‌افزار برنامه‌ریزی و زمان‌بندی تولید (APS)، مدیریت قطعات و BOM، کنترل کیفیت، ردیابی تولید، و نرم‌افزار نگهداری و تعمیرات ماشین‌آلات (CMMS) متناسب با نیازهای خاص صنعت ریخته‌گری دقیق.",
+      "en": "We've worked continuously with this manufacturer since 2019 across a custom ERP build, production planning & scheduling software (APS), parts/BOM management, quality control, production tracking, and a CMMS for machinery maintenance — all tailored to the specific needs of precision casting."
+    }
+  },
+  {
+     "slug": "ghooch-project",
+  "title": { "fa": "فروشگاه اینترنتی لوازم شکار قوچ", "en": "Example Online Store" },
+  "summary": { "fa": "طراحی و توسعه فروشگاه اینترنتی", "en": "Design and development of online store" },
+  "description": {
+    "fa": "این پروژه شامل طراحی و توسعه یک فروشگاه اینترنتی کامل با سیستم پرداخت آنلاین، مدیریت موجودی و پنل مدیریت پیشرفته بود.",
+    "en": "This project included designing and developing a complete online store with payment integration, inventory management and advanced admin panel."
+  },
+    "featured": true,
+  "category": "ecommerce",
+  "image": "/images/portfolio/ghoch-store.jpg",
+  "desktopScreenshot": "/images/portfolio/desk - ghooch.com.png",
+  "mobileScreenshot": "/images/portfolio/ghooch.com.png",
+  
+  "features": [
+    {
+      "title": { "fa": "پرداخت آنلاین", "en": "Online Payment" },
+      "description": { "fa": "اتصال به درگاه‌های پرداخت بانکی", "en": "Integration with bank payment gateways" }
+    },
+    {
+      "title": { "fa": "پنل مدیریت", "en": "Admin Panel" },
+      "description": { "fa": "مدیریت کامل محصولات و سفارشات", "en": "Complete product and order management" }
+    }
+  ],
+  "stats": [
+    {
+      "label": { "fa": "کاربر فعال", "en": "Active Users" },
+      "value": { "fa": "۱۰,۰۰۰+", "en": "10,000+" },
+      "color": "bg-blue-100 text-blue-600"
+    },
+    {
+      "label": { "fa": "سرعت لود", "en": "Load Speed" },
+      "value": { "fa": "۰.۸ ثانیه", "en": "0.8s" },
+      "color": "bg-green-100 text-green-600"
+    }
+  ],
+  "client": { "fa": "قوچ  ", "en": "Example Corp" },
+  "year": 2024,
+  "tags": ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+  "link": "https://example.com"
+  },
+  {
+    "slug": "gold-price-system",
+    "category": "enterprise-software",
+    "client": {
+      "fa": "اتحادیه طلا و جواهر کرمانشاه",
+      "en": "Kermanshah Gold & Jewelry Union"
+    },
+    "year": 1400,
+    "featured": false,
+    "image": "/images/portfolio/gold-price-system.jpg",
+    "tags": [
+      "Fintech",
+      "Real-time Data"
+    ],
+    "link": "",
+    "title": {
+      "fa": "سامانه اعلام نرخ لحظه‌ای طلا و ارز",
+      "en": "Real-Time Gold & Currency Price System"
+    },
+    "summary": {
+      "fa": "نمایش لحظه‌ای نرخ طلا، سکه و ارز برای اعضای اتحادیه طلافروشان.",
+      "en": "Live gold, coin, and currency price feed for jewelry union members."
+    },
+    "description": {
+      "fa": "طراحی سامانه اعلام نرخ لحظه‌ای طلا، سکه (تمام، نیم، ربع، امامی) و ارز برای اتحادیه صنفی طلا و جواهر کرمانشاه، با به‌روزرسانی آنی قیمت‌ها و پشتیبانی از تصمیم‌گیری خرید و فروش اعضا.",
+      "en": "A real-time price board for gold, coins (full, half, quarter, Emami), and currencies for the Kermanshah Gold & Jewelry Union — with instant price updates supporting members' buy/sell decisions."
+    }
+  },
+   {
+    "slug": "smartexport-ai",
+    "category": "ai",
+    "client": {
+      "fa": "پروژه داخلی ایده‌نگار",
+      "en": "Idehnegar In-house Product"
+    },
+    "year": 1404,
+    "featured": true,
+    "image": "/images/portfolio/smartexport-ai.jpg",
+    "tags": [
+      "AI",
+      "Lead Generation",
+      "SaaS",
+      "Automation"
+    ],
+    "link": "",
+    "title": {
+      "fa": "دستیار هوشمند صادرات (SmartExport)",
+      "en": "SmartExport – AI Export Assistant"
+    },
+    "summary": {
+      "fa": "پلتفرم هوش مصنوعی برای اتوماسیون کامل فروش و بازاریابی صادراتی کسب‌وکارهای کوچک و متوسط.",
+      "en": "An AI platform that automates export sales & marketing end-to-end for SMEs."
+    },
+    "description": {
+      "fa": "Idehnegar SmartExport یک پلتفرم نرم‌افزاری مبتنی بر هوش مصنوعی است که به‌عنوان «دستیار هوشمند فروش و صادرات» عمل می‌کند و زنجیره کامل فعالیت‌های بازاریابی و فروش را از مرحله تولید لید تا ارائه پروپوزال و رزرو جلسه، به‌صورت خودکار و ۲۴ ساعته انجام می‌دهد. این پلتفرم شامل بیش از ۱۰ ماژول هوشمند برای مدیریت لید، تولید محتوا، مدیریت کمپین، تحلیل داده و گزارش‌دهی KPI است. شرکت‌ها تنها کافی‌ست اطلاعات مربوط به سازمان، محصولات و خدمات خود را ثبت کنند؛ سامانه به‌صورت کاملاً هوشمند بازارهای هدف را تحلیل می‌کند، کاتالوگ‌های معرفی محصول تولید می‌کند و با مشتریان بالقوه ارتباط برقرار می‌کند.",
+      "en": "Idehnegar SmartExport is an AI-powered platform that acts as an intelligent export sales & marketing assistant, automating the full funnel from lead generation to proposal delivery and meeting booking — around the clock. It ships with 10+ smart modules covering lead management, content generation, campaign management, analytics, and KPI reporting. Companies only need to describe their organization, products, and services; the platform intelligently analyzes target markets, generates product catalogs, and engages potential customers on its own."
+    }
+  },
+  {
+    "slug": "national-hazard-management",
+    "category": "portal",
+    "client": {
+      "fa": "دانشگاه‌های علوم پزشکی سراسر کشور",
+      "en": "National Medical Universities Network"
+    },
+    "year": 1395,
+    "featured": true,
+    "image": "/images/portfolio/national-hazard-management.jpg",
+    "tags": [
+      "GIS",
+      "Crisis Management",
+      "Government"
+    ],
+    "link": "",
+    "title": {
+      "fa": "سامانه ملی مدیریت مخاطرات و منابع اورژانس کشور",
+      "en": "National Emergency Resource & Hazard Management System"
+    },
+    "summary": {
+      "fa": "سامانه مکان‌محور شناسایی و مدیریت منابع بحران در سطح استان‌های کشور، دارای تاییدیه دانش‌بنیان.",
+      "en": "A GIS-based platform for identifying and managing crisis-response resources nationwide, certified as a knowledge-based product."
+    },
+    "description": {
+      "fa": "این سامانه به‌منظور مدیریت و شناسایی منابع در زمان بحران طراحی شده و به استان‌ها (دانشگاه‌های علوم پزشکی، آتش‌نشانی، هلال‌احمر و پلیس) امکان می‌دهد منابع در دسترس خود را شناسایی و در صورت نیاز از سایر استان‌ها و شهرها درخواست کنند. از طریق سیستم اتوماسیون، این درخواست‌ها بررسی و پس از تایید، نیرو یا منابع اورژانس اعزام می‌شوند. کاربران هر استان می‌توانند منابع خود را روی نقشه معرفی کرده و با ابزارهای ارزیابی، منابع مورد نظر را فیلتر کنند.",
+      "en": "Built to identify and manage resources during crises, this system lets provincial bodies (medical universities, fire departments, Red Crescent, police) register their available resources and request additional ones from other provinces when needed. Requests are automatically routed, reviewed, and — once approved — resources are dispatched. Each province can plot its own resources on a live map and filter them with built-in evaluation tools."
+    }
+  } 
+ 
+]

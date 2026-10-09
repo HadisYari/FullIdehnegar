@@ -1,0 +1,46 @@
+﻿ 
+	/* لایه اختصاصی برای بالا آمدن مدال تخصیص و سوییت الرت روی مدال جزییات دیتاتیبل */
+	#editRemittanceModal {
+		z-index: 10065 !important;
+	}
+
+	.swal2-container {
+		z-index: 10085 !important; /* بالاتر از تمامی لایه‌ها و مدال‌ها */
+	}
+
+	/* زیباسازی ساختار نمایش دیتای ریسپانسیو ته‌جدول در موبایل */
+	table.dataTable.dtr-inline.collapsed > tbody > tr > td.child ul.dtr-details {
+		width: 100%;
+		padding: 10px;
+	}
+
+		table.dataTable.dtr-inline.collapsed > tbody > tr > td.child ul.dtr-details > li {
+			border-bottom: 1px solid #ededed;
+			padding: 8px 0;
+			display: flex;
+			justify-content: space-between;
+		}
+
+	.fs-8 {
+		font-size: 0.7rem !important;
+	}
+
+
+	/* تنظیم برای قرارگیری مدال‌های اختصاصی روی مدال‌های ریسپانسیو دیتاتیبل */
+	.modal {
+		z-index: 1090 !important; /* مدال‌های پیش‌فرض بوت‌استرپ را کمی بالاتر می‌آورد */
+	}
+
+	.modal-backdrop {
+		z-index: 1085 !important; /* پس‌زمینه تاریک مدال جدید */
+	}
+
+	/* مطمئن می‌شویم مدال دیتاتیبل لایه پایین‌تر باقی بماند */
+	.dtr-bs-modal {
+		z-index: 1080 !important;
+	}
+
+		.dtr-bs-modal + .modal-backdrop {
+			z-index: 1045 !important;
+		}
+ 
