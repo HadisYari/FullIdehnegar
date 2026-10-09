@@ -1,6 +1,7 @@
 import "server-only";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { cmsEnabled, loadPortfolio, loadPortfolioItem, type PortfolioProjectDto } from "./cms";
 
 export type LocalizedText = { fa: string; en: string };
 
@@ -44,32 +45,46 @@ export type LocalizedText = { fa: string; en: string };
 
 const DATA_FILE = path.join(process.cwd(), "src", "data", "portfolio.json");
 
-/**
- * Reads the portfolio data file straight from disk on every call (no fetch
- * cache involved), so items added through /admin show up immediately
- * without a rebuild or restart.
- */
-export async function getPortfolioItems(): Promise<PortfolioItem[]> {
+/** دادهٔ همراه مخزن: منبع پشتیبان وقتی بک‌اند در دسترس نیست. */
+async function readLocalItems(): Promise<PortfolioItem[]> {
   try {
     const raw = await fs.readFile(DATA_FILE, "utf-8");
-    const items = JSON.parse(raw) as PortfolioItem[];
-    // Newest / most recently added first.
-    return items;
+    return JSON.parse(raw) as PortfolioItem[];
   } catch (err) {
     console.error("Failed to read portfolio.json", err);
     return [];
   }
 }
 
+/**
+ * آیتم‌های نمونه‌کار. با تنظیم CMS_API_URL از SQL Server خوانده می‌شوند
+ * (هر ۶۰ ثانیه با ISR؛ پنل مدیریت پس از ذخیره کش را نامعتبر می‌کند) و اگر
+ * سرویس پاسخ نداد، همان فایل محلی استفاده می‌شود تا سایت از کار نیفتد.
+ */
+export async function getPortfolioItems(): Promise<PortfolioItem[]> {
+  if (!cmsEnabled) return readLocalItems();
+
+  const remote: PortfolioProjectDto[] = await loadPortfolio(200);
+  if (remote.length === 0) return readLocalItems();
+
+  return remote as unknown as PortfolioItem[];
+}
+
 export async function getPortfolioItem(slug: string): Promise<PortfolioItem | undefined> {
-  const items = await getPortfolioItems();
+  if (cmsEnabled) {
+    const remote = await loadPortfolioItem(slug);
+    if (remote) return remote as unknown as PortfolioItem;
+  }
+
+  const items = await readLocalItems();
   return items.find((i) => i.slug === slug);
 }
 
+/** پروژه‌های شاخص (featured) اول می‌آیند؛ بقیه به ترتیب پنل. */
 export async function getFeaturedPortfolioItems(limit = 6): Promise<PortfolioItem[]> {
   const items = await getPortfolioItems();
-  const featured = items.filter((i) => i.features);
-  const rest = items.filter((i) => !i.features);
+  const featured = items.filter((i) => i.featured === true);
+  const rest = items.filter((i) => i.featured !== true);
   return [...featured, ...rest].slice(0, limit);
 }
 

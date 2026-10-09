@@ -1,5 +1,6 @@
 // app/[locale]/about/page.tsx
 import type { Metadata } from "next";
+import { withPageMeta } from "@/lib/cms";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
@@ -17,18 +18,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isFa = locale === "fa";
-  return {
+  // عنوان/توضیح/کلیدواژه از جدول PageMeta (پنل مدیریت) و در نبودش از همین مقادیر.
+  return withPageMeta("about", locale === "fa" ? "fa" : "en", {
+    path: "/about",
     title: isFa
       ? "درباره ما | پیشگامان مهندسی نرم‌افزار ایده‌نگار"
       : "About Us | Idehnegar Software Studio",
     description: isFa
       ? "روایت ما در خلق پلتفرم‌های مقیاس‌پذیر، پرتال‌های سازمانی مدرن و همگرایی هنر دیزاین با مهندسی روز دنیا."
       : "Our story of architecting resilient digital platforms, enterprise software, and human-centered design.",
-    alternates: {
-      canonical: isFa ? "/about" : "/en/about",
-      languages: { fa: "/about", en: "/en/about" },
-    },
-  };
+  });
 }
 
 /* ──────────────────────────────────────────────────────────

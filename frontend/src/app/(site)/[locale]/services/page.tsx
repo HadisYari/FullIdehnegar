@@ -1,5 +1,6 @@
 // app/[locale]/services/page.tsx
 import type { Metadata } from "next";
+import { withPageMeta } from "@/lib/cms";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
@@ -17,16 +18,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isFa = locale === "fa";
-  return {
+  // عنوان/توضیح/کلیدواژه از جدول PageMeta (پنل مدیریت) و در نبودش از همین مقادیر.
+  return withPageMeta("services", locale === "fa" ? "fa" : "en", {
+    path: "/services",
     title: isFa ? "معماری نرم‌افزار و پلتفرم‌های وب | استودیو ایده‌نگار" : "Web Platforms & Software Architecture | Ideh Negar",
     description: isFa
       ? "توسعه نرم‌افزارهای مدرن، پرتال‌های سازمانی، فروشگاه‌های آنلاین مقیاس‌پذیر و طراحی وب اختصاصی."
       : "High-performance web applications, scalable enterprise platforms, and bespoke digital experiences.",
-    alternates: {
-      canonical: isFa ? "/services" : "/en/services",
-      languages: { fa: "/services", en: "/en/services" },
-    },
-  };
+  });
 }
 
 /* ──────────────────────────────────────────────────────────

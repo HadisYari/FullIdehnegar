@@ -1,7 +1,7 @@
 // Central place for company facts. Edit here to update contact info,
 // social links, and stats site-wide.
 
-export const siteConfig = {
+export const siteConfig: SiteConfig = {
   domain: "idehnegar.co",
   url: "https://idehnegar.co",
   nameFa: "پیشگامان ایده‌نگار",
@@ -35,6 +35,32 @@ export const siteConfig = {
     yearsActive: 15,
     awards: 15,
   },
-} as const;
+};
 
-export type SiteConfig = typeof siteConfig;
+/**
+ * شکل داده‌ای تنظیمات. عمداً گسترده (string/number) تعریف شده تا مقدارهای
+ * خوانده‌شده از بک‌اند (lib/cms.ts → loadSiteConfig) همان نوع را داشته باشند.
+ */
+export type SiteConfig = {
+  domain: string;
+  url: string;
+  nameFa: string;
+  nameEn: string;
+  shortNameFa: string;
+  shortNameEn: string;
+  taglineFa: string;
+  taglineEn: string;
+  foundedJalali: number;
+  foundedGregorian: number;
+  email: string;
+  phones: string[];
+  telegram: string;
+  whatsapp: string;
+  addressFa: string;
+  addressEn: string;
+  hoursFa: string;
+  hoursEn: string;
+  mapEmbedSrc: string;
+  social: { telegram: string; linkedin: string; instagram: string };
+  stats: { clients: number; projects: number; yearsActive: number; awards: number };
+};

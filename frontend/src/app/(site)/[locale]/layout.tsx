@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { JsonLd } from "@/components/json-ld";
 import { locales, getDictionary, type Locale } from "@/lib/i18n/dictionaries";
-import { siteConfig } from "@/lib/site-config";
+import { buildMetadata, loadPageMeta, loadSiteConfig } from "@/lib/cms";
 
 // Self-hosted variable fonts (no runtime dependency on Google Fonts).
 const vazirmatn = localFont({
@@ -36,19 +36,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!locales.includes(locale as Locale)) return {};
-  const dict = getDictionary(locale as Locale);
   const isFa = locale === "fa";
 
+  // عنوان و توضیح صفحه از جدول PageMeta (پنل مدیریت) خوانده می‌شود.
+  const pageMeta = await loadPageMeta("home");
+  const config = await loadSiteConfig();
+
   const title = isFa
-    ? `${siteConfig.nameFa} | طراحی سایت و نرم‌افزار سازمانی در کرمانشاه`
-    : `${siteConfig.nameEn} | Web & Enterprise Software Development`;
+    ? `${config.nameFa} | طراحی سایت و نرم‌افزار سازمانی در کرمانشاه`
+    : `${config.nameEn} | Web & Enterprise Software Development`;
   const description = isFa
     ? "شرکت دانش‌بنیان پیشگامان ایده‌نگار؛ طراحی وب‌سایت، پرتال سازمانی، فروشگاه اینترنتی و نرم‌افزار تحت وب با بیش از ۱۵ سال تجربه در کرمانشاه."
     : "Idehnegar Pioneers is a certified knowledge-based company delivering websites, enterprise portals, online stores, and web software — 15+ years of experience.";
 
+  const meta = buildMetadata(pageMeta, locale as Locale, {
+    path: "/",
+    fallbackTitle: title,
+    fallbackDescription: description,
+    baseUrl: config.url,
+  });
+
   return {
-    metadataBase: new URL(siteConfig.url),
-    title: { default: title, template: `%s | ${isFa ? siteConfig.nameFa : siteConfig.nameEn}` },
+    ...meta,
+    metadataBase: new URL(config.url),
+    title: { default: title, template: `%s | ${isFa ? config.nameFa : config.nameEn}` },
     description,
     alternates: {
       canonical: isFa ? "/" : "/en",
@@ -57,8 +68,8 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: isFa ? "fa_IR" : "en_US",
-      url: isFa ? siteConfig.url : `${siteConfig.url}/en`,
-      siteName: isFa ? siteConfig.nameFa : siteConfig.nameEn,
+      url: isFa ? config.url : `${config.url}/en`,
+      siteName: isFa ? config.nameFa : config.nameEn,
       title,
       description,
       images: [{ url: "/images/portfolio/smartexport-ai.jpg", width: 1200, height: 630 }],
@@ -86,23 +97,25 @@ export default async function LocaleLayout({
   if (!locales.includes(rawLocale as Locale)) notFound();
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
+  // یک بار خواندن تنظیمات و تزریق به اجزای سمت کلاینت (فوتر و نوار تماس).
+  const config = await loadSiteConfig();
 
   const organizationLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.nameEn,
-    alternateName: siteConfig.nameFa,
-    url: siteConfig.url,
-    logo: `${siteConfig.url}/images/brand/logo-mark.png`,
-    email: siteConfig.email,
-    telephone: siteConfig.phones[0],
+    name: config.nameEn,
+    alternateName: config.nameFa,
+    url: config.url,
+    logo: `${config.url}/images/brand/logo-mark.png`,
+    email: config.email,
+    telephone: config.phones[0],
     address: {
       "@type": "PostalAddress",
       streetAddress: "22 Bahman Intersection, Fanavari Tower, Floor 7, Unit 11",
       addressLocality: "Kermanshah",
       addressCountry: "IR",
     },
-    sameAs: [siteConfig.social.telegram, siteConfig.social.linkedin, siteConfig.social.instagram],
+    sameAs: [config.social.telegram, config.social.linkedin, config.social.instagram],
   };
 
   return (
@@ -119,8 +132,8 @@ export default async function LocaleLayout({
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <SiteFooter locale={locale} dict={dict} />
-        <MobileCtaBar dict={dict} />
+        <SiteFooter locale={locale} dict={dict} config={config} />
+        <MobileCtaBar dict={dict} config={config} />
       </body>
     </html>
   );
