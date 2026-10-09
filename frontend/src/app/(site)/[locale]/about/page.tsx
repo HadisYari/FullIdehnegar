@@ -1,10 +1,10 @@
 // app/[locale]/about/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadMilestones, loadTeam, withPageMeta } from "@/lib/cms";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
- 
+  
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 
 export function generateStaticParams() {
@@ -124,7 +124,7 @@ const timelineItems = [
 ];
 
 /* ──────────────────────────────────────────────────────────
-   کلاستر نقش‌ها و استعدادهای تیم
+   کلاستر نقش‌ها و استعدادهای تیم — دادهٔ اصلی از /api/public/team
    ────────────────────────────────────────────────────────── */
 const teamConstellation = [
   { role: "Software Architect", label: "معمار ارشد نرم‌افزار", span: "sm:col-span-2", bg: "bg-[#e6304c]/20 border-[#e6304c]/40 text-[#ff4d68]" },
@@ -144,6 +144,32 @@ export default async function AboutPage({
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
   const isFa = locale === "fa";
+
+  // داده‌های صفحه از بک‌اند (با کش ISR) — fallback: آرایه‌های همین فایل
+  const [remoteMilestones, remoteTeam] = await Promise.all([loadMilestones(), loadTeam()]);
+
+  const milestones =
+    remoteMilestones.length > 0
+      ? remoteMilestones.map((milestone) => ({
+          year: milestone.year,
+          titleFa: milestone.title.fa,
+          titleEn: milestone.title.en || milestone.title.fa,
+          descFa: milestone.desc.fa,
+          descEn: milestone.desc.en || milestone.desc.fa,
+          glow: milestone.glow ?? "",
+          gradient: milestone.gradient ?? "",
+        }))
+      : timelineItems;
+
+  const team =
+    remoteTeam.length > 0
+      ? remoteTeam.map((member) => ({
+          role: member.role,
+          label: member.label,
+          span: member.span ?? "",
+          bg: member.bg ?? "",
+        }))
+      : teamConstellation;
 
   return (
     <div className="relative w-full overflow-hidden bg-white text-slate-900">
@@ -290,7 +316,7 @@ export default async function AboutPage({
 
           {/* ایستگاه‌های تایم‌لاین با کادرهای نئونی نرم */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {timelineItems.map((milestone, idx) => (
+            {milestones.map((milestone, idx) => (
               <Reveal
                 key={milestone.year}
                 delay={idx * 80}
@@ -449,7 +475,7 @@ export default async function AboutPage({
             <div className="flex-1 w-full max-w-[480px]">
               <Reveal delay={100}>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {teamConstellation.map((node, i) => (
+                  {team.map((node, i) => (
                     <div
                       key={i}
                       className={`${node.span} ${node.bg} rounded-2xl border p-4 backdrop-blur-md flex flex-col justify-between h-24 sm:h-28 shadow-lg transition-transform duration-300 hover:scale-[1.03]`}

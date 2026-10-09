@@ -37,11 +37,14 @@ export function SiteFooter({
   locale,
   dict,
   config,
+  serviceTitles,
 }: {
   locale: Locale;
   dict: Dictionary;
   /** تنظیمات خوانده‌شده از بک‌اند (پیش‌فرض: دادهٔ همراه مخزن). */
   config?: SiteConfig;
+  /** عنوان خدمات از /api/public/services — fallback: دیکشنری i18n */
+  serviceTitles?: string[];
 }) {
   const cfg = config ?? siteConfig;
   const year = new Date().getFullYear();
@@ -53,7 +56,11 @@ export function SiteFooter({
     { href: localeHref(locale, "/contact"), label: dict.nav.contact },
   ];
 
-  const services = dict.services.items.slice(0, 5);
+  const services = (
+    serviceTitles && serviceTitles.length > 0
+      ? serviceTitles
+      : dict.services.items.map((item) => item.title)
+  ).slice(0, 5);
   const isRtl = locale === "fa";
 
   return (
@@ -131,9 +138,9 @@ export function SiteFooter({
             {dict.footer.servicesTitle}
           </h3>
           <ul className="space-y-3">
-            {services.map((s) => (
-              <li key={s.title} className="text-sm text-white/60 transition-colors hover:text-white cursor-default">
-                {s.title}
+            {services.map((title) => (
+              <li key={title} className="text-sm text-white/60 transition-colors hover:text-white cursor-default">
+                {title}
               </li>
             ))}
           </ul>

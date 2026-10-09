@@ -1,0 +1,128 @@
+[
+  {
+    "id": "wh-1",
+    "name": "مگاشاپ اینترپرایز (MegaShop Pro)",
+    "category": "warehouse",
+    "tag": "سامانه انبارداری چندشعبه‌ای",
+    "planName": "پلن سازمانی مگاشاپ",
+    "priceMonthly": 1850000,
+    "priceYearly": 17760000,
+    "discountBadge": "۲۰٪ تخفیف سالانه",
+    "desc": "طراحی شده برای هایپرمارکت‌ها، کالای دیجیتال و برندهای با بیش از ۵۰ هزار قلم کالا، چند شعبه انبار فیزیکی و فاکتور رسمی.",
+    "features": [
+      "کنترل موجودی چندانبار همزمان",
+      "حواله ورود و خروج بارکدی",
+      "اتصال به سیستم‌های مالی و سپیدار",
+      "هاست اختصاصی ابری و SSL رایگان"
+    ],
+    "desktopScreens": [
+      { "label": "صفحه اصلی و کاتالوگ", "src": "/images/templates/wh1-desk-1.jpg" },
+      { "label": "داشبورد انباردار و بارکدخوان", "src": "/images/templates/wh1-desk-2.jpg" },
+      { "label": "صفحه تسویه و فاکتور", "src": "/images/templates/wh1-desk-3.jpg" }
+    ],
+    "mobileScreens": [
+      { "label": "نسخه خریدار (PWA)", "src": "/images/templates/wh1-mob-1.jpg" },
+      { "label": "پنل تحویل سریع", "src": "/images/templates/wh1-mob-2.jpg" }
+    ]
+  },
+  {
+    "id": "wh-2",
+    "name": "ماتریسی استایل (Moda Matrix)",
+    "category": "warehouse",
+    "tag": "انبارداری سایزبندی و رنگ",
+    "planName": "پلن پیشرفته مد و پوشاک",
+    "priceMonthly": 1450000,
+    "priceYearly": 13920000,
+    "discountBadge": "۲۰٪ تخفیف سالانه",
+    "desc": "ویژه فروشگاه‌های پوشاک و کفش با ماتریس چندبُعدی انبار بر اساس سایز، رنگ، بچ تولید و هشدار اتمام سریع.",
+    "features": [
+      "انبارداری ماتریسی رنگ/سایز",
+      "رزرو موقت کالا در سبد خرید",
+      "هشدار کاهش موجودی بحرانی",
+      "سیستم کد تخفیف پیشرفته"
+    ],
+    "desktopScreens": [
+      { "label": "ویترین کالکشن فصلی", "src": "/images/templates/wh2-desk-1.jpg" },
+      { "label": "پنل کنترل سایز و متریال", "src": "/images/templates/wh2-desk-2.jpg" }
+    ],
+    "mobileScreens": [
+      { "label": "انتخاب سایز و رنگ", "src": "/images/templates/wh2-mob-1.jpg" },
+      { "label": "پیگیری لحظه‌ای مرسوله", "src": "/images/templates/wh2-mob-2.jpg" }
+    ]
+  },
+  {
+    "id": "wh-3",
+    "name": "صنعتی و ابزارآلات (Techno Ware)",
+    "category": "warehouse",
+    "tag": "انبارداری سریالی و قطعات",
+    "planName": "پلن شرکتی B2B",
+    "priceMonthly": 1650000,
+    "priceYearly": 15840000,
+    "discountBadge": "۲۰٪ تخفیف سالانه",
+    "desc": "مناسب توزیع‌کنندگان لوازم یدکی و قطعات با شماره سریال مجزا، انبار قفسه‌بندی‌شده و صدور پیش‌فاکتور رسمی B2B.",
+    "features": [
+      "ثبت بارنامه و سریال فنی قطعه",
+      "صدور آنی پیش‌فاکتور با مالیات",
+      "تفکیک انبار اصلی از امانی",
+      "پنل حسابداری همگام"
+    ],
+    "desktopScreens": [
+      { "label": "جستجوی شماره فنی کالا", "src": "/images/templates/wh3-desk-1.jpg" },
+      { "label": "فاکتور رسمی سازمانی", "src": "/images/templates/wh3-desk-2.jpg" }
+    ],
+    "mobileScreens": [
+      { "label": "استعلام موجودی قطعه", "src": "/images/templates/wh3-mob-1.jpg" },
+      { "label": "ثبت فاکتور اعتباری", "src": "/images/templates/wh3-mob-2.jpg" }
+    ]
+  },
+  {
+    "id": "wh-4",
+    "name": "مارکت‌پلیس هاب (Market Central)",
+    "category": "warehouse",
+    "tag": "انبار مرکزی چندتأمینی",
+    "planName": "پلن مارکت‌پلیس چندفروشندگی",
+    "priceMonthly": 2200000,
+    "priceYearly": 21120000,
+    "discountBadge": "۲۰٪ تخفیف سالانه",
+    "desc": "طراحی هاب لجستیک با امکان نگهداری کالای تأمین‌کنندگان گوناگون در انبار متمرکز و ارسال خودکار به باربری.",
+    "features": [
+      "تفکیک انبار به ازای فروشنده",
+      "تخصیص اتوماتیک نزدیک‌ترین شعبه",
+      "ارزش‌گذاری ریالی راکد",
+      "تسویه حساب خودکار چندتأمینی"
+    ],
+    "desktopScreens": [
+      { "label": "پنل تأمین‌کننده و شارژ انبار", "src": "/images/templates/wh4-desk-1.jpg" },
+      { "label": "مانیتورینگ سفارشات خروجی", "src": "/images/templates/wh4-desk-2.jpg" }
+    ],
+    "mobileScreens": [
+      { "label": "پنل تحویل انباردار", "src": "/images/templates/wh4-mob-1.jpg" },
+      { "label": "سبد خرید چندفروشگاهی", "src": "/images/templates/wh4-mob-2.jpg" }
+    ]
+  },
+  {
+    "id": "light-1",
+    "name": "فلش چابک (Flash Direct)",
+    "category": "light",
+    "tag": "بدون انبارداری • خرید فوری",
+    "planName": "پلن سبک و دانلودی (لایت)",
+    "priceMonthly": 790000,
+    "priceYearly": 7580000,
+    "discountBadge": "۲۵٪ تخفیف سالانه",
+    "desc": "برای بیزینس‌هایی که دغدغه انبار و موجودی فیزیکی ندارند (محصولات دیجیتال، خدماتی، تک‌محصولی یا تأمین آنی). بدون کدهای سنگین انبارداری با سرعت فوق‌العاده.",
+    "features": [
+      "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
+      "بدون لودینگ لاگ انبارداری",
+      "امتیاز ۱۰۰ در تست سرعت",
+      "اتصال سریع به درگاه بانکی"
+    ],
+    "desktopScreens": [
+      { "label": "صفحه فرود متمرکز خرید", "src": "/images/templates/light-desk-1.jpg" },
+      { "label": "فرم تسویه حساب سریع", "src": "/images/templates/light-desk-2.jpg" }
+    ],
+    "mobileScreens": [
+      { "label": "خرید با یک کلیک", "src": "/images/templates/light-mob-1.jpg" },
+      { "label": "فاکتور پیامکی آنی", "src": "/images/templates/light-mob-2.jpg" }
+    ]
+  }
+]

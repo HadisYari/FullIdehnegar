@@ -1,10 +1,9 @@
 // app/[locale]/contact/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadFaqs, loadInquiryTypes, loadSiteConfig, withPageMeta } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import ContactPageCanvas from "@/components/sections/contact-section";
  
-
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -35,5 +34,37 @@ export default async function ContactPage({
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
 
-  return <ContactPageCanvas locale={locale} dict={dict} />;
+  // تنظیمات تماس + حوزه‌های پروژه + FAQs — همگی از بک‌اند (fallback داخلی دارند).
+  const [config, remoteFaqs, remoteInquiryTypes] = await Promise.all([
+    loadSiteConfig(),
+    loadFaqs(),
+    loadInquiryTypes(),
+  ]);
+
+  const faqs =
+    remoteFaqs.length > 0
+      ? remoteFaqs.map((faq) => ({
+          q: faq.question[locale] || faq.question.fa,
+          a: faq.answer[locale] || faq.answer.fa,
+        }))
+      : undefined;
+
+  const inquiryTypes =
+    remoteInquiryTypes.length > 0
+      ? remoteInquiryTypes.map((type) => ({
+          id: type.id,
+          label: type.label[locale] || type.label.fa,
+          icon: type.icon ?? null,
+        }))
+      : undefined;
+
+  return (
+    <ContactPageCanvas
+      locale={locale}
+      dict={dict}
+      config={config}
+      faqs={faqs}
+      inquiryTypes={inquiryTypes}
+    />
+  );
 }

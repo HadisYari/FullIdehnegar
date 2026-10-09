@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
   const subject = String(body.subject || "").trim();
   const message = String(body.message || "").trim();
   const locale = String(body.locale || "fa");
+  const inquiryType = String(body.inquiryType || "").trim().slice(0, 80);
 
   if (!name || !email || !phone || !message) {
     recordFailedAttempt(rateLimitKey);
@@ -67,6 +68,7 @@ export async function POST(request: NextRequest) {
       subject,
       message,
       locale,
+      inquiryType: inquiryType || undefined,
       createdAt: new Date().toISOString(),
       emailSent,
     });

@@ -1,0 +1,23 @@
+[
+  {
+    "title": { "fa": "کافه بازار", "en": "کافه بازار" },
+    "caption": { "fa": "🛒", "en": "🛒" },
+    "href": "https://cafebazaar.ir",
+    "emoji": "🛒",
+    "variant": "bazaar"
+  },
+  {
+    "title": { "fa": "نسخه مستقیم اندروید (APK)", "en": "نسخه مستقیم اندروید (APK)" },
+    "caption": { "fa": "📥", "en": "📥" },
+    "href": "/downloads/gold-app.apk",
+    "emoji": "📥",
+    "variant": "direct"
+  },
+  {
+    "title": { "fa": "📺 تابلوی مغازه", "en": "📺 تابلوی مغازه" },
+    "caption": { "fa": "", "en": "" },
+    "href": "#display-section",
+    "emoji": null,
+    "variant": "anchor"
+  }
+]

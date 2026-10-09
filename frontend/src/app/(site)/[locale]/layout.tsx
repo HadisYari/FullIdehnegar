@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { MobileCtaBar } from "@/components/mobile-cta-bar";
 import { JsonLd } from "@/components/json-ld";
 import { locales, getDictionary, type Locale } from "@/lib/i18n/dictionaries";
-import { buildMetadata, loadPageMeta, loadSiteConfig } from "@/lib/cms";
+import { buildMetadata, loadPageMeta, loadServices, loadSiteConfig } from "@/lib/cms";
 
 // Self-hosted variable fonts (no runtime dependency on Google Fonts).
 const vazirmatn = localFont({
@@ -98,7 +98,16 @@ export default async function LocaleLayout({
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
   // یک بار خواندن تنظیمات و تزریق به اجزای سمت کلاینت (فوتر و نوار تماس).
-  const config = await loadSiteConfig();
+  const [config, remoteServices] = await Promise.all([
+    loadSiteConfig(),
+    loadServices(),
+  ]);
+
+  // عنوان خدمات برای فهرست فوتر — fallback داخل خود SiteFooter است.
+  const serviceTitles =
+    remoteServices.length > 0
+      ? remoteServices.map((service) => service.title[locale] || service.title.fa)
+      : undefined;
 
   const organizationLd = {
     "@context": "https://schema.org",
@@ -132,7 +141,7 @@ export default async function LocaleLayout({
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <SiteFooter locale={locale} dict={dict} config={config} />
+        <SiteFooter locale={locale} dict={dict} config={config} serviceTitles={serviceTitles} />
         <MobileCtaBar dict={dict} config={config} />
       </body>
     </html>

@@ -115,19 +115,24 @@ export type PortfolioProjectDto = {
 
 export type TestimonialDto = {
   id: string;
+  name: LocalizedText;
   quote: LocalizedText;
-  author: LocalizedText;
-  role: LocalizedText;
-  rating?: number;
-  avatarUrl?: string | null;
 };
 
-export type ClientLogoDto = { name: LocalizedText; monogram?: string | null; logoUrl?: string | null };
+export type ClientLogoDto = {
+  id: string;
+  name: LocalizedText;
+  monogram?: string | null;
+  logoUrl?: string | null;
+};
+
+/** «دسته‌بندی نمونه‌کارها» — همان شکل lib/categories.ts */
+export type PortfolioCategoryDto = { slug: string; fa: string; en: string };
 
 export type MilestoneDto = {
   year: string;
   title: LocalizedText;
-  description: LocalizedText;
+  desc: LocalizedText;
   glow?: string | null;
   gradient?: string | null;
 };
@@ -431,6 +436,13 @@ export async function withPageMeta(
 
 export type { PortfolioProjectDto as CmsPortfolioProject };
 
+/** دسته‌بندی‌های نمونه‌کار (VIN /api/public/categories) — fallback آن lib/categories.ts است. */
+export function loadCategories(): Promise<PortfolioCategoryDto[]> {
+  return cmsFetch<PortfolioCategoryDto[]>("/api/public/categories", [], {
+    tags: [CmsTag.portfolio, CmsTag.home],
+  });
+}
+
 export function loadPortfolio(take = 100, category?: string, featured?: boolean): Promise<PortfolioProjectDto[]> {
   const query = new URLSearchParams();
   if (take > 0) query.set("take", String(take));
@@ -528,20 +540,33 @@ export function submitContact(payload: ContactPayload): Promise<InquiryResult | 
   return cmsPost<ContactPayload, InquiryResult>("/api/public/contact", payload);
 }
 
+/**
+ * بدنهٔ POST /api/public/store-orders — دقیقاً همان قرارداد StoreOrderRequest
+ * در بک‌اند (InquiryApiController): FullName/Mobile/StoreName/Domain/TemplateId/
+ * Plan/Cycle/Amount/Gateway/RulesAccepted/Locale + هانی‌پات Company.
+ */
 export type StoreOrderPayload = {
   fullName: string;
   mobile: string;
-  email?: string;
   storeName: string;
-  desiredDomain?: string;
+  domain?: string;
   templateId?: string;
-  planId?: string;
-  billingCycle?: string;
+  plan?: string;
+  cycle?: string;
   amount?: number;
   gateway?: string;
-  note?: string;
+  rulesAccepted: boolean;
+  locale?: string;
+  /** هانی‌پات: ربات‌ها پرش می‌کنند، کاربر واقعی هرگز نمی‌بیند. */
+  company?: string;
 };
 
-export function submitStoreOrder(payload: StoreOrderPayload): Promise<InquiryResult | null> {
-  return cmsPost<StoreOrderPayload, InquiryResult>("/api/public/store-orders", payload);
+export type StoreOrderResult = InquiryResult & {
+  id?: string;
+  reference?: string;
+  status?: string;
+};
+
+export function submitStoreOrder(payload: StoreOrderPayload): Promise<StoreOrderResult | null> {
+  return cmsPost<StoreOrderPayload, StoreOrderResult>("/api/public/store-orders", payload);
 }
