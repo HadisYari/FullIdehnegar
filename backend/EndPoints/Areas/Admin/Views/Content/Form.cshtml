@@ -6,10 +6,10 @@
     var backUrl = ViewData["BackUrl"] as string ?? $"/admin/{Model.RouteName}";
 }
 
-<div class="admin-page-head">
+<div class="admin-page-head mt-1">
     <div>
-        <h1 class="admin-page-title">@Model.Title</h1>
-        <p class="admin-page-subtitle">فیلدهای فارسی و انگلیسی هر دو پر شوند؛ فیلد خالی از سایت حذف می‌شود.</p>
+        <h4 class="admin-page-title">@Model.Title</h4>
+     
     </div>
     <a class="btn btn-label-secondary" href="@backUrl"><i class="ti ti-arrow-right"></i> بازگشت به لیست</a>
 </div>
@@ -39,7 +39,7 @@
         <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h2 class="card-title mb-0">نمایش و ترتیب</h2>
-                <span class="text-muted small">کنترل می‌کند این رکورد کجا و آیا در سایت دیده شود.</span>
+                
             </div>
             <div class="card-body row g-4">
                 @foreach (var field in technical)

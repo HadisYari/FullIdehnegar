@@ -15,15 +15,8 @@
     };
 }
 
-<div class="admin-page-head">
-    <div>
-        <h1 class="admin-page-title">پیش‌خوان</h1>
-        <p class="admin-page-subtitle">
-            آخرین به‌روزرسانی محتوا:
-            <span dir="ltr" class="admin-latin">@(Model.LastContentUpdateUtc?.ToString("yyyy/MM/dd HH:mm") ?? "—")</span>
-            (به وقت سرور)
-        </p>
-    </div>
+<div class="admin-page-head mt-3">
+    
     <div class="d-flex gap-2">
         <a class="btn btn-label-primary" href="/admin/site-settings"><i class="ti ti-settings"></i> تنظیمات سایت</a>
         <a class="btn btn-primary" href="/admin/PortfolioProject/create"><i class="ti ti-plus"></i> پروژه جدید</a>
@@ -47,61 +40,4 @@
     }
 </div>
 
-<div class="row g-4">
-    <div class="col-lg-7">
-        <div class="card h-100">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h2 class="card-title mb-0">تازه‌ترین پیام‌های تماس</h2>
-                <a class="btn btn-sm btn-label-secondary" href="/admin/inbox/messages">همه پیام‌ها</a>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-sm mb-0">
-                    <thead>
-                    <tr>
-                        <th>فرستنده</th>
-                        <th>موضوع</th>
-                        <th class="text-nowrap">تاریخ</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if (Model.LatestMessages.Count == 0)
-                    {
-                        <tr>
-                            <td colspan="4" class="text-center text-muted py-4">هنوز پیامی دریافت نشده است.</td>
-                        </tr>
-                    }
-                    @foreach (var message in Model.LatestMessages)
-                    {
-                        <tr class="@(message.IsArchived ? "" : "fw-semibold")">
-                            <td>@message.Name</td>
-                            <td class="admin-cell-text">@message.Subject</td>
-                            <td class="text-nowrap admin-latin" dir="ltr">@message.CreatedAtUtc.ToString("yyyy/MM/dd HH:mm")</td>
-                            <td>
-                                <a class="btn btn-sm btn-icon btn-label-primary" href="/admin/inbox/messages">
-                                    <i class="ti ti-external-link"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-5">
-        <div class="card h-100">
-            <div class="card-header"><h2 class="card-title mb-0">راهنمای ورود داده</h2></div>
-            <div class="card-body">
-                <ol class="admin-guide mb-0">
-                    <li>ابتدا <a href="/admin/site-settings">اطلاعات شرکت و سئو</a> را کامل کنید؛ آدرس دامنه، شبکه‌های اجتماعی و متن‌های متا از اینجا خوانده می‌شوند.</li>
-                    <li>برای صفحه نمونه‌کارها، اول <a href="/admin/PortfolioCategory">دسته‌بندی‌ها</a> را بسازید تا در فرم پروژه قابل انتخاب شوند.</li>
-                    <li>در فرم‌ها، فیلد انگلیسی را هم پر کنید تا نسخه English سایت خالی نماند.</li>
-                    <li>برای تصاویر، فایل را در <code>wwwroot/uploads</code> آپلود می‌کنیم؛ مسیر نهایی در دیتابیس ذخیره می‌شود.</li>
-                    <li>هر ذخیره‌سازی، کش صفحات مربوطه در سایت را خودکار به‌روز می‌کند.</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+ 

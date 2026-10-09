@@ -101,14 +101,14 @@ public class PortfolioProject : ContentEntity
     [NotMapped]
     public List<string> Gallery
     {
-        get => JsonList.Read(GalleryJson);
+        get => JsonList.Read<string>(GalleryJson);
         set => GalleryJson = JsonList.Write(value);
     }
 
     [NotMapped]
     public List<string> Tags
     {
-        get => JsonList.Read(TagsJson);
+        get => JsonList.Read<string>(TagsJson);
         set => TagsJson = JsonList.Write(value);
     }
 

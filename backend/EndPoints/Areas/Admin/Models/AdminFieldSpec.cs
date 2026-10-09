@@ -1,3 +1,5 @@
+using EndPoints.Areas.Admin.Services;
+
 namespace EndPoints.Areas.Admin.Models;
 
 /// <summary>How a property of an entity is edited in the panel.</summary>
