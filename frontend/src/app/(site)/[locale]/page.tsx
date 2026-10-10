@@ -9,6 +9,7 @@ import { HomeCtaSection } from "@/components/sections/home-cta-section";
 import { getFeaturedPortfolioItems } from "@/lib/portfolio";
 import {
   loadClients,
+  loadHomeServiceCards,
   loadPageMeta,
   loadProcessSteps,
   loadSiteConfig,
@@ -29,11 +30,12 @@ export default async function HomePage({
   const dict = getDictionary(locale);
 
   // همهٔ داده‌های این صفحه از بک‌اند می‌آیند (با کش ISR و fallback داخلی).
-  const [featured, config, remoteSteps, remoteClients, pageMeta] = await Promise.all([
+  const [featured, config, remoteSteps, remoteClients, remoteServiceCards, pageMeta] = await Promise.all([
     getFeaturedPortfolioItems(8),
     loadSiteConfig(),
     loadProcessSteps(),
     loadClients(),
+    loadHomeServiceCards(),
     loadPageMeta("home"),
   ]);
 
@@ -72,7 +74,7 @@ export default async function HomePage({
     <main className="relative flex flex-col overflow-hidden">
       <HeroSection locale={locale} dict={dict} meta={heroMeta} stats={config.stats} />
       <StatsSection locale={locale} dict={dict} stats={config.stats} />
-      <ServicesSection locale={locale} dict={dict} />
+      <ServicesSection locale={locale} dict={dict} cards={remoteServiceCards} />
       <PortfolioPreviewSection items={featured} locale={locale} dict={dict} />
       <ProcessSection dict={dict} steps={steps} />
       <ClientsSection locale={locale} dict={dict} clients={clients} />

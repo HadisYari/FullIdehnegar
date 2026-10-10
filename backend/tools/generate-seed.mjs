@@ -95,7 +95,7 @@ function pair(source, marker) {
 function unquote(value) {
   return value
     .replace(/\\\$\{/g, "${")
-    .replace(/\$\{siteConfig\.(\w+)\}/g, (_, prop) => `\u0000${prop}\u0000`)
+    .replace(/\$\{(?:siteConfig|config)\.(\w+)\}/g, (_, prop) => `\u0000${prop}\u0000`)
     .replace(/\\n/g, "\n")
     .replace(/\\\\"/g, '"')
     .trim();
@@ -104,7 +104,7 @@ function unquote(value) {
 /* ───────────────────────────────── site config ───────────────────────────────── */
 
 const siteConfigSource = read(fe, "lib", "site-config.ts");
-const siteConfig = evalLiteral(literalAfter(siteConfigSource, "export const siteConfig = ", { open: "{" }));
+const siteConfig = evalLiteral(literalAfter(siteConfigSource, "export const siteConfig: SiteConfig = ", { open: "{" }));
 
 /* ───────────────────────────────── dictionaries ───────────────────────────────── */
 
@@ -292,6 +292,30 @@ const services = fa.services.items.map((item, index) => ({
   isPublished: true,
 }));
 
+/* home services grid: the cards of components/sections/services-section.tsx (fa only in source) */
+const homeServiceCards = grab(
+  read(fe, "components", "sections", "services-section.tsx"),
+  "const services = ",
+).map((card, index) => ({
+  code: card.code,
+  iconName: card.icon ?? null,
+  titleFa: card.title,
+  titleEn: "",
+  descriptionFa: card.desc,
+  descriptionEn: "",
+  color: card.color ?? null,
+  softColor: card.softColor ?? null,
+  glowColor: card.glowColor ?? null,
+  featureTitleFa: card.featureTitle ?? null,
+  featureTitleEn: null,
+  featureValueFa: card.featureValue ?? null,
+  featureValueEn: null,
+  progress: card.progress ?? null,
+  tags: card.tags ?? [],
+  sortOrder: index,
+  isPublished: true,
+}));
+
 const processSteps = fa.process.steps.map((step, index) => {
   const palette = [
     { icon: "MessagesSquare", color: "from-blue-500 to-cyan-500", accent: "#3b82f6" },
@@ -319,18 +343,14 @@ const processSteps = fa.process.steps.map((step, index) => {
 });
 
 const clientsSource = read(fe, "components", "sections", "clients-section.tsx");
-const clientsFa = grab(clientsSource, "const clientsFa = ");
-const clientsEn = grab(clientsSource, "const clientsEn = ");
-const logoBlock = literalAfter(clientsSource, "const clientLogos = ", { open: "{" });
-const monograms = {};
-for (const match of logoBlock.matchAll(/(\w+):\s*\([\s\S]*?>\s*([A-Z0-9&]{2,5})\s*</g)) {
-  monograms[match[1]] = match[2];
-}
+// `const clientsFa: ClientItem[] = [ { name, monogram } ]` — the monogram is inline.
+const clientsFa = grab(clientsSource, "const clientsFa: ClientItem[] = ");
+const clientsEn = grab(clientsSource, "const clientsEn: ClientItem[] = ");
 
 const clients = clientsFa.map((client, index) => ({
   nameFa: client.name,
   nameEn: clientsEn[index]?.name ?? "",
-  monogram: monograms[client.key] ?? String(client.key).slice(0, 3).toUpperCase(),
+  monogram: client.monogram ?? null,
   logoUrl: null,
   sortOrder: index,
   isPublished: true,
@@ -375,18 +395,15 @@ const teamDisciplines = team.map((member, index) => ({
 /* ───────────────────────────────── contact page ──────────────────────────────── */
 
 const contactSource = read(fe, "components", "sections", "contact-section.tsx");
-/** Two sibling literals: `const x = isFa ? [fa] : [en]`. */
-function pairLiterals(source, marker) {
-  const at = source.indexOf(marker);
-  if (at === -1) throw new Error(`marker not found: ${marker}`);
-  const first = literalAfter(source, marker, { open: "[" });
-  const rest = source.slice(at + marker.length + first.length + 2);
-  const second = literalAfter(rest, "", { open: "[" });
-  return { fa: evalLiteral(first, true), en: evalLiteral(second, false) };
-}
-
-const faqs = pairLiterals(contactSource, "const faqs = isFa");
-const inquiryTypes = evalLiteralBoth(literalAfter(contactSource, "const projectCategories = "));
+// The contact page content lives in the fallback arrays of contact-section.tsx.
+const faqs = {
+  fa: grab(contactSource, "const fallbackFaqsFa: FaqView[] = "),
+  en: grab(contactSource, "const fallbackFaqsEn: FaqView[] = "),
+};
+const inquiryTypes = {
+  fa: grab(contactSource, "const fallbackInquiryTypesFa: InquiryTypeView[] = "),
+  en: grab(contactSource, "const fallbackInquiryTypesEn: InquiryTypeView[] = "),
+};
 
 const faqItems = faqs.fa.map((item, index) => ({
   questionFa: item.q,
@@ -408,8 +425,9 @@ const inquiryTypesRows = inquiryTypes.fa.map((item, index) => ({
 
 /* ───────────────────────────────── store builder / payment ───────────────────── */
 
-const storeSource = read(fe, "app/(site)/[locale]/store-builder/page.tsx");
-const templates = grab(storeSource, "const allTemplates: TemplateItem[] = ");
+// The store templates and plans live in the data files that the front end falls
+// back to when the API is unavailable (lib/store.ts), so they are the single source.
+const templates = JSON.parse(read(fe, "data", "store-templates.json"));
 
 const storeTemplates = templates.map((tpl, index) => ({
   code: tpl.id,
@@ -428,8 +446,7 @@ const storeTemplates = templates.map((tpl, index) => ({
   isPublished: true,
 }));
 
-const paymentSource = read(fe, "app/(site)/[locale]/payment/page.tsx");
-const tiers = grab(paymentSource, "const storeTiers: StoreTier[] = ");
+const tiers = JSON.parse(read(fe, "data", "store-plans.json"));
 
 const storePlans = tiers.map((tier, index) => ({
   code: tier.id,
@@ -448,24 +465,18 @@ const storePlans = tiers.map((tier, index) => ({
 
 /* ───────────────────────────────── gold app downloads ────────────────────────── */
 
-const goldSource = read(fe, "app/(site)/[locale]/gold-app/page.tsx");
-const downloadButtons = [...goldSource.matchAll(/<a\s+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)]
-  .slice(0, 3)
-  .map((match, index) => {
-    const texts = [...match[2].matchAll(/<span[^>]*>([^<]+)<\/span>/g)].map((m) => m[1].trim()).filter(Boolean);
-    const emoji = (match[2].match(/>([^<>]{1,2})</) || [])[1]?.trim() || null;
-    return {
-      titleFa: texts.at(-1) ?? "دانلود",
-      titleEn: texts.at(-1) ?? "Download",
-      captionFa: texts.length > 1 ? texts[0] : "",
-      captionEn: texts.length > 1 ? texts[0] : "",
-      href: match[1],
-      emoji,
-      variant: ["bazaar", "direct", "anchor"][index] ?? "direct",
-      sortOrder: index,
-      isPublished: true,
-    };
-  });
+// The gold-app download buttons are the same data the front end falls back to (lib/store.ts).
+const downloadButtons = JSON.parse(read(fe, "data", "app-download-links.json")).map((link, index) => ({
+  titleFa: link.title?.fa ?? "",
+  titleEn: link.title?.en || link.title?.fa || "",
+  captionFa: link.caption?.fa ?? "",
+  captionEn: link.caption?.en ?? "",
+  href: link.href,
+  emoji: link.emoji ?? null,
+  variant: link.variant ?? "direct",
+  sortOrder: index,
+  isPublished: true,
+}));
 
 /* ───────────────────────────────── site settings row ─────────────────────────── */
 
@@ -513,6 +524,7 @@ const dataset = {
   portfolioCategories,
   portfolioProjects,
   services,
+  homeServiceCards,
   processSteps,
   clients,
   testimonials,

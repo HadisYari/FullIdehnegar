@@ -149,6 +149,35 @@ public sealed class AdminRegistry
 
         new AdminEntityDefinition
         {
+            RouteName = "HomeServiceCard",
+            TitleFa = "کارت‌های خدمات صفحه اصلی",
+            SingularFa = "کارت خدمت",
+            Icon = "ti ti-layout-cards",
+            Group = "صفحه اصلی",
+            RevalidateTags = new[] { "home" },
+            Gateway = sp => new EntityGateway<HomeServiceCard>(sp.GetRequiredService<IGenericRepository<HomeServiceCard>>()),
+            Columns = Columns(
+                Column("Code", "کد", maxWidth: 120),
+                Column("TitleFa", "عنوان"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("Code", "کد کارت", required: true, maxLength: 40, help: "مثل EXP // 01"))
+                .AddField(AdminFieldExtensions.Text("IconName", "نام آیکون", maxLength: 40, help: "مثل Sparkles، Cpu، Zap، Code2، Layers، Globe، Compass یا Maximize2."))
+                .AddPair("Title", "عنوان (فارسی)", "Title (English)", required: true, maxLength: 300)
+                .AddPair("Description", "توضیح کارت (فارسی)", "Card description (English)", AdminFieldKind.Textarea, maxLength: 1000)
+                .AddField(AdminFieldExtensions.Text("Color", "رنگ اصلی (hex)", maxLength: 20))
+                .AddField(AdminFieldExtensions.Text("SoftColor", "رنگ زمینهٔ آیکون (hex)", maxLength: 20))
+                .AddField(AdminFieldExtensions.Text("GlowColor", "رنگ هاله (CSS)", maxLength: 60))
+                .AddPair("FeatureTitle", "عنوان KPI (فارسی)", "KPI title (English)", maxLength: 200)
+                .AddPair("FeatureValue", "مقدار KPI (فارسی)", "KPI value (English)", maxLength: 100)
+                .AddField(AdminFieldExtensions.Text("Progress", "عرض نوار پیشرفت", maxLength: 10, help: "مثل 92%"))
+                .AddField(AdminFieldExtensions.Tags("TagsJson", "برچسب‌های فناوری"))
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
             RouteName = "ProcessStep",
             TitleFa = "مراحل اجرای پروژه",
             SingularFa = "مرحله",

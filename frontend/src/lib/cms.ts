@@ -152,6 +152,22 @@ export type ServiceDto = {
   visualIndex: number;
 };
 
+/** کارت خدمات صفحه اصلی (جدا از شش خدمت صفحه خدمات). */
+export type HomeServiceCardDto = {
+  id: string;
+  code: string;
+  icon?: string | null;
+  title: LocalizedText;
+  desc: LocalizedText;
+  color?: string | null;
+  softColor?: string | null;
+  glowColor?: string | null;
+  featureTitle?: LocalizedText | null;
+  featureValue?: LocalizedText | null;
+  progress?: string | null;
+  tags: string[];
+};
+
 export type ProcessStepDto = {
   id: string;
   icon?: string | null;
@@ -471,6 +487,10 @@ export function loadRelatedProjects(slug: string, take = 3): Promise<PortfolioPr
 
 export function loadServices(): Promise<ServiceDto[]> {
   return cmsFetch<ServiceDto[]>("/api/public/services", [], { tags: [CmsTag.services, CmsTag.home] });
+}
+
+export function loadHomeServiceCards(): Promise<HomeServiceCardDto[]> {
+  return cmsFetch<HomeServiceCardDto[]>("/api/public/home-services", [], { tags: [CmsTag.home] });
 }
 
 export function loadProcessSteps(): Promise<ProcessStepDto[]> {

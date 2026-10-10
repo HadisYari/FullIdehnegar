@@ -123,6 +123,23 @@ public sealed class ServiceDto
     public int VisualIndex { get; set; }
 }
 
+/// <summary>One card of the home services grid (<c>services-section.tsx</c>).</summary>
+public sealed class HomeServiceCardDto
+{
+    public Guid Id { get; set; }
+    public string Code { get; set; } = string.Empty;
+    public string? Icon { get; set; }
+    public LocalizedText Title { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedText Desc { get; set; } = new(string.Empty, string.Empty);
+    public string? Color { get; set; }
+    public string? SoftColor { get; set; }
+    public string? GlowColor { get; set; }
+    public LocalizedText? FeatureTitle { get; set; }
+    public LocalizedText? FeatureValue { get; set; }
+    public string? Progress { get; set; }
+    public IReadOnlyList<string> Tags { get; set; } = Array.Empty<string>();
+}
+
 public sealed class ProcessStepDto
 {
     public Guid Id { get; set; }
@@ -241,6 +258,7 @@ public sealed class SiteBootstrapDto
     public IReadOnlyList<PortfolioCategoryDto> Categories { get; set; } = Array.Empty<PortfolioCategoryDto>();
     public IReadOnlyList<PortfolioProjectDto> FeaturedProjects { get; set; } = Array.Empty<PortfolioProjectDto>();
     public IReadOnlyList<ServiceDto> Services { get; set; } = Array.Empty<ServiceDto>();
+    public IReadOnlyList<HomeServiceCardDto> HomeServiceCards { get; set; } = Array.Empty<HomeServiceCardDto>();
     public IReadOnlyList<ProcessStepDto> ProcessSteps { get; set; } = Array.Empty<ProcessStepDto>();
     public IReadOnlyList<ClientLogoDto> Clients { get; set; } = Array.Empty<ClientLogoDto>();
     public IReadOnlyList<TestimonialDto> Testimonials { get; set; } = Array.Empty<TestimonialDto>();

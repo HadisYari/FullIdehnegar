@@ -94,6 +94,7 @@ public sealed class SiteApiController : PublicApiControllerBase
         var categories = await Repo<PortfolioCategory>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var projects = await Repo<PortfolioProject>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var services = await Repo<Service>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var homeServiceCards = await Repo<HomeServiceCard>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var steps = await Repo<ProcessStep>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var clients = await Repo<Client>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var testimonials = await Repo<Testimonial>().Query().Published().Ordered().ToListAsync(cancellationToken);
@@ -121,6 +122,7 @@ public sealed class SiteApiController : PublicApiControllerBase
             Categories = categories.Select(category => category.ToDto()).ToList(),
             FeaturedProjects = featured.Select(project => project.ToDto()).ToList(),
             Services = services.Select(service => service.ToDto()).ToList(),
+            HomeServiceCards = homeServiceCards.Select(card => card.ToDto()).ToList(),
             ProcessSteps = steps.Select(step => step.ToDto()).ToList(),
             Clients = clients.Select(client => client.ToDto()).ToList(),
             Testimonials = testimonials.Select(testimonial => testimonial.ToDto()).ToList(),
@@ -285,6 +287,13 @@ public sealed class SectionsApiController : PublicApiControllerBase
     {
         var items = await Repo<Service>().Query().Published().Ordered().ToListAsync(cancellationToken);
         return items.Select(service => service.ToDto()).ToList();
+    }
+
+    [HttpGet("home-services")]
+    public async Task<ActionResult<IReadOnlyList<HomeServiceCardDto>>> HomeServices(CancellationToken cancellationToken)
+    {
+        var items = await Repo<HomeServiceCard>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        return items.Select(card => card.ToDto()).ToList();
     }
 
     [HttpGet("process-steps")]

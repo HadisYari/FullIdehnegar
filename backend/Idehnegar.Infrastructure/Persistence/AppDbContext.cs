@@ -25,6 +25,8 @@ public class AppDbContext : DbContext
     public DbSet<PortfolioProject> PortfolioProjects => Set<PortfolioProject>();
 
     public DbSet<Service> Services => Set<Service>();
+    /// <summary>Cards of the home services grid (separate from the services page).</summary>
+    public DbSet<HomeServiceCard> HomeServiceCards => Set<HomeServiceCard>();
 
     public DbSet<ProcessStep> ProcessSteps => Set<ProcessStep>();
 

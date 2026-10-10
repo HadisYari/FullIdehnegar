@@ -24,6 +24,7 @@ backend/
 | `PortfolioCategories` | فیلترهای صفحهٔ نمونه‌کارها |
 | `PortfolioProjects` | `src/data/portfolio.json` کامل (گالری، فیچرها، آمار، challenge/solution) |
 | `Services`, `ProcessSteps` | سکشن سرویس‌ها و فرآیند همکاری صفحهٔ اصلی |
+| `HomeServiceCards` | کارت‌های گرید «خدمات» صفحهٔ اصلی (جدا از شش خدمت صفحهٔ خدمات) |
 | `Clients`, `Testimonials`, `Milestones`, `TeamDisciplines` | لوگوی مشتریان، نظرات، تایم‌لاین درباره ما، تیم |
 | `FaqItems`, `InquiryTypes` | سوالات متداول و نوع درخواست‌های فرم تماس |
 | `StoreTemplates`, `StorePlan` | صفحهٔ فروشگاه‌ساز و پلن‌های پرداخت |
@@ -113,7 +114,7 @@ X-Robots-Tag: noindex, nofollow
 | `GET /api/public/portfolio?category=&featured=&take=` | لیست پروژه‌ها |
 | `GET /api/public/portfolio/{slug}` | جزئیات یک پروژه |
 | `GET /api/public/portfolio/{slug}/related?take=3` | پروژه‌های مرتبط |
-| `GET /api/public/services` `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
+| `GET /api/public/services` `home-services` `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
 | `POST /api/public/contact` | ذخیرهٔ پیام + ایمیل (rate limited) |
 | `POST /api/public/store-orders` | ثبت سفارش فروشگاه‌ساز (rate limited) |
 | `GET /api/public/health` | سلامت + تعداد رکوردها (بدون کش) |
@@ -179,16 +180,23 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
 
 ### کارهای باقی‌مانده (دانسته و عمدی)
 
-1. بعضی سکشن‌های صفحهٔ اصلی (`ServicesSection`, `ProcessSection`,
-   `ClientsSection`, `TestimonialsSection`) هنوز دادهٔ داخل فایل خودشان را
-   نشان می‌دهند. وصل‌کردنشان مکانیکی است: یک prop اختیاری با مقدار پیش‌فرض
-   فعلی بگیرید و در `page.tsx` از `loadServices()/loadProcessSteps()/…` پاس
-   دهید (تایپ‌ها در `lib/cms.ts` آماده‌اند).
-2. `pages/store-builder`, `gold-app`, `payment` هنوز `withPageMeta` ندارند.
-3. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
+1. صفحهٔ اصلی: `ServicesSection` از `HomeServiceCards` می‌خواند (با fallback
+   داخل فایل). `ProcessSection` و `ClientsSection` قبلاً وصل بودند.
+   `TestimonialsSection` در هیچ صفحه‌ای رندر نمی‌شود (کد مرده).
+2. صفحه‌های `store-builder`, `gold-app` و `payment` `withPageMeta` دارند.
+   `payment/page.tsx` پلن‌ها را از `getStorePlans()` (بک‌اند، با fallback به
+   `src/data/store-plans.json`) می‌گیرد.
+3. هیدر H1 صفحه‌های `services`, `portfolio`, `contact` هنوز متن JSX ثابت دارد،
+   در حالی که `PageMetas` برایشان eyebrow/heading/subheading دارد. وصل‌کردن
+   نیازمند تصمیم دربارهٔ متن نهایی است (تغییر متن قابل‌مشاهده).
+4. کامپوننت‌های `components/sections/about/*`، `project-*`، `page-hero.tsx`،
+   `contact-form.tsx` و `testimonials-section.tsx` در هیچ صفحه‌ای import نشده‌اند؛
+   صفحهٔ «درباره ما» محتوای خودش را inline دارد. داده‌های آن‌ها در بک‌اند
+   جدول ندارند.
+5. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
    `device-mockup.tsx`، `ProcessSection.tsx`، `payment/page.tsx` و یک کامنت JSX
    در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.
-4. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
+6. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
    از کشیدن ریپو: `cd backend && dotnet build BackendIdehnegar.sln`.
 
 ## ۶. SEO در بک‌اند

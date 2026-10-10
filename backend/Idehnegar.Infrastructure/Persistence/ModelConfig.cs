@@ -76,6 +76,19 @@ public static class ModelConfig
 
     private static void ConfigureHome(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<HomeServiceCard>(entity =>
+        {
+            entity.ToTable("HomeServiceCards");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Code).HasMaxLength(40).IsRequired();
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.TagsJson).HasColumnType("nvarchar(max)");
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_HomeServiceCards_Published_Sort");
+        });
+
         modelBuilder.Entity<Service>(entity =>
         {
             entity.ToTable("Services");

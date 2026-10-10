@@ -157,6 +157,26 @@ public static class ContentMapper
         VisualIndex = service.VisualIndex,
     };
 
+    public static HomeServiceCardDto ToDto(this HomeServiceCard card) => new()
+    {
+        Id = card.Id,
+        Code = card.Code,
+        Icon = card.IconName,
+        Title = Text(card.TitleFa, card.TitleEn),
+        Desc = Text(card.DescriptionFa, card.DescriptionEn),
+        Color = card.Color,
+        SoftColor = card.SoftColor,
+        GlowColor = card.GlowColor,
+        FeatureTitle = card.FeatureTitleFa is null && card.FeatureTitleEn is null
+            ? null
+            : Text(card.FeatureTitleFa, card.FeatureTitleEn),
+        FeatureValue = card.FeatureValueFa is null && card.FeatureValueEn is null
+            ? null
+            : Text(card.FeatureValueFa, card.FeatureValueEn),
+        Progress = card.Progress,
+        Tags = card.Tags,
+    };
+
     public static ProcessStepDto ToDto(this ProcessStep step) => new()
     {
         Id = step.Id,

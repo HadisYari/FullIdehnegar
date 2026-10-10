@@ -33,12 +33,21 @@ public static class DbInitializer
 
     private static async Task SeedAsync(AppDbContext db, ILogger logger, CancellationToken cancellationToken)
     {
+        var data = SeedDataset.Load();
+
+        // Tables added after the first release are seeded on their own (when empty),
+        // so databases that already hold the rest of the content still receive them.
+        if (!await db.HomeServiceCards.AnyAsync(cancellationToken) && data.HomeServiceCards.Count > 0)
+        {
+            db.HomeServiceCards.AddRange(data.HomeServiceCards);
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("Seeded {Count} home service cards.", data.HomeServiceCards.Count);
+        }
+
         if (await db.SiteSettings.AnyAsync(cancellationToken))
         {
             return;
         }
-
-        var data = SeedDataset.Load();
         if (data.SiteSettings.Count == 0)
         {
             logger.LogWarning("Seed file is missing or empty — the database was created without content.");
