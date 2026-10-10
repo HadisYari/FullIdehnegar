@@ -1,6 +1,6 @@
 // app/[locale]/contact/page.tsx
 import type { Metadata } from "next";
-import { loadFaqs, loadInquiryTypes, loadSiteConfig, withPageMeta } from "@/lib/cms";
+import { loadFaqs, loadInquiryTypes, loadPageSections, loadSiteConfig, withPageMeta } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import ContactPageCanvas from "@/components/sections/contact-section";
  
@@ -35,10 +35,11 @@ export default async function ContactPage({
   const dict = getDictionary(locale);
 
   // تنظیمات تماس + حوزه‌های پروژه + FAQs — همگی از بک‌اند (fallback داخلی دارند).
-  const [config, remoteFaqs, remoteInquiryTypes] = await Promise.all([
+  const [config, remoteFaqs, remoteInquiryTypes, sections] = await Promise.all([
     loadSiteConfig(),
     loadFaqs(),
     loadInquiryTypes(),
+    loadPageSections("contact"),
   ]);
 
   const faqs =
@@ -65,6 +66,7 @@ export default async function ContactPage({
       config={config}
       faqs={faqs}
       inquiryTypes={inquiryTypes}
+      sections={sections}
     />
   );
 }

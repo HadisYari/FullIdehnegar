@@ -1,6 +1,6 @@
 // app/[locale]/store-builder/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadPageSections, withPageMeta } from "@/lib/cms";
 import { getStoreTemplates } from "@/lib/store";
 import { locales } from "@/lib/i18n/dictionaries";
 import { StoreBuilderClient } from "@/components/store-builder/store-builder-client";
@@ -19,17 +19,26 @@ export async function generateMetadata({
   return withPageMeta("store-builder", locale === "fa" ? "fa" : "en", {
     path: "/store-builder",
     title: isFa
-      ? "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار"
-      : "Cloud Store Builder | Instant Subscription Delivery | Idehnegar",
+      ? "فروشگاه‌ساز ابری | قالب‌های فروشگاه اینترنتی | پیشگامان ایده‌نگار"
+      : "Cloud Store Builder | Store Templates | Idehnegar",
     description: isFa
-      ? "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال مستقیم به درگاه شاپرک."
-      : "Pick a store template with full warehouse management or a light version; instant activation after payment via Shaparak gateway.",
+      ? "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید و برای راه‌اندازی با تیم ایده‌نگار در تماس باشید."
+      : "Pick a store template with full warehouse management or a light version, then contact our team to get started.",
   });
 }
 
-export default async function StoreBuilderPage() {
+export default async function StoreBuilderPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const lang = locale === "en" ? "en" : "fa";
   // قالب‌ها از /api/public/store-templates — fallback: src/data/store-templates.json
-  const templates = await getStoreTemplates();
+  const [templates, sections] = await Promise.all([
+    getStoreTemplates(),
+    loadPageSections("store-builder"),
+  ]);
 
-  return <StoreBuilderClient templates={templates} />;
+  return <StoreBuilderClient templates={templates} sections={sections} locale={lang} />;
 }

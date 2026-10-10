@@ -74,10 +74,10 @@
       "headingEn": "Professional, Results-Driven Web & Software Development",
       "subheadingFa": "بیش از ۱۵ سال تجربه در طراحی وب‌سایت، پرتال‌های سازمانی، فروشگاه اینترنتی و نرم‌افزارهای تحت وب برای کسب‌وکارها، نهادهای دولتی و صنایع بزرگ کشور.",
       "subheadingEn": "15+ years of experience building websites, enterprise portals, online stores, and web software for businesses, government bodies, and major industries.",
-      "ctaPrimaryFa": "درخواست مشاوره رایگان",
-      "ctaPrimaryEn": "Get a Free Consultation",
-      "ctaSecondaryFa": "مشاهده نمونه‌کارها",
-      "ctaSecondaryEn": "View Our Work",
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": "/images/portfolio/smartexport-ai.jpg",
       "noIndex": false,
       "changeFrequency": "weekly",
@@ -94,16 +94,16 @@
       "descriptionEn": "Our story of architecting resilient digital platforms, enterprise software, and human-centered design.",
       "keywordsFa": "",
       "keywordsEn": "",
-      "eyebrowFa": "",
-      "eyebrowEn": "",
-      "headingFa": "",
-      "headingEn": "",
-      "subheadingFa": "",
-      "subheadingEn": "",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "headingFa": null,
+      "headingEn": null,
+      "subheadingFa": null,
+      "subheadingEn": null,
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": null,
       "noIndex": false,
       "changeFrequency": "monthly",
@@ -120,16 +120,16 @@
       "descriptionEn": "High-performance web applications, scalable enterprise platforms, and bespoke digital experiences.",
       "keywordsFa": "",
       "keywordsEn": "",
-      "eyebrowFa": "خدمات",
-      "eyebrowEn": "Services",
-      "headingFa": "چطور می‌توانیم کمک کنیم؟",
-      "headingEn": "How can we help?",
-      "subheadingFa": "از طراحی وب‌سایت شرکتی گرفته تا سامانه‌های سازمانی پیچیده و راهکارهای هوش مصنوعی.",
-      "subheadingEn": "From corporate websites to complex enterprise systems and AI-driven solutions.",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "headingFa": null,
+      "headingEn": null,
+      "subheadingFa": null,
+      "subheadingEn": null,
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": null,
       "noIndex": false,
       "changeFrequency": "monthly",
@@ -146,16 +146,16 @@
       "descriptionEn": "Enterprise portals, custom web systems, and digital platforms crafted by Idehnegar.",
       "keywordsFa": "",
       "keywordsEn": "",
-      "eyebrowFa": "نمونه‌کارها",
-      "eyebrowEn": "Portfolio",
-      "headingFa": "پروژه‌هایی که ساخته‌ایم",
-      "headingEn": "Projects we've built",
-      "subheadingFa": "بخشی از سامانه‌ها، پرتال‌ها و وب‌سایت‌هایی که برای مشتریان طراحی و اجرا کرده‌ایم.",
-      "subheadingEn": "A selection of the systems, portals, and websites we've designed and delivered for our clients.",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "headingFa": null,
+      "headingEn": null,
+      "subheadingFa": null,
+      "subheadingEn": null,
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": null,
       "noIndex": false,
       "changeFrequency": "monthly",
@@ -172,16 +172,16 @@
       "descriptionEn": "Connect with the Idehnegar engineering team for architecture consultations and project roadmaps.",
       "keywordsFa": "",
       "keywordsEn": "",
-      "eyebrowFa": "تماس با ما",
-      "eyebrowEn": "Contact",
-      "headingFa": "بیایید پروژه بعدی‌تان را شروع کنیم",
-      "headingEn": "Let's start your next project",
-      "subheadingFa": "برای مشاوره رایگان و برآورد پروژه، فرم زیر را پر کنید یا مستقیم تماس بگیرید.",
-      "subheadingEn": "Fill out the form for a free consultation and project estimate, or reach out directly.",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "headingFa": null,
+      "headingEn": null,
+      "subheadingFa": null,
+      "subheadingEn": null,
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": null,
       "noIndex": false,
       "changeFrequency": "monthly",
@@ -192,22 +192,22 @@
     {
       "pageKey": "store-builder",
       "path": "/store-builder",
-      "titleFa": "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار",
-      "titleEn": "Cloud Store Builder | Subscriptions with Instant Delivery",
-      "descriptionFa": "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال به درگاه شاپرک.",
-      "descriptionEn": "Pick a storefront template with full warehouse management or the lightweight plan — activated instantly after payment on Shaparak.",
+      "titleFa": "فروشگاه‌ساز ابری | قالب‌های فروشگاه اینترنتی | پیشگامان ایده‌نگار",
+      "titleEn": "Cloud Store Builder | Store Templates | Idehnegar",
+      "descriptionFa": "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید و برای راه‌اندازی با تیم ایده‌نگار در تماس باشید.",
+      "descriptionEn": "Pick a store template with full warehouse management or a light version, then contact our team to get started.",
       "keywordsFa": "",
       "keywordsEn": "",
-      "eyebrowFa": "",
-      "eyebrowEn": "",
-      "headingFa": "",
-      "headingEn": "",
-      "subheadingFa": "",
-      "subheadingEn": "",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "headingFa": null,
+      "headingEn": null,
+      "subheadingFa": null,
+      "subheadingEn": null,
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": null,
       "noIndex": false,
       "changeFrequency": "monthly",
@@ -219,52 +219,26 @@
       "pageKey": "gold-app",
       "path": "/gold-app",
       "titleFa": "اپلیکیشن و تابلوی نرخ لحظه‌ای طلا و سکه | ایده‌نگار",
-      "titleEn": "Live Gold & Coin Rate App and Shop Display | Idehnegar",
-      "descriptionFa": "نرم‌افزار نرخ لحظه‌ای طلا، سکه و ارز با نمایشگر مخصوص مغازه‌های طلا و جواهر؛ به‌روزرسانی خودکار از اطلاعیه‌های رسمی اتحادیه.",
-      "descriptionEn": "Real-time gold, coin and currency rates for Android and shop TVs, synced with official union announcements.",
+      "titleEn": "Live Gold & Coin Rate App and Shop Board | Idehnegar",
+      "descriptionFa": "نرم‌افزار نرخ لحظه‌ای طلا، سکه و ارز با نمایشگر مخصوص مغازه‌های طلا و جواهر؛ به‌روزرسانی خودکار از اتحادیه.",
+      "descriptionEn": "Live gold, coin and currency rate software with a dedicated display board for jewelry shops; auto-updated from the guild.",
       "keywordsFa": "",
       "keywordsEn": "",
-      "eyebrowFa": "",
-      "eyebrowEn": "",
-      "headingFa": "",
-      "headingEn": "",
-      "subheadingFa": "",
-      "subheadingEn": "",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "headingFa": null,
+      "headingEn": null,
+      "subheadingFa": null,
+      "subheadingEn": null,
+      "ctaPrimaryFa": null,
+      "ctaPrimaryEn": null,
+      "ctaSecondaryFa": null,
+      "ctaSecondaryEn": null,
       "ogImage": null,
       "noIndex": false,
       "changeFrequency": "monthly",
       "priority": 0.8,
       "sortOrder": 6,
-      "isPublished": true
-    },
-    {
-      "pageKey": "payment",
-      "path": "/payment",
-      "titleFa": "تسویه حساب و فعال‌سازی اشتراک",
-      "titleEn": "Checkout & Subscription Activation",
-      "descriptionFa": "تکمیل اطلاعات و پرداخت امن اشتراک فروشگاه‌ساز ایده‌نگار.",
-      "descriptionEn": "Complete your details and pay securely to activate your store subscription.",
-      "keywordsFa": "",
-      "keywordsEn": "",
-      "eyebrowFa": "",
-      "eyebrowEn": "",
-      "headingFa": "",
-      "headingEn": "",
-      "subheadingFa": "",
-      "subheadingEn": "",
-      "ctaPrimaryFa": "",
-      "ctaPrimaryEn": "",
-      "ctaSecondaryFa": "",
-      "ctaSecondaryEn": "",
-      "ogImage": null,
-      "noIndex": true,
-      "changeFrequency": "monthly",
-      "priority": 0.8,
-      "sortOrder": 7,
       "isPublished": true
     }
   ],
@@ -944,6 +918,1008 @@
       "isPublished": true
     }
   ],
+  "homeServiceCards": [
+    {
+      "code": "EXP // 01",
+      "iconName": "Sparkles",
+      "titleFa": "طراحی وب تعاملی و ۳D",
+      "titleEn": "",
+      "descriptionFa": "پیاده‌سازی وب‌سایت‌های خلاق با تجربه‌های دیداری عمیق، وب‌جی‌ال (WebGL)، میکرواینترکشن‌ها و هویت انحصاری برند.",
+      "descriptionEn": "",
+      "color": "#e6304c",
+      "softColor": "#ffe5e9",
+      "glowColor": "rgba(230, 48, 76, 0.4)",
+      "featureTitleFa": "نرخ ماندگاری مخاطب (Dwell Time)",
+      "featureTitleEn": null,
+      "featureValueFa": "3.4x بالاتر",
+      "featureValueEn": null,
+      "progress": "92%",
+      "tags": [
+        "Creative UI/UX",
+        "Three.js",
+        "Framer Motion",
+        "Lenis Scroll"
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "code": "ENG // 02",
+      "iconName": "Cpu",
+      "titleFa": "معماری نرم‌افزار و سامانه‌ها",
+      "titleEn": "",
+      "descriptionFa": "توسعه سامانه‌های ابری یکپارچه، داشبوردهای تحلیل داده و وب‌اپلیکیشن‌های چند کاربره با پایداری حداکثری.",
+      "descriptionEn": "",
+      "color": "#6366f1",
+      "softColor": "#e0e7ff",
+      "glowColor": "rgba(99, 102, 241, 0.4)",
+      "featureTitleFa": "پایداری بدون خطا (Uptime)",
+      "featureTitleEn": null,
+      "featureValueFa": "99.98%",
+      "featureValueEn": null,
+      "progress": "98%",
+      "tags": [
+        "TypeScript",
+        "Next.js",
+        "PostgreSQL",
+        "Scalable APIs"
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "code": "SPD // 03",
+      "iconName": "Zap",
+      "titleFa": "مهندسی سرعت و رتبه‌گیری",
+      "titleEn": "",
+      "descriptionFa": "لود آنی بدون تأخیر در تمامی دستگاه‌ها، کسب بهترین امتیازها در الگوریتم Core Web Vitals و سئوی ساختاریافته محتوا.",
+      "descriptionEn": "",
+      "color": "#059669",
+      "softColor": "#d1fae5",
+      "glowColor": "rgba(5, 150, 105, 0.4)",
+      "featureTitleFa": "نمره بهینه‌سازی گوگل",
+      "featureTitleEn": null,
+      "featureValueFa": "100 / 100",
+      "featureValueEn": null,
+      "progress": "100%",
+      "tags": [
+        "SSR / SSG",
+        "Edge Cache",
+        "LightHouse",
+        "Zero Bloat"
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    }
+  ],
+  "aboutSections": [
+    {
+      "key": "values",
+      "eyebrowFa": "ارزش‌های ما",
+      "eyebrowEn": "Our Values",
+      "titleFa": "اصولی که ما را متفاوت می‌کند",
+      "titleEn": "Principles that set us apart",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "key": "certifications",
+      "eyebrowFa": "تاییدیه‌ها و جوایز",
+      "eyebrowEn": "Certifications & Awards",
+      "titleFa": "اعتبار ما، حاصل کارنامه اجرایی ماست",
+      "titleEn": "Our credibility comes from our track record",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "key": "lifecycle",
+      "eyebrowFa": "PIPELINE",
+      "eyebrowEn": "PIPELINE",
+      "titleFa": "فرایند توسعه و تحویل محصول",
+      "titleEn": "How We Engineer & Deliver",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "key": "philosophy",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "فلسفه مهندسی ما",
+      "titleEn": "Our Engineering Culture",
+      "subtitleFa": "نرم‌افزار پایدار اتفاقی نیست؛ نتیجه پایبندی به اصول معماری، استاندارد کدنویسی و تست خودکار است.",
+      "subtitleEn": "Robust systems aren't accidental; they stem from architectural rigor, code standards, and automation.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "key": "tech-stack",
+      "eyebrowFa": "فناوری‌های ما",
+      "eyebrowEn": "Our Tech Stack",
+      "titleFa": "ابزارهایی که آینده را می‌سازند",
+      "titleEn": "Tools that build the future",
+      "subtitleFa": "ما از مدرن‌ترین و قابل‌اعتمادترین فناوری‌های روز دنیا استفاده می‌کنیم.",
+      "subtitleEn": "We use the most modern and reliable technologies available today.",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "pageSections": [
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "hero",
+      "eyebrowFa": "سامانه نرخ لحظه‌ای طلا، سکه و ارز",
+      "eyebrowEn": null,
+      "titleFa": "دسترسی آنی به نرخ رسمی طلا",
+      "titleEn": null,
+      "subtitleFa": "روی تلفن همراه و تابلوی مغازه",
+      "subtitleEn": null,
+      "bodyFa": "با این سامانه، قیمت‌های رسمی اتحادیه طلا و جواهر (شامل مظنه آبشده، انواع مسکوکات، انس جهانی و ارزها) را بدون تاخیر ثانیه‌ای در گوشی همراه خود داشته باشید و همزمان روی تلویزیون مغازه به عنوان تابلوی دیجیتال نمایش دهید.",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "hero-badge",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "اطلاعیه رسمی اتحادیه",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "به‌روزرسانی خودکار و لحظه‌ای",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "platform",
+      "eyebrowFa": "DUAL PLATFORM DISPLAY",
+      "eyebrowEn": null,
+      "titleFa": "یک نرم‌افزار، دو کاربرد اساسی",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "برای مشاهده پیش‌نمایش هر بخش، حالت مورد نظرتان را انتخاب کنید:",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "desktop",
+      "eyebrowFa": "ویژه مانیتور و تلویزیون طلافروشی‌ها",
+      "eyebrowEn": null,
+      "titleFa": "تابلوی دیجیتال قیمت طلا و سکه",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "طراحی عریض با چیدمان شبکه‌ای و فونت‌های بزرگ خوانا، ویژه اتصال به تلویزیون یا کامپیوتر مغازه. مشتریان شما در یک نگاه تمام نرخ‌های آبشده، سکه‌ها، انس و ارزها را مشاهده می‌کنند.",
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": null,
+          "titleFa": "تفکیک قیمت خرید از مشتری و کمترین فروش",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "نمایش ساعت و تاریخ شمسی رسمی با آخرین زمان به‌روزرسانی",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "بخش اختصاصی حدیث روز و اطلاعیه‌های رسمی صنف",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "mobile",
+      "eyebrowFa": "همیشه همراه، در هر زمان و مکان",
+      "eyebrowEn": null,
+      "titleFa": "اپلیکیشن نسخه موبایل (اندروید)",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "با اپلیکیشن موبایل، قیمت لحظه‌ای طلا، سکه امامی، نیم و ربع، مثقال ۱۷ و نرخ لحظه‌ای دلار و یورو را در جیب خود داشته باشید و از نوسانات ناگهانی بازار جا نمانید.",
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": null,
+          "titleFa": "نمایش فلش‌های نوسان صعودی و نزولی قیمت",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "بخش مظنه و ارز (انس جهانی، دلار، یک مثقال)",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "مصرف اینترنت بسیار کم با سرعت لود زیر ثانیه",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "value",
+      "eyebrowFa": "مزایای خرید اشتراک",
+      "eyebrowEn": null,
+      "titleFa": "چرا طلافروشان و فعالان بازار به این اشتراک نیاز دارند؟",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "اطمینان از درستی نرخ‌ها در زمان نوسان‌های شدید بازار، از هر ضرر احتمالی در معاملات جلوگیری می‌کند.",
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": "⚡",
+          "titleFa": "بدون تاخیر ثانیه‌ای",
+          "titleEn": "",
+          "descriptionFa": "متصل به وب‌سرویس مستقیم و پایدار بدون تاخیر و بدون نیاز به فیلترشکن برای تمام استان‌ها و شهرها.",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "📺",
+          "titleFa": "یک اشتراک برای موبایل و تابلو",
+          "titleEn": "",
+          "descriptionFa": "با تهیه یک لایسنس، هم روی گوشی شخصی و هم روی تلویزیون یا تابلوی مغازه دسترسی همزمان خواهید داشت.",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "🛡️",
+          "titleFa": "پشتیبانی ایده‌نگار",
+          "titleEn": "",
+          "descriptionFa": "تضمین پایداری سرور و ارتقای مداوم برنامه توسط تیم مهندسی نرم‌افزار ایده‌نگار.",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "pageKey": "gold-app",
+      "sectionKey": "cta",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "دانلود کنید و اشتراک تابلوی خود را فعال نمایید",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "هم‌اکنون نسخه اندروید را دانلود کنید و جهت تهیه لایسنس و فعال‌سازی تابلوی مغازه با پشتیبانی تماس بگیرید.",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 6,
+      "isPublished": true
+    },
+    {
+      "pageKey": "about",
+      "sectionKey": "manifesto",
+      "eyebrowFa": "عهد مهندسی ما",
+      "eyebrowEn": "The Engineering Manifesto",
+      "titleFa": "همه چیز را بر پایه معماری پایدار بنا می‌کنیم",
+      "titleEn": "Everything Built on Resilient Architecture",
+      "subtitleFa": "«استاندارد ما کدی است که پس از سال‌ها کارکرد، همچنان سریع، خوانا و قابل افتخار باشد.»",
+      "subtitleEn": "“Our standard is code that stays fast, readable and worth being proud of for years.”",
+      "bodyFa": "ما در ایده‌نگار اعتقادی به راه‌حل‌های موقتی و بزک‌شده نداریم. زمانی که مسئولیت فنی یک محصول را می‌پذیریم، خیالتان از لایه‌های امنیتی، پایداری در ترافیک‌های سنگین و توسعه‌پذیری ویژگی‌های آینده آسوده است. ما به هر خط کدی که دیپلوی می‌شود تعهد اخلاقی و فنی داریم.",
+      "bodyEn": "We believe in long-term engineering integrity over quick shortcuts. When you partner with us, infrastructure resilience, strict security layers, and future-proof codebases are guaranteed by design.",
+      "items": [
+        {
+          "icon": null,
+          "titleFa": "توسعه ۱۰۰٪ اختصاصی بدون وابستگی به قالب‌های تجاری سنگین",
+          "titleEn": "100% custom development with no heavy commercial templates",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "تایپ‌سیفتی سراسری با تایپ‌اسکریپت و پایپ‌لاین‌های خودکار تست",
+          "titleEn": "End-to-end type safety with TypeScript and automated test pipelines",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "شفافیت رادیکال و دسترسی لحظه‌ای کارفرما به لاگ‌ها و پیشرفت اسپرینت",
+          "titleEn": "Radical transparency: real-time client access to logs and sprint progress",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "about",
+      "sectionKey": "team",
+      "eyebrowFa": "TEAM CONSTELLATION",
+      "eyebrowEn": "TEAM CONSTELLATION",
+      "titleFa": "ترکیب استعدادها در کنار یکدیگر",
+      "titleEn": "Talent Synergy in Action",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "در پشت پرده هر پلتفرم موفقی، هماهنگی دقیق معماران سیستم، مهندسان رابط کاربری و متخصصان زیرساخت ابری جریان دارد. تیم ما چابک، هم‌راستا و مشتاق حل دشوارترین چالش‌های فنی است.",
+      "bodyEn": "Behind every seamless software launch stands a cross-functional squad of architects, designers, and cloud engineers moving in perfect sync.",
+      "items": [],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "about",
+      "sectionKey": "quick-links",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": "⚡",
+          "titleFa": "خدمات و راهکارهای نرم‌افزار",
+          "titleEn": "Explore Solutions",
+          "descriptionFa": "Bespoke Web • Cloud • Portals",
+          "descriptionEn": "Bespoke Web • Cloud • Portals",
+          "href": "/services",
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "★",
+          "titleFa": "پروژه‌ها و نمونه‌های شاخص",
+          "titleEn": "View Portfolio",
+          "descriptionFa": "Enterprise Case Studies",
+          "descriptionEn": "Enterprise Case Studies",
+          "href": "/portfolio",
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "pageKey": "home",
+      "sectionKey": "cta",
+      "eyebrowFa": "شروع خلق یک اثر متمایز",
+      "eyebrowEn": "Start Your Next Milestone",
+      "titleFa": "ایده بزرگ بعدی‌تان را با",
+      "titleEn": "Build Your Next Breakthrough With",
+      "subtitleFa": "بالاترین استانداردهای مهندسی بسازید",
+      "subtitleEn": "World-Class Engineering",
+      "bodyFa": "ما در ایده‌نگار آماده‌ایم از اولین گام تحلیل نیازمندی‌ها تا معماری توزیع‌شده، لودینگ زیر ثانیه و استقرار ابری در کنار کسب‌وکار شما باشیم.",
+      "bodyEn": "From preliminary domain modeling to high-throughput cloud deployment and sub-second web performance, our senior leads are with you.",
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "home",
+      "sectionKey": "cta-sla",
+      "eyebrowFa": "تعهدنامه کیفیت ایده‌نگار",
+      "eyebrowEn": "Quality Assurance",
+      "titleFa": "SLA Guaranteed",
+      "titleEn": "SLA Guaranteed",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "پاسخ‌گویی فنی ظرف حداکثر ۲ تا ۴ ساعت کاری",
+      "bodyEn": "Initial response within 2-4 business hours",
+      "items": [
+        {
+          "icon": "zap",
+          "titleFa": "میانگین زمان لود اولیه (TTFB)",
+          "titleEn": "Sub-second TTFB",
+          "descriptionFa": "< 50ms",
+          "descriptionEn": "< 50ms",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "shield",
+          "titleFa": "پایداری بدون توقف سرورها",
+          "titleEn": "High Availability Uptime",
+          "descriptionFa": "99.98%",
+          "descriptionEn": "99.98%",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "cpu",
+          "titleFa": "معماری کامپوننت‌ها و تایپ‌سیفتی",
+          "titleEn": "Strict Type-Safety Coverage",
+          "descriptionFa": "100% TS",
+          "descriptionEn": "100% TS",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "home",
+      "sectionKey": "testimonials",
+      "eyebrowFa": "مشتریان می‌گویند",
+      "eyebrowEn": "Testimonials",
+      "titleFa": "چند نمونه از رضایت کارفرمایان",
+      "titleEn": "What our clients say",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "services",
+      "sectionKey": "quick-access",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "دسترسی سریع به تمام راهکارها",
+      "titleEn": "Quick Access to Solutions",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "برای دریافت نقشه راه فنی و برآورد زمان‌بندی پروژه، با تیم ما در تماس باشید.",
+      "bodyEn": "Select any service to review technical deliverables and timelines.",
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "intro",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "ما همیشه مشتاق گفتگو پیرامون معماری‌های نوین، توسعه پلتفرم‌های پرسرعت و ارتقای محصولات دیجیتال شما هستیم. برای هماهنگی جلسات مشاوره یا بررسی پروپوزال، مستقیماً با تیم ما در ارتباط باشید.",
+      "bodyEn": "We are eager to explore scalable architectures, high-throughput web systems, and your next software milestones. Connect directly with our team.",
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "hubs",
+      "eyebrowFa": "STUDIO INTERACTIVE HUBS",
+      "eyebrowEn": "STUDIO INTERACTIVE HUBS",
+      "titleFa": "درگاه‌های تعاملی و دسترسی پردیس ایده‌نگار",
+      "titleEn": "Interactive Studio Access Portals",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "hubs-hours",
+      "eyebrowFa": "Operations Desk",
+      "eyebrowEn": "Operations Desk",
+      "titleFa": "ساعت کاری و پذیرش",
+      "titleEn": "Working Hours",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": null,
+          "titleFa": "شنبه تا چهارشنبه",
+          "titleEn": "Sat - Wed",
+          "descriptionFa": "جلسات و مشاوره حضوری",
+          "descriptionEn": "On-site Discovery",
+          "href": null,
+          "valueFa": "۰۹:۰۰ — ۱۸:۰۰",
+          "valueEn": "09:00 — 18:00"
+        },
+        {
+          "icon": null,
+          "titleFa": "پنج‌شنبه‌ها",
+          "titleEn": "Thursdays",
+          "descriptionFa": "اسپرینت‌های فشرده",
+          "descriptionEn": "Sprint Reviews",
+          "href": null,
+          "valueFa": "۰۹:۰۰ — ۱۳:۰۰",
+          "valueEn": "09:00 — 13:00"
+        },
+        {
+          "icon": null,
+          "titleFa": "پایش اضطراری زیرساخت",
+          "titleEn": "Emergency Cloud SLA",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "۲۴/۷ فعال",
+          "valueEn": "24/7 Active"
+        }
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "hubs-amenities",
+      "eyebrowFa": "Executive Space",
+      "eyebrowEn": "Executive Space",
+      "titleFa": "امکانات پردیس ایده‌نگار",
+      "titleEn": "HQ Amenities",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": "car",
+          "titleFa": "پارکینگ اختصاصی هوشمند",
+          "titleEn": "Reserved Client Parking",
+          "descriptionFa": "رزرو آنی در روز جلسه حضوری",
+          "descriptionEn": "Guaranteed spot during workshop",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "shield-check",
+          "titleFa": "اتاق جلسات مجهز به ارائه ۴K",
+          "titleEn": "Conference Room & Tech Hub",
+          "descriptionFa": "بررسی زنده و آکوستیک کدها",
+          "descriptionEn": "Live code review & projection",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "lock",
+          "titleFa": "تعهد محرمانگی ایده (NDA)",
+          "titleEn": "Strict NDA Protection",
+          "descriptionFa": "امضای رسمی پیش از شروع جلسه",
+          "descriptionEn": "Full IP & confidentiality pact",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "discovery",
+      "eyebrowFa": "HQ GEOSPATIAL RADAR",
+      "eyebrowEn": "HQ GEOSPATIAL RADAR",
+      "titleFa": "میزبان جلسات فنی و استراتژیک شما هستیم",
+      "titleEn": "Hosting Your Technical Discovery Sessions",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "برای جلسات امکان‌سنجی نرم‌افزار، مشاوره حضوری در حوزه معماری پلتفرم‌ها و شناخت فرآیند توسعه، با هماهنگی قبلی پذیرای شما در دفتر مرکزی ایده‌نگار هستیم.",
+      "bodyEn": "Schedule an on-site architecture workshop with our engineering leads to review your technical roadmap and project milestones.",
+      "items": [],
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "faq",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "مشتاق شنیدن صدای شما هستیم",
+      "titleEn": "We Are Eager to Hear From You",
+      "subtitleFa": "پرسش‌های پرتکرار در آغاز همکاری",
+      "subtitleEn": "Frequently Asked Questions",
+      "bodyFa": "در این بخش به سوالات متداول مدیران و کارفرمایان درباره فرآیند برآورد و استانداردهای مهندسی پاسخ داده‌ایم.",
+      "bodyEn": "Transparent answers regarding our engineering standards, scoping process, and delivery pipelines.",
+      "items": [],
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "pageKey": "store-builder",
+      "sectionKey": "intro",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و برای راه‌اندازی فروشگاه با تیم ایده‌نگار در تماس باشید.",
+      "bodyEn": "Choose the template and architecture your business needs, review the previews, and contact our team to set up your store.",
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "store-builder",
+      "sectionKey": "final-cta",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟",
+      "titleEn": "Ready to launch your online store?",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "پس از هماهنگی با تیم ایده‌نگار، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود.",
+      "bodyEn": "After we agree on the details with the Idehnegar team, your store license and server infrastructure are configured and delivered automatically within 10 minutes.",
+      "items": [],
+      "sortOrder": 1,
+      "isPublished": true
+    }
+  ],
+  "coreValues": [
+    {
+      "iconPath": "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z",
+      "titleFa": "نوآوری مستمر",
+      "titleEn": "Continuous Innovation",
+      "descriptionFa": "همیشه از جدیدترین فناوری‌ها استفاده می‌کنیم و هیچ‌وقت به روش‌های قدیمی بسنده نمی‌کنیم.",
+      "descriptionEn": "We always use the latest technologies and never settle for outdated methods.",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z",
+      "titleFa": "کیفیت بی‌تنازل",
+      "titleEn": "Uncompromising Quality",
+      "descriptionFa": "هر خط کد با دقت نوشته می‌شود. ما کیفیت را فدای سرعت نمی‌کنیم.",
+      "descriptionEn": "Every line of code is written with precision. We never sacrifice quality for speed.",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z",
+      "titleFa": "تعهد به مشتری",
+      "titleEn": "Client Commitment",
+      "descriptionFa": "موفقیت مشتری، موفقیت ماست. در هر مرحله از پروژه در کنار شما هستیم.",
+      "descriptionEn": "Our client's success is our success. We stand by you at every project stage.",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418",
+      "titleFa": "دید بین‌المللی",
+      "titleEn": "Global Perspective",
+      "descriptionFa": "با تجربه پروژه‌های بین‌المللی، استانداردهای جهانی را در پروژه‌های داخلی هم رعایت می‌کنیم.",
+      "descriptionEn": "With international project experience, we apply world-class standards to every project.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z",
+      "titleFa": "عملکرد بالا",
+      "titleEn": "High Performance",
+      "descriptionFa": "سامانه‌هایی می‌سازیم که سریع، پایدار و آماده مقیاس‌پذیری هستند.",
+      "descriptionEn": "We build systems that are fast, stable, and ready to scale.",
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z",
+      "titleFa": "امنیت اول",
+      "titleEn": "Security First",
+      "descriptionFa": "امنیت از روز اول در معماری سامانه‌ها تعبیه می‌شود، نه به عنوان یک افزونه.",
+      "descriptionEn": "Security is built into the architecture from day one — not bolted on later.",
+      "sortOrder": 5,
+      "isPublished": true
+    }
+  ],
+  "certifications": [
+    {
+      "icon": "🏛️",
+      "titleFa": "تاییدیه دانش‌بنیان",
+      "titleEn": "Knowledge-Based Certification",
+      "organizationFa": "معاونت علمی، فناوری و اقتصاد دانش‌بنیان ریاست‌جمهوری",
+      "organizationEn": "Iran's Vice Presidency for Science, Technology & Knowledge-Based Economy",
+      "colorClass": "from-blue-500/10 to-cyan-500/10",
+      "borderClass": "hover:border-blue-400",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "icon": "💻",
+      "titleFa": "صلاحیت مشاوره و آموزش",
+      "titleEn": "Consulting & Training Qualification",
+      "organizationFa": "نظام صنفی رایانه‌ای کشور",
+      "organizationEn": "National Computer Trade Union",
+      "colorClass": "from-purple-500/10 to-violet-500/10",
+      "borderClass": "hover:border-purple-400",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "icon": "🌐",
+      "titleFa": "صلاحیت نرم‌افزار و پرتال",
+      "titleEn": "Software & Portal Qualification",
+      "organizationFa": "شورای عالی انفورماتیک",
+      "organizationEn": "Supreme Council of Informatics",
+      "colorClass": "from-emerald-500/10 to-green-500/10",
+      "borderClass": "hover:border-emerald-400",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "icon": "🏆",
+      "titleFa": "تندیس کارآفرین برتر",
+      "titleEn": "Top Entrepreneur Award",
+      "organizationFa": "اداره کل تعاون، کار و رفاه اجتماعی (۱۳۹۴)",
+      "organizationEn": "Kermanshah's Cooperatives, Labor & Social Welfare (2015)",
+      "colorClass": "from-amber-500/10 to-orange-500/10",
+      "borderClass": "hover:border-amber-400",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "icon": "📜",
+      "titleFa": "لوح تقدیر همدلی و همیاری",
+      "titleEn": "Appreciation Plaque",
+      "organizationFa": "استانداری کرمانشاه",
+      "organizationEn": "Kermanshah Governorate",
+      "colorClass": "from-rose-500/10 to-pink-500/10",
+      "borderClass": "hover:border-rose-400",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "lifecycleSteps": [
+    {
+      "numberLabel": "01",
+      "nameFa": "کشف و تحلیل سیستم",
+      "nameEn": "System Discovery",
+      "descriptionFa": "استخراج Use Caseها، مدلسازی داده‌ها و انتخاب معماری پایدار متناسب با مقیاس.",
+      "descriptionEn": "Domain modeling, gathering core use-cases, and selecting targeted architecture.",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "02",
+      "nameFa": "طراحی تعاملی و UI/UX",
+      "nameEn": "UI/UX & Prototyping",
+      "descriptionFa": "طراحی Design System اختصاصی، پروتوتایپ تست‌پذیر و کاربرپژوهی دقیق.",
+      "descriptionEn": "Design system crafting, user research, and fully clickable wireframing.",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "03",
+      "nameFa": "پیاده‌سازی ماژولار",
+      "nameEn": "Modular Coding",
+      "descriptionFa": "کدنویسی تمیز با بازبینی دونفره (Peer Code Review) و پایبندی به اصول SOLID.",
+      "descriptionEn": "Clean development enforced by peer code reviews and strict SOLID practices.",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "04",
+      "nameFa": "تست جامع و بنچ‌مارک",
+      "nameEn": "Testing & Profiling",
+      "descriptionFa": "تست‌های لود (Load Testing)، اعتبارسنجی امنیتی و بررسی نرخ پاسخگویی سیستم.",
+      "descriptionEn": "Automated test suites, peak load evaluations, and security scans.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "05",
+      "nameFa": "استقرار و مانیتورینگ",
+      "nameEn": "Deployment & APM",
+      "descriptionFa": "راه‌اندازی پایپ‌لاین CI/CD، لاگ‌گیری متمرکز و مانیتورینگ سلامت با APM.",
+      "descriptionEn": "Containerized deployment, centralized telemetry, and real-time health alerts.",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "philosophyPrinciples": [
+    {
+      "iconName": "Layers",
+      "tagFa": "معماری مقیاس‌پذیر",
+      "tagEn": "Scalable Architecture",
+      "titleFa": "Clean Architecture & DDD",
+      "titleEn": "Clean Architecture & DDD",
+      "descriptionFa": "توسعه مبتنی بر جداسازی لایه‌ها و دامنه‌محوری؛ سامانه‌ای که با رشد بیزینس دچار بدهی فنی (Technical Debt) نمی‌شود.",
+      "descriptionEn": "Layered separation and domain-centric design, ensuring the product scales without crippling technical debt.",
+      "codeSnippet": "UI -> Application -> Domain <- Infrastructure",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "iconName": "ShieldCheck",
+      "tagFa": "پایداری محصول",
+      "tagEn": "System Reliability",
+      "titleFa": "توسعه آزمون‌محور و امنیت ذاتی",
+      "titleEn": "Security-First & Automated Testing",
+      "descriptionFa": "تست‌های اتوماتیک Integration و Unit همراه با اسکن امنیتی خطوط کد قبل از استقرار در پروداکشن.",
+      "descriptionEn": "End-to-end integration test suites and static analysis scans executed prior to any production deployment.",
+      "codeSnippet": null,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "iconName": "GitMerge",
+      "tagFa": "اتوماسیون DevOps",
+      "tagEn": "DevOps Automation",
+      "titleFa": "استقرار پیوسته بدون قطعی (Zero Downtime)",
+      "titleEn": "Zero-Downtime Deployment",
+      "descriptionFa": "پایپ‌لاین‌های CI/CD مدرن با رویکرد Infrastructure as Code جهت انتشار پایدار، سریع و بدون ریسک.",
+      "descriptionEn": "Battle-tested CI/CD pipelines with GitOps workflows for predictable, automated releases.",
+      "codeSnippet": null,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "iconName": "Workflow",
+      "tagFa": "متدولوژی تحویل",
+      "tagEn": "Agile Delivery",
+      "titleFa": "توسعه چابک و تکرارشونده (Iterative)",
+      "titleEn": "Iterative Engineering Sprints",
+      "descriptionFa": "ارائه فیچرها در قالب اسپرینت‌های شفاف، فیدبک‌گیری پیوسته و تحویل مداوم ارزش به کاربر نهایی.",
+      "descriptionEn": "Transparent sprint cycles with continuous stakeholder feedback to maximize shipped value.",
+      "codeSnippet": null,
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "techStackGroups": [
+    {
+      "labelFa": "فرانت‌اند",
+      "labelEn": "Frontend",
+      "items": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion"
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "labelFa": "بک‌اند",
+      "labelEn": "Backend",
+      "items": [
+        ".NET / C#",
+        "Node.js",
+        "Python",
+        "REST API",
+        "GraphQL"
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "labelFa": "دیتابیس",
+      "labelEn": "Database",
+      "items": [
+        "PostgreSQL",
+        "SQL Server",
+        "MongoDB",
+        "Redis"
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "labelFa": "زیرساخت",
+      "labelEn": "Infrastructure",
+      "items": [
+        "AWS",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "CI/CD"
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "aboutStats": [
+    {
+      "value": 15,
+      "suffix": "+",
+      "labelFa": "سال تجربه",
+      "labelEn": "Years Experience",
+      "icon": "📅",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "value": 300,
+      "suffix": "+",
+      "labelFa": "پروژه موفق",
+      "labelEn": "Successful Projects",
+      "icon": "🚀",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "value": 50,
+      "suffix": "+",
+      "labelFa": "مشتری فعال",
+      "labelEn": "Active Clients",
+      "icon": "🤝",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "value": 4,
+      "suffix": null,
+      "labelFa": "کشور همکاری",
+      "labelEn": "Countries Served",
+      "icon": "🌍",
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
   "processSteps": [
     {
       "icon": "MessagesSquare",
@@ -1399,40 +2375,56 @@
     {
       "code": "wh-1",
       "name": "مگاشاپ اینترپرایز (MegaShop Pro)",
+      "nameEn": "MegaShop Enterprise (MegaShop Pro)",
       "category": "warehouse",
       "tag": "سامانه انبارداری چندشعبه‌ای",
+      "tagEn": "Multi-branch warehouse management system",
       "planName": "پلن سازمانی مگاشاپ",
+      "planNameEn": "MegaShop Enterprise plan",
       "priceMonthly": 1850000,
       "priceYearly": 17760000,
       "discountBadge": "۲۰٪ تخفیف سالانه",
+      "discountBadgeEn": "20% off annually",
       "description": "طراحی شده برای هایپرمارکت‌ها، کالای دیجیتال و برندهای با بیش از ۵۰ هزار قلم کالا، چند شعبه انبار فیزیکی و فاکتور رسمی.",
+      "descriptionEn": "Designed for hypermarkets, digital goods retailers and brands with over 50,000 SKUs, several physical warehouses and official invoicing.",
       "features": [
         "کنترل موجودی چندانبار همزمان",
         "حواله ورود و خروج بارکدی",
         "اتصال به سیستم‌های مالی و سپیدار",
         "هاست اختصاصی ابری و SSL رایگان"
       ],
+      "featuresEn": [
+        "Real-time stock control across multiple warehouses",
+        "Barcode-based receipts and dispatches",
+        "Integration with financial systems and Sepidar",
+        "Dedicated cloud hosting and free SSL"
+      ],
       "desktopScreens": [
         {
           "label": "صفحه اصلی و کاتالوگ",
+          "labelEn": "Home page and catalogue",
           "src": "/images/templates/wh1-desk-1.jpg"
         },
         {
           "label": "داشبورد انباردار و بارکدخوان",
+          "labelEn": "Warehouse dashboard and barcode scanner",
           "src": "/images/templates/wh1-desk-2.jpg"
         },
         {
           "label": "صفحه تسویه و فاکتور",
+          "labelEn": "Checkout and invoice page",
           "src": "/images/templates/wh1-desk-3.jpg"
         }
       ],
       "mobileScreens": [
         {
           "label": "نسخه خریدار (PWA)",
+          "labelEn": "Buyer app (PWA)",
           "src": "/images/templates/wh1-mob-1.jpg"
         },
         {
           "label": "پنل تحویل سریع",
+          "labelEn": "Fast delivery panel",
           "src": "/images/templates/wh1-mob-2.jpg"
         }
       ],
@@ -1442,36 +2434,51 @@
     {
       "code": "wh-2",
       "name": "ماتریسی استایل (Moda Matrix)",
+      "nameEn": "Moda Matrix",
       "category": "warehouse",
       "tag": "انبارداری سایزبندی و رنگ",
+      "tagEn": "Size and colour warehouse management",
       "planName": "پلن پیشرفته مد و پوشاک",
+      "planNameEn": "Advanced fashion and apparel plan",
       "priceMonthly": 1450000,
       "priceYearly": 13920000,
       "discountBadge": "۲۰٪ تخفیف سالانه",
+      "discountBadgeEn": "20% off annually",
       "description": "ویژه فروشگاه‌های پوشاک و کفش با ماتریس چندبُعدی انبار بر اساس سایز، رنگ، بچ تولید و هشدار اتمام سریع.",
+      "descriptionEn": "Built for clothing and footwear stores, with a multi-dimensional warehouse matrix by size, colour and production batch, plus low-stock alerts.",
       "features": [
         "انبارداری ماتریسی رنگ/سایز",
         "رزرو موقت کالا در سبد خرید",
         "هشدار کاهش موجودی بحرانی",
         "سیستم کد تخفیف پیشرفته"
       ],
+      "featuresEn": [
+        "Colour and size matrix inventory",
+        "Temporary stock reservation in the cart",
+        "Critical low-stock alerts",
+        "Advanced discount code system"
+      ],
       "desktopScreens": [
         {
           "label": "ویترین کالکشن فصلی",
+          "labelEn": "Seasonal collection showcase",
           "src": "/images/templates/wh2-desk-1.jpg"
         },
         {
           "label": "پنل کنترل سایز و متریال",
+          "labelEn": "Size and material control panel",
           "src": "/images/templates/wh2-desk-2.jpg"
         }
       ],
       "mobileScreens": [
         {
           "label": "انتخاب سایز و رنگ",
+          "labelEn": "Size and colour selection",
           "src": "/images/templates/wh2-mob-1.jpg"
         },
         {
           "label": "پیگیری لحظه‌ای مرسوله",
+          "labelEn": "Live shipment tracking",
           "src": "/images/templates/wh2-mob-2.jpg"
         }
       ],
@@ -1481,36 +2488,51 @@
     {
       "code": "wh-3",
       "name": "صنعتی و ابزارآلات (Techno Ware)",
+      "nameEn": "Techno Ware (Industrial & Tools)",
       "category": "warehouse",
       "tag": "انبارداری سریالی و قطعات",
+      "tagEn": "Serialised and spare-parts warehouse",
       "planName": "پلن شرکتی B2B",
+      "planNameEn": "B2B corporate plan",
       "priceMonthly": 1650000,
       "priceYearly": 15840000,
       "discountBadge": "۲۰٪ تخفیف سالانه",
+      "discountBadgeEn": "20% off annually",
       "description": "مناسب توزیع‌کنندگان لوازم یدکی و قطعات با شماره سریال مجزا، انبار قفسه‌بندی‌شده و صدور پیش‌فاکتور رسمی B2B.",
+      "descriptionEn": "For distributors of spare parts and components with individual serial numbers, shelf-organised warehouses and official B2B pro-forma invoices.",
       "features": [
         "ثبت بارنامه و سریال فنی قطعه",
         "صدور آنی پیش‌فاکتور با مالیات",
         "تفکیک انبار اصلی از امانی",
         "پنل حسابداری همگام"
       ],
+      "featuresEn": [
+        "Consignment notes and technical part serial numbers",
+        "Instant pro-forma invoices with tax",
+        "Main and consignment warehouses kept separate",
+        "Synced accounting panel"
+      ],
       "desktopScreens": [
         {
           "label": "جستجوی شماره فنی کالا",
+          "labelEn": "Technical part number search",
           "src": "/images/templates/wh3-desk-1.jpg"
         },
         {
           "label": "فاکتور رسمی سازمانی",
+          "labelEn": "Official corporate invoice",
           "src": "/images/templates/wh3-desk-2.jpg"
         }
       ],
       "mobileScreens": [
         {
           "label": "استعلام موجودی قطعه",
+          "labelEn": "Part stock enquiry",
           "src": "/images/templates/wh3-mob-1.jpg"
         },
         {
           "label": "ثبت فاکتور اعتباری",
+          "labelEn": "Credit invoice entry",
           "src": "/images/templates/wh3-mob-2.jpg"
         }
       ],
@@ -1520,36 +2542,51 @@
     {
       "code": "wh-4",
       "name": "مارکت‌پلیس هاب (Market Central)",
+      "nameEn": "Market Central",
       "category": "warehouse",
       "tag": "انبار مرکزی چندتأمینی",
+      "tagEn": "Central multi-supplier warehouse",
       "planName": "پلن مارکت‌پلیس چندفروشندگی",
+      "planNameEn": "Multi-vendor marketplace plan",
       "priceMonthly": 2200000,
       "priceYearly": 21120000,
       "discountBadge": "۲۰٪ تخفیف سالانه",
+      "discountBadgeEn": "20% off annually",
       "description": "طراحی هاب لجستیک با امکان نگهداری کالای تأمین‌کنندگان گوناگون در انبار متمرکز و ارسال خودکار به باربری.",
+      "descriptionEn": "A logistics hub that stores goods from several suppliers in one central warehouse and hands outgoing orders to the courier automatically.",
       "features": [
         "تفکیک انبار به ازای فروشنده",
         "تخصیص اتوماتیک نزدیک‌ترین شعبه",
         "ارزش‌گذاری ریالی راکد",
         "تسویه حساب خودکار چندتأمینی"
       ],
+      "featuresEn": [
+        "Warehouse separation per seller",
+        "Automatic allocation to the nearest branch",
+        "Valuation of slow-moving stock in rials",
+        "Automatic multi-supplier settlement"
+      ],
       "desktopScreens": [
         {
           "label": "پنل تأمین‌کننده و شارژ انبار",
+          "labelEn": "Supplier panel and warehouse top-up",
           "src": "/images/templates/wh4-desk-1.jpg"
         },
         {
           "label": "مانیتورینگ سفارشات خروجی",
+          "labelEn": "Outgoing order monitoring",
           "src": "/images/templates/wh4-desk-2.jpg"
         }
       ],
       "mobileScreens": [
         {
           "label": "پنل تحویل انباردار",
+          "labelEn": "Warehouse keeper delivery panel",
           "src": "/images/templates/wh4-mob-1.jpg"
         },
         {
           "label": "سبد خرید چندفروشگاهی",
+          "labelEn": "Multi-store shopping cart",
           "src": "/images/templates/wh4-mob-2.jpg"
         }
       ],
@@ -1559,129 +2596,53 @@
     {
       "code": "light-1",
       "name": "فلش چابک (Flash Direct)",
+      "nameEn": "Flash Direct",
       "category": "light",
-      "tag": "بدون انبارداری • خرید فوری",
+      "tag": "بدون انبارداری • راه‌اندازی فوری",
+      "tagEn": "No warehousing • instant setup",
       "planName": "پلن سبک و دانلودی (لایت)",
+      "planNameEn": "Light download plan",
       "priceMonthly": 790000,
       "priceYearly": 7580000,
       "discountBadge": "۲۵٪ تخفیف سالانه",
+      "discountBadgeEn": "25% off annually",
       "description": "برای بیزینس‌هایی که دغدغه انبار و موجودی فیزیکی ندارند (محصولات دیجیتال، خدماتی، تک‌محصولی یا تأمین آنی). بدون کدهای سنگین انبارداری با سرعت فوق‌العاده.",
+      "descriptionEn": "For businesses without a warehouse or physical stock (digital products, services, single products or instant sourcing). No heavy warehousing features, and very fast.",
       "features": [
         "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
         "بدون لودینگ لاگ انبارداری",
-        "امتیاز ۱۰۰ در تست سرعت",
-        "اتصال سریع به درگاه بانکی"
+        "امتیاز ۱۰۰ در تست سرعت"
+      ],
+      "featuresEn": [
+        "One-step checkout in 30 seconds",
+        "No warehousing log loading",
+        "Score of 100 in speed tests"
       ],
       "desktopScreens": [
         {
           "label": "صفحه فرود متمرکز خرید",
+          "labelEn": "Focused purchase landing page",
           "src": "/images/templates/light-desk-1.jpg"
         },
         {
           "label": "فرم تسویه حساب سریع",
+          "labelEn": "Quick checkout form",
           "src": "/images/templates/light-desk-2.jpg"
         }
       ],
       "mobileScreens": [
         {
           "label": "خرید با یک کلیک",
+          "labelEn": "One-click purchase",
           "src": "/images/templates/light-mob-1.jpg"
         },
         {
           "label": "فاکتور پیامکی آنی",
+          "labelEn": "Instant SMS invoice",
           "src": "/images/templates/light-mob-2.jpg"
         }
       ],
       "sortOrder": 4,
-      "isPublished": true
-    }
-  ],
-  "storePlans": [
-    {
-      "code": "light-direct",
-      "name": "نسخه چابک و فوری (Light)",
-      "badge": "تک‌محصولی و خدمات",
-      "tagline": "ایده‌آل برای فایل دانلودی، اشتراک آموزشی و بیزینس‌های بدون انبار فیزیکی",
-      "isPopular": false,
-      "monthlyPrice": 1590000,
-      "yearlyPrice": 17580000,
-      "setupTime": "تحویل آنی پس از پرداخت",
-      "features": [
-        "تسویه حساب تک‌مرحله‌ای (خرید در ۳۰ ثانیه)",
-        "سرعت لود زیر ۱ ثانیه (بدون سربار انبارداری)",
-        "اتصال به درگاه زرین‌پال، زیبال و شاپرک",
-        "سیستم صدور فاکتور و ارسال پیامک خودکار",
-        "هاست ابری استاندارد + دامنه .ir رایگان"
-      ],
-      "limitations": [
-        "فاقد انبارداری ماتریسی و چندشعبه‌ای",
-        "فاقد اتصال به حسابداری سپیدار"
-      ],
-      "sortOrder": 0,
-      "isPublished": true
-    },
-    {
-      "code": "retail-smart",
-      "name": "نسخه مد و ریتیل (Fashion & Matrix)",
-      "badge": "ماتریسی رنگ و سایز",
-      "tagline": "ویژه فروشگاه‌های پوشاک، کفش و اکسسوری با نیاز به کنترل ویژگی‌های چندگانه",
-      "isPopular": false,
-      "monthlyPrice": 2450000,
-      "yearlyPrice": 28920000,
-      "setupTime": "تحویل و نصب در ۳۰ دقیقه",
-      "features": [
-        "مدیریت ابعاد چندگانه (رنگ، سایز، قد، نوع پارچه)",
-        "رزرو موقت کالا در سبد خرید مشتری تا پایان مهلت",
-        "هشدار پیامکی کاهش موجودی و نقطه سفارش بحرانی",
-        "تعریف کدهای تخفیف درصدی، مبلغی و ارسال رایگان",
-        "پشتیبانی تیکتی VIP + وب‌سرویس پیامکی اختصاصی"
-      ],
-      "limitations": [
-        "حداکثر تا ۵ شعبه فیزیکی همزمان"
-      ],
-      "sortOrder": 1,
-      "isPublished": true
-    },
-    {
-      "code": "b2b-techno",
-      "name": "نسخه قطعات و صنعتی (Techno B2B)",
-      "badge": "فاکتور رسمی و شماره فنی",
-      "tagline": "مناسب توزیع‌کنندگان لوازم یدکی، ابزارآلات و بنکداران کالای سنگین",
-      "isPopular": false,
-      "monthlyPrice": 4650000,
-      "yearlyPrice": 45840000,
-      "setupTime": "تحویل و کانفیگ اختصاصی ۱ ساعته",
-      "features": [
-        "جستجوی پیشرفته بر پایه شماره سریال و کد فنی",
-        "صدور آنی پیش‌فاکتور رسمی شرکتی با احتساب مالیات ارزش‌افزوده",
-        "تعریف سطوح قیمتی مجزا برای همکار و مصرف‌کننده نهایی",
-        "امکان تفکیک انبار اصلی شرکت از امانی نمایندگی‌ها",
-        "گزارش‌گیری فصلی فروش استاندارد دارایی"
-      ],
-      "limitations": [
-        "پنل تأمین‌کننده مستقل مارکت‌پلیس ندارد"
-      ],
-      "sortOrder": 2,
-      "isPublished": true
-    },
-    {
-      "code": "enterprise-omni",
-      "name": "نسخه جامع مگاشاپ و مارکت‌پلیس (Enterprise)",
-      "badge": "چندانبارداری و هایپرمارکت",
-      "tagline": "قدرتمندترین نسخه برای برندهای بالای ۵۰ هزار قلم کالا و فروشگاه‌های چندفروشندگی",
-      "isPopular": true,
-      "monthlyPrice": 6200000,
-      "yearlyPrice": 89120000,
-      "setupTime": "نصب ابری و اتصال دیتابیس در کمتر از ۲ ساعت",
-      "features": [
-        "انبارداری نامحدود چندشعبه‌ای و حواله انتقال بین‌انباری با بارکد",
-        "اتصال مستقیم API به نرم‌افزارهای مالی (سپیدار، هلو و...)",
-        "پنل اختصاصی چندتأمینی (Marketplace Hub) با تسویه مجزا",
-        "تخصیص خودکار سفارش به نزدیک‌ترین انبار بر اساس موقعیت کاربر",
-        "سرور اختصاصی ایزوله پرسرعت + گواهی SSL حرفه‌ای و پشتیبانی ۲۴/۷"
-      ],
-      "limitations": [],
-      "sortOrder": 3,
       "isPublished": true
     }
   ],

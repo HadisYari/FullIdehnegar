@@ -4,6 +4,8 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import type { AboutSectionDto, CertificationDto } from "@/lib/cms";
+import { resolveText } from "./about-copy";
 
 const certsData = {
   fa: {
@@ -90,8 +92,32 @@ const certsData = {
   },
 };
 
-export function CertificationsShowcase({ locale }: { locale: Locale }) {
-  const t = certsData[locale];
+type CertView = { icon: string; title: string; org: string; color: string; borderColor: string };
+
+export function CertificationsShowcase({
+  locale,
+  items,
+  copy,
+}: {
+  locale: Locale;
+  items?: CertificationDto[];
+  copy?: AboutSectionDto;
+}) {
+  const fallback = certsData[locale];
+  const t: { title: string; heading: string; items: CertView[] } = {
+    title: resolveText(copy?.eyebrow, locale, fallback.title),
+    heading: resolveText(copy?.title, locale, fallback.heading),
+    items:
+      items && items.length > 0
+        ? items.map((item) => ({
+            icon: item.icon ?? "🏅",
+            title: resolveText(item.title, locale, ""),
+            org: resolveText(item.organization, locale, ""),
+            color: item.colorClass ?? "",
+            borderColor: item.borderClass ?? "",
+          }))
+        : fallback.items,
+  };
 
   return (
     <section className="bg-surface py-20 sm:py-28">

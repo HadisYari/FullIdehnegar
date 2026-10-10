@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace EndPoints.Infrastructure;
 
 /// <summary>
-/// Protects the two public write endpoints (contact form + checkout intent)
+/// Protects the public write endpoints (contact form)
 /// from spam, without any external dependency.
 /// </summary>
 public static class PublicRateLimiting

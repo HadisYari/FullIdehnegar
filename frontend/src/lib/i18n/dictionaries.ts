@@ -13,7 +13,7 @@ export const dictionaries = {
       portfolio: "نمونه‌کارها",
       contact: "تماس با ما",
       cta: "مشاوره رایگان",
-      store: "خریداشتراک فروشگاه ساز",
+      store: "فروشگاه‌ساز",
       goldApp: "اپ طلا و جواهر     ",
     },
     hero: {

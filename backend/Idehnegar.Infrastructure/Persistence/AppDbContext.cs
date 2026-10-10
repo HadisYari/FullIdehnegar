@@ -25,6 +25,18 @@ public class AppDbContext : DbContext
     public DbSet<PortfolioProject> PortfolioProjects => Set<PortfolioProject>();
 
     public DbSet<Service> Services => Set<Service>();
+    /// <summary>Cards of the home services grid (separate from the services page).</summary>
+    public DbSet<HomeServiceCard> HomeServiceCards => Set<HomeServiceCard>();
+    /// <summary>About page: section copy and the item tables of its blocks.</summary>
+    public DbSet<AboutSection> AboutSections => Set<AboutSection>();
+    public DbSet<CoreValue> CoreValues => Set<CoreValue>();
+    public DbSet<Certification> Certifications => Set<Certification>();
+    public DbSet<LifecycleStep> LifecycleSteps => Set<LifecycleStep>();
+    public DbSet<PhilosophyPrinciple> PhilosophyPrinciples => Set<PhilosophyPrinciple>();
+    public DbSet<TechStackGroup> TechStackGroups => Set<TechStackGroup>();
+    public DbSet<AboutStat> AboutStats => Set<AboutStat>();
+    /// <summary>Copy and repeated items of page blocks (hero, cards, bullet lists).</summary>
+    public DbSet<PageSection> PageSections => Set<PageSection>();
 
     public DbSet<ProcessStep> ProcessSteps => Set<ProcessStep>();
 
@@ -42,13 +54,9 @@ public class AppDbContext : DbContext
 
     public DbSet<StoreTemplate> StoreTemplates => Set<StoreTemplate>();
 
-    public DbSet<StorePlan> StorePlans => Set<StorePlan>();
-
     public DbSet<AppDownloadLink> AppDownloadLinks => Set<AppDownloadLink>();
 
     public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
-
-    public DbSet<StoreOrder> StoreOrders => Set<StoreOrder>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

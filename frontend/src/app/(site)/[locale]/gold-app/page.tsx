@@ -1,6 +1,6 @@
 // app/[locale]/gold-app/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadPageSections, withPageMeta } from "@/lib/cms";
 import { getAppDownloadLinks } from "@/lib/store";
 import { locales } from "@/lib/i18n/dictionaries";
 import { GoldAppClient } from "@/components/gold-app/gold-app-client";
@@ -29,7 +29,8 @@ export async function generateMetadata({
 
 export default async function GoldAppPage() {
   // لینک‌های دانلود از /api/public/app-download-links — fallback: src/data/app-download-links.json
-  const links = await getAppDownloadLinks();
+  // متن بخش‌ها از /api/public/page-sections/gold-app — fallback: متن محلی در کامپوننت
+  const [links, sections] = await Promise.all([getAppDownloadLinks(), loadPageSections("gold-app")]);
 
-  return <GoldAppClient links={links} />;
+  return <GoldAppClient links={links} sections={sections} />;
 }

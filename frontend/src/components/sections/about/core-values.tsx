@@ -4,6 +4,9 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import type { ReactNode } from "react";
+import type { AboutSectionDto, CoreValueDto } from "@/lib/cms";
+import { resolveText } from "./about-copy";
 
 const valuesData = {
   fa: [
@@ -120,9 +123,40 @@ const valuesData = {
   ],
 };
 
-export function CoreValues({ locale }: { locale: Locale }) {
+/** SVG icon of a value card, built from the stored path (`d` attribute). */
+const valueIcon = (path: string | null | undefined) =>
+  path ? (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-7 w-7">
+      <path strokeLinecap="round" strokeLinejoin="round" d={path} />
+    </svg>
+  ) : null;
+
+type ValueView = { icon: ReactNode; title: string; description: string };
+
+export function CoreValues({
+  locale,
+  items,
+  copy,
+}: {
+  locale: Locale;
+  items?: CoreValueDto[];
+  copy?: AboutSectionDto;
+}) {
   const isFa = locale === "fa";
-  const values = valuesData[locale];
+  const values: ValueView[] =
+    items && items.length > 0
+      ? items.map((item) => ({
+          icon: valueIcon(item.iconPath),
+          title: resolveText(item.title, locale, ""),
+          description: resolveText(item.desc, locale, ""),
+        }))
+      : valuesData[locale];
+  const eyebrow = resolveText(copy?.eyebrow, locale, isFa ? "ارزش‌های ما" : "Our Values");
+  const heading = resolveText(
+    copy?.title,
+    locale,
+    isFa ? "اصولی که ما را متفاوت می‌کند" : "Principles that set us apart",
+  );
 
   return (
     <section className="bg-surface py-20 sm:py-28">
@@ -135,12 +169,10 @@ export function CoreValues({ locale }: { locale: Locale }) {
           transition={{ duration: 0.6 }}
         >
           <span className="inline-block rounded-full bg-primary-100 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary-700 dark:bg-primary-950 dark:text-primary-300">
-            {isFa ? "ارزش‌های ما" : "Our Values"}
+            {eyebrow}
           </span>
           <h2 className="mt-4 text-balance text-3xl font-black text-primary-950 dark:text-white sm:text-4xl lg:text-5xl">
-            {isFa
-              ? "اصولی که ما را متفاوت می‌کند"
-              : "Principles that set us apart"}
+            {heading}
           </h2>
         </motion.div>
 

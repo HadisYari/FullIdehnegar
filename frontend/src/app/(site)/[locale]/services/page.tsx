@@ -1,6 +1,7 @@
 // app/[locale]/services/page.tsx
 import type { Metadata } from "next";
-import { loadServices, withPageMeta, type ServiceDto } from "@/lib/cms";
+import { loadPageSections, loadServices, withPageMeta, type ServiceDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
@@ -406,6 +407,20 @@ const serviceHighlights: Record<Locale, string[][]> = {
   ],
 };
 
+/* کپی ثابت بلوک‌های صفحه (fallback). سید داده بک‌اند از همین literal ساخته می‌شود. */
+const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
+  "quick-access": {
+    fa: {
+      title: "دسترسی سریع به تمام راهکارها",
+      body: "برای دریافت نقشه راه فنی و برآورد زمان‌بندی پروژه، با تیم ما در تماس باشید.",
+    },
+    en: {
+      title: "Quick Access to Solutions",
+      body: "Select any service to review technical deliverables and timelines.",
+    },
+  },
+};
+
 /* ──────────────────────────────────────────────────────────
    ViewModel خدمات — داده از /api/public/services (بک‌اند)
    ────────────────────────────────────────────────────────── */
@@ -444,8 +459,17 @@ export default async function ServicesPage({
   const dict = getDictionary(locale);
   const isFa = locale === "fa";
 
-  const remoteServices = await loadServices();
+  const [remoteServices, remoteSections] = await Promise.all([
+    loadServices(),
+    loadPageSections("services"),
+  ]);
   const serviceItems = toViewItems(remoteServices, locale, dict);
+  const quickAccess = resolveSection(
+    remoteSections,
+    "quick-access",
+    locale,
+    fallbackSections["quick-access"][locale],
+  );
 
   return (
     <div className="relative w-full overflow-hidden bg-white text-slate-900">
@@ -571,7 +595,7 @@ export default async function ServicesPage({
           سکشن‌های متناوب با امواج اصلاح‌شده و بدون درز
          ══════════════════════════════════════════════════════════ */}
       <div className="relative">
-        {dict.services.items.map((item, i) => {
+        {serviceItems.map((item, i) => {
           // سکشن ۰ (طراحی وب): سفید
           // سکشن ۱ (پرتال سازمانی): سرمه‌ای (#0f0f52)
           const isDark = i % 2 === 1;
@@ -641,7 +665,7 @@ export default async function ServicesPage({
                         </p>
 
                         <div className="mt-5 space-y-2.5">
-                          {serviceHighlights[locale][i]?.map((highlight) => (
+                          {item.highlights.map((highlight) => (
                             <div key={highlight} className="flex items-center gap-2.5">
                               <span
                                 className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
@@ -707,17 +731,15 @@ export default async function ServicesPage({
         <Container>
           <div className="text-center max-w-lg mx-auto mb-8">
             <h3 className="text-base sm:text-lg font-bold text-slate-900">
-              {isFa ? "دسترسی سریع به تمام راهکارها" : "Quick Access to Solutions"}
+              {quickAccess.title}
             </h3>
             <p className="text-xs text-slate-500 mt-1">
-              {isFa
-                ? "برای دریافت نقشه راه فنی و برآورد زمان‌بندی پروژه، با تیم ما در تماس باشید."
-                : "Select any service to review technical deliverables and timelines."}
+              {quickAccess.body}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-            {dict.services.items.map((srv, idx) => (
+            {serviceItems.map((srv, idx) => (
               <Link
                 key={srv.title}
                 href={isFa ? "/contact" : "/en/contact"}

@@ -1,6 +1,13 @@
 // app/[locale]/about/page.tsx
 import type { Metadata } from "next";
-import { loadMilestones, loadTeam, withPageMeta } from "@/lib/cms";
+import { aboutSection, loadAboutContent, loadMilestones, loadPageSections, loadTeam, withPageMeta } from "@/lib/cms";
+import { resolveSection } from "@/lib/page-sections";
+import { CertificationsShowcase } from "@/components/sections/about/certifications-showcase";
+import { CoreValues } from "@/components/sections/about/core-values";
+import { DevelopmentLifecycle } from "@/components/sections/about/development-lifecycle";
+import { EngineeringPhilosophy } from "@/components/sections/about/engineering-philosophy";
+import { StatsCounter } from "@/components/sections/about/stats-counter";
+import { TechStack } from "@/components/sections/about/tech-stack";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
@@ -135,6 +142,63 @@ const teamConstellation = [
   { role: "QA & Performance Lead", label: "تضمین کیفیت و سرعت", span: "sm:col-span-1", bg: "bg-white/10 border-white/15 text-white" },
 ];
 
+/*
+ * متن محلی بلوک‌های صفحه (مانیفست، تیم، کپسول‌ها). وقتی API در دسترس است از جدول PageSection
+ * خوانده می‌شود و این مقادیر فقط پشتیبان‌اند. seed هم از همین‌جا ردیف‌ها را می‌سازد.
+ */
+const fallbackPageSections = {
+  manifesto: {
+    fa: {
+      eyebrow: "عهد مهندسی ما",
+      title: "همه چیز را بر پایه معماری پایدار بنا می‌کنیم",
+      subtitle: "«استاندارد ما کدی است که پس از سال‌ها کارکرد، همچنان سریع، خوانا و قابل افتخار باشد.»",
+      body: "ما در ایده‌نگار اعتقادی به راه‌حل‌های موقتی و بزک‌شده نداریم. زمانی که مسئولیت فنی یک محصول را می‌پذیریم، خیالتان از لایه‌های امنیتی، پایداری در ترافیک‌های سنگین و توسعه‌پذیری ویژگی‌های آینده آسوده است. ما به هر خط کدی که دیپلوی می‌شود تعهد اخلاقی و فنی داریم.",
+      items: [
+        { title: "توسعه ۱۰۰٪ اختصاصی بدون وابستگی به قالب‌های تجاری سنگین" },
+        { title: "تایپ‌سیفتی سراسری با تایپ‌اسکریپت و پایپ‌لاین‌های خودکار تست" },
+        { title: "شفافیت رادیکال و دسترسی لحظه‌ای کارفرما به لاگ‌ها و پیشرفت اسپرینت" },
+      ],
+    },
+    en: {
+      eyebrow: "The Engineering Manifesto",
+      title: "Everything Built on Resilient Architecture",
+      subtitle: "“Our standard is code that stays fast, readable and worth being proud of for years.”",
+      body: "We believe in long-term engineering integrity over quick shortcuts. When you partner with us, infrastructure resilience, strict security layers, and future-proof codebases are guaranteed by design.",
+      items: [
+        { title: "100% custom development with no heavy commercial templates" },
+        { title: "End-to-end type safety with TypeScript and automated test pipelines" },
+        { title: "Radical transparency: real-time client access to logs and sprint progress" },
+      ],
+    },
+  },
+  team: {
+    fa: {
+      eyebrow: "TEAM CONSTELLATION",
+      title: "ترکیب استعدادها در کنار یکدیگر",
+      body: "در پشت پرده هر پلتفرم موفقی، هماهنگی دقیق معماران سیستم، مهندسان رابط کاربری و متخصصان زیرساخت ابری جریان دارد. تیم ما چابک، هم‌راستا و مشتاق حل دشوارترین چالش‌های فنی است.",
+    },
+    en: {
+      eyebrow: "TEAM CONSTELLATION",
+      title: "Talent Synergy in Action",
+      body: "Behind every seamless software launch stands a cross-functional squad of architects, designers, and cloud engineers moving in perfect sync.",
+    },
+  },
+  "quick-links": {
+    fa: {
+      items: [
+        { icon: "⚡", title: "خدمات و راهکارهای نرم‌افزار", description: "Bespoke Web • Cloud • Portals", href: "/services" },
+        { icon: "★", title: "پروژه‌ها و نمونه‌های شاخص", description: "Enterprise Case Studies", href: "/portfolio" },
+      ],
+    },
+    en: {
+      items: [
+        { icon: "⚡", title: "Explore Solutions", description: "Bespoke Web • Cloud • Portals", href: "/services" },
+        { icon: "★", title: "View Portfolio", description: "Enterprise Case Studies", href: "/portfolio" },
+      ],
+    },
+  },
+};
+
 export default async function AboutPage({
   params,
 }: {
@@ -146,7 +210,19 @@ export default async function AboutPage({
   const isFa = locale === "fa";
 
   // داده‌های صفحه از بک‌اند (با کش ISR) — fallback: آرایه‌های همین فایل
-  const [remoteMilestones, remoteTeam] = await Promise.all([loadMilestones(), loadTeam()]);
+  const [remoteMilestones, remoteTeam, remoteAbout, remoteSections] = await Promise.all([
+    loadMilestones(),
+    loadTeam(),
+    loadAboutContent(),
+    loadPageSections("about"),
+  ]);
+
+  // متن بلوک‌های مانیفست، تیم و کپسول‌های دسترسی: از جدول PageSection، در نبود API متن محلی
+  const manifesto = resolveSection(remoteSections, "manifesto", locale, fallbackPageSections.manifesto[locale]);
+  const teamCopy = resolveSection(remoteSections, "team", locale, fallbackPageSections.team[locale]);
+  const quickLinks = resolveSection(remoteSections, "quick-links", locale, fallbackPageSections["quick-links"][locale]);
+  // مسیرهای داخلی در نسخه انگلیسی زیر /en قرار می‌گیرند
+  const localeHref = (href: string) => (isFa || !href.startsWith("/") ? href : `/en${href}`);
 
   const milestones =
     remoteMilestones.length > 0
@@ -386,7 +462,7 @@ export default async function AboutPage({
                     </div>
 
                     <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-md text-center text-xs text-white/90 leading-relaxed">
-                      «استاندارد ما کدی است که پس از سال‌ها کارکرد، همچنان سریع، خوانا و قابل افتخار باشد.»
+                      {manifesto.subtitle}
                     </div>
                   </div>
                 </div>
@@ -398,32 +474,24 @@ export default async function AboutPage({
               <Reveal>
                 <div className="inline-flex items-center gap-2 rounded-full bg-[#0f0f52]/10 px-3.5 py-1 text-xs font-bold text-[#0f0f52]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#0f0f52]" />
-                  {isFa ? "عهد مهندسی ما" : "The Engineering Manifesto"}
+                  {manifesto.eyebrow}
                 </div>
 
                 <h2 className="mt-4 text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                  {isFa
-                    ? "همه چیز را بر پایه معماری پایدار بنا می‌کنیم"
-                    : "Everything Built on Resilient Architecture"}
+                  {manifesto.title}
                 </h2>
 
                 <p className="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  {isFa
-                    ? "ما در ایده‌نگار اعتقادی به راه‌حل‌های موقتی و بزک‌شده نداریم. زمانی که مسئولیت فنی یک محصول را می‌پذیریم، خیالتان از لایه‌های امنیتی، پایداری در ترافیک‌های سنگین و توسعه‌پذیری ویژگی‌های آینده آسوده است. ما به هر خط کدی که دیپلوی می‌شود تعهد اخلاقی و فنی داریم."
-                    : "We believe in long-term engineering integrity over quick shortcuts. When you partner with us, infrastructure resilience, strict security layers, and future-proof codebases are guaranteed by design."}
+                  {manifesto.body}
                 </p>
 
                 <div className="mt-6 space-y-3">
-                  {[
-                    "توسعه ۱۰۰٪ اختصاصی بدون وابستگی به قالب‌های تجاری سنگین",
-                    "تایپ‌سیفتی سراسری با تایپ‌اسکریپت و پایپ‌لاین‌های خودکار تست",
-                    "شفافیت رادیکال و دسترسی لحظه‌ای کارفرما به لاگ‌ها و پیشرفت اسپرینت",
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-slate-800">
+                  {manifesto.items.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-slate-800">
                       <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-xs">
                         ✓
                       </span>
-                      <span>{item}</span>
+                      <span>{item.title}</span>
                     </div>
                   ))}
                 </div>
@@ -448,15 +516,13 @@ export default async function AboutPage({
             <div className="flex-1 text-center lg:text-start">
               <Reveal>
                 <span className="font-mono text-xs font-bold text-rose-300 uppercase tracking-widest">
-                  TEAM CONSTELLATION
+                  {teamCopy.eyebrow}
                 </span>
                 <h2 className="mt-2 text-2xl sm:text-4xl font-black text-white">
-                  {isFa ? "ترکیب استعدادها در کنار یکدیگر" : "Talent Synergy in Action"}
+                  {teamCopy.title}
                 </h2>
                 <p className="mt-4 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                  {isFa
-                    ? "در پشت پرده هر پلتفرم موفقی، هماهنگی دقیق معماران سیستم، مهندسان رابط کاربری و متخصصان زیرساخت ابری جریان دارد. تیم ما چابک، هم‌راستا و مشتاق حل دشوارترین چالش‌های فنی است."
-                    : "Behind every seamless software launch stands a cross-functional squad of architects, designers, and cloud engineers moving in perfect sync."}
+                  {teamCopy.body}
                 </p>
 
                 <div className="mt-8">
@@ -502,56 +568,65 @@ export default async function AboutPage({
       <OrganicWaveTransition flip />
 
       {/* ══════════════════════════════════════════════════════════
+          ۵. بلوک‌های داده‌محور (از جداول درباره ما؛ در نبود API، متن محلی کامپوننت‌ها)
+         ══════════════════════════════════════════════════════════ */}
+      <CoreValues
+        locale={locale}
+        items={remoteAbout?.coreValues}
+        copy={aboutSection(remoteAbout, "values")}
+      />
+      <CertificationsShowcase
+        locale={locale}
+        items={remoteAbout?.certifications}
+        copy={aboutSection(remoteAbout, "certifications")}
+      />
+      <DevelopmentLifecycle
+        locale={locale}
+        items={remoteAbout?.lifecycleSteps}
+        copy={aboutSection(remoteAbout, "lifecycle")}
+      />
+      <EngineeringPhilosophy
+        locale={locale}
+        items={remoteAbout?.philosophyPrinciples}
+        copy={aboutSection(remoteAbout, "philosophy")}
+      />
+      <StatsCounter locale={locale} items={remoteAbout?.stats} />
+      <TechStack
+        locale={locale}
+        items={remoteAbout?.techStackGroups}
+        copy={aboutSection(remoteAbout, "tech-stack")}
+      />
+
+      {/* ══════════════════════════════════════════════════════════
           ۵. کپسول‌های دسترسی سریع به خدمات و نمونه‌کارها
          ══════════════════════════════════════════════════════════ */}
       <section className="relative py-12 bg-white border-t mb-12 border-slate-100">
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
-            
-            <Link
-              href={isFa ? "/services" : "/en/services"}
-              className="group flex items-center justify-between rounded-3xl border border-slate-200 bg-slate-50 p-4 shadow-xs hover:border-[#e6304c] hover:bg-white hover:shadow-xl hover:shadow-[#e6304c]/10 transition-all duration-300"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0f0f52] text-white font-mono text-sm font-bold group-hover:bg-[#e6304c] transition-colors">
-                  ⚡
+            {quickLinks.items.map((item, index) => (
+              <Link
+                key={index}
+                href={localeHref(item.href ?? "/")}
+                className="group flex items-center justify-between rounded-3xl border border-slate-200 bg-slate-50 p-4 shadow-xs hover:border-[#e6304c] hover:bg-white hover:shadow-xl hover:shadow-[#e6304c]/10 transition-all duration-300"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0f0f52] text-white font-mono text-sm font-bold group-hover:bg-[#e6304c] transition-colors">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#e6304c] transition-colors">
+                      {item.title}
+                    </h4>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {item.description}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#e6304c] transition-colors">
-                    {isFa ? "خدمات و راهکارهای نرم‌افزار" : "Explore Solutions"}
-                  </h4>
-                  <span className="text-[10px] font-mono text-slate-400">
-                    Bespoke Web • Cloud • Portals
-                  </span>
-                </div>
-              </div>
-              <span className={`text-slate-400 group-hover:text-[#e6304c] font-bold ${isFa ? "rotate-180" : ""}`}>
-                →
-              </span>
-            </Link>
-
-            <Link
-              href={isFa ? "/portfolio" : "/en/portfolio"}
-              className="group flex items-center justify-between rounded-3xl border border-slate-200 bg-slate-50 p-4 shadow-xs hover:border-[#e6304c] hover:bg-white hover:shadow-xl hover:shadow-[#e6304c]/10 transition-all duration-300"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0f0f52] text-white font-mono text-sm font-bold group-hover:bg-[#e6304c] transition-colors">
-                  ★
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#e6304c] transition-colors">
-                    {isFa ? "پروژه‌ها و نمونه‌های شاخص" : "View Portfolio"}
-                  </h4>
-                  <span className="text-[10px] font-mono text-slate-400">
-                    Enterprise Case Studies
-                  </span>
-                </div>
-              </div>
-              <span className={`text-slate-400 group-hover:text-[#e6304c] font-bold ${isFa ? "rotate-180" : ""}`}>
-                →
-              </span>
-            </Link>
-
+                <span className={`text-slate-400 group-hover:text-[#e6304c] font-bold ${isFa ? "rotate-180" : ""}`}>
+                  →
+                </span>
+              </Link>
+            ))}
           </div>
         </Container>
       </section>

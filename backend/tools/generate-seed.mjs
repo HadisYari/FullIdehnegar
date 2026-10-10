@@ -95,7 +95,7 @@ function pair(source, marker) {
 function unquote(value) {
   return value
     .replace(/\\\$\{/g, "${")
-    .replace(/\$\{siteConfig\.(\w+)\}/g, (_, prop) => `\u0000${prop}\u0000`)
+    .replace(/\$\{(?:siteConfig|config)\.(\w+)\}/g, (_, prop) => `\u0000${prop}\u0000`)
     .replace(/\\n/g, "\n")
     .replace(/\\\\"/g, '"')
     .trim();
@@ -104,7 +104,7 @@ function unquote(value) {
 /* ───────────────────────────────── site config ───────────────────────────────── */
 
 const siteConfigSource = read(fe, "lib", "site-config.ts");
-const siteConfig = evalLiteral(literalAfter(siteConfigSource, "export const siteConfig = ", { open: "{" }));
+const siteConfig = evalLiteral(literalAfter(siteConfigSource, "export const siteConfig: SiteConfig = ", { open: "{" }));
 
 /* ───────────────────────────────── dictionaries ───────────────────────────────── */
 
@@ -123,7 +123,6 @@ const pageFiles = {
   contact: "app/(site)/[locale]/contact/page.tsx",
   "store-builder": "app/(site)/[locale]/store-builder/page.tsx",
   "gold-app": "app/(site)/[locale]/gold-app/page.tsx",
-  payment: "app/(site)/[locale]/payment/page.tsx",
 };
 
 const layoutSource = read(fe, "app/(site)/[locale]/layout.tsx");
@@ -147,8 +146,6 @@ const seoDefaults = {
     eyebrow: { fa: fa.hero.eyebrow, en: en.hero.eyebrow },
     heading: { fa: fa.hero.title, en: en.hero.title },
     subheading: { fa: fa.hero.subtitle, en: en.hero.subtitle },
-    ctaPrimary: { fa: fa.hero.ctaPrimary, en: en.hero.ctaPrimary },
-    ctaSecondary: { fa: fa.hero.ctaSecondary, en: en.hero.ctaSecondary },
   },
 };
 
@@ -157,12 +154,12 @@ const seoDefaults = {
 const MISSING_SEO = {
   "store-builder": {
     title: {
-      fa: "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار",
-      en: "Cloud Store Builder | Subscriptions with Instant Delivery",
+      fa: "فروشگاه‌ساز ابری | قالب‌های فروشگاه اینترنتی | پیشگامان ایده‌نگار",
+      en: "Cloud Store Builder | Store Templates | Idehnegar",
     },
     description: {
-      fa: "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال به درگاه شاپرک.",
-      en: "Pick a storefront template with full warehouse management or the lightweight plan — activated instantly after payment on Shaparak.",
+      fa: "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید و برای راه‌اندازی با تیم ایده‌نگار در تماس باشید.",
+      en: "Pick a store template with full warehouse management or a light version, then contact our team to get started.",
     },
   },
   "gold-app": {
@@ -173,13 +170,6 @@ const MISSING_SEO = {
     description: {
       fa: "نرم‌افزار نرخ لحظه‌ای طلا، سکه و ارز با نمایشگر مخصوص مغازه‌های طلا و جواهر؛ به‌روزرسانی خودکار از اطلاعیه‌های رسمی اتحادیه.",
       en: "Real-time gold, coin and currency rates for Android and shop TVs, synced with official union announcements.",
-    },
-  },
-  payment: {
-    title: { fa: "تسویه حساب و فعال‌سازی اشتراک", en: "Checkout & Subscription Activation" },
-    description: {
-      fa: "تکمیل اطلاعات و پرداخت امن اشتراک فروشگاه‌ساز ایده‌نگار.",
-      en: "Complete your details and pay securely to activate your store subscription.",
     },
   },
 };
@@ -202,18 +192,21 @@ const pageMetas = Object.entries(pageFiles).map(([key, file], index) => {
     descriptionEn: description.en || missing?.description?.en || "",
     keywordsFa: defaults.keywords?.fa ?? "",
     keywordsEn: defaults.keywords?.en ?? "",
-    eyebrowFa: defaults.eyebrow?.fa ?? fallback.eyebrow ?? "",
-    eyebrowEn: defaults.eyebrow?.en ?? fallbackEn.eyebrow ?? "",
-    headingFa: defaults.heading?.fa ?? fallback.title ?? "",
-    headingEn: defaults.heading?.en ?? fallbackEn.title ?? "",
-    subheadingFa: defaults.subheading?.fa ?? fallback.subtitle ?? "",
-    subheadingEn: defaults.subheading?.en ?? fallbackEn.subtitle ?? "",
-    ctaPrimaryFa: defaults.ctaPrimary?.fa ?? "",
-    ctaPrimaryEn: defaults.ctaPrimary?.en ?? "",
-    ctaSecondaryFa: defaults.ctaSecondary?.fa ?? "",
-    ctaSecondaryEn: defaults.ctaSecondary?.en ?? "",
+    // Hero copy is read by the home page only. Other pages keep their visible H1 in
+    // the front end, so their rows carry no eyebrow/heading/subheading.
+    eyebrowFa: key === "home" ? defaults.eyebrow?.fa ?? fallback.eyebrow ?? "" : null,
+    eyebrowEn: key === "home" ? defaults.eyebrow?.en ?? fallbackEn.eyebrow ?? "" : null,
+    headingFa: key === "home" ? defaults.heading?.fa ?? fallback.title ?? "" : null,
+    headingEn: key === "home" ? defaults.heading?.en ?? fallbackEn.title ?? "" : null,
+    subheadingFa: key === "home" ? defaults.subheading?.fa ?? fallback.subtitle ?? "" : null,
+    subheadingEn: key === "home" ? defaults.subheading?.en ?? fallbackEn.subtitle ?? "" : null,
+    // The CTA fields are no longer edited in the panel and no page reads them.
+    ctaPrimaryFa: null,
+    ctaPrimaryEn: null,
+    ctaSecondaryFa: null,
+    ctaSecondaryEn: null,
     ogImage: key === "home" ? "/images/portfolio/smartexport-ai.jpg" : null,
-    noIndex: key === "payment",
+    noIndex: false,
     changeFrequency: defaults.changeFrequency ?? "monthly",
     priority: defaults.priority ?? (key === "services" || key === "portfolio" || key === "store-builder" ? 0.9 : 0.8),
     sortOrder: index,
@@ -292,6 +285,30 @@ const services = fa.services.items.map((item, index) => ({
   isPublished: true,
 }));
 
+/* home services grid: the cards of components/sections/services-section.tsx (fa only in source) */
+const homeServiceCards = grab(
+  read(fe, "components", "sections", "services-section.tsx"),
+  "const fallbackCards = ",
+).map((card, index) => ({
+  code: card.code,
+  iconName: card.icon ?? null,
+  titleFa: card.title,
+  titleEn: "",
+  descriptionFa: card.desc,
+  descriptionEn: "",
+  color: card.color ?? null,
+  softColor: card.softColor ?? null,
+  glowColor: card.glowColor ?? null,
+  featureTitleFa: card.featureTitle ?? null,
+  featureTitleEn: null,
+  featureValueFa: card.featureValue ?? null,
+  featureValueEn: null,
+  progress: card.progress ?? null,
+  tags: card.tags ?? [],
+  sortOrder: index,
+  isPublished: true,
+}));
+
 const processSteps = fa.process.steps.map((step, index) => {
   const palette = [
     { icon: "MessagesSquare", color: "from-blue-500 to-cyan-500", accent: "#3b82f6" },
@@ -319,18 +336,14 @@ const processSteps = fa.process.steps.map((step, index) => {
 });
 
 const clientsSource = read(fe, "components", "sections", "clients-section.tsx");
-const clientsFa = grab(clientsSource, "const clientsFa = ");
-const clientsEn = grab(clientsSource, "const clientsEn = ");
-const logoBlock = literalAfter(clientsSource, "const clientLogos = ", { open: "{" });
-const monograms = {};
-for (const match of logoBlock.matchAll(/(\w+):\s*\([\s\S]*?>\s*([A-Z0-9&]{2,5})\s*</g)) {
-  monograms[match[1]] = match[2];
-}
+// `const clientsFa: ClientItem[] = [ { name, monogram } ]` — the monogram is inline.
+const clientsFa = grab(clientsSource, "const clientsFa: ClientItem[] = ");
+const clientsEn = grab(clientsSource, "const clientsEn: ClientItem[] = ");
 
 const clients = clientsFa.map((client, index) => ({
   nameFa: client.name,
   nameEn: clientsEn[index]?.name ?? "",
-  monogram: monograms[client.key] ?? String(client.key).slice(0, 3).toUpperCase(),
+  monogram: client.monogram ?? null,
   logoUrl: null,
   sortOrder: index,
   isPublished: true,
@@ -375,18 +388,15 @@ const teamDisciplines = team.map((member, index) => ({
 /* ───────────────────────────────── contact page ──────────────────────────────── */
 
 const contactSource = read(fe, "components", "sections", "contact-section.tsx");
-/** Two sibling literals: `const x = isFa ? [fa] : [en]`. */
-function pairLiterals(source, marker) {
-  const at = source.indexOf(marker);
-  if (at === -1) throw new Error(`marker not found: ${marker}`);
-  const first = literalAfter(source, marker, { open: "[" });
-  const rest = source.slice(at + marker.length + first.length + 2);
-  const second = literalAfter(rest, "", { open: "[" });
-  return { fa: evalLiteral(first, true), en: evalLiteral(second, false) };
-}
-
-const faqs = pairLiterals(contactSource, "const faqs = isFa");
-const inquiryTypes = evalLiteralBoth(literalAfter(contactSource, "const projectCategories = "));
+// The contact page content lives in the fallback arrays of contact-section.tsx.
+const faqs = {
+  fa: grab(contactSource, "const fallbackFaqsFa: FaqView[] = "),
+  en: grab(contactSource, "const fallbackFaqsEn: FaqView[] = "),
+};
+const inquiryTypes = {
+  fa: grab(contactSource, "const fallbackInquiryTypesFa: InquiryTypeView[] = "),
+  en: grab(contactSource, "const fallbackInquiryTypesEn: InquiryTypeView[] = "),
+};
 
 const faqItems = faqs.fa.map((item, index) => ({
   questionFa: item.q,
@@ -406,66 +416,49 @@ const inquiryTypesRows = inquiryTypes.fa.map((item, index) => ({
   isPublished: true,
 }));
 
-/* ───────────────────────────────── store builder / payment ───────────────────── */
+/* ───────────────────────────────── store builder ─────────────────────────────── */
 
-const storeSource = read(fe, "app/(site)/[locale]/store-builder/page.tsx");
-const templates = grab(storeSource, "const allTemplates: TemplateItem[] = ");
+// The store templates and plans live in the data files that the front end falls
+// back to when the API is unavailable (lib/store.ts), so they are the single source.
+const templates = JSON.parse(read(fe, "data", "store-templates.json"));
 
 const storeTemplates = templates.map((tpl, index) => ({
   code: tpl.id,
-  name: tpl.name,
+  name: tpl.name.fa,
+  nameEn: tpl.name.en,
   category: tpl.category,
-  tag: tpl.tag ?? null,
-  planName: tpl.planName,
+  tag: tpl.tag.fa || null,
+  tagEn: tpl.tag.en || null,
+  planName: tpl.planName.fa,
+  planNameEn: tpl.planName.en,
   priceMonthly: tpl.priceMonthly,
   priceYearly: tpl.priceYearly,
-  discountBadge: tpl.discountBadge ?? null,
-  description: tpl.desc ?? null,
-  features: tpl.features ?? [],
-  desktopScreens: (tpl.desktopScreens ?? []).map((s) => ({ label: s.label, src: s.src })),
-  mobileScreens: (tpl.mobileScreens ?? []).map((s) => ({ label: s.label, src: s.src })),
-  sortOrder: index,
-  isPublished: true,
-}));
-
-const paymentSource = read(fe, "app/(site)/[locale]/payment/page.tsx");
-const tiers = grab(paymentSource, "const storeTiers: StoreTier[] = ");
-
-const storePlans = tiers.map((tier, index) => ({
-  code: tier.id,
-  name: tier.name,
-  badge: tier.badge ?? null,
-  tagline: tier.tagline ?? null,
-  isPopular: Boolean(tier.isPopular),
-  monthlyPrice: tier.monthlyPrice,
-  yearlyPrice: tier.yearlyPrice,
-  setupTime: tier.setupTime ?? null,
-  features: tier.features ?? [],
-  limitations: tier.limitations ?? [],
+  discountBadge: tpl.discountBadge.fa || null,
+  discountBadgeEn: tpl.discountBadge.en || null,
+  description: tpl.desc.fa || null,
+  descriptionEn: tpl.desc.en || null,
+  features: tpl.features.fa,
+  featuresEn: tpl.features.en,
+  desktopScreens: tpl.desktopScreens.map((s) => ({ label: s.label.fa, labelEn: s.label.en, src: s.src })),
+  mobileScreens: tpl.mobileScreens.map((s) => ({ label: s.label.fa, labelEn: s.label.en, src: s.src })),
   sortOrder: index,
   isPublished: true,
 }));
 
 /* ───────────────────────────────── gold app downloads ────────────────────────── */
 
-const goldSource = read(fe, "app/(site)/[locale]/gold-app/page.tsx");
-const downloadButtons = [...goldSource.matchAll(/<a\s+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)]
-  .slice(0, 3)
-  .map((match, index) => {
-    const texts = [...match[2].matchAll(/<span[^>]*>([^<]+)<\/span>/g)].map((m) => m[1].trim()).filter(Boolean);
-    const emoji = (match[2].match(/>([^<>]{1,2})</) || [])[1]?.trim() || null;
-    return {
-      titleFa: texts.at(-1) ?? "دانلود",
-      titleEn: texts.at(-1) ?? "Download",
-      captionFa: texts.length > 1 ? texts[0] : "",
-      captionEn: texts.length > 1 ? texts[0] : "",
-      href: match[1],
-      emoji,
-      variant: ["bazaar", "direct", "anchor"][index] ?? "direct",
-      sortOrder: index,
-      isPublished: true,
-    };
-  });
+// The gold-app download buttons are the same data the front end falls back to (lib/store.ts).
+const downloadButtons = JSON.parse(read(fe, "data", "app-download-links.json")).map((link, index) => ({
+  titleFa: link.title?.fa ?? "",
+  titleEn: link.title?.en || link.title?.fa || "",
+  captionFa: link.caption?.fa ?? "",
+  captionEn: link.caption?.en ?? "",
+  href: link.href,
+  emoji: link.emoji ?? null,
+  variant: link.variant ?? "direct",
+  sortOrder: index,
+  isPublished: true,
+}));
 
 /* ───────────────────────────────── site settings row ─────────────────────────── */
 
@@ -507,12 +500,212 @@ const siteSettings = [
 
 /* ───────────────────────────────── write the file ────────────────────────────── */
 
+/* ─────────────────── about page blocks (components/sections/about) ─────────────────── */
+
+const aboutDir = path.join(fe, "components", "sections", "about");
+const aboutRead = (file) => read(aboutDir, file);
+
+// Core values: the icon is an inline <svg>, so only its path `d` is stored; the
+// first 6 `d=` attributes are the fa items, the next 6 the en items.
+const valuesText = literalAfter(aboutRead("core-values.tsx"), "const valuesData = ", { open: "{" });
+const valueIconPaths = [...valuesText.matchAll(/d="([^"]+)"/g)].map((m) => m[1]);
+if (valueIconPaths.length !== 12) throw new Error(`expected 12 value icon paths, found ${valueIconPaths.length}`);
+const valuesData = grab(aboutRead("core-values.tsx"), "const valuesData = ", { open: "{" });
+const coreValues = valuesData.fa.map((item, index) => ({
+  iconPath: valueIconPaths[index],
+  titleFa: item.title,
+  titleEn: valuesData.en[index].title,
+  descriptionFa: item.description,
+  descriptionEn: valuesData.en[index].description,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+const certsData = grab(aboutRead("certifications-showcase.tsx"), "const certsData = ", { open: "{" });
+const certifications = certsData.fa.items.map((item, index) => {
+  const en = certsData.en.items[index];
+  return {
+    icon: item.icon,
+    titleFa: item.title,
+    titleEn: en.title,
+    organizationFa: item.org,
+    organizationEn: en.org,
+    colorClass: item.color,
+    borderClass: item.borderColor,
+    sortOrder: index,
+    isPublished: true,
+  };
+});
+
+const lifecycleData = grab(aboutRead("development-lifecycle.tsx"), "const steps = ", { open: "{" });
+const lifecycleSteps = lifecycleData.fa.map((step, index) => ({
+  numberLabel: step.num,
+  nameFa: step.name,
+  nameEn: lifecycleData.en[index].name,
+  descriptionFa: step.desc,
+  descriptionEn: lifecycleData.en[index].desc,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+const philosophyData = grab(
+  aboutRead("engineering-philosophy.tsx"),
+  "Record<Locale, { title: string; subtitle: string; items: PhilosophyItem[] }> = ",
+  { open: "{" },
+);
+const philosophyPrinciples = philosophyData.fa.items.map((item, index) => {
+  const en = philosophyData.en.items[index];
+  return {
+    iconName: item.icon,
+    tagFa: item.tag,
+    tagEn: en.tag,
+    titleFa: item.title,
+    titleEn: en.title,
+    descriptionFa: item.desc,
+    descriptionEn: en.desc,
+    codeSnippet: item.codeSnippet ?? null,
+    sortOrder: index,
+    isPublished: true,
+  };
+});
+
+const statsData = grab(aboutRead("stats-counter.tsx"), "const statsData = ", { open: "{" });
+const aboutStats = statsData.fa.map((stat, index) => ({
+  value: stat.value,
+  suffix: stat.suffix || null,
+  labelFa: stat.label,
+  labelEn: statsData.en[index].label,
+  icon: stat.icon,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+const techData = grab(aboutRead("tech-stack.tsx"), "const categories = ", { open: "{" });
+const techStackGroups = techData.fa.groups.map((group, index) => ({
+  labelFa: group.label,
+  labelEn: techData.en.groups[index].label,
+  items: group.items,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+// Section copy of each block. Lifted from the inline JSX of the components.
+const aboutSections = [
+  {
+    key: "values",
+    eyebrowFa: "ارزش‌های ما",
+    eyebrowEn: "Our Values",
+    titleFa: "اصولی که ما را متفاوت می‌کند",
+    titleEn: "Principles that set us apart",
+    subtitleFa: null,
+    subtitleEn: null,
+  },
+  {
+    key: "certifications",
+    eyebrowFa: certsData.fa.title,
+    eyebrowEn: certsData.en.title,
+    titleFa: certsData.fa.heading,
+    titleEn: certsData.en.heading,
+    subtitleFa: null,
+    subtitleEn: null,
+  },
+  {
+    key: "lifecycle",
+    eyebrowFa: "PIPELINE",
+    eyebrowEn: "PIPELINE",
+    titleFa: "فرایند توسعه و تحویل محصول",
+    titleEn: "How We Engineer & Deliver",
+    subtitleFa: null,
+    subtitleEn: null,
+  },
+  {
+    key: "philosophy",
+    eyebrowFa: null,
+    eyebrowEn: null,
+    titleFa: philosophyData.fa.title,
+    titleEn: philosophyData.en.title,
+    subtitleFa: philosophyData.fa.subtitle,
+    subtitleEn: philosophyData.en.subtitle,
+  },
+  {
+    key: "tech-stack",
+    eyebrowFa: techData.fa.title,
+    eyebrowEn: techData.en.title,
+    titleFa: techData.fa.heading,
+    titleEn: techData.en.heading,
+    subtitleFa: techData.fa.subtitle,
+    subtitleEn: techData.en.subtitle,
+  },
+].map((section, index) => ({ ...section, sortOrder: index, isPublished: true }));
+
+/* ───────────── page sections (copy + repeated items of page blocks) ───────────── *
+ * Each page component keeps its fallback copy in one literal. The literal is either
+ * bilingual ({ fa: {...}, en: {...} }) or Persian-only (a single {...} object). Items are
+ * strings (bullets) or objects ({ title, description, href }).                         */
+const pageSectionSources = [
+  { pageKey: "gold-app", file: ["components", "gold-app", "gold-app-client.tsx"], marker: "const fallbackSections = " },
+  { pageKey: "about", file: ["app", "(site)", "[locale]", "about", "page.tsx"], marker: "const fallbackPageSections = " },
+  { pageKey: "home", file: ["components", "sections", "home-cta-section.tsx"], marker: "const fallbackSections = " },
+  { pageKey: "home", file: ["components", "sections", "testimonials-section.tsx"], marker: "const fallbackSections" },
+  { pageKey: "services", file: ["app", "(site)", "[locale]", "services", "page.tsx"], marker: "const fallbackSections" },
+  { pageKey: "contact", file: ["components", "sections", "contact-section.tsx"], marker: "const fallbackSections" },
+  { pageKey: "store-builder", file: ["components", "store-builder", "store-builder-client.tsx"], marker: "const fallbackSections" },
+];
+
+const pageSections = pageSectionSources.flatMap(({ pageKey, file, marker }) => {
+  const literal = grab(read(fe, ...file), marker, { open: "{" });
+  return Object.entries(literal).map(([sectionKey, value], index) => {
+    const bilingual = "fa" in value;
+    const fa = bilingual ? value.fa : value;
+    const en = bilingual ? value.en ?? {} : {};
+    const items = (fa.items ?? []).map((item, i) => {
+      const base = typeof item === "string" ? { title: item } : item;
+      const other = en.items?.[i];
+      const otherItem = typeof other === "string" ? { title: other } : other ?? {};
+      return {
+        icon: base.icon ?? null,
+        titleFa: base.title ?? "",
+        titleEn: otherItem.title ?? "",
+        descriptionFa: base.description ?? "",
+        descriptionEn: otherItem.description ?? "",
+        href: base.href ?? otherItem.href ?? null,
+        valueFa: base.value ?? "",
+        valueEn: otherItem.value ?? "",
+      };
+    });
+    return {
+      pageKey,
+      sectionKey,
+      eyebrowFa: fa.eyebrow ?? null,
+      eyebrowEn: en.eyebrow ?? null,
+      titleFa: fa.title ?? null,
+      titleEn: en.title ?? null,
+      subtitleFa: fa.subtitle ?? null,
+      subtitleEn: en.subtitle ?? null,
+      bodyFa: fa.body ?? null,
+      bodyEn: en.body ?? null,
+      items,
+      sortOrder: index,
+      isPublished: true,
+    };
+  });
+});
+
 const dataset = {
   siteSettings,
   pageMetas,
   portfolioCategories,
   portfolioProjects,
   services,
+  homeServiceCards,
+  aboutSections,
+  pageSections,
+  coreValues,
+  certifications,
+  lifecycleSteps,
+  philosophyPrinciples,
+  techStackGroups,
+  aboutStats,
   processSteps,
   clients,
   testimonials,
@@ -521,7 +714,6 @@ const dataset = {
   faqItems,
   inquiryTypes: inquiryTypesRows,
   storeTemplates,
-  storePlans,
   appDownloadLinks: downloadButtons,
 };
 

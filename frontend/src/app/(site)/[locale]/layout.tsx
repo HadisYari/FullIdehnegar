@@ -120,7 +120,7 @@ export default async function LocaleLayout({
     telephone: config.phones[0],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "22 Bahman Intersection, Fanavari Tower, Floor 7, Unit 11",
+      streetAddress: config.addressEn,
       addressLocality: "Kermanshah",
       addressCountry: "IR",
     },

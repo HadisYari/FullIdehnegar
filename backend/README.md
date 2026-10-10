@@ -11,7 +11,7 @@ backend/
 └─ tools/generate-seed.mjs    تولید seed.json از داده‌های frontend/src
 ```
 
-## ۱. مدل داده (۱۷ جدول، همگی در schema `dbo`)
+## ۱. مدل داده (۲۶ جدول، همگی در schema `dbo`)
 
 اصل طراحی: **جدول‌ها آینهٔ چیزی‌اند که فرانت‌اند واقعاً استفاده می‌کند** — بدون
 جدول اضافی؛ و برای روان‌بودن ورود داده، هر صفحهٔ سایت تا جای ممکن در **یک جدول**
@@ -20,15 +20,19 @@ backend/
 | جدول | مصرف در فرانت‌اند |
 | --- | --- |
 | `SiteSettings` (تک‌رکورد) | `src/lib/site-config.ts` — نام، دامنه، تلفن‌ها، آدرس، ساعت، شبکه‌های اجتماعی، آمار |
-| `PageMetas` | عنوان/توضیح/کلیدواژه/OG/noindex هر صفحه (۸ کلید: home…payment) |
+| `PageMetas` | عنوان/توضیح/کلیدواژه/OG/noindex هر صفحه (۷ کلید: home…store-builder، gold-app). برچسب/تیتر/زیرتیتر فقط برای صفحهٔ اصلی است و در پنل فقط همان صفحه نمایش داده می‌شود؛ H1 بقیهٔ صفحه‌ها در فرانت‌اند استاتیک است. ستون‌های `CtaPrimary`/`CtaSecondary` در جدول مانده‌اند، اما دیگر در پنل ویرایش نمی‌شوند و فرانت‌اند هم نمی‌خواندشان. |
 | `PortfolioCategories` | فیلترهای صفحهٔ نمونه‌کارها |
 | `PortfolioProjects` | `src/data/portfolio.json` کامل (گالری، فیچرها، آمار، challenge/solution) |
 | `Services`, `ProcessSteps` | سکشن سرویس‌ها و فرآیند همکاری صفحهٔ اصلی |
+| `HomeServiceCards` | کارت‌های گرید «خدمات» صفحهٔ اصلی (جدا از شش خدمت صفحهٔ خدمات) |
 | `Clients`, `Testimonials`, `Milestones`, `TeamDisciplines` | لوگوی مشتریان، نظرات، تایم‌لاین درباره ما، تیم |
+| `AboutSections` | متن (eyebrow/عنوان/زیرعنوان) هر بلوک صفحهٔ درباره ما، با کلید `values`، `certifications`، `lifecycle`، `philosophy`، `tech-stack` |
+| `CoreValues`, `Certifications`, `LifecycleSteps`, `PhilosophyPrinciples`, `TechStackGroups`, `AboutStats` | آیتم‌های بلوک‌های درباره ما: ارزش‌ها (مسیر SVG آیکون)، تاییدیه‌ها، مراحل توسعه، اصول مهندسی، گروه‌های فناوری (`ItemsJson`)، آمار |
+| `PageSections` | متن و آیتم‌های بلوک‌های صفحه‌های دیگر، با کلید (`PageKey`, `SectionKey`) یکتا: `gold-app` (`hero`, `hero-badge`, `platform`, `desktop`, `mobile`, `value`, `cta`)، `about` (`manifesto`, `team`, `quick-links`)، `home` (`cta`, `cta-sla`, `testimonials`)، `services` (`quick-access`)، `contact` (`intro`, `hubs`, `hubs-hours`, `hubs-amenities`, `discovery`, `faq`)، `store-builder` (`intro`, `final-cta`). عنوان/زیرعنوان/متن دوزبانه و `ItemsJson` (بولت، کارت یا لینک، با آیکون، `Href` و `Value` اختیاری مثل ساعت یا عدد) |
 | `FaqItems`, `InquiryTypes` | سوالات متداول و نوع درخواست‌های فرم تماس |
-| `StoreTemplates`, `StorePlan` | صفحهٔ فروشگاه‌ساز و پلن‌های پرداخت |
+| `StoreTemplates` | قالب‌های صفحهٔ فروشگاه‌ساز؛ نام، توضیح، برچسب، امکانات و تصاویر به فارسی و انگلیسی (`NameEn`, `DescriptionEn`, `FeaturesEnJson`, …) |
 | `AppDownloadLinks` | لینک‌های دانلود اپ طلا |
-| `ContactMessages`, `StoreOrders` | خروجی فرم تماس و فرم سفارش (فقط نوشتنی) |
+| `ContactMessages` | خروجی فرم تماس (فقط نوشتنی) |
 
 قواعد مشترک:
 
@@ -113,9 +117,8 @@ X-Robots-Tag: noindex, nofollow
 | `GET /api/public/portfolio?category=&featured=&take=` | لیست پروژه‌ها |
 | `GET /api/public/portfolio/{slug}` | جزئیات یک پروژه |
 | `GET /api/public/portfolio/{slug}/related?take=3` | پروژه‌های مرتبط |
-| `GET /api/public/services` `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
+| `GET /api/public/services` `home-services` `about-content` (همهٔ بلوک‌های درباره ما در یک پاسخ) `page-sections/{pageKey}` (متن و آیتم‌های بلوک‌های یک صفحه) `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
 | `POST /api/public/contact` | ذخیرهٔ پیام + ایمیل (rate limited) |
-| `POST /api/public/store-orders` | ثبت سفارش فروشگاه‌ساز (rate limited) |
 | `GET /api/public/health` | سلامت + تعداد رکوردها (بدون کش) |
 
 خروجی JSON `camelCase` است و فیلدهای null حذف می‌شوند تا با interfaceهای
@@ -137,7 +140,7 @@ TypeScript فرانت‌اند (`PortfolioItem`…) یک‌به‌یک جور د
   `CryptographicOperations.FixedTimeEquals`، تأخیر ۷۰۰ms در صورت خطا، محافظت در
   برابر open-redirect، و هدرهای `X-Robots-Tag: noindex` + `X-Frame-Options: SAMEORIGIN`
   برای همهٔ مسیرهای `/admin`.
-- **صندوق‌ها:** `/admin/inbox/messages` و `/admin/inbox/orders` (بایگانی، حذف، تغییر وضعیت سفارش).
+- **صندوق‌ها:** `/admin/inbox/messages` (بایگانی، حذف).
 - **تنظیمات:** `/admin/site-settings` (اطلاعات شرکت + سئوی صفحه‌ها در یک صفحهٔ گروه‌بندی‌شده).
 
 ### Revalidation (ISR)
@@ -152,7 +155,7 @@ body: { "secret": "…", "tags": ["portfolio","home","sitemap"] }
 سمت فرانت‌اند `frontend/src/app/api/revalidate/route.ts` بعد از بررسی رمز،
 `revalidateTag(tag, { expire: 0 })` را برای همان تگ‌ها اجرا می‌کند. تگ‌ها بین
 پنل و فرانت مشترک‌اند: `settings, pages, home, portfolio, services, about,
-contact, store, payment, gold-app, sitemap`.
+contact, store, gold-app, sitemap`.
 
 ## ۵. اتصال فرانت‌اند
 
@@ -179,16 +182,29 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
 
 ### کارهای باقی‌مانده (دانسته و عمدی)
 
-1. بعضی سکشن‌های صفحهٔ اصلی (`ServicesSection`, `ProcessSection`,
-   `ClientsSection`, `TestimonialsSection`) هنوز دادهٔ داخل فایل خودشان را
-   نشان می‌دهند. وصل‌کردنشان مکانیکی است: یک prop اختیاری با مقدار پیش‌فرض
-   فعلی بگیرید و در `page.tsx` از `loadServices()/loadProcessSteps()/…` پاس
-   دهید (تایپ‌ها در `lib/cms.ts` آماده‌اند).
-2. `pages/store-builder`, `gold-app`, `payment` هنوز `withPageMeta` ندارند.
-3. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
-   `device-mockup.tsx`، `ProcessSection.tsx`، `payment/page.tsx` و یک کامنت JSX
+1. صفحهٔ اصلی: `ServicesSection` از `HomeServiceCards` می‌خواند (با fallback
+   داخل فایل). `ProcessSection` و `ClientsSection` قبلاً وصل بودند.
+   `TestimonialsSection` در هیچ صفحه‌ای رندر نمی‌شود (کد مرده).
+2. صفحه‌های `store-builder` و `gold-app` `withPageMeta` دارند.
+3. هیدر H1 صفحه‌های `services`, `portfolio`, `contact`, `store-builder`
+   عمداً متن JSX ثابت است (برای سئو) و eyebrow/heading/subheading این صفحه‌ها از
+   پنل `PageMetas` حذف شده‌اند (`ShowsHeroCopy`). متن بلوک‌های بدنه (کپسول‌های
+   دسترسی سریع `services`، سه کارت `contact` شامل ساعت کاری، امکانات، HQ و FAQ،
+   متن `store-builder`) از `PageSections` خوانده می‌شود. برچسب‌های
+   کوتاه UI (دکمه‌ها، تب‌ها، فیلدهای فرم) و کانال‌های تماس با لینک‌های `SiteSetting`
+   ثابت‌اند. `bootstrap` هم هنوز فراخوانی نمی‌شود و کنار اندپوینت‌های تکی است.
+4. صفحهٔ «درباره ما»: شش بلوک `components/sections/about/*` (ارزش‌ها، تاییدیه‌ها،
+   فرایند توسعه، فلسفه مهندسی، آمار، فناوری‌ها) از `GET /api/public/about-content`
+   داده می‌گیرند و متن محلی‌شان فقط در نبود API استفاده می‌شود. هدر و مانیفست
+   صفحهٔ درباره ما (مانیفست، بلوک تیم و کپسول‌های دسترسی) از `PageSections`
+   خوانده می‌شود. هدر H1 و دکمه‌های کوتاه ثابت‌اند. `about-hero.tsx` هم در هیچ صفحه‌ای import
+   نشده است (طرح جایگزین). بقیهٔ کامپوننت‌های `project-*`، `page-hero.tsx`،
+   `contact-form.tsx` import نشده‌اند. `testimonials-section.tsx` روی صفحهٔ اصلی
+   mount شده و نظرات را از `GET /api/public/testimonials` می‌گیرد.
+5. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
+   `device-mockup.tsx`، `ProcessSection.tsx` و یک کامنت JSX
    در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.
-4. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
+6. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
    از کشیدن ریپو: `cd backend && dotnet build BackendIdehnegar.sln`.
 
 ## ۶. SEO در بک‌اند
