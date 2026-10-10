@@ -349,6 +349,7 @@ public static class ContentMapper
         LastModified = page.UpdatedAtUtc ?? page.CreatedAtUtc,
         ChangeFrequency = page.ChangeFrequency,
         Priority = page.Priority,
+        NoIndex = page.NoIndex,
     };
 
     public static SitemapEntryDto ToSitemapEntry(this PortfolioProject project) => new()

@@ -1,6 +1,6 @@
 // app/[locale]/store-builder/page.tsx
 import type { Metadata } from "next";
-import { loadPageSections, withPageMeta } from "@/lib/cms";
+import { loadPageMeta, loadPageSections, withPageMeta } from "@/lib/cms";
 import { getStoreTemplates } from "@/lib/store";
 import { locales } from "@/lib/i18n/dictionaries";
 import { StoreBuilderClient } from "@/components/store-builder/store-builder-client";
@@ -35,10 +35,23 @@ export default async function StoreBuilderPage({
   const { locale } = await params;
   const lang = locale === "en" ? "en" : "fa";
   // قالب‌ها از /api/public/store-templates — fallback: src/data/store-templates.json
-  const [templates, sections] = await Promise.all([
+  const [templates, sections, pageMeta] = await Promise.all([
     getStoreTemplates(),
     loadPageSections("store-builder"),
+    loadPageMeta("store-builder"),
   ]);
 
-  return <StoreBuilderClient templates={templates} sections={sections} locale={lang} />;
+  // متن هیرو از جدول PageMeta (پنل مدیریت) — fallback: متن‌های همین صفحه.
+  const hero = {
+    eyebrow:
+      (pageMeta && (pageMeta.eyebrow[lang] || pageMeta.eyebrow.fa)) ||
+      (lang === "fa" ? "فروشگاه‌ساز ابری • راه‌اندازی سریع" : "Cloud store builder • fast setup"),
+    heading:
+      (pageMeta && (pageMeta.heading[lang] || pageMeta.heading.fa)) ||
+      (lang === "fa"
+        ? "انتخاب قالب فروشگاه\n|راه‌اندازی سریع با پشتیبانی پیشگامان ایده‌نگار|"
+        : "Choose a store template\n|Fast setup with Idehnegar support|"),
+  };
+
+  return <StoreBuilderClient templates={templates} sections={sections} locale={lang} hero={hero} />;
 }

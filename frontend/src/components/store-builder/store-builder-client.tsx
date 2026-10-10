@@ -9,6 +9,7 @@ import type { LocalizedList, LocalizedText, PageSectionDto, StoreTemplateDto } f
 import { resolveSection } from "@/lib/page-sections";
 import { localeHref } from "@/lib/i18n/paths";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import { SplitTitle } from "@/components/split-title";
 
 /* ──────────────────────────────────────────────────────────
    موج متحرک بالای سکشن سرمه‌ای
@@ -94,11 +95,14 @@ export function StoreBuilderClient({
   templates,
   sections,
   locale = "fa",
+  hero,
 }: {
   templates: StoreTemplateDto[];
   /** بلوک‌های متنی از /api/public/page-sections/store-builder — fallback: fallbackSections */
   sections?: PageSectionDto[];
   locale?: Locale;
+  /** متن هیرو از جدول PageMeta — fallback: متن‌های همین کامپوننت */
+  hero?: { eyebrow?: string; heading?: string };
 }) {
   const isFa = locale === "fa";
   /** متن ثابت دوزبانه: فارسی برای / و انگلیسی برای /en */
@@ -148,14 +152,20 @@ export function StoreBuilderClient({
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/20 bg-[#e6304c]/10 px-3.5 py-1 text-xs font-bold text-[#e6304c]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e6304c] animate-pulse" />
-              {tr("فروشگاه‌ساز ابری • راه‌اندازی سریع", "Cloud store builder • fast setup")}
+              {hero?.eyebrow?.trim() || tr("فروشگاه‌ساز ابری • راه‌اندازی سریع", "Cloud store builder • fast setup")}
             </div>
 
             <h1 className="mt-4 text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              {tr("انتخاب قالب فروشگاه", "Choose a store template")} <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]">
-                {tr("راه‌اندازی سریع با پشتیبانی پیشگامان ایده‌نگار", "Fast setup with Idehnegar support")}
-              </span>
+              <SplitTitle
+                title={
+                  hero?.heading?.trim() ||
+                  tr(
+                    "انتخاب قالب فروشگاه\n|راه‌اندازی سریع با پشتیبانی پیشگامان ایده‌نگار|",
+                    "Choose a store template\n|Fast setup with Idehnegar support|",
+                  )
+                }
+                accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]"
+              />
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mx-auto">

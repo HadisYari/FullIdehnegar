@@ -163,7 +163,7 @@ contact, store, gold-app, sitemap`.
 
 ```bash
 cd frontend
-echo 'CMS_API_URL=http://localhost:5000' >> .env.local
+echo 'CMS_API_URL=http://localhost:5100' >> .env.local   # پورت launchSettings.json
 echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:RevalidateSecret
 ```
 
@@ -182,30 +182,25 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
 
 ### کارهای باقی‌مانده (دانسته و عمدی)
 
-1. صفحهٔ اصلی: `ServicesSection` از `HomeServiceCards` می‌خواند (با fallback
-   داخل فایل). `ProcessSection` و `ClientsSection` قبلاً وصل بودند.
-   `TestimonialsSection` در هیچ صفحه‌ای رندر نمی‌شود (کد مرده).
-2. صفحه‌های `store-builder` و `gold-app` `withPageMeta` دارند.
-3. هیدر H1 صفحه‌های `services`, `portfolio`, `contact`, `store-builder`
-   عمداً متن JSX ثابت است (برای سئو) و eyebrow/heading/subheading این صفحه‌ها از
-   پنل `PageMetas` حذف شده‌اند (`ShowsHeroCopy`). متن بلوک‌های بدنه (کپسول‌های
-   دسترسی سریع `services`، سه کارت `contact` شامل ساعت کاری، امکانات، HQ و FAQ،
-   متن `store-builder`) از `PageSections` خوانده می‌شود. برچسب‌های
-   کوتاه UI (دکمه‌ها، تب‌ها، فیلدهای فرم) و کانال‌های تماس با لینک‌های `SiteSetting`
-   ثابت‌اند. `bootstrap` هم هنوز فراخوانی نمی‌شود و کنار اندپوینت‌های تکی است.
-4. صفحهٔ «درباره ما»: شش بلوک `components/sections/about/*` (ارزش‌ها، تاییدیه‌ها،
-   فرایند توسعه، فلسفه مهندسی، آمار، فناوری‌ها) از `GET /api/public/about-content`
-   داده می‌گیرند و متن محلی‌شان فقط در نبود API استفاده می‌شود. هدر و مانیفست
-   صفحهٔ درباره ما (مانیفست، بلوک تیم و کپسول‌های دسترسی) از `PageSections`
-   خوانده می‌شود. هدر H1 و دکمه‌های کوتاه ثابت‌اند. `about-hero.tsx` هم در هیچ صفحه‌ای import
-   نشده است (طرح جایگزین). بقیهٔ کامپوننت‌های `project-*`، `page-hero.tsx`،
-   `contact-form.tsx` import نشده‌اند. `testimonials-section.tsx` روی صفحهٔ اصلی
-   mount شده و نظرات را از `GET /api/public/testimonials` می‌گیرد.
-5. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
-   `device-mockup.tsx`، `ProcessSection.tsx` و یک کامنت JSX
-   در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.
-6. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
+1. هیروی همهٔ صفحات (eyebrow / H1 / زیرتیتر / دکمه‌های CTA) از جدول `PageMetas`
+   خوانده می‌شود؛ متن تیترها قرارداد `\n` (خط جدید) و `|متن|` (بخش گرادیانی) را
+   می‌پذیرد (`frontend/src/components/split-title.tsx`). عنوان سکشن‌های صفحهٔ اصلی
+   (فرایند، مشتریان، پیش‌نمایش نمونه‌کارها، کارت پایانی فرایند) و هدر تایم‌لاین و
+   کپسول‌های هیروی درباره ما از `PageSections` می‌آیند. برچسب‌های کوتاه UI
+   (دکمه‌ها، تب‌ها، فیلدهای فرم) و متون دکوراتیو کوچک ثابت‌اند.
+2. `bootstrap` هنوز توسط فرانت فراخوانی نمی‌شود و کنار اندپوینت‌های تکی است.
+3. `about-hero.tsx` و `page-hero.tsx` در هیچ صفحه‌ای import نشده‌اند (طرح‌های جایگزین).
+   `testimonials-section.tsx` روی صفحهٔ اصلی mount شده و نظرات را از
+   `GET /api/public/testimonials` می‌گیرد.
+4. پنج خطای از قبل موجود در `npm run lint` (state-in-effect در `device-mockup.tsx` و
+   `ProcessSection.tsx`، کامنت JSX در `services/page.tsx` و دو `any` در
+   `project-info-card.tsx` و `services-section.tsx`) به این تغییرات مربوط نیستند.
+5. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
    از کشیدن ریپو: `cd backend && dotnet build BackendIdehnegar.sln`.
+6. برای توسعهٔ فرانت بدون دات‌نت/SQL Server می‌توان از استند-این API استفاده کرد که
+   همان قرارداد `/api/public/*` را روی `SeedData/seed.json` پیاده‌سازی می‌کند:
+   `node backend/tools/dev-api.mjs` (روی پورت 5100). در محیط واقعی خود `EndPoints`
+   را روی همان پورت اجرا کنید.
 
 ## ۶. SEO در بک‌اند
 

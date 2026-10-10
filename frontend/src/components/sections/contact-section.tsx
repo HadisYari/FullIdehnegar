@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
+import { SplitTitle } from "@/components/split-title";
 import { siteConfig, type SiteConfig } from "@/lib/site-config";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import type { PageSectionDto } from "@/lib/cms";
@@ -293,6 +294,7 @@ export function ContactPageCanvas({
   faqs: faqsProp,
   inquiryTypes,
   sections,
+  hero,
 }: {
   locale: Locale;
   dict: Dictionary;
@@ -304,9 +306,18 @@ export function ContactPageCanvas({
   faqs?: FaqView[];
   /** حوزه‌های پروژه از /api/public/inquiry-types — fallback: دادهٔ محلی */
   inquiryTypes?: InquiryTypeView[];
+  /** متن هیرو از جدول PageMeta — fallback: متن‌های همین صفحه */
+  hero?: { eyebrow?: string; heading?: string; subheading?: string };
 }) {
   const isFa = locale === "fa";
   const cfg = config ?? siteConfig;
+
+  // متن هیرو: PageMeta اولویت دارد، در نبودش متن‌های همین صفحه
+  const heroEyebrow = hero?.eyebrow?.trim() || (isFa ? "درگاه ارتباط مستقیم" : "DIRECT ENGAGEMENT DESK");
+  const heroHeading = hero?.heading?.trim() || (isFa ? "|با ما در ارتباط باشید|" : "|Connect With Us|");
+  const heroSubheading =
+    hero?.subheading?.trim() ||
+    (isFa ? "استودیو مهندسی نرم‌افزار پیشگامان ایده‌نگار" : "Idehnegar Software Engineering Studio");
 
   // متن بخش‌ها: CMS اولویت دارد، در نبودش fallbackSections
   const copy = {
@@ -493,18 +504,19 @@ export function ContactPageCanvas({
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-md">
                   <span className="h-2 w-2 rounded-full bg-[#e6304c] animate-ping" />
                   <span className="font-mono text-xs font-semibold tracking-wider text-rose-300">
-                    {isFa ? "درگاه ارتباط مستقیم" : "DIRECT ENGAGEMENT DESK"}
+                    {heroEyebrow}
                   </span>
                 </div>
 
                 <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.25]">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200">
-                    {isFa ? "با ما در ارتباط باشید" : "Connect With Us"}
-                  </span>
+                  <SplitTitle
+                    title={heroHeading}
+                    accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200"
+                  />
                 </h1>
 
                 <h2 className="mt-3 text-lg sm:text-2xl font-bold text-white/90">
-                  {isFa ? "استودیو مهندسی نرم‌افزار پیشگامان ایده‌نگار" : "Idehnegar Software Engineering Studio"}
+                  {heroSubheading}
                 </h2>
 
                 <p className="mt-4 text-xs sm:text-sm sm:leading-relaxed text-white/75 leading-relaxed max-w-xl mx-auto lg:mx-0">

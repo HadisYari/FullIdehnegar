@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Idehnegar.Core.Contracts;
 
 /// <summary>
@@ -25,6 +27,12 @@ public sealed class SiteSettingsDto
     public string Email { get; set; } = string.Empty;
     public IReadOnlyList<string> Phones { get; set; } = Array.Empty<string>();
     public string? Telegram { get; set; }
+
+    /// <summary>
+    /// Explicit wire name: System.Text.Json would camel-case <c>WhatsApp</c> to
+    /// <c>whatsApp</c>, while the front end (<c>src/lib/cms.ts</c>) reads <c>whatsapp</c>.
+    /// </summary>
+    [JsonPropertyName("whatsapp")]
     public string? WhatsApp { get; set; }
     public LocalizedText Address { get; set; } = new(string.Empty, string.Empty);
     public LocalizedText Hours { get; set; } = new(string.Empty, string.Empty);
@@ -215,6 +223,9 @@ public sealed class SitemapEntryDto
     public DateTime? LastModified { get; set; }
     public string ChangeFrequency { get; set; } = "monthly";
     public decimal Priority { get; set; } = 0.5m;
+
+    /// <summary>Mirrors <c>PageMeta.NoIndex</c> so the front end can filter again defensively.</summary>
+    public bool NoIndex { get; set; }
 }
 
 /// <summary>

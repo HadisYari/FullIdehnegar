@@ -11,8 +11,16 @@ import { resolveSection, type LocalSection } from "@/lib/page-sections";
 /* کپی ثابت عنوان بخش (fallback). سید داده بک‌اند از همین literal ساخته می‌شود. */
 const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
   testimonials: {
-    fa: { eyebrow: "مشتریان می‌گویند", title: "چند نمونه از رضایت کارفرمایان" },
-    en: { eyebrow: "Testimonials", title: "What our clients say" },
+    fa: {
+      eyebrow: "مشتریان می‌گویند",
+      title: "چند نمونه از رضایت کارفرمایان",
+      subtitle: "بشنوید از کسانی که مأموریت دیزاین و توسعه وب‌سایت خود را به ما سپردند",
+    },
+    en: {
+      eyebrow: "Testimonials",
+      title: "What our clients say",
+      subtitle: "What our clients say about our design and development standards",
+    },
   },
 };
 
@@ -116,9 +124,7 @@ export function TestimonialsSection({
           
           {/* Sub-headline for context (perfect for design agencies) */}
           <p className="mt-1.5 text-xs text-dark sm:text-sm">
-            {isRTL 
-              ? "بشنوید از کسانی که مأموریت دیزاین و توسعه وب‌سایت خود را به ما سپردند" 
-              : "What our clients say about our design and development standards"}
+            {copy.subtitle}
           </p>
         </Reveal>
 

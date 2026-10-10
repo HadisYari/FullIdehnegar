@@ -46,7 +46,15 @@ export async function POST(request: NextRequest) {
   }
 
   // ۱) ترجیحاً بک‌اند: ثبت در SQL Server، ایمیل و نمایش در صندوق پنل مدیریت.
-  const cmsResult = await submitContact({ name, email, phone, subject, message, locale });
+  const cmsResult = await submitContact({
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    locale,
+    inquiryType: inquiryType || undefined,
+  });
   if (cmsResult) {
     return NextResponse.json({ ok: true, emailSent: cmsResult.emailSent === true, stored: "cms" });
   }

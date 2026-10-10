@@ -69,13 +69,16 @@ export function HeroSection({
   locale: Locale;
   dict: Dictionary;
   /** متن‌های صفحهٔ اصلی از جدول PageMeta (بک‌اند) — fallback: دیکشنری i18n */
-  meta?: { eyebrow?: string; title?: string; subtitle?: string };
+  meta?: { eyebrow?: string; title?: string; subtitle?: string; ctaPrimary?: string; ctaSecondary?: string };
   /** ارقام صفحهٔ اصلی (جدول SiteSetting) — fallback: siteConfig */
   stats?: { yearsActive: number; projects: number };
 }) {
   const eyebrow = meta?.eyebrow?.trim() || dict.hero.eyebrow;
   const title = meta?.title?.trim() || dict.hero.title;
   const subtitle = meta?.subtitle?.trim() || dict.hero.subtitle;
+  // دکمه‌های CTA از جدول PageMeta (ctaPrimary/ctaSecondary) با fallback متن فعلی.
+  const ctaPrimary = meta?.ctaPrimary?.trim() || (locale === "en" ? "Get a Free Consultation" : "درخواست مشاوره");
+  const ctaSecondary = meta?.ctaSecondary?.trim() || (locale === "en" ? "View Store Builder" : "مشاهده فروشگاه‌ساز");
   const yearsActive = stats?.yearsActive ?? 15;
   const projects = stats?.projects ?? 326;
   const containerRef = useRef<HTMLElement>(null);
@@ -185,7 +188,7 @@ export function HeroSection({
             <motion.div variants={itemVariant} className="inline-block">
               <span className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/20 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#e6304c] shadow-sm backdrop-blur-md">
                 <Sparkles className="h-3.5 w-3.5 animate-pulse" />
-                {dict.hero.eyebrow}
+                {eyebrow}
               </span>
             </motion.div>
 
@@ -194,7 +197,7 @@ export function HeroSection({
               variants={itemVariant}
               className="mt-8 text-balance text-3xl font-black leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-[3rem] xl:text-[3.5rem]"
             >
-              {dict.hero.title.split(" ").map((word, i) => (
+              {title.split(" ").map((word, i) => (
                 <span key={i} className={i === 2 || i === 3 ? "bg-gradient-to-r from-[#e6304c] to-indigo-600 bg-clip-text text-transparent" : ""}>
                   {word}{" "}
                 </span>
@@ -206,7 +209,7 @@ export function HeroSection({
               variants={itemVariant}
               className="mx-auto mt-6 max-w-lg text-balance text-base leading-relaxed text-slate-600 sm:text-lg lg:mx-0"
             >
-              {dict.hero.subtitle}
+              {subtitle}
             </motion.p>
 
             {/* بخش دکمه‌های فراخوانی */}
@@ -221,7 +224,7 @@ export function HeroSection({
                 {/* انیمیشن نور متحرک (Shimmer) داخل دکمه */}
                 <span className="absolute inset-0 -z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
                 {/* <span className="relative z-10">{dict.hero.ctaPrimary}</span> */}
-                <span className="relative z-10">  درخواست مشاوره </span>
+                <span className="relative z-10">{ctaPrimary}</span>
                 {/* <ArrowUpRight className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" /> */}
               </Link>
 
@@ -231,7 +234,7 @@ export function HeroSection({
               >
                 {/* <Monitor className="h-4 w-4 text-slate-400 transition-colors group-hover:text-[#e6304c]" /> */}
                 {/* {dict.hero.ctaSecondary} */}
-            {locale === "en" ? "View Store Builder" : "مشاهده فروشگاه‌ساز"}
+                {ctaSecondary}
               </Link>
             </motion.div>
 
@@ -246,7 +249,7 @@ export function HeroSection({
                 </div>
                 <div>
                   <p className="text-xl font-black text-slate-900 leading-none">
-                    {formatNumber("15+", locale)}
+                    {formatNumber(`${yearsActive}+`, locale)}
                   </p>
                   <p className="mt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                     {dict.stats.years}

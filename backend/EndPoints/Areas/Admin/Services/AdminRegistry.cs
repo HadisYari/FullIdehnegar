@@ -35,14 +35,6 @@ public sealed class AdminRegistry
 
     private static List<AdminFieldSpec> Fields() => new();
 
-    /// <summary>
-    /// Eyebrow, heading and subheading of a page are read by the home page only. The other
-    /// pages keep their visible copy in the front end, so the panel offers these fields
-    /// for the home page (and for a new row, before its page key is chosen) only.
-    /// </summary>
-    private static bool ShowsHeroCopy(object row) =>
-        row is not PageMeta page || string.IsNullOrEmpty(page.PageKey) || page.PageKey == "home";
-
     private static AdminColumnSpec Column(string property, string label, bool isImage = false, bool isBool = false, int maxWidth = 0) =>
         new() { Property = property, Label = label, IsImage = isImage, IsBool = isBool, MaxWidth = maxWidth };
 
@@ -583,9 +575,12 @@ public sealed class AdminRegistry
                 .AddPair("Title", "عنوان سئو (فارسی)", "SEO title (English)", maxLength: 220)
                 .AddPair("Description", "توضیح متا (فارسی)", "Meta description (English)", AdminFieldKind.Textarea)
                 .AddPair("Keywords", "کلمات کلیدی (فارسی)", "Keywords (English)", maxLength: 500)
-                .AddPair("Eyebrow", "برچسب بالای تیتر", "Hero eyebrow", maxLength: 200, showWhen: ShowsHeroCopy)
-                .AddPair("Heading", "تیتر اصلی صفحه", "Hero heading", maxLength: 300, showWhen: ShowsHeroCopy)
-                .AddPair("Subheading", "زیرتیتر صفحه", "Hero subheading", AdminFieldKind.Textarea, showWhen: ShowsHeroCopy)
+                .AddPair("Eyebrow", "برچسب بالای تیتر (فارسی)", "Hero eyebrow (English)", maxLength: 200)
+                .AddPair("Heading", "تیتر اصلی صفحه (فارسی)", "Hero heading (English)", maxLength: 300,
+                    help: "برای شکستن خط از \\n و برای بخش گرادیانی از |متن| استفاده کنید.")
+                .AddPair("Subheading", "زیرتیتر صفحه (فارسی)", "Hero subheading (English)", AdminFieldKind.Textarea)
+                .AddPair("CtaPrimary", "متن دکمه اصلی (فارسی)", "Primary button (English)", maxLength: 200)
+                .AddPair("CtaSecondary", "متن دکمه دوم (فارسی)", "Secondary button (English)", maxLength: 200)
                 .AddField(AdminFieldExtensions.Image("OgImage", "تصویر اشتراک‌گذاری (OG)"))
                 .AddField(AdminFieldExtensions.Select("ChangeFrequency", "دوره تغییر (sitemap)", "change-frequency"))
                 .AddField(AdminFieldExtensions.Money("Priority", "اولویت (۰ تا ۱)"))
@@ -709,10 +704,11 @@ public static class AdminFieldExtensions
         AdminFieldKind kind = AdminFieldKind.Text,
         bool required = false,
         int maxLength = 300,
-        Func<object, bool>? showWhen = null)
+        Func<object, bool>? showWhen = null,
+        string? help = null)
     {
-        fields.Add(Field(property + "Fa", labelFa, kind, required, maxLength, showWhen: showWhen));
-        fields.Add(Field(property + "En", labelEn, kind, required, maxLength, showWhen: showWhen));
+        fields.Add(Field(property + "Fa", labelFa, kind, required, maxLength, help, showWhen: showWhen));
+        fields.Add(Field(property + "En", labelEn, kind, required, maxLength, help, showWhen: showWhen));
         return fields;
     }
 

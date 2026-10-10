@@ -174,6 +174,67 @@ const MISSING_SEO = {
   },
 };
 
+/* Visible hero copy (eyebrow / H1 / subheading / CTA buttons) of every page — the
+ * front end reads these from PageMeta and only falls back to its JSX literals.
+ * `heading` uses `\n` for a line break and `|…|` for the gradient segment, the
+ * same convention SplitTitle.tsx renders. Gold-app keeps its hero in PageSections. */
+const HERO_COPY = {
+  home: {
+    eyebrow: { fa: fa.hero.eyebrow, en: en.hero.eyebrow },
+    heading: { fa: fa.hero.title, en: en.hero.title },
+    subheading: { fa: fa.hero.subtitle, en: en.hero.subtitle },
+    ctaPrimary: { fa: "درخواست مشاوره", en: "Get a Free Consultation" },
+    ctaSecondary: { fa: "مشاهده فروشگاه‌ساز", en: "View Store Builder" },
+  },
+  about: {
+    eyebrow: { fa: "شناسنامه و داستان ایده‌نگار", en: "About Idehnegar" },
+    heading: {
+      fa: "پیشگام در مهندسی وب و\n|تحول پایدار دیجیتال|",
+      en: "Pioneering Scalable Web &\n|Digital Architecture|",
+    },
+    subheading: {
+      fa: "ما در پیشگامان ایده‌نگار معتقدیم نرم‌افزارهای موفق از کدهای اتفاقی ساخته نمی‌شوند؛ آن‌ها حاصل معماری هدفمند، احترام عمیق به تجربه کاربر و اشتیاق وسواس‌گونه برای تحویل محصولاتی هستند که با رشد کسب‌وکار شما هرگز فرسوده نمی‌شوند.",
+      en: "At Idehnegar, we engineer scalable digital platforms built for long-term endurance. A studio founded by software craftspeople dedicated to eliminating templates and building refined systems.",
+    },
+  },
+  services: {
+    eyebrow: { fa: "استودیو مهندسی نرم‌افزار و طراحی محصول", en: "SOFTWARE ENGINEERING & PRODUCT STUDIO" },
+    heading: {
+      fa: "همگرایی |هنر دیزاین|\n و نبوغ مهندسی نرم‌افزار",
+      en: "Where |Refined Design|\n Meets High-Scale Engineering",
+    },
+    subheading: {
+      fa: "ما در ایده‌نگار فراتر از یک وب‌سایت معمولی عمل می‌کنیم؛ سیستم‌های تحت وب پایدار، پرتال‌های مقیاس‌پذیر و پلتفرم‌های دیجیتالی می‌سازیم که اعتبار و بازده تجاری شما را دگرگون می‌کنند.",
+      en: "We engineer resilient digital platforms, enterprise portals, and bespoke web solutions tailored for organizations that demand technical perfection.",
+    },
+    ctaPrimary: { fa: "شروع گفت‌وگوی فنی و استعلام", en: "Start Technical Discovery" },
+  },
+  portfolio: {
+    eyebrow: { fa: "ویترین پروژه‌های عملیاتی", en: "Curated Case Studies" },
+    heading: { fa: "نمونه‌کارها و |پروژه‌های شاخص|", en: "Our Featured |Projects|" },
+    subheading: {
+      fa: "مجموعه‌ای از پرتال‌های سازمانی، وب‌سایت‌های اختصاصی و سامانه‌های نرم‌افزاری مقیاس‌پذیر.",
+      en: "Enterprise portals, scalable web apps, and bespoke platforms engineered by Idehnegar.",
+    },
+  },
+  contact: {
+    eyebrow: { fa: "درگاه ارتباط مستقیم", en: "DIRECT ENGAGEMENT DESK" },
+    heading: { fa: "|با ما در ارتباط باشید|", en: "|Connect With Us|" },
+    subheading: {
+      fa: "استودیو مهندسی نرم‌افزار پیشگامان ایده‌نگار",
+      en: "Idehnegar Software Engineering Studio",
+    },
+  },
+  "store-builder": {
+    eyebrow: { fa: "فروشگاه‌ساز ابری • راه‌اندازی سریع", en: "Cloud store builder • fast setup" },
+    heading: {
+      fa: "انتخاب قالب فروشگاه\n|راه‌اندازی سریع با پشتیبانی پیشگامان ایده‌نگار|",
+      en: "Choose a store template\n|Fast setup with Idehnegar support|",
+    },
+  },
+  "gold-app": {},
+};
+
 const pageMetas = Object.entries(pageFiles).map(([key, file], index) => {
   const source = file === pageFiles.home ? layoutSource : read(fe, file);
   const fallback = fa[key] ?? {};
@@ -182,6 +243,7 @@ const pageMetas = Object.entries(pageFiles).map(([key, file], index) => {
   const title = defaults.title ?? pair(source, "title");
   const description = defaults.description ?? pair(source, "description");
   const missing = MISSING_SEO[key];
+  const hero = HERO_COPY[key] ?? {};
 
   return {
     pageKey: key,
@@ -192,19 +254,18 @@ const pageMetas = Object.entries(pageFiles).map(([key, file], index) => {
     descriptionEn: description.en || missing?.description?.en || "",
     keywordsFa: defaults.keywords?.fa ?? "",
     keywordsEn: defaults.keywords?.en ?? "",
-    // Hero copy is read by the home page only. Other pages keep their visible H1 in
-    // the front end, so their rows carry no eyebrow/heading/subheading.
-    eyebrowFa: key === "home" ? defaults.eyebrow?.fa ?? fallback.eyebrow ?? "" : null,
-    eyebrowEn: key === "home" ? defaults.eyebrow?.en ?? fallbackEn.eyebrow ?? "" : null,
-    headingFa: key === "home" ? defaults.heading?.fa ?? fallback.title ?? "" : null,
-    headingEn: key === "home" ? defaults.heading?.en ?? fallbackEn.title ?? "" : null,
-    subheadingFa: key === "home" ? defaults.subheading?.fa ?? fallback.subtitle ?? "" : null,
-    subheadingEn: key === "home" ? defaults.subheading?.en ?? fallbackEn.subtitle ?? "" : null,
-    // The CTA fields are no longer edited in the panel and no page reads them.
-    ctaPrimaryFa: null,
-    ctaPrimaryEn: null,
-    ctaSecondaryFa: null,
-    ctaSecondaryEn: null,
+    // Hero copy of the visible H1 area — read by every page from PageMeta now.
+    // The gold-app page keeps its hero in PageSections, so its row has no hero copy.
+    eyebrowFa: hero.eyebrow?.fa ?? null,
+    eyebrowEn: hero.eyebrow?.en ?? null,
+    headingFa: hero.heading?.fa ?? null,
+    headingEn: hero.heading?.en ?? null,
+    subheadingFa: hero.subheading?.fa ?? null,
+    subheadingEn: hero.subheading?.en ?? null,
+    ctaPrimaryFa: hero.ctaPrimary?.fa ?? null,
+    ctaPrimaryEn: hero.ctaPrimary?.en ?? null,
+    ctaSecondaryFa: hero.ctaSecondary?.fa ?? null,
+    ctaSecondaryEn: hero.ctaSecondary?.en ?? null,
     ogImage: key === "home" ? "/images/portfolio/smartexport-ai.jpg" : null,
     noIndex: false,
     changeFrequency: defaults.changeFrequency ?? "monthly",
@@ -647,6 +708,9 @@ const pageSectionSources = [
   { pageKey: "about", file: ["app", "(site)", "[locale]", "about", "page.tsx"], marker: "const fallbackPageSections = " },
   { pageKey: "home", file: ["components", "sections", "home-cta-section.tsx"], marker: "const fallbackSections = " },
   { pageKey: "home", file: ["components", "sections", "testimonials-section.tsx"], marker: "const fallbackSections" },
+  { pageKey: "home", file: ["components", "sections", "ProcessSection.tsx"], marker: "const fallbackSections" },
+  { pageKey: "home", file: ["components", "sections", "clients-section.tsx"], marker: "const fallbackSections" },
+  { pageKey: "home", file: ["components", "sections", "portfolio-preview-section.tsx"], marker: "const fallbackSections" },
   { pageKey: "services", file: ["app", "(site)", "[locale]", "services", "page.tsx"], marker: "const fallbackSections" },
   { pageKey: "contact", file: ["components", "sections", "contact-section.tsx"], marker: "const fallbackSections" },
   { pageKey: "store-builder", file: ["components", "store-builder", "store-builder-client.tsx"], marker: "const fallbackSections" },

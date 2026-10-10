@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Container } from "../container";
 import { Reveal } from "../reveal";
-import type { Dictionary } from "@/lib/i18n/dictionaries";
+import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
+import type { PageSectionDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
 import {
   MessagesSquare,
   FileSearch,
@@ -44,6 +46,34 @@ const iconMap: Record<string, LucideIcon> = {
   TestTube2,
   Rocket,
   Headphones,
+};
+
+/* کپی ثابت عنوان بخش و کارت پایانی (fallback). سید داده بک‌اند از همین literal ساخته می‌شود. */
+const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
+  process: {
+    fa: {
+      eyebrow: "فرآیند توسعه ما",
+      title: "از ایده تا اجرا، قدم به قدم",
+      subtitle: "یک متدولوژی اثبات‌شده ۷ مرحله‌ای که ایده شما را به یک راهکار نرم‌افزاری قدرتمند تبدیل می‌کند",
+    },
+    en: {
+      eyebrow: "Our Development Process",
+      title: "From idea to launch, step by step",
+      subtitle: "A proven 7-step methodology that transforms your vision into powerful software solutions",
+    },
+  },
+  "process-cta": {
+    fa: {
+      title: "پروژه تحویل داده شد",
+      body: "محصول شما با موفقیت راه‌اندازی و در حال اجراست",
+      items: [{ title: "پروژه خود را شروع کنید" }],
+    },
+    en: {
+      title: "Project Delivered",
+      body: "Your product is live and running successfully",
+      items: [{ title: "Start Your Project" }],
+    },
+  },
 };
 
 /* ──────────────── کارت هر مرحله ──────────────── */
@@ -162,7 +192,7 @@ function StepCard({
 }
 
 /* ──────────────── کارت پایانی ──────────────── */
-function FinalCard({ dict }: { dict: Dictionary }) {
+function FinalCard({ copy }: { copy: { title: string; desc: string; ctaLabel: string } }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -185,8 +215,8 @@ function FinalCard({ dict }: { dict: Dictionary }) {
         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm">
           <CheckCircle2 className="h-6 w-6" strokeWidth={2.5} />
         </div>
-        <h3 className="mt-5 text-lg font-black">{dict.process.finalLabel}</h3>
-        <p className="mt-2 text-sm leading-7 text-white/80">{dict.process.finalDesc}</p>
+        <h3 className="mt-5 text-lg font-black">{copy.title}</h3>
+        <p className="mt-2 text-sm leading-7 text-white/80">{copy.desc}</p>
         <motion.a
           href="#contact"
           whileHover={{ scale: 1.04 }}
@@ -198,7 +228,7 @@ function FinalCard({ dict }: { dict: Dictionary }) {
             animate={{ x: ["-150%", "150%"] }}
             transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 2 }}
           />
-          <span className="relative">{dict.process.ctaLabel}</span>
+          <span className="relative">{copy.ctaLabel}</span>
           <ArrowRight className="relative h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
         </motion.a>
       </div>
@@ -366,14 +396,26 @@ function LiquidWaveBottom() {
 
 /* ──────────────── کامپوننت اصلی ──────────────── */
 export function ProcessSection({
+  locale = "fa",
   dict,
   steps: stepsProp,
+  sections,
 }: {
+  locale?: Locale;
   dict: Dictionary;
   /** مراحل از /api/public/process-steps — fallback: دیکشنری i18n */
   steps?: StepItem[];
+  /** بلوک‌های عنوان/کارت پایانی از /api/public/page-sections/home — fallback: fallbackSections */
+  sections?: PageSectionDto[];
 }) {
   const steps = stepsProp && stepsProp.length > 0 ? stepsProp : (dict.process.steps as StepItem[]);
+  const header = resolveSection(sections, "process", locale, fallbackSections.process[locale]);
+  const finalCta = resolveSection(sections, "process-cta", locale, fallbackSections["process-cta"][locale]);
+  const finalCopy = {
+    title: finalCta.title || dict.process.finalLabel,
+    desc: finalCta.body || dict.process.finalDesc,
+    ctaLabel: finalCta.items[0]?.title || dict.process.ctaLabel,
+  };
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [isRtl, setIsRtl] = useState(false);
@@ -484,17 +526,17 @@ export function ProcessSection({
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/20 bg-white/90 px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-[#e6304c] shadow-sm backdrop-blur-sm">
               <Sparkles className="h-3.5 w-3.5 animate-pulse" />
-              {dict.process.eyebrow}
+              {header.eyebrow}
             </div>
           </Reveal>
           <Reveal delay={100}>
             <h2 className="mt-5 text-balance text-4xl font-black leading-[1.1] tracking-tight text-slate-950 sm:text-5xl">
-              {dict.process.title}
+              {header.title}
               <span className="bg-gradient-to-r from-[#e6304c] via-rose-500 to-indigo-600 bg-clip-text text-transparent">.</span>
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">{dict.process.subtitle}</p>
+            <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">{header.subtitle}</p>
           </Reveal>
         </div>
 
@@ -563,7 +605,7 @@ export function ProcessSection({
               );
             })}
             <div className="relative">
-              <FinalCard dict={dict} />
+              <FinalCard copy={finalCopy} />
             </div>
           </div>
 
@@ -591,7 +633,7 @@ export function ProcessSection({
               </div>
             ))}
             <div className="w-[80vw] max-w-[320px] shrink-0 snap-center">
-              <FinalCard dict={dict} />
+              <FinalCard copy={finalCopy} />
             </div>
           </div>
           <div className="mt-4 flex justify-center gap-1.5">
