@@ -177,6 +177,70 @@ public static class ContentMapper
         Tags = card.Tags,
     };
 
+    /// <summary>Optional localized text: null when neither language is filled in.</summary>
+    private static LocalizedText? OptionalText(string? fa, string? en) =>
+        fa is null && en is null ? null : Text(fa, en);
+
+    public static AboutSectionDto ToDto(this AboutSection section) => new()
+    {
+        Key = section.Key,
+        Eyebrow = OptionalText(section.EyebrowFa, section.EyebrowEn),
+        Title = Text(section.TitleFa, section.TitleEn),
+        Subtitle = OptionalText(section.SubtitleFa, section.SubtitleEn),
+    };
+
+    public static CoreValueDto ToDto(this CoreValue value) => new()
+    {
+        Id = value.Id,
+        IconPath = value.IconPath,
+        Title = Text(value.TitleFa, value.TitleEn),
+        Desc = Text(value.DescriptionFa, value.DescriptionEn),
+    };
+
+    public static CertificationDto ToDto(this Certification certification) => new()
+    {
+        Id = certification.Id,
+        Icon = certification.Icon,
+        Title = Text(certification.TitleFa, certification.TitleEn),
+        Organization = Text(certification.OrganizationFa, certification.OrganizationEn),
+        ColorClass = certification.ColorClass,
+        BorderClass = certification.BorderClass,
+    };
+
+    public static LifecycleStepDto ToDto(this LifecycleStep step) => new()
+    {
+        Id = step.Id,
+        Number = step.NumberLabel,
+        Name = Text(step.NameFa, step.NameEn),
+        Desc = Text(step.DescriptionFa, step.DescriptionEn),
+    };
+
+    public static PhilosophyPrincipleDto ToDto(this PhilosophyPrinciple principle) => new()
+    {
+        Id = principle.Id,
+        Icon = principle.IconName,
+        Tag = Text(principle.TagFa, principle.TagEn),
+        Title = Text(principle.TitleFa, principle.TitleEn),
+        Desc = Text(principle.DescriptionFa, principle.DescriptionEn),
+        CodeSnippet = principle.CodeSnippet,
+    };
+
+    public static TechStackGroupDto ToDto(this TechStackGroup group) => new()
+    {
+        Id = group.Id,
+        Label = Text(group.LabelFa, group.LabelEn),
+        Items = group.Items,
+    };
+
+    public static AboutStatDto ToDto(this AboutStat stat) => new()
+    {
+        Id = stat.Id,
+        Value = stat.Value,
+        Suffix = stat.Suffix,
+        Label = Text(stat.LabelFa, stat.LabelEn),
+        Icon = stat.Icon,
+    };
+
     public static ProcessStepDto ToDto(this ProcessStep step) => new()
     {
         Id = step.Id,

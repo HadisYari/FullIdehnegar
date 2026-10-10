@@ -296,6 +296,30 @@ public sealed class SectionsApiController : PublicApiControllerBase
         return items.Select(card => card.ToDto()).ToList();
     }
 
+    /// <summary>Every block of the about page in one response (keeps the page to a single request).</summary>
+    [HttpGet("about-content")]
+    public async Task<ActionResult<AboutContentDto>> AboutContent(CancellationToken cancellationToken)
+    {
+        var sections = await Repo<AboutSection>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var values = await Repo<CoreValue>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var certifications = await Repo<Certification>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var lifecycle = await Repo<LifecycleStep>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var philosophy = await Repo<PhilosophyPrinciple>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var techStack = await Repo<TechStackGroup>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var stats = await Repo<AboutStat>().Query().Published().Ordered().ToListAsync(cancellationToken);
+
+        return new AboutContentDto
+        {
+            Sections = sections.Select(section => section.ToDto()).ToList(),
+            CoreValues = values.Select(value => value.ToDto()).ToList(),
+            Certifications = certifications.Select(item => item.ToDto()).ToList(),
+            LifecycleSteps = lifecycle.Select(step => step.ToDto()).ToList(),
+            PhilosophyPrinciples = philosophy.Select(item => item.ToDto()).ToList(),
+            TechStackGroups = techStack.Select(group => group.ToDto()).ToList(),
+            Stats = stats.Select(stat => stat.ToDto()).ToList(),
+        };
+    }
+
     [HttpGet("process-steps")]
     public async Task<ActionResult<IReadOnlyList<ProcessStepDto>>> ProcessSteps(CancellationToken cancellationToken)
     {

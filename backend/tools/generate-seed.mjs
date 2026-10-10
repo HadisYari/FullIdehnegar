@@ -295,7 +295,7 @@ const services = fa.services.items.map((item, index) => ({
 /* home services grid: the cards of components/sections/services-section.tsx (fa only in source) */
 const homeServiceCards = grab(
   read(fe, "components", "sections", "services-section.tsx"),
-  "const services = ",
+  "const fallbackCards = ",
 ).map((card, index) => ({
   code: card.code,
   iconName: card.icon ?? null,
@@ -518,6 +518,144 @@ const siteSettings = [
 
 /* ───────────────────────────────── write the file ────────────────────────────── */
 
+/* ─────────────────── about page blocks (components/sections/about) ─────────────────── */
+
+const aboutDir = path.join(fe, "components", "sections", "about");
+const aboutRead = (file) => read(aboutDir, file);
+
+// Core values: the icon is an inline <svg>, so only its path `d` is stored; the
+// first 6 `d=` attributes are the fa items, the next 6 the en items.
+const valuesText = literalAfter(aboutRead("core-values.tsx"), "const valuesData = ", { open: "{" });
+const valueIconPaths = [...valuesText.matchAll(/d="([^"]+)"/g)].map((m) => m[1]);
+if (valueIconPaths.length !== 12) throw new Error(`expected 12 value icon paths, found ${valueIconPaths.length}`);
+const valuesData = grab(aboutRead("core-values.tsx"), "const valuesData = ", { open: "{" });
+const coreValues = valuesData.fa.map((item, index) => ({
+  iconPath: valueIconPaths[index],
+  titleFa: item.title,
+  titleEn: valuesData.en[index].title,
+  descriptionFa: item.description,
+  descriptionEn: valuesData.en[index].description,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+const certsData = grab(aboutRead("certifications-showcase.tsx"), "const certsData = ", { open: "{" });
+const certifications = certsData.fa.items.map((item, index) => {
+  const en = certsData.en.items[index];
+  return {
+    icon: item.icon,
+    titleFa: item.title,
+    titleEn: en.title,
+    organizationFa: item.org,
+    organizationEn: en.org,
+    colorClass: item.color,
+    borderClass: item.borderColor,
+    sortOrder: index,
+    isPublished: true,
+  };
+});
+
+const lifecycleData = grab(aboutRead("development-lifecycle.tsx"), "const steps = ", { open: "{" });
+const lifecycleSteps = lifecycleData.fa.map((step, index) => ({
+  numberLabel: step.num,
+  nameFa: step.name,
+  nameEn: lifecycleData.en[index].name,
+  descriptionFa: step.desc,
+  descriptionEn: lifecycleData.en[index].desc,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+const philosophyData = grab(
+  aboutRead("engineering-philosophy.tsx"),
+  "Record<Locale, { title: string; subtitle: string; items: PhilosophyItem[] }> = ",
+  { open: "{" },
+);
+const philosophyPrinciples = philosophyData.fa.items.map((item, index) => {
+  const en = philosophyData.en.items[index];
+  return {
+    iconName: item.icon,
+    tagFa: item.tag,
+    tagEn: en.tag,
+    titleFa: item.title,
+    titleEn: en.title,
+    descriptionFa: item.desc,
+    descriptionEn: en.desc,
+    codeSnippet: item.codeSnippet ?? null,
+    sortOrder: index,
+    isPublished: true,
+  };
+});
+
+const statsData = grab(aboutRead("stats-counter.tsx"), "const statsData = ", { open: "{" });
+const aboutStats = statsData.fa.map((stat, index) => ({
+  value: stat.value,
+  suffix: stat.suffix || null,
+  labelFa: stat.label,
+  labelEn: statsData.en[index].label,
+  icon: stat.icon,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+const techData = grab(aboutRead("tech-stack.tsx"), "const categories = ", { open: "{" });
+const techStackGroups = techData.fa.groups.map((group, index) => ({
+  labelFa: group.label,
+  labelEn: techData.en.groups[index].label,
+  items: group.items,
+  sortOrder: index,
+  isPublished: true,
+}));
+
+// Section copy of each block. Lifted from the inline JSX of the components.
+const aboutSections = [
+  {
+    key: "values",
+    eyebrowFa: "ارزش‌های ما",
+    eyebrowEn: "Our Values",
+    titleFa: "اصولی که ما را متفاوت می‌کند",
+    titleEn: "Principles that set us apart",
+    subtitleFa: null,
+    subtitleEn: null,
+  },
+  {
+    key: "certifications",
+    eyebrowFa: certsData.fa.title,
+    eyebrowEn: certsData.en.title,
+    titleFa: certsData.fa.heading,
+    titleEn: certsData.en.heading,
+    subtitleFa: null,
+    subtitleEn: null,
+  },
+  {
+    key: "lifecycle",
+    eyebrowFa: "PIPELINE",
+    eyebrowEn: "PIPELINE",
+    titleFa: "فرایند توسعه و تحویل محصول",
+    titleEn: "How We Engineer & Deliver",
+    subtitleFa: null,
+    subtitleEn: null,
+  },
+  {
+    key: "philosophy",
+    eyebrowFa: null,
+    eyebrowEn: null,
+    titleFa: philosophyData.fa.title,
+    titleEn: philosophyData.en.title,
+    subtitleFa: philosophyData.fa.subtitle,
+    subtitleEn: philosophyData.en.subtitle,
+  },
+  {
+    key: "tech-stack",
+    eyebrowFa: techData.fa.title,
+    eyebrowEn: techData.en.title,
+    titleFa: techData.fa.heading,
+    titleEn: techData.en.heading,
+    subtitleFa: techData.fa.subtitle,
+    subtitleEn: techData.en.subtitle,
+  },
+].map((section, index) => ({ ...section, sortOrder: index, isPublished: true }));
+
 const dataset = {
   siteSettings,
   pageMetas,
@@ -525,6 +663,13 @@ const dataset = {
   portfolioProjects,
   services,
   homeServiceCards,
+  aboutSections,
+  coreValues,
+  certifications,
+  lifecycleSteps,
+  philosophyPrinciples,
+  techStackGroups,
+  aboutStats,
   processSteps,
   clients,
   testimonials,

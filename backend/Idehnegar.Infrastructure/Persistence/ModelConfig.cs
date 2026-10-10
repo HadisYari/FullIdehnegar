@@ -14,6 +14,7 @@ public static class ModelConfig
         ConfigureSite(modelBuilder);
         ConfigurePortfolio(modelBuilder);
         ConfigureHome(modelBuilder);
+        ConfigureAbout(modelBuilder);
         ConfigurePages(modelBuilder);
         ConfigureStore(modelBuilder);
         ConfigureInquiries(modelBuilder);
@@ -71,6 +72,90 @@ public static class ModelConfig
 
             // Category is kept as a soft reference (the slug string), exactly like
             // the front-end data model, so content can be imported without FK churn.
+        });
+    }
+
+    private static void ConfigureAbout(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AboutSection>(entity =>
+        {
+            entity.ToTable("AboutSections");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Key).HasMaxLength(40).IsRequired();
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.HasIndex(e => e.Key).IsUnique().HasDatabaseName("UX_AboutSections_Key");
+        });
+
+        modelBuilder.Entity<CoreValue>(entity =>
+        {
+            entity.ToTable("CoreValues");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.IconPath).HasMaxLength(1000);
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(1000).IsRequired();
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_CoreValues_Published_Sort");
+        });
+
+        modelBuilder.Entity<Certification>(entity =>
+        {
+            entity.ToTable("Certifications");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.OrganizationFa).HasMaxLength(400).IsRequired();
+            entity.Property(e => e.OrganizationEn).HasMaxLength(400).IsRequired();
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_Certifications_Published_Sort");
+        });
+
+        modelBuilder.Entity<LifecycleStep>(entity =>
+        {
+            entity.ToTable("LifecycleSteps");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.NumberLabel).HasMaxLength(10).IsRequired();
+            entity.Property(e => e.NameFa).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.NameEn).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(500).IsRequired();
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_LifecycleSteps_Published_Sort");
+        });
+
+        modelBuilder.Entity<PhilosophyPrinciple>(entity =>
+        {
+            entity.ToTable("PhilosophyPrinciples");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.IconName).HasMaxLength(40);
+            entity.Property(e => e.TagFa).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.TagEn).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.CodeSnippet).HasMaxLength(300);
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_PhilosophyPrinciples_Published_Sort");
+        });
+
+        modelBuilder.Entity<TechStackGroup>(entity =>
+        {
+            entity.ToTable("TechStackGroups");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.LabelFa).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.LabelEn).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.ItemsJson).HasColumnType("nvarchar(max)");
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_TechStackGroups_Published_Sort");
+        });
+
+        modelBuilder.Entity<AboutStat>(entity =>
+        {
+            entity.ToTable("AboutStats");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Suffix).HasMaxLength(10);
+            entity.Property(e => e.LabelFa).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.LabelEn).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.Icon).HasMaxLength(20);
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_AboutStats_Published_Sort");
         });
     }
 

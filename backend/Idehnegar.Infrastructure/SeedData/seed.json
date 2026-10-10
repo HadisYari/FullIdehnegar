@@ -1018,6 +1018,364 @@
       "isPublished": true
     }
   ],
+  "aboutSections": [
+    {
+      "key": "values",
+      "eyebrowFa": "ارزش‌های ما",
+      "eyebrowEn": "Our Values",
+      "titleFa": "اصولی که ما را متفاوت می‌کند",
+      "titleEn": "Principles that set us apart",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "key": "certifications",
+      "eyebrowFa": "تاییدیه‌ها و جوایز",
+      "eyebrowEn": "Certifications & Awards",
+      "titleFa": "اعتبار ما، حاصل کارنامه اجرایی ماست",
+      "titleEn": "Our credibility comes from our track record",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "key": "lifecycle",
+      "eyebrowFa": "PIPELINE",
+      "eyebrowEn": "PIPELINE",
+      "titleFa": "فرایند توسعه و تحویل محصول",
+      "titleEn": "How We Engineer & Deliver",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "key": "philosophy",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "فلسفه مهندسی ما",
+      "titleEn": "Our Engineering Culture",
+      "subtitleFa": "نرم‌افزار پایدار اتفاقی نیست؛ نتیجه پایبندی به اصول معماری، استاندارد کدنویسی و تست خودکار است.",
+      "subtitleEn": "Robust systems aren't accidental; they stem from architectural rigor, code standards, and automation.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "key": "tech-stack",
+      "eyebrowFa": "فناوری‌های ما",
+      "eyebrowEn": "Our Tech Stack",
+      "titleFa": "ابزارهایی که آینده را می‌سازند",
+      "titleEn": "Tools that build the future",
+      "subtitleFa": "ما از مدرن‌ترین و قابل‌اعتمادترین فناوری‌های روز دنیا استفاده می‌کنیم.",
+      "subtitleEn": "We use the most modern and reliable technologies available today.",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "coreValues": [
+    {
+      "iconPath": "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z",
+      "titleFa": "نوآوری مستمر",
+      "titleEn": "Continuous Innovation",
+      "descriptionFa": "همیشه از جدیدترین فناوری‌ها استفاده می‌کنیم و هیچ‌وقت به روش‌های قدیمی بسنده نمی‌کنیم.",
+      "descriptionEn": "We always use the latest technologies and never settle for outdated methods.",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z",
+      "titleFa": "کیفیت بی‌تنازل",
+      "titleEn": "Uncompromising Quality",
+      "descriptionFa": "هر خط کد با دقت نوشته می‌شود. ما کیفیت را فدای سرعت نمی‌کنیم.",
+      "descriptionEn": "Every line of code is written with precision. We never sacrifice quality for speed.",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z",
+      "titleFa": "تعهد به مشتری",
+      "titleEn": "Client Commitment",
+      "descriptionFa": "موفقیت مشتری، موفقیت ماست. در هر مرحله از پروژه در کنار شما هستیم.",
+      "descriptionEn": "Our client's success is our success. We stand by you at every project stage.",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418",
+      "titleFa": "دید بین‌المللی",
+      "titleEn": "Global Perspective",
+      "descriptionFa": "با تجربه پروژه‌های بین‌المللی، استانداردهای جهانی را در پروژه‌های داخلی هم رعایت می‌کنیم.",
+      "descriptionEn": "With international project experience, we apply world-class standards to every project.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z",
+      "titleFa": "عملکرد بالا",
+      "titleEn": "High Performance",
+      "descriptionFa": "سامانه‌هایی می‌سازیم که سریع، پایدار و آماده مقیاس‌پذیری هستند.",
+      "descriptionEn": "We build systems that are fast, stable, and ready to scale.",
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "iconPath": "M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z",
+      "titleFa": "امنیت اول",
+      "titleEn": "Security First",
+      "descriptionFa": "امنیت از روز اول در معماری سامانه‌ها تعبیه می‌شود، نه به عنوان یک افزونه.",
+      "descriptionEn": "Security is built into the architecture from day one — not bolted on later.",
+      "sortOrder": 5,
+      "isPublished": true
+    }
+  ],
+  "certifications": [
+    {
+      "icon": "🏛️",
+      "titleFa": "تاییدیه دانش‌بنیان",
+      "titleEn": "Knowledge-Based Certification",
+      "organizationFa": "معاونت علمی، فناوری و اقتصاد دانش‌بنیان ریاست‌جمهوری",
+      "organizationEn": "Iran's Vice Presidency for Science, Technology & Knowledge-Based Economy",
+      "colorClass": "from-blue-500/10 to-cyan-500/10",
+      "borderClass": "hover:border-blue-400",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "icon": "💻",
+      "titleFa": "صلاحیت مشاوره و آموزش",
+      "titleEn": "Consulting & Training Qualification",
+      "organizationFa": "نظام صنفی رایانه‌ای کشور",
+      "organizationEn": "National Computer Trade Union",
+      "colorClass": "from-purple-500/10 to-violet-500/10",
+      "borderClass": "hover:border-purple-400",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "icon": "🌐",
+      "titleFa": "صلاحیت نرم‌افزار و پرتال",
+      "titleEn": "Software & Portal Qualification",
+      "organizationFa": "شورای عالی انفورماتیک",
+      "organizationEn": "Supreme Council of Informatics",
+      "colorClass": "from-emerald-500/10 to-green-500/10",
+      "borderClass": "hover:border-emerald-400",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "icon": "🏆",
+      "titleFa": "تندیس کارآفرین برتر",
+      "titleEn": "Top Entrepreneur Award",
+      "organizationFa": "اداره کل تعاون، کار و رفاه اجتماعی (۱۳۹۴)",
+      "organizationEn": "Kermanshah's Cooperatives, Labor & Social Welfare (2015)",
+      "colorClass": "from-amber-500/10 to-orange-500/10",
+      "borderClass": "hover:border-amber-400",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "icon": "📜",
+      "titleFa": "لوح تقدیر همدلی و همیاری",
+      "titleEn": "Appreciation Plaque",
+      "organizationFa": "استانداری کرمانشاه",
+      "organizationEn": "Kermanshah Governorate",
+      "colorClass": "from-rose-500/10 to-pink-500/10",
+      "borderClass": "hover:border-rose-400",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "lifecycleSteps": [
+    {
+      "numberLabel": "01",
+      "nameFa": "کشف و تحلیل سیستم",
+      "nameEn": "System Discovery",
+      "descriptionFa": "استخراج Use Caseها، مدلسازی داده‌ها و انتخاب معماری پایدار متناسب با مقیاس.",
+      "descriptionEn": "Domain modeling, gathering core use-cases, and selecting targeted architecture.",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "02",
+      "nameFa": "طراحی تعاملی و UI/UX",
+      "nameEn": "UI/UX & Prototyping",
+      "descriptionFa": "طراحی Design System اختصاصی، پروتوتایپ تست‌پذیر و کاربرپژوهی دقیق.",
+      "descriptionEn": "Design system crafting, user research, and fully clickable wireframing.",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "03",
+      "nameFa": "پیاده‌سازی ماژولار",
+      "nameEn": "Modular Coding",
+      "descriptionFa": "کدنویسی تمیز با بازبینی دونفره (Peer Code Review) و پایبندی به اصول SOLID.",
+      "descriptionEn": "Clean development enforced by peer code reviews and strict SOLID practices.",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "04",
+      "nameFa": "تست جامع و بنچ‌مارک",
+      "nameEn": "Testing & Profiling",
+      "descriptionFa": "تست‌های لود (Load Testing)، اعتبارسنجی امنیتی و بررسی نرخ پاسخگویی سیستم.",
+      "descriptionEn": "Automated test suites, peak load evaluations, and security scans.",
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "numberLabel": "05",
+      "nameFa": "استقرار و مانیتورینگ",
+      "nameEn": "Deployment & APM",
+      "descriptionFa": "راه‌اندازی پایپ‌لاین CI/CD، لاگ‌گیری متمرکز و مانیتورینگ سلامت با APM.",
+      "descriptionEn": "Containerized deployment, centralized telemetry, and real-time health alerts.",
+      "sortOrder": 4,
+      "isPublished": true
+    }
+  ],
+  "philosophyPrinciples": [
+    {
+      "iconName": "Layers",
+      "tagFa": "معماری مقیاس‌پذیر",
+      "tagEn": "Scalable Architecture",
+      "titleFa": "Clean Architecture & DDD",
+      "titleEn": "Clean Architecture & DDD",
+      "descriptionFa": "توسعه مبتنی بر جداسازی لایه‌ها و دامنه‌محوری؛ سامانه‌ای که با رشد بیزینس دچار بدهی فنی (Technical Debt) نمی‌شود.",
+      "descriptionEn": "Layered separation and domain-centric design, ensuring the product scales without crippling technical debt.",
+      "codeSnippet": "UI -> Application -> Domain <- Infrastructure",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "iconName": "ShieldCheck",
+      "tagFa": "پایداری محصول",
+      "tagEn": "System Reliability",
+      "titleFa": "توسعه آزمون‌محور و امنیت ذاتی",
+      "titleEn": "Security-First & Automated Testing",
+      "descriptionFa": "تست‌های اتوماتیک Integration و Unit همراه با اسکن امنیتی خطوط کد قبل از استقرار در پروداکشن.",
+      "descriptionEn": "End-to-end integration test suites and static analysis scans executed prior to any production deployment.",
+      "codeSnippet": null,
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "iconName": "GitMerge",
+      "tagFa": "اتوماسیون DevOps",
+      "tagEn": "DevOps Automation",
+      "titleFa": "استقرار پیوسته بدون قطعی (Zero Downtime)",
+      "titleEn": "Zero-Downtime Deployment",
+      "descriptionFa": "پایپ‌لاین‌های CI/CD مدرن با رویکرد Infrastructure as Code جهت انتشار پایدار، سریع و بدون ریسک.",
+      "descriptionEn": "Battle-tested CI/CD pipelines with GitOps workflows for predictable, automated releases.",
+      "codeSnippet": null,
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "iconName": "Workflow",
+      "tagFa": "متدولوژی تحویل",
+      "tagEn": "Agile Delivery",
+      "titleFa": "توسعه چابک و تکرارشونده (Iterative)",
+      "titleEn": "Iterative Engineering Sprints",
+      "descriptionFa": "ارائه فیچرها در قالب اسپرینت‌های شفاف، فیدبک‌گیری پیوسته و تحویل مداوم ارزش به کاربر نهایی.",
+      "descriptionEn": "Transparent sprint cycles with continuous stakeholder feedback to maximize shipped value.",
+      "codeSnippet": null,
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "techStackGroups": [
+    {
+      "labelFa": "فرانت‌اند",
+      "labelEn": "Frontend",
+      "items": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion"
+      ],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "labelFa": "بک‌اند",
+      "labelEn": "Backend",
+      "items": [
+        ".NET / C#",
+        "Node.js",
+        "Python",
+        "REST API",
+        "GraphQL"
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "labelFa": "دیتابیس",
+      "labelEn": "Database",
+      "items": [
+        "PostgreSQL",
+        "SQL Server",
+        "MongoDB",
+        "Redis"
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "labelFa": "زیرساخت",
+      "labelEn": "Infrastructure",
+      "items": [
+        "AWS",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "CI/CD"
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
+  "aboutStats": [
+    {
+      "value": 15,
+      "suffix": "+",
+      "labelFa": "سال تجربه",
+      "labelEn": "Years Experience",
+      "icon": "📅",
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "value": 300,
+      "suffix": "+",
+      "labelFa": "پروژه موفق",
+      "labelEn": "Successful Projects",
+      "icon": "🚀",
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "value": 50,
+      "suffix": "+",
+      "labelFa": "مشتری فعال",
+      "labelEn": "Active Clients",
+      "icon": "🤝",
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "value": 4,
+      "suffix": null,
+      "labelFa": "کشور همکاری",
+      "labelEn": "Countries Served",
+      "icon": "🌍",
+      "sortOrder": 3,
+      "isPublished": true
+    }
+  ],
   "processSteps": [
     {
       "icon": "MessagesSquare",

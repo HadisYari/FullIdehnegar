@@ -178,6 +178,157 @@ public sealed class AdminRegistry
 
         new AdminEntityDefinition
         {
+            RouteName = "AboutSection",
+            TitleFa = "بخش‌های متنی صفحه درباره ما",
+            SingularFa = "بخش",
+            Icon = "ti ti-layout-navbar",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<AboutSection>(sp.GetRequiredService<IGenericRepository<AboutSection>>()),
+            Columns = Columns(
+                Column("Key", "کلید"),
+                Column("TitleFa", "عنوان"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("Key", "کلید بخش", required: true, maxLength: 40, help: "یکی از: values، certifications، lifecycle، philosophy، tech-stack"))
+                .AddPair("Eyebrow", "برچسب بالای عنوان (فارسی)", "Eyebrow (English)", maxLength: 200)
+                .AddPair("Title", "عنوان بخش (فارسی)", "Section title (English)", required: true, maxLength: 300)
+                .AddPair("Subtitle", "زیرعنوان (فارسی)", "Subtitle (English)", AdminFieldKind.Textarea, maxLength: 1000)
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "CoreValue",
+            TitleFa = "ارزش‌های ما",
+            SingularFa = "ارزش",
+            Icon = "ti ti-diamond",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<CoreValue>(sp.GetRequiredService<IGenericRepository<CoreValue>>()),
+            Columns = Columns(
+                Column("TitleFa", "عنوان"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("IconPath", "مسیر SVG آیکون (مقدار d)", maxLength: 1000, help: "فقط مقدار attribute d یک path با viewBox ۲۴×۲۴."))
+                .AddPair("Title", "عنوان (فارسی)", "Title (English)", required: true, maxLength: 300)
+                .AddPair("Description", "توضیح (فارسی)", "Description (English)", AdminFieldKind.Textarea, maxLength: 1000)
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "Certification",
+            TitleFa = "تاییدیه‌ها و جوایز",
+            SingularFa = "تاییدیه",
+            Icon = "ti ti-certificate",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<Certification>(sp.GetRequiredService<IGenericRepository<Certification>>()),
+            Columns = Columns(
+                Column("Icon", "آیکون", maxWidth: 80),
+                Column("TitleFa", "عنوان"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("Icon", "ایموجی آیکون", maxLength: 20))
+                .AddPair("Title", "عنوان (فارسی)", "Title (English)", required: true, maxLength: 300)
+                .AddPair("Organization", "صادرکننده (فارسی)", "Issuer (English)", required: true, maxLength: 400)
+                .AddField(AdminFieldExtensions.Text("ColorClass", "کلاس گرادیان (Tailwind)", maxLength: 200, help: "مثل from-blue-500/10 to-cyan-500/10"))
+                .AddField(AdminFieldExtensions.Text("BorderClass", "کلاس حاشیه هاور (Tailwind)", maxLength: 120, help: "مثل hover:border-blue-400"))
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "LifecycleStep",
+            TitleFa = "مراحل توسعه و تحویل",
+            SingularFa = "مرحله",
+            Icon = "ti ti-timeline",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<LifecycleStep>(sp.GetRequiredService<IGenericRepository<LifecycleStep>>()),
+            Columns = Columns(
+                Column("NumberLabel", "شماره", maxWidth: 80),
+                Column("NameFa", "عنوان"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("NumberLabel", "شماره مرحله", required: true, maxLength: 10, help: "مثل 01"))
+                .AddPair("Name", "نام مرحله (فارسی)", "Step name (English)", required: true, maxLength: 200)
+                .AddPair("Description", "توضیح (فارسی)", "Description (English)", AdminFieldKind.Textarea, required: true, maxLength: 500)
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "PhilosophyPrinciple",
+            TitleFa = "اصول مهندسی ما",
+            SingularFa = "اصل",
+            Icon = "ti ti-code",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<PhilosophyPrinciple>(sp.GetRequiredService<IGenericRepository<PhilosophyPrinciple>>()),
+            Columns = Columns(
+                Column("TitleFa", "عنوان"),
+                Column("IconName", "آیکون", maxWidth: 120),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("IconName", "نام آیکون", maxLength: 40, help: "مثل Layers، ShieldCheck، GitMerge یا Workflow."))
+                .AddPair("Tag", "برچسب (فارسی)", "Tag (English)", required: true, maxLength: 200)
+                .AddPair("Title", "عنوان (فارسی)", "Title (English)", required: true, maxLength: 300)
+                .AddPair("Description", "توضیح (فارسی)", "Description (English)", AdminFieldKind.Textarea, required: true, maxLength: 1000)
+                .AddField(AdminFieldExtensions.Text("CodeSnippet", "خط کد (اختیاری)", maxLength: 300))
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "TechStackGroup",
+            TitleFa = "گروه‌های فناوری",
+            SingularFa = "گروه",
+            Icon = "ti ti-stack-2",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<TechStackGroup>(sp.GetRequiredService<IGenericRepository<TechStackGroup>>()),
+            Columns = Columns(
+                Column("LabelFa", "گروه"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddPair("Label", "نام گروه (فارسی)", "Group name (English)", required: true, maxLength: 120)
+                .AddField(AdminFieldExtensions.Tags("ItemsJson", "فناوری‌های این گروه"))
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "AboutStat",
+            TitleFa = "آمار صفحه درباره ما",
+            SingularFa = "آمار",
+            Icon = "ti ti-chart-bar",
+            Group = "درباره ما",
+            RevalidateTags = new[] { "about" },
+            Gateway = sp => new EntityGateway<AboutStat>(sp.GetRequiredService<IGenericRepository<AboutStat>>()),
+            Columns = Columns(
+                Column("Icon", "آیکون", maxWidth: 80),
+                Column("LabelFa", "برچسب"),
+                Column("Value", "مقدار", maxWidth: 100),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Number("Value", "عدد", required: true))
+                .AddField(AdminFieldExtensions.Text("Suffix", "پسوند عدد", maxLength: 10, help: "مثل +"))
+                .AddPair("Label", "برچسب (فارسی)", "Label (English)", required: true, maxLength: 120)
+                .AddField(AdminFieldExtensions.Text("Icon", "ایموجی", maxLength: 20))
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
             RouteName = "ProcessStep",
             TitleFa = "مراحل اجرای پروژه",
             SingularFa = "مرحله",

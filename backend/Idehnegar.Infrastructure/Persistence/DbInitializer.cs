@@ -37,12 +37,14 @@ public static class DbInitializer
 
         // Tables added after the first release are seeded on their own (when empty),
         // so databases that already hold the rest of the content still receive them.
-        if (!await db.HomeServiceCards.AnyAsync(cancellationToken) && data.HomeServiceCards.Count > 0)
-        {
-            db.HomeServiceCards.AddRange(data.HomeServiceCards);
-            await db.SaveChangesAsync(cancellationToken);
-            logger.LogInformation("Seeded {Count} home service cards.", data.HomeServiceCards.Count);
-        }
+        await SeedTableIfEmptyAsync(db, db.HomeServiceCards, data.HomeServiceCards, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.AboutSections, data.AboutSections, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.CoreValues, data.CoreValues, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.Certifications, data.Certifications, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.LifecycleSteps, data.LifecycleSteps, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.PhilosophyPrinciples, data.PhilosophyPrinciples, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.TechStackGroups, data.TechStackGroups, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.AboutStats, data.AboutStats, cancellationToken);
 
         if (await db.SiteSettings.AnyAsync(cancellationToken))
         {
@@ -77,5 +79,21 @@ public static class DbInitializer
             data.PortfolioProjects.Count,
             data.PageMetas.Count,
             data.Services.Count);
+    }
+
+    private static async Task SeedTableIfEmptyAsync<TEntity>(
+        AppDbContext db,
+        DbSet<TEntity> table,
+        List<TEntity> rows,
+        CancellationToken cancellationToken)
+        where TEntity : class
+    {
+        if (rows.Count == 0 || await table.AnyAsync(cancellationToken))
+        {
+            return;
+        }
+
+        table.AddRange(rows);
+        await db.SaveChangesAsync(cancellationToken);
     }
 }

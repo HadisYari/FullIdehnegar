@@ -27,6 +27,14 @@ public class AppDbContext : DbContext
     public DbSet<Service> Services => Set<Service>();
     /// <summary>Cards of the home services grid (separate from the services page).</summary>
     public DbSet<HomeServiceCard> HomeServiceCards => Set<HomeServiceCard>();
+    /// <summary>About page: section copy and the item tables of its blocks.</summary>
+    public DbSet<AboutSection> AboutSections => Set<AboutSection>();
+    public DbSet<CoreValue> CoreValues => Set<CoreValue>();
+    public DbSet<Certification> Certifications => Set<Certification>();
+    public DbSet<LifecycleStep> LifecycleSteps => Set<LifecycleStep>();
+    public DbSet<PhilosophyPrinciple> PhilosophyPrinciples => Set<PhilosophyPrinciple>();
+    public DbSet<TechStackGroup> TechStackGroups => Set<TechStackGroup>();
+    public DbSet<AboutStat> AboutStats => Set<AboutStat>();
 
     public DbSet<ProcessStep> ProcessSteps => Set<ProcessStep>();
 

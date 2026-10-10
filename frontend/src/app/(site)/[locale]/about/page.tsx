@@ -1,6 +1,12 @@
 // app/[locale]/about/page.tsx
 import type { Metadata } from "next";
-import { loadMilestones, loadTeam, withPageMeta } from "@/lib/cms";
+import { aboutSection, loadAboutContent, loadMilestones, loadTeam, withPageMeta } from "@/lib/cms";
+import { CertificationsShowcase } from "@/components/sections/about/certifications-showcase";
+import { CoreValues } from "@/components/sections/about/core-values";
+import { DevelopmentLifecycle } from "@/components/sections/about/development-lifecycle";
+import { EngineeringPhilosophy } from "@/components/sections/about/engineering-philosophy";
+import { StatsCounter } from "@/components/sections/about/stats-counter";
+import { TechStack } from "@/components/sections/about/tech-stack";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
@@ -146,7 +152,11 @@ export default async function AboutPage({
   const isFa = locale === "fa";
 
   // داده‌های صفحه از بک‌اند (با کش ISR) — fallback: آرایه‌های همین فایل
-  const [remoteMilestones, remoteTeam] = await Promise.all([loadMilestones(), loadTeam()]);
+  const [remoteMilestones, remoteTeam, remoteAbout] = await Promise.all([
+    loadMilestones(),
+    loadTeam(),
+    loadAboutContent(),
+  ]);
 
   const milestones =
     remoteMilestones.length > 0
@@ -500,6 +510,36 @@ export default async function AboutPage({
 
       {/* ترنزیشن خروج از سرمه‌ای به بخش نهایی */}
       <OrganicWaveTransition flip />
+
+      {/* ══════════════════════════════════════════════════════════
+          ۵. بلوک‌های داده‌محور (از جداول درباره ما؛ در نبود API، متن محلی کامپوننت‌ها)
+         ══════════════════════════════════════════════════════════ */}
+      <CoreValues
+        locale={locale}
+        items={remoteAbout?.coreValues}
+        copy={aboutSection(remoteAbout, "values")}
+      />
+      <CertificationsShowcase
+        locale={locale}
+        items={remoteAbout?.certifications}
+        copy={aboutSection(remoteAbout, "certifications")}
+      />
+      <DevelopmentLifecycle
+        locale={locale}
+        items={remoteAbout?.lifecycleSteps}
+        copy={aboutSection(remoteAbout, "lifecycle")}
+      />
+      <EngineeringPhilosophy
+        locale={locale}
+        items={remoteAbout?.philosophyPrinciples}
+        copy={aboutSection(remoteAbout, "philosophy")}
+      />
+      <StatsCounter locale={locale} items={remoteAbout?.stats} />
+      <TechStack
+        locale={locale}
+        items={remoteAbout?.techStackGroups}
+        copy={aboutSection(remoteAbout, "tech-stack")}
+      />
 
       {/* ══════════════════════════════════════════════════════════
           ۵. کپسول‌های دسترسی سریع به خدمات و نمونه‌کارها

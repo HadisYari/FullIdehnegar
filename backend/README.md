@@ -11,7 +11,7 @@ backend/
 └─ tools/generate-seed.mjs    تولید seed.json از داده‌های frontend/src
 ```
 
-## ۱. مدل داده (۱۷ جدول، همگی در schema `dbo`)
+## ۱. مدل داده (۲۵ جدول، همگی در schema `dbo`)
 
 اصل طراحی: **جدول‌ها آینهٔ چیزی‌اند که فرانت‌اند واقعاً استفاده می‌کند** — بدون
 جدول اضافی؛ و برای روان‌بودن ورود داده، هر صفحهٔ سایت تا جای ممکن در **یک جدول**
@@ -26,6 +26,8 @@ backend/
 | `Services`, `ProcessSteps` | سکشن سرویس‌ها و فرآیند همکاری صفحهٔ اصلی |
 | `HomeServiceCards` | کارت‌های گرید «خدمات» صفحهٔ اصلی (جدا از شش خدمت صفحهٔ خدمات) |
 | `Clients`, `Testimonials`, `Milestones`, `TeamDisciplines` | لوگوی مشتریان، نظرات، تایم‌لاین درباره ما، تیم |
+| `AboutSections` | متن (eyebrow/عنوان/زیرعنوان) هر بلوک صفحهٔ درباره ما، با کلید `values`، `certifications`، `lifecycle`، `philosophy`، `tech-stack` |
+| `CoreValues`, `Certifications`, `LifecycleSteps`, `PhilosophyPrinciples`, `TechStackGroups`, `AboutStats` | آیتم‌های بلوک‌های درباره ما: ارزش‌ها (مسیر SVG آیکون)، تاییدیه‌ها، مراحل توسعه، اصول مهندسی، گروه‌های فناوری (`ItemsJson`)، آمار |
 | `FaqItems`, `InquiryTypes` | سوالات متداول و نوع درخواست‌های فرم تماس |
 | `StoreTemplates`, `StorePlan` | صفحهٔ فروشگاه‌ساز و پلن‌های پرداخت |
 | `AppDownloadLinks` | لینک‌های دانلود اپ طلا |
@@ -114,7 +116,7 @@ X-Robots-Tag: noindex, nofollow
 | `GET /api/public/portfolio?category=&featured=&take=` | لیست پروژه‌ها |
 | `GET /api/public/portfolio/{slug}` | جزئیات یک پروژه |
 | `GET /api/public/portfolio/{slug}/related?take=3` | پروژه‌های مرتبط |
-| `GET /api/public/services` `home-services` `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
+| `GET /api/public/services` `home-services` `about-content` (همهٔ بلوک‌های درباره ما در یک پاسخ) `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
 | `POST /api/public/contact` | ذخیرهٔ پیام + ایمیل (rate limited) |
 | `POST /api/public/store-orders` | ثبت سفارش فروشگاه‌ساز (rate limited) |
 | `GET /api/public/health` | سلامت + تعداد رکوردها (بدون کش) |
@@ -189,10 +191,12 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
 3. هیدر H1 صفحه‌های `services`, `portfolio`, `contact` هنوز متن JSX ثابت دارد،
    در حالی که `PageMetas` برایشان eyebrow/heading/subheading دارد. وصل‌کردن
    نیازمند تصمیم دربارهٔ متن نهایی است (تغییر متن قابل‌مشاهده).
-4. کامپوننت‌های `components/sections/about/*`، `project-*`، `page-hero.tsx`،
-   `contact-form.tsx` و `testimonials-section.tsx` در هیچ صفحه‌ای import نشده‌اند؛
-   صفحهٔ «درباره ما» محتوای خودش را inline دارد. داده‌های آن‌ها در بک‌اند
-   جدول ندارند.
+4. صفحهٔ «درباره ما»: شش بلوک `components/sections/about/*` (ارزش‌ها، تاییدیه‌ها،
+   فرایند توسعه، فلسفه مهندسی، آمار، فناوری‌ها) از `GET /api/public/about-content`
+   داده می‌گیرند و متن محلی‌شان فقط در نبود API استفاده می‌شود. هدر و مانیفست
+   صفحهٔ درباره ما هنوز inline است؛ `about-hero.tsx` هم در هیچ صفحه‌ای import
+   نشده است (طرح جایگزین). بقیهٔ کامپوننت‌های `project-*`، `page-hero.tsx`،
+   `contact-form.tsx` و `testimonials-section.tsx` import نشده‌اند.
 5. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
    `device-mockup.tsx`، `ProcessSection.tsx`، `payment/page.tsx` و یک کامنت JSX
    در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.
