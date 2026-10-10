@@ -1,10 +1,11 @@
 // app/[locale]/services/page.tsx
 import type { Metadata } from "next";
-import { loadPageSections, loadServices, withPageMeta, type ServiceDto } from "@/lib/cms";
+import { loadPageMeta, loadPageSections, loadServices, withPageMeta, type ServiceDto } from "@/lib/cms";
 import { resolveSection, type LocalSection } from "@/lib/page-sections";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
+import { SplitTitle } from "@/components/split-title";
   
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 
@@ -459,9 +460,10 @@ export default async function ServicesPage({
   const dict = getDictionary(locale);
   const isFa = locale === "fa";
 
-  const [remoteServices, remoteSections] = await Promise.all([
+  const [remoteServices, remoteSections, pageMeta] = await Promise.all([
     loadServices(),
     loadPageSections("services"),
+    loadPageMeta("services"),
   ]);
   const serviceItems = toViewItems(remoteServices, locale, dict);
   const quickAccess = resolveSection(
@@ -470,6 +472,24 @@ export default async function ServicesPage({
     locale,
     fallbackSections["quick-access"][locale],
   );
+
+  // متن هیرو از جدول PageMeta (پنل مدیریت) — fallback: متن‌های همین صفحه.
+  const heroEyebrow =
+    (pageMeta && (pageMeta.eyebrow[locale] || pageMeta.eyebrow.fa)) ||
+    (isFa ? "استودیو مهندسی نرم‌افزار و طراحی محصول" : "SOFTWARE ENGINEERING & PRODUCT STUDIO");
+  const heroHeading =
+    (pageMeta && (pageMeta.heading[locale] || pageMeta.heading.fa)) ||
+    (isFa
+      ? "همگرایی |هنر دیزاین|\n و نبوغ مهندسی نرم‌افزار"
+      : "Where |Refined Design|\n Meets High-Scale Engineering");
+  const heroSubheading =
+    (pageMeta && (pageMeta.subheading[locale] || pageMeta.subheading.fa)) ||
+    (isFa
+      ? "ما در ایده‌نگار فراتر از یک وب‌سایت معمولی عمل می‌کنیم؛ سیستم‌های تحت وب پایدار، پرتال‌های مقیاس‌پذیر و پلتفرم‌های دیجیتالی می‌سازیم که اعتبار و بازده تجاری شما را دگرگون می‌کنند."
+      : "We engineer resilient digital platforms, enterprise portals, and bespoke web solutions tailored for organizations that demand technical perfection.");
+  const heroCta =
+    (pageMeta && (pageMeta.ctaPrimary[locale] || pageMeta.ctaPrimary.fa)) ||
+    (isFa ? "شروع گفت‌وگوی فنی و استعلام" : "Start Technical Discovery");
 
   return (
     <div className="relative w-full overflow-hidden bg-white text-slate-900">
@@ -500,28 +520,19 @@ export default async function ServicesPage({
                 <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md">
                   <span className="h-2 w-2 rounded-full bg-[#e6304c] animate-ping" />
                   <span className="font-mono text-xs font-semibold tracking-wider text-white/90">
-                    {isFa ? "استودیو مهندسی نرم‌افزار و طراحی محصول" : "SOFTWARE ENGINEERING & PRODUCT STUDIO"}
+                    {heroEyebrow}
                   </span>
                 </div>
 
                 <h1 className="mt-6 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.3] sm:leading-[1.2]">
-                  {isFa ? (
-                    <>
-                      همگرایی <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] to-rose-400">هنر دیزاین</span>
-                      <br className="hidden sm:block" /> و نبوغ مهندسی نرم‌افزار
-                    </>
-                  ) : (
-                    <>
-                      Where <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] to-rose-400">Refined Design</span>
-                      <br /> Meets High-Scale Engineering
-                    </>
-                  )}
+                  <SplitTitle
+                    title={heroHeading}
+                    accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] to-rose-400"
+                  />
                 </h1>
 
                 <p className="mt-5 max-w-xl text-sm sm:text-base text-white/70 leading-relaxed mx-auto lg:mx-0">
-                  {isFa
-                    ? "ما در ایده‌نگار فراتر از یک وب‌سایت معمولی عمل می‌کنیم؛ سیستم‌های تحت وب پایدار، پرتال‌های مقیاس‌پذیر و پلتفرم‌های دیجیتالی می‌سازیم که اعتبار و بازده تجاری شما را دگرگون می‌کنند."
-                    : "We engineer resilient digital platforms, enterprise portals, and bespoke web solutions tailored for organizations that demand technical perfection."}
+                  {heroSubheading}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
@@ -529,7 +540,7 @@ export default async function ServicesPage({
                     href={isFa ? "/contact" : "/en/contact"}
                     className="inline-flex items-center gap-2 rounded-xl bg-[#e6304c] px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-xl shadow-[#e6304c]/30 transition-all duration-300 hover:scale-105 hover:bg-[#ff3b59]"
                   >
-                    <span>{isFa ? "شروع گفت‌وگوی فنی و استعلام" : "Start Technical Discovery"}</span>
+                    <span>{heroCta}</span>
                     <span className={`transform ${isFa ? "rotate-180" : ""}`}>→</span>
                   </Link>
 

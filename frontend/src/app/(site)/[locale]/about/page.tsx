@@ -1,7 +1,8 @@
 // app/[locale]/about/page.tsx
 import type { Metadata } from "next";
-import { aboutSection, loadAboutContent, loadMilestones, loadPageSections, loadTeam, withPageMeta } from "@/lib/cms";
+import { aboutSection, loadAboutContent, loadMilestones, loadPageMeta, loadPageSections, loadTeam, withPageMeta } from "@/lib/cms";
 import { resolveSection } from "@/lib/page-sections";
+import { SplitTitle } from "@/components/split-title";
 import { CertificationsShowcase } from "@/components/sections/about/certifications-showcase";
 import { CoreValues } from "@/components/sections/about/core-values";
 import { DevelopmentLifecycle } from "@/components/sections/about/development-lifecycle";
@@ -147,6 +148,34 @@ const teamConstellation = [
  * خوانده می‌شود و این مقادیر فقط پشتیبان‌اند. seed هم از همین‌جا ردیف‌ها را می‌سازد.
  */
 const fallbackPageSections = {
+  /* کپسول‌های آماری هیرو — مقدار (value) و برچسب (title) هر کپسول */
+  hero: {
+    fa: {
+      items: [
+        { value: "۵۰+", title: "پلتفرم سازمانی لایو" },
+        { value: "۱۰۰٪", title: "تایپ‌سیف و بدون باگ" },
+      ],
+    },
+    en: {
+      items: [
+        { value: "50+", title: "Live enterprise platforms" },
+        { value: "100%", title: "Type-safe & bug-free" },
+      ],
+    },
+  },
+  /* هدر سکشن تایم‌لاین «سفر ما در گذر زمان» */
+  timeline: {
+    fa: {
+      eyebrow: "CHRONOLOGY OF CRAFTSMANSHIP",
+      title: "سفر ما در گذر زمان",
+      subtitle: "با هم ساختیم، با هم پیش می‌رویم",
+    },
+    en: {
+      eyebrow: "CHRONOLOGY OF CRAFTSMANSHIP",
+      title: "Our Journey Through Time",
+      subtitle: "Built Together, Scaling Together",
+    },
+  },
   manifesto: {
     fa: {
       eyebrow: "عهد مهندسی ما",
@@ -210,17 +239,35 @@ export default async function AboutPage({
   const isFa = locale === "fa";
 
   // داده‌های صفحه از بک‌اند (با کش ISR) — fallback: آرایه‌های همین فایل
-  const [remoteMilestones, remoteTeam, remoteAbout, remoteSections] = await Promise.all([
+  const [remoteMilestones, remoteTeam, remoteAbout, remoteSections, pageMeta] = await Promise.all([
     loadMilestones(),
     loadTeam(),
     loadAboutContent(),
     loadPageSections("about"),
+    loadPageMeta("about"),
   ]);
 
   // متن بلوک‌های مانیفست، تیم و کپسول‌های دسترسی: از جدول PageSection، در نبود API متن محلی
   const manifesto = resolveSection(remoteSections, "manifesto", locale, fallbackPageSections.manifesto[locale]);
   const teamCopy = resolveSection(remoteSections, "team", locale, fallbackPageSections.team[locale]);
   const quickLinks = resolveSection(remoteSections, "quick-links", locale, fallbackPageSections["quick-links"][locale]);
+  const heroBadges = resolveSection(remoteSections, "hero", locale, fallbackPageSections.hero[locale]);
+  const timeline = resolveSection(remoteSections, "timeline", locale, fallbackPageSections.timeline[locale]);
+
+  // متن هیرو از جدول PageMeta (پنل مدیریت) — fallback: متن‌های همین صفحه.
+  const heroEyebrow =
+    (pageMeta && (pageMeta.eyebrow[locale] || pageMeta.eyebrow.fa)) ||
+    (isFa ? "شناسنامه و داستان ایده‌نگار" : "About Idehnegar");
+  const heroHeading =
+    (pageMeta && (pageMeta.heading[locale] || pageMeta.heading.fa)) ||
+    (isFa
+      ? "پیشگام در مهندسی وب و\n|تحول پایدار دیجیتال|"
+      : "Pioneering Scalable Web &\n|Digital Architecture|");
+  const heroSubheading =
+    (pageMeta && (pageMeta.subheading[locale] || pageMeta.subheading.fa)) ||
+    (isFa
+      ? "ما در پیشگامان ایده‌نگار معتقدیم نرم‌افزارهای موفق از کدهای اتفاقی ساخته نمی‌شوند؛ آن‌ها حاصل معماری هدفمند، احترام عمیق به تجربه کاربر و اشتیاق وسواس‌گونه برای تحویل محصولاتی هستند که با رشد کسب‌وکار شما هرگز فرسوده نمی‌شوند."
+      : "At Idehnegar, we engineer scalable digital platforms built for long-term endurance. A studio founded by software craftspeople dedicated to eliminating templates and building refined systems.");
   // مسیرهای داخلی در نسخه انگلیسی زیر /en قرار می‌گیرند
   const localeHref = (href: string) => (isFa || !href.startsWith("/") ? href : `/en${href}`);
 
@@ -325,43 +372,32 @@ export default async function AboutPage({
               <Reveal>
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/20 bg-[#e6304c]/10 px-3.5 py-1 text-xs font-bold text-[#e6304c]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#e6304c]" />
-                  {isFa ? "شناسنامه و داستان ایده‌نگار" : "About Idehnegar"}
+                  {heroEyebrow}
                 </div>
 
                 <h1 className="mt-4 text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-                  {isFa ? (
-                    <>
-                      پیشگام در مهندسی وب و <br />
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]">
-                        تحول پایدار دیجیتال
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      Pioneering Scalable Web &amp; <br />
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]">
-                        Digital Architecture
-                      </span>
-                    </>
-                  )}
+                  <SplitTitle
+                    title={heroHeading}
+                    accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]"
+                  />
                 </h1>
 
                 <p className="mt-5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  {isFa
-                    ? "ما در پیشگامان ایده‌نگار معتقدیم نرم‌افزارهای موفق از کدهای اتفاقی ساخته نمی‌شوند؛ آن‌ها حاصل معماری هدفمند، احترام عمیق به تجربه کاربر و اشتیاق وسواس‌گونه برای تحویل محصولاتی هستند که با رشد کسب‌وکار شما هرگز فرسوده نمی‌شوند."
-                    : "At Idehnegar, we engineer scalable digital platforms built for long-term endurance. A studio founded by software craftspeople dedicated to eliminating templates and building refined systems."}
+                  {heroSubheading}
                 </p>
 
-                {/* کپسول‌های شاخص آماری */}
+                {/* کپسول‌های شاخص آماری (آیتم‌های بلوک hero در جدول PageSection) */}
                 <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 shadow-xs">
-                    <span className="font-mono text-xl font-black text-[#0f0f52]">۵۰+</span>
-                    <span className="ms-2 text-xs font-semibold text-slate-700">پلتفرم سازمانی لایو</span>
-                  </div>
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 shadow-xs">
-                    <span className="font-mono text-xl font-black text-[#e6304c]">۱۰۰٪</span>
-                    <span className="ms-2 text-xs font-semibold text-slate-700">تایپ‌سیف و بدون باگ</span>
-                  </div>
+                  {heroBadges.items.map((badge, index) => (
+                    <div key={index} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 shadow-xs">
+                      <span
+                        className={`font-mono text-xl font-black ${index % 2 === 0 ? "text-[#0f0f52]" : "text-[#e6304c]"}`}
+                      >
+                        {badge.value}
+                      </span>
+                      <span className="ms-2 text-xs font-semibold text-slate-700">{badge.title}</span>
+                    </div>
+                  ))}
                 </div>
               </Reveal>
             </div>
@@ -380,13 +416,13 @@ export default async function AboutPage({
         <Container className="relative z-10">
           <Reveal className="text-center max-w-xl mx-auto mb-14">
             <span className="font-mono text-xs font-bold text-rose-300 uppercase tracking-widest">
-              CHRONOLOGY OF CRAFTSMANSHIP
+              {timeline.eyebrow}
             </span>
             <h2 className="mt-2 text-2xl sm:text-4xl font-black text-white">
-              {isFa ? "سفر ما در گذر زمان" : "Our Journey Through Time"}
+              {timeline.title}
             </h2>
             <p className="mt-2 text-sm text-slate-300">
-              {isFa ? "با هم ساختیم، با هم پیش می‌رویم" : "Built Together, Scaling Together"}
+              {timeline.subtitle}
             </p>
           </Reveal>
 

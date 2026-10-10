@@ -81,6 +81,8 @@ export default async function HomePage({
         eyebrow: pageMeta.eyebrow[locale] || pageMeta.eyebrow.fa || undefined,
         title: pageMeta.heading[locale] || pageMeta.heading.fa || undefined,
         subtitle: pageMeta.subheading[locale] || pageMeta.subheading.fa || undefined,
+        ctaPrimary: pageMeta.ctaPrimary?.[locale] || pageMeta.ctaPrimary?.fa || undefined,
+        ctaSecondary: pageMeta.ctaSecondary?.[locale] || pageMeta.ctaSecondary?.fa || undefined,
       }
     : undefined;
 
@@ -89,9 +91,9 @@ export default async function HomePage({
       <HeroSection locale={locale} dict={dict} meta={heroMeta} stats={config.stats} />
       <StatsSection locale={locale} dict={dict} stats={config.stats} />
       <ServicesSection locale={locale} dict={dict} cards={remoteServiceCards} />
-      <PortfolioPreviewSection items={featured} locale={locale} dict={dict} />
-      <ProcessSection dict={dict} steps={steps} />
-      <ClientsSection locale={locale} dict={dict} clients={clients} />
+      <PortfolioPreviewSection items={featured} locale={locale} dict={dict} sections={remoteSections} />
+      <ProcessSection locale={locale} dict={dict} steps={steps} sections={remoteSections} />
+      <ClientsSection locale={locale} clients={clients} sections={remoteSections} />
       <TestimonialsSection
         locale={locale}
         items={remoteTestimonials}

@@ -1,6 +1,6 @@
 // app/[locale]/contact/page.tsx
 import type { Metadata } from "next";
-import { loadFaqs, loadInquiryTypes, loadPageSections, loadSiteConfig, withPageMeta } from "@/lib/cms";
+import { loadFaqs, loadInquiryTypes, loadPageMeta, loadPageSections, loadSiteConfig, withPageMeta } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import ContactPageCanvas from "@/components/sections/contact-section";
  
@@ -35,12 +35,26 @@ export default async function ContactPage({
   const dict = getDictionary(locale);
 
   // تنظیمات تماس + حوزه‌های پروژه + FAQs — همگی از بک‌اند (fallback داخلی دارند).
-  const [config, remoteFaqs, remoteInquiryTypes, sections] = await Promise.all([
+  const [config, remoteFaqs, remoteInquiryTypes, sections, pageMeta] = await Promise.all([
     loadSiteConfig(),
     loadFaqs(),
     loadInquiryTypes(),
     loadPageSections("contact"),
+    loadPageMeta("contact"),
   ]);
+
+  // متن هیرو از جدول PageMeta (پنل مدیریت) — fallback: متن‌های همین صفحه.
+  const hero = {
+    eyebrow:
+      (pageMeta && (pageMeta.eyebrow[locale] || pageMeta.eyebrow.fa)) ||
+      (locale === "fa" ? "درگاه ارتباط مستقیم" : "DIRECT ENGAGEMENT DESK"),
+    heading:
+      (pageMeta && (pageMeta.heading[locale] || pageMeta.heading.fa)) ||
+      (locale === "fa" ? "|با ما در ارتباط باشید|" : "|Connect With Us|"),
+    subheading:
+      (pageMeta && (pageMeta.subheading[locale] || pageMeta.subheading.fa)) ||
+      (locale === "fa" ? "استودیو مهندسی نرم‌افزار پیشگامان ایده‌نگار" : "Idehnegar Software Engineering Studio"),
+  };
 
   const faqs =
     remoteFaqs.length > 0
@@ -67,6 +81,7 @@ export default async function ContactPage({
       faqs={faqs}
       inquiryTypes={inquiryTypes}
       sections={sections}
+      hero={hero}
     />
   );
 }
