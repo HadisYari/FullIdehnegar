@@ -1,6 +1,6 @@
 // app/[locale]/store-builder/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadPageSections, withPageMeta } from "@/lib/cms";
 import { getStoreTemplates } from "@/lib/store";
 import { locales } from "@/lib/i18n/dictionaries";
 import { StoreBuilderClient } from "@/components/store-builder/store-builder-client";
@@ -29,7 +29,10 @@ export async function generateMetadata({
 
 export default async function StoreBuilderPage() {
   // قالب‌ها از /api/public/store-templates — fallback: src/data/store-templates.json
-  const templates = await getStoreTemplates();
+  const [templates, sections] = await Promise.all([
+    getStoreTemplates(),
+    loadPageSections("store-builder"),
+  ]);
 
-  return <StoreBuilderClient templates={templates} />;
+  return <StoreBuilderClient templates={templates} sections={sections} />;
 }

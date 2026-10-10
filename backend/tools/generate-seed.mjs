@@ -665,6 +665,11 @@ const pageSectionSources = [
   { pageKey: "gold-app", file: ["components", "gold-app", "gold-app-client.tsx"], marker: "const fallbackSections = " },
   { pageKey: "about", file: ["app", "(site)", "[locale]", "about", "page.tsx"], marker: "const fallbackPageSections = " },
   { pageKey: "home", file: ["components", "sections", "home-cta-section.tsx"], marker: "const fallbackSections = " },
+  { pageKey: "home", file: ["components", "sections", "testimonials-section.tsx"], marker: "const fallbackSections" },
+  { pageKey: "services", file: ["app", "(site)", "[locale]", "services", "page.tsx"], marker: "const fallbackSections" },
+  { pageKey: "contact", file: ["components", "sections", "contact-section.tsx"], marker: "const fallbackSections" },
+  { pageKey: "store-builder", file: ["components", "store-builder", "store-builder-client.tsx"], marker: "const fallbackSections" },
+  { pageKey: "payment", file: ["components", "payment", "payment-client.tsx"], marker: "const fallbackSections" },
 ];
 
 const pageSections = pageSectionSources.flatMap(({ pageKey, file, marker }) => {
@@ -684,6 +689,8 @@ const pageSections = pageSectionSources.flatMap(({ pageKey, file, marker }) => {
         descriptionFa: base.description ?? "",
         descriptionEn: otherItem.description ?? "",
         href: base.href ?? otherItem.href ?? null,
+        valueFa: base.value ?? "",
+        valueEn: otherItem.value ?? "",
       };
     });
     return {

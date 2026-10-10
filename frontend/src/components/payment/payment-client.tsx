@@ -5,13 +5,32 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
-import type { StorePlanDto } from "@/lib/cms";
+import type { PageSectionDto, StorePlanDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
+
+/* کپی ثابت متن‌های بخش‌های این صفحه (فارسی). {count} = تعداد نسخه‌ها. */
+const fallbackSections: Record<string, LocalSection> = {
+  intro: {
+    body: "یکی از {count} نسخه زیر را بر اساس ساختار کسب‌وکار و نوع انبارداری خود انتخاب کنید تا فاکتور رسمی و لینک پرداخت صادر شود.",
+  },
+  trust: {
+    items: [
+      { icon: "🔒", title: "رمزنگاری ۲۵۶ بیتی SSL و اتصال به سوئیچ رسمی بانک مرکزی" },
+      { title: "ضمانت بازگشت وجه تا ۷ روز در صورت عدم تأیید زیرساخت فنی" },
+    ],
+  },
+};
 
 /* ──────────────────────────────────────────────────────────
    کامپوننت محتوای پرداخت (داخل Suspense برای خواندن searchParams)
    ────────────────────────────────────────────────────────── */
-function PaymentContent({ plans }: { plans: StorePlanDto[] }) {
+function PaymentContent({ plans, sections }: { plans: StorePlanDto[]; sections?: PageSectionDto[] }) {
   const searchParams = useSearchParams();
+
+  // متن بخش‌ها: CMS اولویت دارد، در نبودش fallbackSections
+  const intro = resolveSection(sections, "intro", "fa", fallbackSections.intro);
+  const trust = resolveSection(sections, "trust", "fa", fallbackSections.trust);
+  const introBody = intro.body.replace("{count}", String(plans.length));
 
   // گرفتن ورودی‌های صفحه قبل (در صورت وجود)
   const initialTemplate = searchParams.get("templateId");
@@ -127,7 +146,7 @@ function PaymentContent({ plans }: { plans: StorePlanDto[] }) {
             </h1>
 
             <p className="mt-2 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto">
-              یکی از {plans.length} نسخه زیر را بر اساس ساختار کسب‌وکار و نوع انبارداری خود انتخاب کنید تا فاکتور رسمی و لینک پرداخت صادر شود.
+              {introBody}
             </p>
 
             {/* سوییچر دوره پرداخت ماهانه / سالانه */}
@@ -525,8 +544,12 @@ function PaymentContent({ plans }: { plans: StorePlanDto[] }) {
 
               {/* نمادهای اطمینان */}
               <div className="pt-2 text-center text-[10px] text-slate-400 space-y-1">
-                <p>🔒 رمزنگاری ۲۵۶ بیتی SSL و اتصال به سوئیچ رسمی بانک مرکزی</p>
-                <p>ضمانت بازگشت وجه تا ۷ روز در صورت عدم تأیید زیرساخت فنی</p>
+                {trust.items.map((item) => (
+                  <p key={item.title}>
+                    {item.icon ? `${item.icon} ` : ""}
+                    {item.title}
+                  </p>
+                ))}
               </div>
             </form>
 
@@ -547,7 +570,7 @@ function PaymentContent({ plans }: { plans: StorePlanDto[] }) {
   );
 }
 
-export function PaymentClient({ plans }: { plans: StorePlanDto[] }) {
+export function PaymentClient({ plans, sections }: { plans: StorePlanDto[]; sections?: PageSectionDto[] }) {
   return (
     <Suspense
       fallback={
@@ -556,7 +579,7 @@ export function PaymentClient({ plans }: { plans: StorePlanDto[] }) {
         </div>
       }
     >
-      <PaymentContent plans={plans} />
+      <PaymentContent plans={plans} sections={sections} />
     </Suspense>
   );
 }

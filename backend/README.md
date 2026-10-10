@@ -28,7 +28,7 @@ backend/
 | `Clients`, `Testimonials`, `Milestones`, `TeamDisciplines` | لوگوی مشتریان، نظرات، تایم‌لاین درباره ما، تیم |
 | `AboutSections` | متن (eyebrow/عنوان/زیرعنوان) هر بلوک صفحهٔ درباره ما، با کلید `values`، `certifications`، `lifecycle`، `philosophy`، `tech-stack` |
 | `CoreValues`, `Certifications`, `LifecycleSteps`, `PhilosophyPrinciples`, `TechStackGroups`, `AboutStats` | آیتم‌های بلوک‌های درباره ما: ارزش‌ها (مسیر SVG آیکون)، تاییدیه‌ها، مراحل توسعه، اصول مهندسی، گروه‌های فناوری (`ItemsJson`)، آمار |
-| `PageSections` | متن و آیتم‌های بلوک‌های صفحه‌های دیگر، با کلید (`PageKey`, `SectionKey`) یکتا: `gold-app` (`hero`, `hero-badge`, `platform`, `desktop`, `mobile`, `value`, `cta`)، `about` (`manifesto`, `team`, `quick-links`)، `home` (`cta`, `cta-sla`). عنوان/زیرعنوان/متن دوزبانه و `ItemsJson` (بولت، کارت یا لینک، با آیکون و `Href` اختیاری) |
+| `PageSections` | متن و آیتم‌های بلوک‌های صفحه‌های دیگر، با کلید (`PageKey`, `SectionKey`) یکتا: `gold-app` (`hero`, `hero-badge`, `platform`, `desktop`, `mobile`, `value`, `cta`)، `about` (`manifesto`, `team`, `quick-links`)، `home` (`cta`, `cta-sla`, `testimonials`)، `services` (`quick-access`)، `contact` (`intro`, `hubs`, `hubs-hours`, `hubs-amenities`, `discovery`, `faq`)، `store-builder` (`intro`, `final-cta`) و `payment` (`intro`, `trust`). عنوان/زیرعنوان/متن دوزبانه و `ItemsJson` (بولت، کارت یا لینک، با آیکون، `Href` و `Value` اختیاری مثل ساعت یا عدد) |
 | `FaqItems`, `InquiryTypes` | سوالات متداول و نوع درخواست‌های فرم تماس |
 | `StoreTemplates`, `StorePlan` | صفحهٔ فروشگاه‌ساز و پلن‌های پرداخت |
 | `AppDownloadLinks` | لینک‌های دانلود اپ طلا |
@@ -189,19 +189,21 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
 2. صفحه‌های `store-builder`, `gold-app` و `payment` `withPageMeta` دارند.
    `payment/page.tsx` پلن‌ها را از `getStorePlans()` (بک‌اند، با fallback به
    `src/data/store-plans.json`) می‌گیرد.
-3. هیدر H1 صفحه‌های `services`, `portfolio`, `contact` عمداً متن JSX ثابت است
-   (برای سئو). eyebrow/heading/subheading این صفحه‌ها از پنل `PageMetas` حذف
-   شده‌اند (`ShowsHeroCopy`). بلوک‌های بدنهٔ `services` (عنوان «خدمت مهندسی»،
-   کپسول‌های دسترسی سریع)، `contact` (سه `<h3>`: «میزبان جلسات…»، «درگاه‌های
-   تعاملی…»، و بلوک‌های HQ) و `store-builder`/`payment` هنوز متن ثابت دارند.
-   همان مکانیزم `PageSections` برای آن‌ها قابل استفاده است.
+3. هیدر H1 صفحه‌های `services`, `portfolio`, `contact`, `store-builder`, `payment`
+   عمداً متن JSX ثابت است (برای سئو) و eyebrow/heading/subheading این صفحه‌ها از
+   پنل `PageMetas` حذف شده‌اند (`ShowsHeroCopy`). متن بلوک‌های بدنه (کپسول‌های
+   دسترسی سریع `services`، سه کارت `contact` شامل ساعت کاری، امکانات، HQ و FAQ،
+   متن `store-builder`/`payment`) از `PageSections` خوانده می‌شود. برچسب‌های
+   کوتاه UI (دکمه‌ها، تب‌ها، فیلدهای فرم) و کانال‌های تماس با لینک‌های `SiteSetting`
+   ثابت‌اند. `bootstrap` هم هنوز فراخوانی نمی‌شود و کنار اندپوینت‌های تکی است.
 4. صفحهٔ «درباره ما»: شش بلوک `components/sections/about/*` (ارزش‌ها، تاییدیه‌ها،
    فرایند توسعه، فلسفه مهندسی، آمار، فناوری‌ها) از `GET /api/public/about-content`
    داده می‌گیرند و متن محلی‌شان فقط در نبود API استفاده می‌شود. هدر و مانیفست
    صفحهٔ درباره ما (مانیفست، بلوک تیم و کپسول‌های دسترسی) از `PageSections`
    خوانده می‌شود. هدر H1 و دکمه‌های کوتاه ثابت‌اند. `about-hero.tsx` هم در هیچ صفحه‌ای import
    نشده است (طرح جایگزین). بقیهٔ کامپوننت‌های `project-*`، `page-hero.tsx`،
-   `contact-form.tsx` و `testimonials-section.tsx` import نشده‌اند.
+   `contact-form.tsx` import نشده‌اند. `testimonials-section.tsx` روی صفحهٔ اصلی
+   mount شده و نظرات را از `GET /api/public/testimonials` می‌گیرد.
 5. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
    `device-mockup.tsx`، `ProcessSection.tsx`، `payment/page.tsx` و یک کامنت JSX
    در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.

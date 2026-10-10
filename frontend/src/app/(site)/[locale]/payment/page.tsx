@@ -1,6 +1,6 @@
 // app/[locale]/payment/page.tsx
 import type { Metadata } from "next";
-import { withPageMeta } from "@/lib/cms";
+import { loadPageSections, withPageMeta } from "@/lib/cms";
 import { getStorePlans } from "@/lib/store";
 import { locales } from "@/lib/i18n/dictionaries";
 import { PaymentClient } from "@/components/payment/payment-client";
@@ -28,6 +28,6 @@ export async function generateMetadata({
 
 export default async function PaymentPage() {
   // پلن‌ها از بک‌اند (CMS) خوانده می‌شوند؛ در نبود API از src/data/store-plans.json.
-  const plans = await getStorePlans();
-  return <PaymentClient plans={plans} />;
+  const [plans, sections] = await Promise.all([getStorePlans(), loadPageSections("payment")]);
+  return <PaymentClient plans={plans} sections={sections} />;
 }

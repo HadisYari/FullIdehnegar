@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
-import type { StoreTemplateDto } from "@/lib/cms";
+import type { PageSectionDto, StoreTemplateDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
 
 /* ──────────────────────────────────────────────────────────
    موج متحرک بالای سکشن سرمه‌ای
@@ -65,7 +66,28 @@ function LiquidWaveBottom() {
   );
 }
 
-export function StoreBuilderClient({ templates }: { templates: StoreTemplateDto[] }) {
+/* کپی ثابت متن‌های بخش‌های این صفحه (فارسی). سید داده بک‌اند از همین literal ساخته می‌شود. */
+const fallbackSections: Record<string, LocalSection> = {
+  intro: {
+    body: "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.",
+  },
+  "final-cta": {
+    title: "آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟",
+    body: "با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.",
+  },
+};
+
+export function StoreBuilderClient({
+  templates,
+  sections,
+}: {
+  templates: StoreTemplateDto[];
+  /** بلوک‌های متنی از /api/public/page-sections/store-builder — fallback: fallbackSections */
+  sections?: PageSectionDto[];
+}) {
+  const intro = resolveSection(sections, "intro", "fa", fallbackSections.intro);
+  const finalCta = resolveSection(sections, "final-cta", "fa", fallbackSections["final-cta"]);
+
   const [activeCategory, setActiveCategory] = useState<"warehouse" | "light">("warehouse");
   const [activeTemplateId, setActiveTemplateId] = useState<string>(templates[0]?.id ?? "wh-1");
   const [deviceMode, setDeviceMode] = useState<"desktop" | "mobile">("desktop");
@@ -115,7 +137,7 @@ export function StoreBuilderClient({ templates }: { templates: StoreTemplateDto[
             </h1>
 
             <p className="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mx-auto">
-              قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.
+              {intro.body}
             </p>
 
             {/* سوییچر دوره پرداخت ماهانه / سالانه */}
@@ -484,10 +506,10 @@ export function StoreBuilderClient({ templates }: { templates: StoreTemplateDto[
               💳
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-              آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟
+              {finalCta.title}
             </h2>
             <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.
+              {finalCta.body}
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">

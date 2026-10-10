@@ -26,4 +26,7 @@ public sealed class PageSectionItemDto
     public LocalizedText? Description { get; set; }
 
     public string? Href { get; set; }
+
+    /// <summary>Optional short badge/value shown next to the item (time, figure, status).</summary>
+    public LocalizedText? Value { get; set; }
 }

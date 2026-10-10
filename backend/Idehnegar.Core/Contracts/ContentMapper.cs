@@ -32,6 +32,7 @@ public static class ContentMapper
         Title = Text(item.TitleFa, item.TitleEn),
         Description = OptionalText(item.DescriptionFa, item.DescriptionEn),
         Href = item.Href,
+        Value = OptionalText(item.ValueFa, item.ValueEn),
     };
 
     private static string? FirstNonEmpty(string? first, string? second) =>
@@ -198,10 +199,6 @@ public static class ContentMapper
         Progress = card.Progress,
         Tags = card.Tags,
     };
-
-    /// <summary>Optional localized text: null when neither language is filled in.</summary>
-    private static LocalizedText? OptionalText(string? fa, string? en) =>
-        fa is null && en is null ? null : Text(fa, en);
 
     public static AboutSectionDto ToDto(this AboutSection section) => new()
     {

@@ -1139,7 +1139,9 @@
           "titleEn": "",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": null,
@@ -1147,7 +1149,9 @@
           "titleEn": "",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": null,
@@ -1155,7 +1159,9 @@
           "titleEn": "",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         }
       ],
       "sortOrder": 3,
@@ -1179,7 +1185,9 @@
           "titleEn": "",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": null,
@@ -1187,7 +1195,9 @@
           "titleEn": "",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": null,
@@ -1195,7 +1205,9 @@
           "titleEn": "",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         }
       ],
       "sortOrder": 4,
@@ -1219,7 +1231,9 @@
           "titleEn": "",
           "descriptionFa": "متصل به وب‌سرویس مستقیم و پایدار بدون تاخیر و بدون نیاز به فیلترشکن برای تمام استان‌ها و شهرها.",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": "📺",
@@ -1227,7 +1241,9 @@
           "titleEn": "",
           "descriptionFa": "با تهیه یک لایسنس، هم روی گوشی شخصی و هم روی تلویزیون یا تابلوی مغازه دسترسی همزمان خواهید داشت.",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": "🛡️",
@@ -1235,7 +1251,9 @@
           "titleEn": "",
           "descriptionFa": "تضمین پایداری سرور و ارتقای مداوم برنامه توسط تیم مهندسی نرم‌افزار ایده‌نگار.",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         }
       ],
       "sortOrder": 5,
@@ -1274,7 +1292,9 @@
           "titleEn": "100% custom development with no heavy commercial templates",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": null,
@@ -1282,7 +1302,9 @@
           "titleEn": "End-to-end type safety with TypeScript and automated test pipelines",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": null,
@@ -1290,7 +1312,9 @@
           "titleEn": "Radical transparency: real-time client access to logs and sprint progress",
           "descriptionFa": "",
           "descriptionEn": "",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         }
       ],
       "sortOrder": 0,
@@ -1329,7 +1353,9 @@
           "titleEn": "Explore Solutions",
           "descriptionFa": "Bespoke Web • Cloud • Portals",
           "descriptionEn": "Bespoke Web • Cloud • Portals",
-          "href": "/services"
+          "href": "/services",
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": "★",
@@ -1337,7 +1363,9 @@
           "titleEn": "View Portfolio",
           "descriptionFa": "Enterprise Case Studies",
           "descriptionEn": "Enterprise Case Studies",
-          "href": "/portfolio"
+          "href": "/portfolio",
+          "valueFa": "",
+          "valueEn": ""
         }
       ],
       "sortOrder": 2,
@@ -1376,7 +1404,9 @@
           "titleEn": "Sub-second TTFB",
           "descriptionFa": "< 50ms",
           "descriptionEn": "< 50ms",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": "shield",
@@ -1384,7 +1414,9 @@
           "titleEn": "High Availability Uptime",
           "descriptionFa": "99.98%",
           "descriptionEn": "99.98%",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         },
         {
           "icon": "cpu",
@@ -1392,7 +1424,272 @@
           "titleEn": "Strict Type-Safety Coverage",
           "descriptionFa": "100% TS",
           "descriptionEn": "100% TS",
-          "href": null
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "home",
+      "sectionKey": "testimonials",
+      "eyebrowFa": "مشتریان می‌گویند",
+      "eyebrowEn": "Testimonials",
+      "titleFa": "چند نمونه از رضایت کارفرمایان",
+      "titleEn": "What our clients say",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "services",
+      "sectionKey": "quick-access",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "دسترسی سریع به تمام راهکارها",
+      "titleEn": "Quick Access to Solutions",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "برای دریافت نقشه راه فنی و برآورد زمان‌بندی پروژه، با تیم ما در تماس باشید.",
+      "bodyEn": "Select any service to review technical deliverables and timelines.",
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "intro",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "ما همیشه مشتاق گفتگو پیرامون معماری‌های نوین، توسعه پلتفرم‌های پرسرعت و ارتقای محصولات دیجیتال شما هستیم. برای هماهنگی جلسات مشاوره یا بررسی پروپوزال، مستقیماً با تیم ما در ارتباط باشید.",
+      "bodyEn": "We are eager to explore scalable architectures, high-throughput web systems, and your next software milestones. Connect directly with our team.",
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "hubs",
+      "eyebrowFa": "STUDIO INTERACTIVE HUBS",
+      "eyebrowEn": "STUDIO INTERACTIVE HUBS",
+      "titleFa": "درگاه‌های تعاملی و دسترسی پردیس ایده‌نگار",
+      "titleEn": "Interactive Studio Access Portals",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "hubs-hours",
+      "eyebrowFa": "Operations Desk",
+      "eyebrowEn": "Operations Desk",
+      "titleFa": "ساعت کاری و پذیرش",
+      "titleEn": "Working Hours",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": null,
+          "titleFa": "شنبه تا چهارشنبه",
+          "titleEn": "Sat - Wed",
+          "descriptionFa": "جلسات و مشاوره حضوری",
+          "descriptionEn": "On-site Discovery",
+          "href": null,
+          "valueFa": "۰۹:۰۰ — ۱۸:۰۰",
+          "valueEn": "09:00 — 18:00"
+        },
+        {
+          "icon": null,
+          "titleFa": "پنج‌شنبه‌ها",
+          "titleEn": "Thursdays",
+          "descriptionFa": "اسپرینت‌های فشرده",
+          "descriptionEn": "Sprint Reviews",
+          "href": null,
+          "valueFa": "۰۹:۰۰ — ۱۳:۰۰",
+          "valueEn": "09:00 — 13:00"
+        },
+        {
+          "icon": null,
+          "titleFa": "پایش اضطراری زیرساخت",
+          "titleEn": "Emergency Cloud SLA",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "۲۴/۷ فعال",
+          "valueEn": "24/7 Active"
+        }
+      ],
+      "sortOrder": 2,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "hubs-amenities",
+      "eyebrowFa": "Executive Space",
+      "eyebrowEn": "Executive Space",
+      "titleFa": "امکانات پردیس ایده‌نگار",
+      "titleEn": "HQ Amenities",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": "car",
+          "titleFa": "پارکینگ اختصاصی هوشمند",
+          "titleEn": "Reserved Client Parking",
+          "descriptionFa": "رزرو آنی در روز جلسه حضوری",
+          "descriptionEn": "Guaranteed spot during workshop",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "shield-check",
+          "titleFa": "اتاق جلسات مجهز به ارائه ۴K",
+          "titleEn": "Conference Room & Tech Hub",
+          "descriptionFa": "بررسی زنده و آکوستیک کدها",
+          "descriptionEn": "Live code review & projection",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": "lock",
+          "titleFa": "تعهد محرمانگی ایده (NDA)",
+          "titleEn": "Strict NDA Protection",
+          "descriptionFa": "امضای رسمی پیش از شروع جلسه",
+          "descriptionEn": "Full IP & confidentiality pact",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        }
+      ],
+      "sortOrder": 3,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "discovery",
+      "eyebrowFa": "HQ GEOSPATIAL RADAR",
+      "eyebrowEn": "HQ GEOSPATIAL RADAR",
+      "titleFa": "میزبان جلسات فنی و استراتژیک شما هستیم",
+      "titleEn": "Hosting Your Technical Discovery Sessions",
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "برای جلسات امکان‌سنجی نرم‌افزار، مشاوره حضوری در حوزه معماری پلتفرم‌ها و شناخت فرآیند توسعه، با هماهنگی قبلی پذیرای شما در دفتر مرکزی ایده‌نگار هستیم.",
+      "bodyEn": "Schedule an on-site architecture workshop with our engineering leads to review your technical roadmap and project milestones.",
+      "items": [],
+      "sortOrder": 4,
+      "isPublished": true
+    },
+    {
+      "pageKey": "contact",
+      "sectionKey": "faq",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "مشتاق شنیدن صدای شما هستیم",
+      "titleEn": "We Are Eager to Hear From You",
+      "subtitleFa": "پرسش‌های پرتکرار در آغاز همکاری",
+      "subtitleEn": "Frequently Asked Questions",
+      "bodyFa": "در این بخش به سوالات متداول مدیران و کارفرمایان درباره فرآیند برآورد و استانداردهای مهندسی پاسخ داده‌ایم.",
+      "bodyEn": "Transparent answers regarding our engineering standards, scoping process, and delivery pipelines.",
+      "items": [],
+      "sortOrder": 5,
+      "isPublished": true
+    },
+    {
+      "pageKey": "store-builder",
+      "sectionKey": "intro",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "store-builder",
+      "sectionKey": "final-cta",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": "آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟",
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 1,
+      "isPublished": true
+    },
+    {
+      "pageKey": "payment",
+      "sectionKey": "intro",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": "یکی از {count} نسخه زیر را بر اساس ساختار کسب‌وکار و نوع انبارداری خود انتخاب کنید تا فاکتور رسمی و لینک پرداخت صادر شود.",
+      "bodyEn": null,
+      "items": [],
+      "sortOrder": 0,
+      "isPublished": true
+    },
+    {
+      "pageKey": "payment",
+      "sectionKey": "trust",
+      "eyebrowFa": null,
+      "eyebrowEn": null,
+      "titleFa": null,
+      "titleEn": null,
+      "subtitleFa": null,
+      "subtitleEn": null,
+      "bodyFa": null,
+      "bodyEn": null,
+      "items": [
+        {
+          "icon": "🔒",
+          "titleFa": "رمزنگاری ۲۵۶ بیتی SSL و اتصال به سوئیچ رسمی بانک مرکزی",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
+        },
+        {
+          "icon": null,
+          "titleFa": "ضمانت بازگشت وجه تا ۷ روز در صورت عدم تأیید زیرساخت فنی",
+          "titleEn": "",
+          "descriptionFa": "",
+          "descriptionEn": "",
+          "href": null,
+          "valueFa": "",
+          "valueEn": ""
         }
       ],
       "sortOrder": 1,

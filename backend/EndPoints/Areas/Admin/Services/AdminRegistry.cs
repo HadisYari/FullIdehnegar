@@ -647,6 +647,8 @@ public sealed class AdminRegistry
                     new AdminRepeaterColumn("TitleEn", "Title (EN)"),
                     new AdminRepeaterColumn("DescriptionFa", "توضیح (فارسی)", AdminFieldKind.Textarea, 1000),
                     new AdminRepeaterColumn("DescriptionEn", "Description (EN)", AdminFieldKind.Textarea, 1000),
+                    new AdminRepeaterColumn("ValueFa", "مقدار / نشان (فارسی، اختیاری)", MaxLength: 120),
+                    new AdminRepeaterColumn("ValueEn", "Value / badge (EN, optional)", MaxLength: 120),
                     new AdminRepeaterColumn("Href", "آدرس لینک (اختیاری)", MaxLength: 1000),
                 }))
                 .AddPublish(),

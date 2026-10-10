@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/i18n/dictionaries";
  * Local copy of a page block. Components keep this as their fallback so the page still
  * renders while the API is offline; the seed generator reads the same literal.
  */
-export type LocalItem = { icon?: string; title: string; description?: string; href?: string };
+export type LocalItem = { icon?: string; title: string; description?: string; href?: string; value?: string };
 
 export type LocalSection = {
   eyebrow?: string;
@@ -15,7 +15,13 @@ export type LocalSection = {
   items?: LocalItem[];
 };
 
-export type ResolvedItem = { title: string; description: string; href: string | null; icon: string | null };
+export type ResolvedItem = {
+  title: string;
+  description: string;
+  href: string | null;
+  icon: string | null;
+  value: string;
+};
 
 export type ResolvedSection = {
   eyebrow: string;
@@ -50,6 +56,7 @@ export function resolveSection(
           description: pickLocal(item.description, locale) || localItem?.description || "",
           href: item.href ?? localItem?.href ?? null,
           icon: item.icon ?? null,
+          value: pickLocal(item.value, locale) || localItem?.value || "",
         };
       })
     : (local.items ?? []).map((item) => ({
@@ -57,6 +64,7 @@ export function resolveSection(
         description: item.description ?? "",
         href: item.href ?? null,
         icon: item.icon ?? null,
+        value: item.value ?? "",
       }));
 
   return {

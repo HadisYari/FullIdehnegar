@@ -557,6 +557,8 @@ export type PageSectionItemDto = {
   title: LocalizedText;
   description: LocalizedText | null;
   href: string | null;
+  /** Optional short badge (time, figure, status). */
+  value: LocalizedText | null;
 };
 
 export type PageSectionDto = {

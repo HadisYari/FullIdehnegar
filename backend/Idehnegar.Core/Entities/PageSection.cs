@@ -70,4 +70,9 @@ public class PageSectionItem
     public string DescriptionEn { get; set; } = string.Empty;
 
     public string? Href { get; set; }
+
+    /// <summary>Optional short badge/value (e.g. "۰۹:۰۰ — ۱۸:۰۰", "24/7"). Empty = none.</summary>
+    public string ValueFa { get; set; } = string.Empty;
+
+    public string ValueEn { get; set; } = string.Empty;
 }
