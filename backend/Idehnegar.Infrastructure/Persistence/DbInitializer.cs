@@ -45,6 +45,7 @@ public static class DbInitializer
         await SeedTableIfEmptyAsync(db, db.PhilosophyPrinciples, data.PhilosophyPrinciples, cancellationToken);
         await SeedTableIfEmptyAsync(db, db.TechStackGroups, data.TechStackGroups, cancellationToken);
         await SeedTableIfEmptyAsync(db, db.AboutStats, data.AboutStats, cancellationToken);
+        await SeedTableIfEmptyAsync(db, db.PageSections, data.PageSections, cancellationToken);
 
         if (await db.SiteSettings.AnyAsync(cancellationToken))
         {

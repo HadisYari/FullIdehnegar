@@ -147,8 +147,6 @@ const seoDefaults = {
     eyebrow: { fa: fa.hero.eyebrow, en: en.hero.eyebrow },
     heading: { fa: fa.hero.title, en: en.hero.title },
     subheading: { fa: fa.hero.subtitle, en: en.hero.subtitle },
-    ctaPrimary: { fa: fa.hero.ctaPrimary, en: en.hero.ctaPrimary },
-    ctaSecondary: { fa: fa.hero.ctaSecondary, en: en.hero.ctaSecondary },
   },
 };
 
@@ -210,10 +208,11 @@ const pageMetas = Object.entries(pageFiles).map(([key, file], index) => {
     headingEn: key === "home" ? defaults.heading?.en ?? fallbackEn.title ?? "" : null,
     subheadingFa: key === "home" ? defaults.subheading?.fa ?? fallback.subtitle ?? "" : null,
     subheadingEn: key === "home" ? defaults.subheading?.en ?? fallbackEn.subtitle ?? "" : null,
-    ctaPrimaryFa: defaults.ctaPrimary?.fa ?? "",
-    ctaPrimaryEn: defaults.ctaPrimary?.en ?? "",
-    ctaSecondaryFa: defaults.ctaSecondary?.fa ?? "",
-    ctaSecondaryEn: defaults.ctaSecondary?.en ?? "",
+    // The CTA fields are no longer edited in the panel and no page reads them.
+    ctaPrimaryFa: null,
+    ctaPrimaryEn: null,
+    ctaSecondaryFa: null,
+    ctaSecondaryEn: null,
     ogImage: key === "home" ? "/images/portfolio/smartexport-ai.jpg" : null,
     noIndex: key === "payment",
     changeFrequency: defaults.changeFrequency ?? "monthly",
@@ -658,6 +657,53 @@ const aboutSections = [
   },
 ].map((section, index) => ({ ...section, sortOrder: index, isPublished: true }));
 
+/* ───────────── page sections (copy + repeated items of page blocks) ───────────── *
+ * Each page component keeps its fallback copy in one literal. The literal is either
+ * bilingual ({ fa: {...}, en: {...} }) or Persian-only (a single {...} object). Items are
+ * strings (bullets) or objects ({ title, description, href }).                         */
+const pageSectionSources = [
+  { pageKey: "gold-app", file: ["components", "gold-app", "gold-app-client.tsx"], marker: "const fallbackSections = " },
+  { pageKey: "about", file: ["app", "(site)", "[locale]", "about", "page.tsx"], marker: "const fallbackPageSections = " },
+  { pageKey: "home", file: ["components", "sections", "home-cta-section.tsx"], marker: "const fallbackSections = " },
+];
+
+const pageSections = pageSectionSources.flatMap(({ pageKey, file, marker }) => {
+  const literal = grab(read(fe, ...file), marker, { open: "{" });
+  return Object.entries(literal).map(([sectionKey, value], index) => {
+    const bilingual = "fa" in value;
+    const fa = bilingual ? value.fa : value;
+    const en = bilingual ? value.en ?? {} : {};
+    const items = (fa.items ?? []).map((item, i) => {
+      const base = typeof item === "string" ? { title: item } : item;
+      const other = en.items?.[i];
+      const otherItem = typeof other === "string" ? { title: other } : other ?? {};
+      return {
+        icon: base.icon ?? null,
+        titleFa: base.title ?? "",
+        titleEn: otherItem.title ?? "",
+        descriptionFa: base.description ?? "",
+        descriptionEn: otherItem.description ?? "",
+        href: base.href ?? otherItem.href ?? null,
+      };
+    });
+    return {
+      pageKey,
+      sectionKey,
+      eyebrowFa: fa.eyebrow ?? null,
+      eyebrowEn: en.eyebrow ?? null,
+      titleFa: fa.title ?? null,
+      titleEn: en.title ?? null,
+      subtitleFa: fa.subtitle ?? null,
+      subtitleEn: en.subtitle ?? null,
+      bodyFa: fa.body ?? null,
+      bodyEn: en.body ?? null,
+      items,
+      sortOrder: index,
+      isPublished: true,
+    };
+  });
+});
+
 const dataset = {
   siteSettings,
   pageMetas,
@@ -666,6 +712,7 @@ const dataset = {
   services,
   homeServiceCards,
   aboutSections,
+  pageSections,
   coreValues,
   certifications,
   lifecycleSteps,

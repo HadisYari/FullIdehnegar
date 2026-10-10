@@ -15,6 +15,7 @@ public static class ModelConfig
         ConfigurePortfolio(modelBuilder);
         ConfigureHome(modelBuilder);
         ConfigureAbout(modelBuilder);
+        ConfigurePageSections(modelBuilder);
         ConfigurePages(modelBuilder);
         ConfigureStore(modelBuilder);
         ConfigureInquiries(modelBuilder);
@@ -156,6 +157,27 @@ public static class ModelConfig
             entity.Property(e => e.LabelEn).HasMaxLength(120).IsRequired();
             entity.Property(e => e.Icon).HasMaxLength(20);
             entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_AboutStats_Published_Sort");
+        });
+    }
+
+    private static void ConfigurePageSections(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PageSection>(entity =>
+        {
+            entity.ToTable("PageSections");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.PageKey).HasMaxLength(40).IsRequired();
+            entity.Property(e => e.SectionKey).HasMaxLength(60).IsRequired();
+            entity.Property(e => e.EyebrowFa).HasMaxLength(200);
+            entity.Property(e => e.EyebrowEn).HasMaxLength(200);
+            entity.Property(e => e.TitleFa).HasMaxLength(300);
+            entity.Property(e => e.TitleEn).HasMaxLength(300);
+            entity.Property(e => e.SubtitleFa).HasMaxLength(1000);
+            entity.Property(e => e.SubtitleEn).HasMaxLength(1000);
+            entity.Property(e => e.BodyFa).HasMaxLength(2000);
+            entity.Property(e => e.BodyEn).HasMaxLength(2000);
+            entity.Property(e => e.ItemsJson).HasColumnType("nvarchar(max)");
+            entity.HasIndex(e => new { e.PageKey, e.SectionKey }).IsUnique().HasDatabaseName("UX_PageSections_Page_Section");
         });
     }
 

@@ -25,6 +25,7 @@ public sealed class SeedDataset
     public List<PhilosophyPrinciple> PhilosophyPrinciples { get; set; } = new();
     public List<TechStackGroup> TechStackGroups { get; set; } = new();
     public List<AboutStat> AboutStats { get; set; } = new();
+    public List<PageSection> PageSections { get; set; } = new();
     public List<ProcessStep> ProcessSteps { get; set; } = new();
     public List<Client> Clients { get; set; } = new();
     public List<Testimonial> Testimonials { get; set; } = new();

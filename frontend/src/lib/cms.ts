@@ -551,6 +551,30 @@ export function loadAboutContent(): Promise<AboutContentDto | null> {
   return cmsFetch<AboutContentDto | null>("/api/public/about-content", null, { tags: [CmsTag.about] });
 }
 
+/* بلوک‌های محتوایی صفحات (تیتر، متن و آیتم‌های فهرست/کارت) — GET /api/public/page-sections/{pageKey} */
+export type PageSectionItemDto = {
+  icon: string | null;
+  title: LocalizedText;
+  description: LocalizedText | null;
+  href: string | null;
+};
+
+export type PageSectionDto = {
+  key: string;
+  eyebrow: LocalizedText | null;
+  title: LocalizedText | null;
+  subtitle: LocalizedText | null;
+  body: LocalizedText | null;
+  items: PageSectionItemDto[];
+};
+
+/** Every block of one page; [] when the CMS is offline (components then use their local copy). */
+export function loadPageSections(pageKey: string): Promise<PageSectionDto[]> {
+  return cmsFetch<PageSectionDto[]>(`/api/public/page-sections/${encodeURIComponent(pageKey)}`, [], {
+    tags: [CmsTag.pages],
+  });
+}
+
 /** Section copy (eyebrow/title/subtitle) of one about block, by key. */
 export function aboutSection(content: AboutContentDto | null, key: string): AboutSectionDto | undefined {
   return content?.sections.find((section) => section.key === key);

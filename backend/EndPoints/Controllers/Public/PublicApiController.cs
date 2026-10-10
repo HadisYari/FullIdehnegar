@@ -296,6 +296,18 @@ public sealed class SectionsApiController : PublicApiControllerBase
         return items.Select(card => card.ToDto()).ToList();
     }
 
+    /// <summary>Every copy block and repeated item of one page (for example <c>home</c>, <c>about</c>, <c>gold-app</c>).</summary>
+    [HttpGet("page-sections/{pageKey}")]
+    public async Task<ActionResult<IReadOnlyList<PageSectionDto>>> PageSections(string pageKey, CancellationToken cancellationToken)
+    {
+        var sections = await Repo<PageSection>().Query().Published()
+            .Where(section => section.PageKey == pageKey)
+            .Ordered()
+            .ToListAsync(cancellationToken);
+
+        return sections.Select(section => section.ToDto()).ToList();
+    }
+
     /// <summary>Every block of the about page in one response (keeps the page to a single request).</summary>
     [HttpGet("about-content")]
     public async Task<ActionResult<AboutContentDto>> AboutContent(CancellationToken cancellationToken)

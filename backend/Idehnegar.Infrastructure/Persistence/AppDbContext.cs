@@ -35,6 +35,8 @@ public class AppDbContext : DbContext
     public DbSet<PhilosophyPrinciple> PhilosophyPrinciples => Set<PhilosophyPrinciple>();
     public DbSet<TechStackGroup> TechStackGroups => Set<TechStackGroup>();
     public DbSet<AboutStat> AboutStats => Set<AboutStat>();
+    /// <summary>Copy and repeated items of page blocks (hero, cards, bullet lists).</summary>
+    public DbSet<PageSection> PageSections => Set<PageSection>();
 
     public DbSet<ProcessStep> ProcessSteps => Set<ProcessStep>();
 

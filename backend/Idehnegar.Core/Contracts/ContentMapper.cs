@@ -12,6 +12,28 @@ public static class ContentMapper
 {
     private static LocalizedText Text(string? fa, string? en) => new(fa ?? string.Empty, en ?? fa ?? string.Empty);
 
+    private static LocalizedText? OptionalText(string? fa, string? en) =>
+        string.IsNullOrWhiteSpace(fa) && string.IsNullOrWhiteSpace(en) ? null : Text(fa, en);
+
+    /// <summary>Maps a page block; empty optional copy is returned as <c>null</c>.</summary>
+    public static PageSectionDto ToDto(this PageSection section) => new()
+    {
+        Key = section.SectionKey,
+        Eyebrow = OptionalText(section.EyebrowFa, section.EyebrowEn),
+        Title = OptionalText(section.TitleFa, section.TitleEn),
+        Subtitle = OptionalText(section.SubtitleFa, section.SubtitleEn),
+        Body = OptionalText(section.BodyFa, section.BodyEn),
+        Items = section.Items.Select(item => item.ToDto()).ToList(),
+    };
+
+    public static PageSectionItemDto ToDto(this PageSectionItem item) => new()
+    {
+        Icon = item.Icon,
+        Title = Text(item.TitleFa, item.TitleEn),
+        Description = OptionalText(item.DescriptionFa, item.DescriptionEn),
+        Href = item.Href,
+    };
+
     private static string? FirstNonEmpty(string? first, string? second) =>
         string.IsNullOrWhiteSpace(first) ? second : first;
 

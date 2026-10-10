@@ -609,12 +609,46 @@ public sealed class AdminRegistry
                 .AddPair("Eyebrow", "برچسب بالای تیتر", "Hero eyebrow", maxLength: 200, showWhen: ShowsHeroCopy)
                 .AddPair("Heading", "تیتر اصلی صفحه", "Hero heading", maxLength: 300, showWhen: ShowsHeroCopy)
                 .AddPair("Subheading", "زیرتیتر صفحه", "Hero subheading", AdminFieldKind.Textarea, showWhen: ShowsHeroCopy)
-                .AddPair("CtaPrimary", "متن دکمه اصلی", "Primary CTA", maxLength: 150)
-                .AddPair("CtaSecondary", "متن دکمه دوم", "Secondary CTA", maxLength: 150)
                 .AddField(AdminFieldExtensions.Image("OgImage", "تصویر اشتراک‌گذاری (OG)"))
                 .AddField(AdminFieldExtensions.Select("ChangeFrequency", "دوره تغییر (sitemap)", "change-frequency"))
                 .AddField(AdminFieldExtensions.Money("Priority", "اولویت (۰ تا ۱)"))
                 .AddField(AdminFieldExtensions.Check("NoIndex", "noindex — خارج از ایندکس و سایت‌مپ"))
+                .AddPublish(),
+        },
+
+        new AdminEntityDefinition
+        {
+            RouteName = "PageSection",
+            TitleFa = "بخش‌های صفحات",
+            SingularFa = "بخش",
+            Icon = "ti ti-layout-rows",
+            Group = "صفحات",
+            Searchable = true,
+            SearchProperty = "SectionKey",
+            RevalidateTags = new[] { "pages", "home", "about", "services", "portfolio", "contact", "store", "payment", "gold-app" },
+            Gateway = sp => new EntityGateway<PageSection>(sp.GetRequiredService<IGenericRepository<PageSection>>()),
+            Columns = Columns(
+                Column("PageKey", "صفحه", maxWidth: 120),
+                Column("SectionKey", "بخش", maxWidth: 160),
+                Column("TitleFa", "عنوان"),
+                Column("SortOrder", "ترتیب", maxWidth: 80),
+                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Text("PageKey", "کلید صفحه", required: true, maxLength: 40, help: "home, about, gold-app"))
+                .AddField(AdminFieldExtensions.Text("SectionKey", "کلید بخش", required: true, maxLength: 60, help: "مثل hero یا manifesto. بعد از ساخت تغییر ندهید، چون فرانت با همین کلید می‌خواند."))
+                .AddPair("Eyebrow", "برچسب بالای تیتر (فارسی)", "Eyebrow (English)", maxLength: 200)
+                .AddPair("Title", "عنوان (فارسی)", "Title (English)", maxLength: 300)
+                .AddPair("Subtitle", "زیرعنوان (فارسی)", "Subtitle (English)", AdminFieldKind.Textarea, maxLength: 1000)
+                .AddPair("Body", "متن (فارسی)", "Body (English)", AdminFieldKind.Textarea, maxLength: 2000)
+                .AddField(AdminFieldExtensions.Repeater("ItemsJson", "آیتم‌ها (بولت، کارت یا لینک)", new[]
+                {
+                    new AdminRepeaterColumn("Icon", "آیکون (ایموجی، اختیاری)", MaxLength: 10),
+                    new AdminRepeaterColumn("TitleFa", "عنوان (فارسی)"),
+                    new AdminRepeaterColumn("TitleEn", "Title (EN)"),
+                    new AdminRepeaterColumn("DescriptionFa", "توضیح (فارسی)", AdminFieldKind.Textarea, 1000),
+                    new AdminRepeaterColumn("DescriptionEn", "Description (EN)", AdminFieldKind.Textarea, 1000),
+                    new AdminRepeaterColumn("Href", "آدرس لینک (اختیاری)", MaxLength: 1000),
+                }))
                 .AddPublish(),
         },
     };

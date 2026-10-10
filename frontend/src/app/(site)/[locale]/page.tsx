@@ -11,6 +11,7 @@ import {
   loadClients,
   loadHomeServiceCards,
   loadPageMeta,
+  loadPageSections,
   loadProcessSteps,
   loadSiteConfig,
 } from "@/lib/cms";
@@ -30,14 +31,16 @@ export default async function HomePage({
   const dict = getDictionary(locale);
 
   // همهٔ داده‌های این صفحه از بک‌اند می‌آیند (با کش ISR و fallback داخلی).
-  const [featured, config, remoteSteps, remoteClients, remoteServiceCards, pageMeta] = await Promise.all([
-    getFeaturedPortfolioItems(8),
-    loadSiteConfig(),
-    loadProcessSteps(),
-    loadClients(),
-    loadHomeServiceCards(),
-    loadPageMeta("home"),
-  ]);
+  const [featured, config, remoteSteps, remoteClients, remoteServiceCards, pageMeta, remoteSections] =
+    await Promise.all([
+      getFeaturedPortfolioItems(8),
+      loadSiteConfig(),
+      loadProcessSteps(),
+      loadClients(),
+      loadHomeServiceCards(),
+      loadPageMeta("home"),
+      loadPageSections("home"),
+    ]);
 
   // مراحل توسعه — fallback: دیکشنری i18n
   const steps =
@@ -80,7 +83,7 @@ export default async function HomePage({
       <ClientsSection locale={locale} dict={dict} clients={clients} />
 
       {/* 🌟 سکشن پیش‌فوتر: ایجاد زمینه روشن برای نشستن موج سرمه‌ای فوتر */}
-      <HomeCtaSection locale={locale} dict={dict} />
+      <HomeCtaSection locale={locale} sections={remoteSections} />
     </main>
   );
 }
