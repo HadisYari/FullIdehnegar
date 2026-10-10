@@ -83,7 +83,7 @@ builder.Services.AddCors(options => options.AddPolicy("frontend", policy =>
         policy.WithOrigins(frontendOrigins.Where(origin => !string.IsNullOrWhiteSpace(origin)).ToArray())
             .WithMethods("GET", "POST", "OPTIONS")
             .WithHeaders("Content-Type", "X-Revalidate-Secret")
-            .MaxAge(600);
+            .SetPreflightMaxAge(TimeSpan.FromMinutes(600));
     }
     else
     {

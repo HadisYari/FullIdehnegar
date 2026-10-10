@@ -13,114 +13,352 @@
     <title>@(ViewData["Title"] ?? "پنل مدیریت محتوا") | پیشگامان ایده‌نگار</title>
     <link rel="icon" type="image/png" href="~/Panel/brand/favicon.png" />
 
-    <link rel="stylesheet" href="~/Panel/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="~/Panel/assets/vendor/css/theme-default.css" />
-    <link rel="stylesheet" href="~/Panel/assets/css/rtl.css" />
-    <link rel="stylesheet" href="~/Panel/assets/vendor/fonts/tabler-icons.css" />
-    <link rel="stylesheet" href="~/Panel/assets/fonts/farsi-fonts/font.css" />
-    <link rel="stylesheet" href="~/Panel/assets/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="~/Panel/custome/css/file-uploader.css" />
-    <link rel="stylesheet" href="~/admin/admin.css" asp-append-version="true" />
+    <!-- Favicon -->
+    <link href="/Panel/assets/img/favicon/favicon.ico" rel="icon" type="image/x-icon" />
+    <!-- Icons -->
+    <link href="/Panel/assets/vendor/fonts/fontawesome.css" rel="stylesheet" />
+    <link href="/Panel/assets/vendor/fonts/tabler-icons.css" rel="stylesheet" />
+    <link href="/Panel/assets/vendor/fonts/flag-icons.css" rel="stylesheet" />
+    <!-- Core CSS class="template-customizer-theme-css"-->
+    <link href="/Panel/assets/vendor/css/rtl/core.css" rel="stylesheet" />
+    <link href="/Panel/assets/vendor/css/rtl/theme-default.css" rel="stylesheet" />
+    @* <link href="/Panel/assets/css/demo.css" rel="stylesheet" /> *@
+    <!-- Vendors CSS -->
+    @* <link href="/Panel/assets/vendor/libs/node-waves/node-waves.css" rel="stylesheet" /> *@
+    <link href="/Panel/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    @* <link href="/Panel/assets/vendor/libs/typeahead-js/typeahead.css" rel="stylesheet" /> *@
+    @* <link href="/Panel/assets/vendor/libs/apex-charts/apex-charts.css" rel="stylesheet" /> *@
+    @* <link href="/Panel/assets/vendor/libs/swiper/swiper.css" rel="stylesheet" /> *@
+    <link href="/Panel/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" rel="stylesheet" />
+    <link href="/Panel/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" rel="stylesheet" />
+    <link href="/Panel/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" rel="stylesheet" />
+    <!-- Page CSS -->
+    @* <link href="/Panel/assets/vendor/css/pages/cards-advance.css" rel="stylesheet" /> *@
+    <!-- Helpers -->
+    <script src="/Panel/assets/vendor/js/helpers.js"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="/Panel/assets/vendor/js/template-customizer.js"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/Panel/assets/js/config.js"></script>
+    <!-- Better experience of RTL -->
+    <link href="/Panel/assets/css/rtl.css?v=1.1.1" rel="stylesheet" />
+    <link href="~/panel/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/panel/assets/vendor/libs/select2/select2.css" rel="stylesheet" />
+
+    <link href="~/Panel/PersionDataPiker/Mh1PersianDatePicker.css" rel="stylesheet" />
 </head>
-<body class="layout-wrapper admin-body">
-<div class="admin-shell">
-    <aside class="admin-sidebar">
-        <div class="admin-brand">
-            <img src="~/Panel/brand/logo.png" alt="پیشگامان ایده‌نگار" />
-            <div>
-                <span class="admin-brand-title">پنل ایده‌نگار</span>
-                <span class="admin-brand-sub">مدیریت محتوای سایت</span>
-            </div>
-        </div>
+<body  >
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+        <div class="layout-container">
+            <!-- Navbar -->
+            <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="container-xxl">
+                    <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+                        <a class="app-brand-link gap-2" href="/">
+                            <span class="app-brand-logo demo">
+                                <img width="50" height="50" src="~/Panel/assets/img/favicon/favicon.ico" />
+                            </span>
+                            <span class="app-brand-text demo menu-text fw-bold">ایده نگار     </span>
+                        </a>
+                        <a class="layout-menu-toggle menu-link fs-8 text-large ms-auto d-xl-none" href="javascript:void(0);">
+                            <i class="ti ti-x ti-sm align-middle"></i>
+                        </a>
+                    </div>
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item  nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="ti ti-menu-2 ti-sm"></i>
+                        </a>
+                    </div>
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
 
-        <nav class="admin-nav" aria-label="منوی پنل">
-            <a class="admin-nav-link @(currentEntity == "/admin" || currentEntity.StartsWith("/admin/dashboard") ? "active" : "")"
-               href="/admin">
-                <i class="ti ti-dashboard"></i> پیش‌خوان
-            </a>
+                            <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+                                <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" href="javascript:void(0);">
+                                    <i class="ti ti-md"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+                                    <li>
+                                        <a class="dropdown-item" data-theme="light" href="javascript:void(0);">
+                                            <span class="align-middle">
+                                                <i class="ti ti-sun me-2"></i>
+                                                روز
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" data-theme="dark" href="javascript:void(0);">
+                                            <span class="align-middle">
+                                                <i class="ti ti-moon me-2"></i>
+                                                شب
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" data-theme="system" href="javascript:void(0);">
+                                            <span class="align-middle">
+                                                <i class="ti ti-device-desktop me-2"></i>
+                                                سیستم
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
 
-            @foreach (var group in Registry.Groups)
-            {
-                <div class="admin-nav-group">@group.Key</div>
-                @foreach (var definition in group.OrderBy(item => item.TitleFa, StringComparer.CurrentCulture))
-                {
-                    <a class="admin-nav-link @(currentEntity.Contains(definition.RouteName, StringComparison.OrdinalIgnoreCase) ? "active" : "")"
-                       href="/admin/@definition.RouteName">
-                        <i class="@definition.Icon"></i> @definition.TitleFa
-                    </a>
-                }
-            }
 
-            <div class="admin-nav-group">دریافت‌ها</div>
-            <a class="admin-nav-link @(currentEntity.Contains("inbox/messages", StringComparison.OrdinalIgnoreCase) ? "active" : "")" href="/admin/inbox/messages">
-                <i class="ti ti-mail-incoming"></i> پیام‌های تماس
-            </a>
-            <a class="admin-nav-link @(currentEntity.Contains("inbox/orders", StringComparison.OrdinalIgnoreCase) ? "active" : "")" href="/admin/inbox/orders">
-                <i class="ti ti-receipt"></i> سفارش‌های فروشگاه‌ساز
-            </a>
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" href="javascript:void(0);">
+                                    <div class="avatar avatar-online">
+                                        <img class="h-auto rounded-circle" src="/Panel/assets/img/avatars/man-user-icon.png" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="/">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img class="h-auto rounded-circle" src="/Panel/assets/img/avatars/man-user-icon.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block mb-1"> @User.Identity.Name  </span>
+                                                    @* <small class="text-muted"> @User</small> *@
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
 
-            <div class="admin-nav-group">تنظیمات</div>
-            <a class="admin-nav-link @(currentEntity.Contains("site-settings", StringComparison.OrdinalIgnoreCase) ? "active" : "")" href="/admin/site-settings">
-                <i class="ti ti-settings"></i> اطلاعات شرکت و سئو
-            </a>
-        </nav>
-    </aside>
 
-    <div class="admin-main">
-        <header class="admin-topbar">
-            <button type="button" class="btn btn-icon btn-label-secondary btn-sm" id="adminSidebarToggle" aria-label="باز و بسته کردن منو">
-                <i class="ti ti-menu-2"></i>
-            </button>
-            <div class="admin-topbar-title">
-                @(ViewData["Title"] ?? "پیش‌خوان")
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <a class="btn btn-sm btn-label-primary" href="/" target="_blank" rel="noopener">
-                    <i class="ti ti-external-link"></i> مشاهده سایت
-                </a>
-                <span class="text-muted small">@userName</span>
-                <form method="post" asp-area="Admin" asp-controller="Account" asp-action="Logout" class="d-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-sm btn-outline-secondary">خروج</button>
-                </form>
-            </div>
-        </header>
+                                    <li>
+                                        <a class="dropdown-item" href="/Authentication/SignOut" target="_blank">
+                                            <i class="ti ti-logout me-2 ti-sm"></i>
+                                            <span class="align-middle">خروج از حساب</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
 
-        <main class="admin-content">
-            @if (!string.IsNullOrWhiteSpace(flash))
-            {
-                <div class="alert alert-success alert-dismissible admin-flash" role="status">
-                    @flash
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
                 </div>
+            </nav>
+            <!-- / Navbar -->
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+
+                    
+                    @{
+                        var isDashboard = currentEntity == "/admin" ||
+                        currentEntity.StartsWith("/admin/dashboard",
+                        StringComparison.OrdinalIgnoreCase);
+                    }
+
+                    <aside class="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0"
+                           id="layout-menu">
+                        <div class="container-xxl d-flex h-100">
+                            <ul class="menu-inner">
+
+                                @* داشبورد *@
+                                <li class="menu-item @(isDashboard ? "active" : "")">
+                                    <a class="menu-link fs-8" href="/admin">
+                                        <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                                        <div>پیش‌خوان</div>
+                                    </a>
+                                </li>
+
+                                @* گروه‌های داینامیک *@
+                                @foreach (var group in Registry.Groups)
+                                {
+                                    <li class="menu-item menu-has-sub
+                        @(group.Any(item =>
+                                                                currentEntity.Contains(item.RouteName,
+                                                                    StringComparison.OrdinalIgnoreCase))
+                                                                ? "active open" : "")">
+
+                                    <a href="javascript:void(0);"
+                                       class="menu-link fs-8 menu-toggle">
+                                        <i class="menu-icon tf-icons ti ti-folder"></i>
+                                        <div>@group.Key</div>
+                                    </a>
+
+                                        <ul class="menu-sub">
+                                        @foreach (var definition in group.OrderBy(
+                                                                                item => item.TitleFa,
+                                                                                StringComparer.CurrentCulture))
+                                            {
+                                                var isActive = currentEntity.Contains(
+                                                definition.RouteName,
+                                                StringComparison.OrdinalIgnoreCase);
+
+                                                <li class="menu-item @(isActive ? "active" : "")">
+                                                    <a class="menu-link fs-8"
+                                                       href="/admin/@definition.RouteName">
+                                                        <i class="menu-icon tf-icons @definition.Icon"></i>
+                                                        <div>@definition.TitleFa</div>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+
+                                @* دریافت‌ها *@
+                                <li class="menu-item
+                @(currentEntity.Contains("inbox/messages",
+                                                        StringComparison.OrdinalIgnoreCase)
+                                                        ? "active open" : "")">
+
+                                    <a href="javascript:void(0);"
+                                       class="menu-link fs-8 menu-toggle">
+                                        <i class="menu-icon tf-icons ti ti-inbox"></i>
+                                        <div>دریافت‌ها</div>
+                                    </a>
+
+                                    <ul class="menu-sub">
+                                        <li class="menu-item
+                        @(currentEntity.Contains("inbox/messages",
+                                                                        StringComparison.OrdinalIgnoreCase)
+                                                                        ? "active" : "")">
+                                            <a class="menu-link fs-8"
+                                               href="/admin/inbox/messages">
+                                                <i class="menu-icon tf-icons ti ti-mail-incoming"></i>
+                                                <div>پیام‌های تماس</div>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                                @* تنظیمات *@
+                                <li class="menu-item
+                @(currentEntity.Contains("site-settings",
+                                                        StringComparison.OrdinalIgnoreCase)
+                                                        ? "active open" : "")">
+
+                                    <a href="javascript:void(0);"
+                                       class="menu-link fs-8 menu-toggle">
+                                        <i class="menu-icon tf-icons ti ti-settings"></i>
+                                        <div>تنظیمات</div>
+                                    </a>
+
+                                    <ul class="menu-sub">
+                                        <li class="menu-item
+                        @(currentEntity.Contains("site-settings",
+                                                                        StringComparison.OrdinalIgnoreCase)
+                                                                        ? "active" : "")">
+                                            <a class="menu-link fs-8"
+                                               href="/admin/site-settings">
+                                                <i class="menu-icon tf-icons ti ti-building"></i>
+                                                <div>اطلاعات شرکت و سئو</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </aside>
+                    
+
+          
+
+       
+        
+
+        
+  
+
+                    <div class="container-xxl pt-0 flex-grow-1 container-p-y">
+                        <div class="row">
+                            @if (!string.IsNullOrWhiteSpace(flash))
+                            {
+                                <div class="alert alert-success alert-dismissible admin-flash" role="status">
+                                    @flash
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+                                </div>
+                            }
+
+                            @if (ViewData["PanelWarning"] is string warning)
+                            {
+                                <div class="alert alert-warning" role="alert">@warning</div>
+                            }
+
+                            @RenderBody()
+                        </div>
+                    </div>
+
+                    <!--/ Content -->
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
+                                <div>
+                                    ©2026
+                                    ارائه شده توسط
+
+                                    <a class="fw-medium" href="http://idehnegar.co/" target="_blank">ایده نگار</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- / Footer -->
+                    <div class="content-backdrop fade"></div>
+                </div>
+            </div>
+
+    <script src="/Panel/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/Panel/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/Panel/assets/vendor/js/bootstrap.js"></script>
+    <script src="/Panel/assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="/Panel/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/Panel/assets/vendor/libs/hammer/hammer.js"></script>
+    @* <script src="/Panel/assets/vendor/libs/i18n/i18n.js"></script> *@
+    <script src="/Panel/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="/Panel/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+    <!-- Vendors JS -->
+    @* <script src="/Panel/assets/vendor/libs/apex-charts/apexcharts.js"></script> *@
+    @* <script src="/Panel/assets/vendor/libs/swiper/swiper.js"></script> *@
+    <script src="/Panel/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+    <script src="/Panel/assets/vendor/libs/datatables-bs5/i18n/fa.js"></script>
+    <!-- Main JS -->
+    <script src="/Panel/assets/js/main.js"></script>
+    <!-- Page JS -->
+    @* <script src="/Panel/assets/js/dashboards-analytics.js"></script> *@
+
+    <script src="~/panel/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/panel/sweetalert2/sweetalert2.min.js"></script>
+    @* @await Html.PartialAsync("_pluginHoldOn") *@
+     
+
+    <script src="~/panel/custome/js/persionformatfunctionpartail.js"></script>
+    <link href="~/panel/custome/css/styledatatable.css" rel="stylesheet" />
+    <link href="~/panel/custome/css/file-uploader.css" rel="stylesheet" />
+
+    <!-- کلاینت مرکزی HTTP و سرویس‌های API -->
+    <script src="~/panel/custome/js/api-client.js"></script>
+    <script src="~/panel/custome/js/api-services.js"></script>
+    <!-- کامپوننت سراسری آپلود فایل -->
+    <script src="~/panel/custome/js/file-uploader.js"></script>
+
+    <script>
+        // فعال‌سازی تب بر اساس پارامتر ?tab= در آدرس (برای صفحات Master-Detail)
+        $(function () {
+            var tab = new URLSearchParams(window.location.search).get('tab');
+            if (tab) {
+                var trigger = document.querySelector('[data-bs-target="#tab-' + tab + '"]');
+                if (trigger) new bootstrap.Tab(trigger).show();
             }
-
-            @if (ViewData["PanelWarning"] is string warning)
-            {
-                <div class="alert alert-warning" role="alert">@warning</div>
-            }
-
-            @RenderBody()
-        </main>
-
-        <footer class="admin-footer">
-            <span>© @DateTime.UtcNow.Year پیشگامان ایده‌نگار — پنل مدیریت محتوا</span>
-            <span class="text-muted">داده‌ها به‌صورت زنده روی سایت اعمال می‌شوند.</span>
-        </footer>
-    </div>
-</div>
-
-<script src="~/Panel/assets/vendor/libs/jquery/jquery.js"></script>
-<script src="~/Panel/assets/vendor/libs/popper/popper.js"></script>
-<script src="~/Panel/assets/vendor/js/bootstrap.js"></script>
-<script src="~/Panel/assets/vendor/js/helpers.js"></script>
-<script src="~/Panel/assets/js/config.js"></script>
-<script src="~/Panel/assets/vendor/js/menu.js"></script>
-<script src="~/Panel/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="~/Panel/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="~/Panel/custome/js/api-client.js"></script>
-<script src="~/Panel/custome/js/file-uploader.js"></script>
-<script src="~/admin/admin.js" asp-append-version="true"></script>
+        });
+    </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

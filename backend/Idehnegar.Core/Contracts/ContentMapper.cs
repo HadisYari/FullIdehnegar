@@ -12,6 +12,29 @@ public static class ContentMapper
 {
     private static LocalizedText Text(string? fa, string? en) => new(fa ?? string.Empty, en ?? fa ?? string.Empty);
 
+    private static LocalizedText? OptionalText(string? fa, string? en) =>
+        string.IsNullOrWhiteSpace(fa) && string.IsNullOrWhiteSpace(en) ? null : Text(fa, en);
+
+    /// <summary>Maps a page block; empty optional copy is returned as <c>null</c>.</summary>
+    public static PageSectionDto ToDto(this PageSection section) => new()
+    {
+        Key = section.SectionKey,
+        Eyebrow = OptionalText(section.EyebrowFa, section.EyebrowEn),
+        Title = OptionalText(section.TitleFa, section.TitleEn),
+        Subtitle = OptionalText(section.SubtitleFa, section.SubtitleEn),
+        Body = OptionalText(section.BodyFa, section.BodyEn),
+        Items = section.Items.Select(item => item.ToDto()).ToList(),
+    };
+
+    public static PageSectionItemDto ToDto(this PageSectionItem item) => new()
+    {
+        Icon = item.Icon,
+        Title = Text(item.TitleFa, item.TitleEn),
+        Description = OptionalText(item.DescriptionFa, item.DescriptionEn),
+        Href = item.Href,
+        Value = OptionalText(item.ValueFa, item.ValueEn),
+    };
+
     private static string? FirstNonEmpty(string? first, string? second) =>
         string.IsNullOrWhiteSpace(first) ? second : first;
 
@@ -143,7 +166,7 @@ public static class ContentMapper
 
     private static LabeledImageDto ToDto(LabeledImage image) => new()
     {
-        Label = image.Label,
+        Label = Text(image.Label, image.LabelEn),
         Src = image.Src,
     };
 
@@ -155,6 +178,86 @@ public static class ContentMapper
         Desc = Text(service.DescriptionFa, service.DescriptionEn),
         Highlights = new LocalizedList(service.HighlightsFa, service.HighlightsEn),
         VisualIndex = service.VisualIndex,
+    };
+
+    public static HomeServiceCardDto ToDto(this HomeServiceCard card) => new()
+    {
+        Id = card.Id,
+        Code = card.Code,
+        Icon = card.IconName,
+        Title = Text(card.TitleFa, card.TitleEn),
+        Desc = Text(card.DescriptionFa, card.DescriptionEn),
+        Color = card.Color,
+        SoftColor = card.SoftColor,
+        GlowColor = card.GlowColor,
+        FeatureTitle = card.FeatureTitleFa is null && card.FeatureTitleEn is null
+            ? null
+            : Text(card.FeatureTitleFa, card.FeatureTitleEn),
+        FeatureValue = card.FeatureValueFa is null && card.FeatureValueEn is null
+            ? null
+            : Text(card.FeatureValueFa, card.FeatureValueEn),
+        Progress = card.Progress,
+        Tags = card.Tags,
+    };
+
+    public static AboutSectionDto ToDto(this AboutSection section) => new()
+    {
+        Key = section.Key,
+        Eyebrow = OptionalText(section.EyebrowFa, section.EyebrowEn),
+        Title = Text(section.TitleFa, section.TitleEn),
+        Subtitle = OptionalText(section.SubtitleFa, section.SubtitleEn),
+    };
+
+    public static CoreValueDto ToDto(this CoreValue value) => new()
+    {
+        Id = value.Id,
+        IconPath = value.IconPath,
+        Title = Text(value.TitleFa, value.TitleEn),
+        Desc = Text(value.DescriptionFa, value.DescriptionEn),
+    };
+
+    public static CertificationDto ToDto(this Certification certification) => new()
+    {
+        Id = certification.Id,
+        Icon = certification.Icon,
+        Title = Text(certification.TitleFa, certification.TitleEn),
+        Organization = Text(certification.OrganizationFa, certification.OrganizationEn),
+        ColorClass = certification.ColorClass,
+        BorderClass = certification.BorderClass,
+    };
+
+    public static LifecycleStepDto ToDto(this LifecycleStep step) => new()
+    {
+        Id = step.Id,
+        Number = step.NumberLabel,
+        Name = Text(step.NameFa, step.NameEn),
+        Desc = Text(step.DescriptionFa, step.DescriptionEn),
+    };
+
+    public static PhilosophyPrincipleDto ToDto(this PhilosophyPrinciple principle) => new()
+    {
+        Id = principle.Id,
+        Icon = principle.IconName,
+        Tag = Text(principle.TagFa, principle.TagEn),
+        Title = Text(principle.TitleFa, principle.TitleEn),
+        Desc = Text(principle.DescriptionFa, principle.DescriptionEn),
+        CodeSnippet = principle.CodeSnippet,
+    };
+
+    public static TechStackGroupDto ToDto(this TechStackGroup group) => new()
+    {
+        Id = group.Id,
+        Label = Text(group.LabelFa, group.LabelEn),
+        Items = group.Items,
+    };
+
+    public static AboutStatDto ToDto(this AboutStat stat) => new()
+    {
+        Id = stat.Id,
+        Value = stat.Value,
+        Suffix = stat.Suffix,
+        Label = Text(stat.LabelFa, stat.LabelEn),
+        Icon = stat.Icon,
     };
 
     public static ProcessStepDto ToDto(this ProcessStep step) => new()
@@ -218,31 +321,17 @@ public static class ContentMapper
     public static StoreTemplateDto ToDto(this StoreTemplate template) => new()
     {
         Id = template.Code,
-        Name = template.Name,
+        Name = Text(template.Name, template.NameEn),
         Category = template.Category,
-        Tag = template.Tag,
-        PlanName = template.PlanName,
+        Tag = Text(template.Tag, template.TagEn),
+        PlanName = Text(template.PlanName, template.PlanNameEn),
         PriceMonthly = template.PriceMonthly,
         PriceYearly = template.PriceYearly,
-        DiscountBadge = template.DiscountBadge,
-        Desc = template.Description,
-        Features = template.Features,
+        DiscountBadge = Text(template.DiscountBadge, template.DiscountBadgeEn),
+        Desc = Text(template.Description, template.DescriptionEn),
+        Features = new LocalizedList(template.Features, template.FeaturesEn),
         DesktopScreens = template.DesktopScreens.Select(ToDto).ToList(),
         MobileScreens = template.MobileScreens.Select(ToDto).ToList(),
-    };
-
-    public static StorePlanDto ToDto(this StorePlan plan) => new()
-    {
-        Id = plan.Code,
-        Name = plan.Name,
-        Badge = plan.Badge,
-        Tagline = plan.Tagline,
-        IsPopular = plan.IsPopular,
-        MonthlyPrice = plan.MonthlyPrice,
-        YearlyPrice = plan.YearlyPrice,
-        SetupTime = plan.SetupTime,
-        Features = plan.Features,
-        Limitations = plan.Limitations,
     };
 
     public static AppDownloadLinkDto ToDto(this AppDownloadLink link) => new()
@@ -260,6 +349,7 @@ public static class ContentMapper
         LastModified = page.UpdatedAtUtc ?? page.CreatedAtUtc,
         ChangeFrequency = page.ChangeFrequency,
         Priority = page.Priority,
+        NoIndex = page.NoIndex,
     };
 
     public static SitemapEntryDto ToSitemapEntry(this PortfolioProject project) => new()

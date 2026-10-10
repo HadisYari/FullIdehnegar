@@ -27,6 +27,11 @@ public static class AdminFormBinder
 
         foreach (var field in fields)
         {
+            if (field.ShowWhen is not null && !field.ShowWhen(row))
+            {
+                continue;
+            }
+
             var raw = EntityValue.GetText(row, field.Property);
             var value = field.Kind switch
             {
@@ -59,6 +64,12 @@ public static class AdminFormBinder
 
         foreach (var field in fields)
         {
+            // Hidden fields are not posted; skipping them keeps the stored value.
+            if (field.ShowWhen is not null && !field.ShowWhen(row))
+            {
+                continue;
+            }
+
             var raw = form[field.Property].FirstOrDefault();
 
             if (field.IsJsonBacked)

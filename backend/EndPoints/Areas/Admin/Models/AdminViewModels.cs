@@ -77,7 +77,6 @@ public sealed class AdminDashboardModel
     public int Testimonials { get; set; }
     public int Clients { get; set; }
     public int UnreadMessages { get; set; }
-    public int PendingOrders { get; set; }
     public DateTime? LastContentUpdateUtc { get; set; }
     public List<AdminMessagePreview> LatestMessages { get; set; } = new();
 }

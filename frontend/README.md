@@ -9,6 +9,29 @@
 - بدون دیتابیس: نمونه‌کارها در `src/data/portfolio.json` ذخیره می‌شوند (فایل‌محور، سبک و بدون نیاز به سرویس جداگانه)
 - فونت‌ها به‌صورت لوکال (self-hosted) بارگذاری می‌شوند — بدون وابستگی به Google Fonts
 
+## اتصال به بک‌اند (CMS)
+
+محتوای سایت (نمونه‌کارها، خدمات، متن صفحات، تنظیمات شرکت، پیام‌ها و…) از
+بک‌اند ASP.NET در پوشهٔ `../backend` می‌آید. همهٔ خواندن‌ها از یک لایه می‌گذرند:
+`src/lib/cms.ts` — اگر API در دسترس نباشد، سایت به‌صورت خودکار از دادهٔ همراه
+مخزن (`src/data/*.json` و literalهای کامپوننت‌ها) استفاده می‌کند تا هیچ‌وقت نشکند.
+
+```bash
+# در frontend/.env.local
+CMS_API_URL=http://localhost:5100   # پورت backend/EndPoints (launchSettings.json)
+CMS_REVALIDATE_SECRET=…             # همان مقدار Site:RevalidateSecret بک‌اند
+CMS_REVALIDATE_SECONDS=60
+CMS_TIMEOUT_MS=4000
+```
+
+- پنل مدیریت محتوا روی خود بک‌اند است: `http://localhost:5100/admin`.
+- پس از هر ذخیره در پنل، بک‌اند `POST /api/revalidate` را صدا می‌زند تا کش ISR
+  فرانت همان تگ‌ها را تازه کند.
+- فرم تماس (`POST /api/contact`) اول در بک‌اند (SQL Server + ایمیل) ثبت می‌شود
+  و فقط در نبود بک‌اند در `src/data/messages.json` می‌نویسد.
+- برای توسعهٔ فرانت بدون دات‌نت/SQL Server: `node ../backend/tools/dev-api.mjs`
+  همان قرارداد API را روی `SeedData/seed.json` اجرا می‌کند.
+
 ## اجرا روی سرور خودتان
 
 ### ۱) نصب و بیلد

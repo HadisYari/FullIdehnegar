@@ -4,13 +4,16 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import type { AboutSectionDto, PhilosophyPrincipleDto } from "@/lib/cms";
+import { resolveText } from "./about-copy";
 import { 
   Code2, 
   Cpu, 
   Layers, 
   ShieldCheck, 
   GitMerge, 
-  Workflow 
+  Workflow,
+  type LucideIcon,
 } from "lucide-react";
 
 interface PhilosophyItem {
@@ -86,8 +89,39 @@ const philosophyData: Record<Locale, { title: string; subtitle: string; items: P
   },
 };
 
-export function EngineeringPhilosophy({ locale }: { locale: Locale }) {
-  const data = philosophyData[locale];
+const philosophyIcons: Record<string, LucideIcon> = {
+  Layers,
+  ShieldCheck,
+  GitMerge,
+  Workflow,
+  Code2,
+  Cpu,
+};
+
+export function EngineeringPhilosophy({
+  locale,
+  items,
+  copy,
+}: {
+  locale: Locale;
+  items?: PhilosophyPrincipleDto[];
+  copy?: AboutSectionDto;
+}) {
+  const fallback = philosophyData[locale];
+  const data: { title: string; subtitle: string; items: PhilosophyItem[] } = {
+    title: resolveText(copy?.title, locale, fallback.title),
+    subtitle: resolveText(copy?.subtitle, locale, fallback.subtitle),
+    items:
+      items && items.length > 0
+        ? items.map((item) => ({
+            icon: (item.icon && philosophyIcons[item.icon]) || Layers,
+            tag: resolveText(item.tag, locale, ""),
+            title: resolveText(item.title, locale, ""),
+            desc: resolveText(item.desc, locale, ""),
+            codeSnippet: item.codeSnippet ?? undefined,
+          }))
+        : fallback.items,
+  };
 
   return (
     <section className="relative overflow-hidden py-24 sm:py-32">

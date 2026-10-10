@@ -6,8 +6,8 @@ import { Container } from "@/components/container";
 import { PortfolioCard } from "@/components/portfolio-card";
 import { DeviceShowcase, LaptopMockup, PhoneMockup } from "@/components/device-mockup";
 import { JsonLd } from "@/components/json-ld";
-import { getPortfolioItem, getPortfolioItems } from "@/lib/portfolio";
-import { loadCategories, loadSiteConfig } from "@/lib/cms";
+import { getPortfolioItem, getPortfolioItems, type PortfolioItem } from "@/lib/portfolio";
+import { loadCategories, loadRelatedProjects, loadSiteConfig } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import { localeHref } from "@/lib/i18n/paths";
 import { categories as localCategories, categoryLabel } from "@/lib/categories";
@@ -56,22 +56,26 @@ export default async function PortfolioDetailPage({
   const item = await getPortfolioItem(slug);
   if (!item) notFound();
 
-  const [allItems, config, remoteCategories] = await Promise.all([
+  const [allItems, config, remoteCategories, remoteRelated] = await Promise.all([
     getPortfolioItems(),
     loadSiteConfig(),
     loadCategories(),
+    loadRelatedProjects(slug, 3),
   ]);
 
   // دسته‌بندی‌ها از /api/public/categories — fallback: lib/categories
   const categoryList = remoteCategories.length > 0 ? remoteCategories : localCategories;
 
-  const related = allItems
+  // پروژه‌های مرتبط از /api/public/portfolio/{slug}/related؛ در نبودش فیلتر محلی (همان دسته، سپس بقیه)
+  const localRelated = allItems
     .filter((i) => i.slug !== slug && i.category === item.category)
     .slice(0, 3);
-  const moreItems =
-    related.length > 0
-      ? related
-      : allItems.filter((i) => i.slug !== slug).slice(0, 3);
+  const moreItems: PortfolioItem[] =
+    remoteRelated.length > 0
+      ? (remoteRelated as unknown as PortfolioItem[])
+      : localRelated.length > 0
+        ? localRelated
+        : allItems.filter((i) => i.slug !== slug).slice(0, 3);
 
   const projectLd = {
     "@context": "https://schema.org",

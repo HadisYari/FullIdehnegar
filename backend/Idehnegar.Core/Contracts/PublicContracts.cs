@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Idehnegar.Core.Contracts;
 
 /// <summary>
@@ -25,6 +27,12 @@ public sealed class SiteSettingsDto
     public string Email { get; set; } = string.Empty;
     public IReadOnlyList<string> Phones { get; set; } = Array.Empty<string>();
     public string? Telegram { get; set; }
+
+    /// <summary>
+    /// Explicit wire name: System.Text.Json would camel-case <c>WhatsApp</c> to
+    /// <c>whatsApp</c>, while the front end (<c>src/lib/cms.ts</c>) reads <c>whatsapp</c>.
+    /// </summary>
+    [JsonPropertyName("whatsapp")]
     public string? WhatsApp { get; set; }
     public LocalizedText Address { get; set; } = new(string.Empty, string.Empty);
     public LocalizedText Hours { get; set; } = new(string.Empty, string.Empty);
@@ -81,7 +89,7 @@ public sealed class ProjectStatDto
 
 public sealed class LabeledImageDto
 {
-    public string Label { get; set; } = string.Empty;
+    public LocalizedText Label { get; set; } = new(string.Empty, string.Empty);
     public string Src { get; set; } = string.Empty;
 }
 
@@ -121,6 +129,23 @@ public sealed class ServiceDto
     public LocalizedText Desc { get; set; } = new(string.Empty, string.Empty);
     public LocalizedList Highlights { get; set; } = new(Array.Empty<string>(), Array.Empty<string>());
     public int VisualIndex { get; set; }
+}
+
+/// <summary>One card of the home services grid (<c>services-section.tsx</c>).</summary>
+public sealed class HomeServiceCardDto
+{
+    public Guid Id { get; set; }
+    public string Code { get; set; } = string.Empty;
+    public string? Icon { get; set; }
+    public LocalizedText Title { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedText Desc { get; set; } = new(string.Empty, string.Empty);
+    public string? Color { get; set; }
+    public string? SoftColor { get; set; }
+    public string? GlowColor { get; set; }
+    public LocalizedText? FeatureTitle { get; set; }
+    public LocalizedText? FeatureValue { get; set; }
+    public string? Progress { get; set; }
+    public IReadOnlyList<string> Tags { get; set; } = Array.Empty<string>();
 }
 
 public sealed class ProcessStepDto
@@ -182,36 +207,6 @@ public sealed class InquiryTypeDto
     public string? Icon { get; set; }
 }
 
-public sealed class StoreTemplateDto
-{
-    public string Id { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public string Category { get; set; } = "warehouse";
-    public string? Tag { get; set; }
-    public string PlanName { get; set; } = string.Empty;
-    public decimal PriceMonthly { get; set; }
-    public decimal PriceYearly { get; set; }
-    public string? DiscountBadge { get; set; }
-    public string? Desc { get; set; }
-    public IReadOnlyList<string> Features { get; set; } = Array.Empty<string>();
-    public IReadOnlyList<LabeledImageDto> DesktopScreens { get; set; } = Array.Empty<LabeledImageDto>();
-    public IReadOnlyList<LabeledImageDto> MobileScreens { get; set; } = Array.Empty<LabeledImageDto>();
-}
-
-public sealed class StorePlanDto
-{
-    public string Id { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public string? Badge { get; set; }
-    public string? Tagline { get; set; }
-    public bool IsPopular { get; set; }
-    public decimal MonthlyPrice { get; set; }
-    public decimal YearlyPrice { get; set; }
-    public string? SetupTime { get; set; }
-    public IReadOnlyList<string> Features { get; set; } = Array.Empty<string>();
-    public IReadOnlyList<string> Limitations { get; set; } = Array.Empty<string>();
-}
-
 public sealed class AppDownloadLinkDto
 {
     public LocalizedText Title { get; set; } = new(string.Empty, string.Empty);
@@ -228,6 +223,9 @@ public sealed class SitemapEntryDto
     public DateTime? LastModified { get; set; }
     public string ChangeFrequency { get; set; } = "monthly";
     public decimal Priority { get; set; } = 0.5m;
+
+    /// <summary>Mirrors <c>PageMeta.NoIndex</c> so the front end can filter again defensively.</summary>
+    public bool NoIndex { get; set; }
 }
 
 /// <summary>
@@ -241,6 +239,7 @@ public sealed class SiteBootstrapDto
     public IReadOnlyList<PortfolioCategoryDto> Categories { get; set; } = Array.Empty<PortfolioCategoryDto>();
     public IReadOnlyList<PortfolioProjectDto> FeaturedProjects { get; set; } = Array.Empty<PortfolioProjectDto>();
     public IReadOnlyList<ServiceDto> Services { get; set; } = Array.Empty<ServiceDto>();
+    public IReadOnlyList<HomeServiceCardDto> HomeServiceCards { get; set; } = Array.Empty<HomeServiceCardDto>();
     public IReadOnlyList<ProcessStepDto> ProcessSteps { get; set; } = Array.Empty<ProcessStepDto>();
     public IReadOnlyList<ClientLogoDto> Clients { get; set; } = Array.Empty<ClientLogoDto>();
     public IReadOnlyList<TestimonialDto> Testimonials { get; set; } = Array.Empty<TestimonialDto>();
@@ -249,7 +248,22 @@ public sealed class SiteBootstrapDto
     public IReadOnlyList<FaqDto> Faqs { get; set; } = Array.Empty<FaqDto>();
     public IReadOnlyList<InquiryTypeDto> InquiryTypes { get; set; } = Array.Empty<InquiryTypeDto>();
     public IReadOnlyList<StoreTemplateDto> StoreTemplates { get; set; } = Array.Empty<StoreTemplateDto>();
-    public IReadOnlyList<StorePlanDto> StorePlans { get; set; } = Array.Empty<StorePlanDto>();
     public IReadOnlyList<AppDownloadLinkDto> AppDownloadLinks { get; set; } = Array.Empty<AppDownloadLinkDto>();
     public DateTime GeneratedAtUtc { get; set; } = DateTime.UtcNow;
+}
+
+public sealed class StoreTemplateDto
+{
+    public string Id { get; set; } = string.Empty;
+    public LocalizedText Name { get; set; } = new(string.Empty, string.Empty);
+    public string Category { get; set; } = "warehouse";
+    public LocalizedText Tag { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedText PlanName { get; set; } = new(string.Empty, string.Empty);
+    public decimal PriceMonthly { get; set; }
+    public decimal PriceYearly { get; set; }
+    public LocalizedText DiscountBadge { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedText Desc { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedList Features { get; set; } = new(Array.Empty<string>(), Array.Empty<string>());
+    public IReadOnlyList<LabeledImageDto> DesktopScreens { get; set; } = Array.Empty<LabeledImageDto>();
+    public IReadOnlyList<LabeledImageDto> MobileScreens { get; set; } = Array.Empty<LabeledImageDto>();
 }

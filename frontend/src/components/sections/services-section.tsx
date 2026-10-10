@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
   Code2,
@@ -19,7 +20,43 @@ import { Container } from "../container";
 import { Reveal } from "../reveal";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import { localeHref } from "@/lib/i18n/paths";
+import type { HomeServiceCardDto } from "@/lib/cms";
 import { LiquidWaveTop } from "../LiquidWaveTop";
+
+/* آیکون‌های مجاز کارت‌ها — نام آیکون از پنل مدیریت (فیلد IconName) */
+const cardIcons: Record<string, LucideIcon> = {
+  Sparkles,
+  Cpu,
+  Zap,
+  Code2,
+  Layers,
+  Globe,
+  Compass,
+  Maximize2,
+};
+
+/** متن چندزبانه را برای زبان جاری برمی‌گرداند (در نبود ترجمه، فارسی). */
+function pickText(text: { fa: string; en: string } | null | undefined, locale: Locale): string {
+  if (!text) return "";
+  return text[locale] || text.fa || "";
+}
+
+/** DTO بک‌اند را به شکل ViewModel کارت تبدیل می‌کند. */
+function toCardView(card: HomeServiceCardDto, locale: Locale) {
+  return {
+    code: card.code,
+    title: pickText(card.title, locale),
+    desc: pickText(card.desc, locale),
+    icon: (card.icon && cardIcons[card.icon]) || Sparkles,
+    color: card.color || "#e6304c",
+    softColor: card.softColor || "#ffe5e9",
+    glowColor: card.glowColor || "rgba(230, 48, 76, 0.4)",
+    featureTitle: pickText(card.featureTitle, locale),
+    featureValue: pickText(card.featureValue, locale),
+    progress: card.progress || "0%",
+    tags: card.tags ?? [],
+  };
+}
 
 // کارت تعاملی با افکت عمق سه‌بعدی و واکنش به حرکت ماوس
 function InteractiveCard({
@@ -158,11 +195,14 @@ function InteractiveCard({
 export function ServicesSection({
   locale,
   dict,
+  cards,
 }: {
   locale: Locale;
   dict: Dictionary;
+  /** کارت‌های خدمات صفحه اصلی از /api/public/home-services؛ در نبودشان فهرست پیش‌فرض. */
+  cards?: HomeServiceCardDto[];
 }) {
-  const services = [
+  const fallbackCards = [
     {
       code: "EXP // 01",
       title: "طراحی وب تعاملی و ۳D",
@@ -203,6 +243,10 @@ export function ServicesSection({
       tags: ["SSR / SSG", "Edge Cache", "LightHouse", "Zero Bloat"],
     },
   ];
+
+
+  const services =
+    cards && cards.length > 0 ? cards.map((card) => toCardView(card, locale)) : fallbackCards;
 
   return (
     <section

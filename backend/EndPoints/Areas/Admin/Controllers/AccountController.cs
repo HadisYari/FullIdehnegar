@@ -63,13 +63,12 @@ public sealed class AccountController : Controller
 
         // The password is never stored in the database: the panel accepts the
         // SHA-256 hash configured in appsettings (or IDEHNEGAR_ADMIN_PASSWORD in dev).
-        var expected = _options.PasswordSha256;
+        var password = _options.PasswordSha256;
         var environmentPassword = Environment.GetEnvironmentVariable("IDEHNEGAR_ADMIN_PASSWORD");
         var usernameMatches = string.Equals(model.Username.Trim(), _options.Username, StringComparison.Ordinal);
 
-        var passwordMatches = !string.IsNullOrWhiteSpace(expected)
-            ? PasswordHasher.Verify(model.Password, expected)
-            : !string.IsNullOrWhiteSpace(environmentPassword) && model.Password == environmentPassword;
+        var passwordMatches = 
+            !string.IsNullOrWhiteSpace(password) && model.Password == password;
 
         if (!usernameMatches || !passwordMatches)
         {
@@ -111,7 +110,7 @@ public sealed class AccountController : Controller
 
     private IActionResult RedirectLocal(string? next)
     {
-        var safe = !string.IsNullOrWhiteSpace(next) && next.StartsWith('/', StringComparison.Ordinal) && !next.StartsWith("//", StringComparison.Ordinal);
+        var safe = !string.IsNullOrWhiteSpace(next) && next.StartsWith("/", StringComparison.Ordinal) && !next.StartsWith("//", StringComparison.Ordinal);
         return safe ? LocalRedirect(next!) : RedirectToAction("Index", "Dashboard", new { area = "Admin" });
     }
 }

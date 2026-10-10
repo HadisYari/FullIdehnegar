@@ -9,7 +9,7 @@ namespace EndPoints.Infrastructure;
 /// for both performance and freshness (SEO crawlers always get a 200).
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public sealed class PublicCacheAttribute : Attribute, IActionFilter
+public sealed class PublicCacheAttribute : Attribute
 {
     private readonly int _maxAge;
     private readonly int _sharedMaxAge;
@@ -39,7 +39,7 @@ public sealed class PublicCacheAttribute : Attribute, IActionFilter
         headers[HeaderNames.CacheControl] = $"public, max-age={_maxAge}, s-maxage={_sharedMaxAge}, stale-while-revalidate=3600, stale-if-error=86400";
         headers[HeaderNames.Vary] = "Accept-Encoding";
         // Structured data and sitemaps are machine consumed: keep them out of the index.
-        headers[HeaderNames.XRobotsTag] = "noindex, nofollow";
+       // headers[HeaderNames.xr] = "noindex, nofollow";
     }
 }
 
@@ -54,13 +54,13 @@ public static class SecurityHeadersExtensions
         {
             var headers = context.Response.Headers;
             headers[HeaderNames.XContentTypeOptions] = "nosniff";
-            headers[HeaderNames.ReferrerPolicy] = "strict-origin-when-cross-origin";
-            headers[HeaderNames.PermissionsPolicy] = "camera=(), microphone=(), geolocation=(self), interest-cohort=()";
+          //  headers[HeaderNames.ReferrerPolicy] = "strict-origin-when-cross-origin";
+          //  headers[HeaderNames.PermissionsPolicy] = "camera=(), microphone=(), geolocation=(self), interest-cohort=()";
 
             var path = context.Request.Path.Value ?? string.Empty;
             if (path.StartsWith("/admin", StringComparison.OrdinalIgnoreCase))
             {
-                headers[HeaderNames.XRobotsTag] = "noindex, nofollow";
+              //  headers[HeaderNames.XRobotsTag] = "noindex, nofollow";
                 headers[HeaderNames.XFrameOptions] = "SAMEORIGIN";
             }
 

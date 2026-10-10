@@ -3,24 +3,56 @@
 import { useEffect, useRef, useState } from "react";
 import { Container } from "../container";
 import { Reveal } from "../reveal";
-import testimonials from "@/data/testimonials.json";
-import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
+import localTestimonials from "@/data/testimonials.json";
+import type { Locale } from "@/lib/i18n/dictionaries";
+import type { PageSectionDto, TestimonialDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
 
-export function TestimonialsSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
+/* کپی ثابت عنوان بخش (fallback). سید داده بک‌اند از همین literal ساخته می‌شود. */
+const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
+  testimonials: {
+    fa: {
+      eyebrow: "مشتریان می‌گویند",
+      title: "چند نمونه از رضایت کارفرمایان",
+      subtitle: "بشنوید از کسانی که مأموریت دیزاین و توسعه وب‌سایت خود را به ما سپردند",
+    },
+    en: {
+      eyebrow: "Testimonials",
+      title: "What our clients say",
+      subtitle: "What our clients say about our design and development standards",
+    },
+  },
+};
+
+export function TestimonialsSection({
+  locale,
+  items,
+  sections,
+}: {
+  locale: Locale;
+  /** نظرات مشتریان از /api/public/testimonials — fallback: src/data/testimonials.json */
+  items?: Pick<TestimonialDto, "name" | "quote">[];
+  /** بلوک عنوان از /api/public/page-sections/home — fallback: fallbackSections */
+  sections?: PageSectionDto[];
+}) {
   const [active, setActive] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const isRTL = locale === "fa";
 
+  const testimonials = items && items.length > 0 ? items : localTestimonials;
+  const count = testimonials.length;
+  const copy = resolveSection(sections, "testimonials", locale, fallbackSections.testimonials[locale]);
+
   useEffect(() => {
     if (isPaused) return;
     const id = setInterval(() => {
-      setActive((p) => (p + 1) % testimonials.length);
+      setActive((p) => (p + 1) % count);
     }, 5000);
     return () => clearInterval(id);
-  }, [isPaused]);
+  }, [isPaused, count]);
 
-  const goTo = (i: number) => setActive((i + testimonials.length) % testimonials.length);
+  const goTo = (i: number) => setActive((i + count) % count);
 
   return (
     <section
@@ -78,7 +110,7 @@ export function TestimonialsSection({ locale, dict }: { locale: Locale; dict: Di
               className="text-[9px] font-bold uppercase tracking-widest"
               style={{ color: "#e6304c" }}
             >
-              {dict.testimonials.eyebrow || "Feedback"}
+              {copy.eyebrow || "Feedback"}
             </span>
           </div>
 
@@ -87,14 +119,12 @@ export function TestimonialsSection({ locale, dict }: { locale: Locale; dict: Di
             className="mt-2.5 text-xl font-black tracking-tight sm:text-2xl"
             style={{ color: "#0f0f52" }}
           >
-            {dict.testimonials.title}
+            {copy.title}
           </h2>
           
           {/* Sub-headline for context (perfect for design agencies) */}
           <p className="mt-1.5 text-xs text-dark sm:text-sm">
-            {isRTL 
-              ? "بشنوید از کسانی که مأموریت دیزاین و توسعه وب‌سایت خود را به ما سپردند" 
-              : "What our clients say about our design and development standards"}
+            {copy.subtitle}
           </p>
         </Reveal>
 

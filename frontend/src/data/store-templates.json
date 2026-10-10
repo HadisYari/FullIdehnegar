@@ -1,128 +1,367 @@
 [
   {
     "id": "wh-1",
-    "name": "مگاشاپ اینترپرایز (MegaShop Pro)",
+    "name": {
+      "fa": "مگاشاپ اینترپرایز (MegaShop Pro)",
+      "en": "MegaShop Enterprise (MegaShop Pro)"
+    },
     "category": "warehouse",
-    "tag": "سامانه انبارداری چندشعبه‌ای",
-    "planName": "پلن سازمانی مگاشاپ",
+    "tag": {
+      "fa": "سامانه انبارداری چندشعبه‌ای",
+      "en": "Multi-branch warehouse management system"
+    },
+    "planName": {
+      "fa": "پلن سازمانی مگاشاپ",
+      "en": "MegaShop Enterprise plan"
+    },
     "priceMonthly": 1850000,
     "priceYearly": 17760000,
-    "discountBadge": "۲۰٪ تخفیف سالانه",
-    "desc": "طراحی شده برای هایپرمارکت‌ها، کالای دیجیتال و برندهای با بیش از ۵۰ هزار قلم کالا، چند شعبه انبار فیزیکی و فاکتور رسمی.",
-    "features": [
-      "کنترل موجودی چندانبار همزمان",
-      "حواله ورود و خروج بارکدی",
-      "اتصال به سیستم‌های مالی و سپیدار",
-      "هاست اختصاصی ابری و SSL رایگان"
-    ],
+    "discountBadge": {
+      "fa": "۲۰٪ تخفیف سالانه",
+      "en": "20% off annually"
+    },
+    "desc": {
+      "fa": "طراحی شده برای هایپرمارکت‌ها، کالای دیجیتال و برندهای با بیش از ۵۰ هزار قلم کالا، چند شعبه انبار فیزیکی و فاکتور رسمی.",
+      "en": "Designed for hypermarkets, digital goods retailers and brands with over 50,000 SKUs, several physical warehouses and official invoicing."
+    },
+    "features": {
+      "fa": [
+        "کنترل موجودی چندانبار همزمان",
+        "حواله ورود و خروج بارکدی",
+        "اتصال به سیستم‌های مالی و سپیدار",
+        "هاست اختصاصی ابری و SSL رایگان"
+      ],
+      "en": [
+        "Real-time stock control across multiple warehouses",
+        "Barcode-based receipts and dispatches",
+        "Integration with financial systems and Sepidar",
+        "Dedicated cloud hosting and free SSL"
+      ]
+    },
     "desktopScreens": [
-      { "label": "صفحه اصلی و کاتالوگ", "src": "/images/templates/wh1-desk-1.jpg" },
-      { "label": "داشبورد انباردار و بارکدخوان", "src": "/images/templates/wh1-desk-2.jpg" },
-      { "label": "صفحه تسویه و فاکتور", "src": "/images/templates/wh1-desk-3.jpg" }
+      {
+        "label": {
+          "fa": "صفحه اصلی و کاتالوگ",
+          "en": "Home page and catalogue"
+        },
+        "src": "/images/templates/wh1-desk-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "داشبورد انباردار و بارکدخوان",
+          "en": "Warehouse dashboard and barcode scanner"
+        },
+        "src": "/images/templates/wh1-desk-2.jpg"
+      },
+      {
+        "label": {
+          "fa": "صفحه تسویه و فاکتور",
+          "en": "Checkout and invoice page"
+        },
+        "src": "/images/templates/wh1-desk-3.jpg"
+      }
     ],
     "mobileScreens": [
-      { "label": "نسخه خریدار (PWA)", "src": "/images/templates/wh1-mob-1.jpg" },
-      { "label": "پنل تحویل سریع", "src": "/images/templates/wh1-mob-2.jpg" }
+      {
+        "label": {
+          "fa": "نسخه خریدار (PWA)",
+          "en": "Buyer app (PWA)"
+        },
+        "src": "/images/templates/wh1-mob-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "پنل تحویل سریع",
+          "en": "Fast delivery panel"
+        },
+        "src": "/images/templates/wh1-mob-2.jpg"
+      }
     ]
   },
   {
     "id": "wh-2",
-    "name": "ماتریسی استایل (Moda Matrix)",
+    "name": {
+      "fa": "ماتریسی استایل (Moda Matrix)",
+      "en": "Moda Matrix"
+    },
     "category": "warehouse",
-    "tag": "انبارداری سایزبندی و رنگ",
-    "planName": "پلن پیشرفته مد و پوشاک",
+    "tag": {
+      "fa": "انبارداری سایزبندی و رنگ",
+      "en": "Size and colour warehouse management"
+    },
+    "planName": {
+      "fa": "پلن پیشرفته مد و پوشاک",
+      "en": "Advanced fashion and apparel plan"
+    },
     "priceMonthly": 1450000,
     "priceYearly": 13920000,
-    "discountBadge": "۲۰٪ تخفیف سالانه",
-    "desc": "ویژه فروشگاه‌های پوشاک و کفش با ماتریس چندبُعدی انبار بر اساس سایز، رنگ، بچ تولید و هشدار اتمام سریع.",
-    "features": [
-      "انبارداری ماتریسی رنگ/سایز",
-      "رزرو موقت کالا در سبد خرید",
-      "هشدار کاهش موجودی بحرانی",
-      "سیستم کد تخفیف پیشرفته"
-    ],
+    "discountBadge": {
+      "fa": "۲۰٪ تخفیف سالانه",
+      "en": "20% off annually"
+    },
+    "desc": {
+      "fa": "ویژه فروشگاه‌های پوشاک و کفش با ماتریس چندبُعدی انبار بر اساس سایز، رنگ، بچ تولید و هشدار اتمام سریع.",
+      "en": "Built for clothing and footwear stores, with a multi-dimensional warehouse matrix by size, colour and production batch, plus low-stock alerts."
+    },
+    "features": {
+      "fa": [
+        "انبارداری ماتریسی رنگ/سایز",
+        "رزرو موقت کالا در سبد خرید",
+        "هشدار کاهش موجودی بحرانی",
+        "سیستم کد تخفیف پیشرفته"
+      ],
+      "en": [
+        "Colour and size matrix inventory",
+        "Temporary stock reservation in the cart",
+        "Critical low-stock alerts",
+        "Advanced discount code system"
+      ]
+    },
     "desktopScreens": [
-      { "label": "ویترین کالکشن فصلی", "src": "/images/templates/wh2-desk-1.jpg" },
-      { "label": "پنل کنترل سایز و متریال", "src": "/images/templates/wh2-desk-2.jpg" }
+      {
+        "label": {
+          "fa": "ویترین کالکشن فصلی",
+          "en": "Seasonal collection showcase"
+        },
+        "src": "/images/templates/wh2-desk-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "پنل کنترل سایز و متریال",
+          "en": "Size and material control panel"
+        },
+        "src": "/images/templates/wh2-desk-2.jpg"
+      }
     ],
     "mobileScreens": [
-      { "label": "انتخاب سایز و رنگ", "src": "/images/templates/wh2-mob-1.jpg" },
-      { "label": "پیگیری لحظه‌ای مرسوله", "src": "/images/templates/wh2-mob-2.jpg" }
+      {
+        "label": {
+          "fa": "انتخاب سایز و رنگ",
+          "en": "Size and colour selection"
+        },
+        "src": "/images/templates/wh2-mob-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "پیگیری لحظه‌ای مرسوله",
+          "en": "Live shipment tracking"
+        },
+        "src": "/images/templates/wh2-mob-2.jpg"
+      }
     ]
   },
   {
     "id": "wh-3",
-    "name": "صنعتی و ابزارآلات (Techno Ware)",
+    "name": {
+      "fa": "صنعتی و ابزارآلات (Techno Ware)",
+      "en": "Techno Ware (Industrial & Tools)"
+    },
     "category": "warehouse",
-    "tag": "انبارداری سریالی و قطعات",
-    "planName": "پلن شرکتی B2B",
+    "tag": {
+      "fa": "انبارداری سریالی و قطعات",
+      "en": "Serialised and spare-parts warehouse"
+    },
+    "planName": {
+      "fa": "پلن شرکتی B2B",
+      "en": "B2B corporate plan"
+    },
     "priceMonthly": 1650000,
     "priceYearly": 15840000,
-    "discountBadge": "۲۰٪ تخفیف سالانه",
-    "desc": "مناسب توزیع‌کنندگان لوازم یدکی و قطعات با شماره سریال مجزا، انبار قفسه‌بندی‌شده و صدور پیش‌فاکتور رسمی B2B.",
-    "features": [
-      "ثبت بارنامه و سریال فنی قطعه",
-      "صدور آنی پیش‌فاکتور با مالیات",
-      "تفکیک انبار اصلی از امانی",
-      "پنل حسابداری همگام"
-    ],
+    "discountBadge": {
+      "fa": "۲۰٪ تخفیف سالانه",
+      "en": "20% off annually"
+    },
+    "desc": {
+      "fa": "مناسب توزیع‌کنندگان لوازم یدکی و قطعات با شماره سریال مجزا، انبار قفسه‌بندی‌شده و صدور پیش‌فاکتور رسمی B2B.",
+      "en": "For distributors of spare parts and components with individual serial numbers, shelf-organised warehouses and official B2B pro-forma invoices."
+    },
+    "features": {
+      "fa": [
+        "ثبت بارنامه و سریال فنی قطعه",
+        "صدور آنی پیش‌فاکتور با مالیات",
+        "تفکیک انبار اصلی از امانی",
+        "پنل حسابداری همگام"
+      ],
+      "en": [
+        "Consignment notes and technical part serial numbers",
+        "Instant pro-forma invoices with tax",
+        "Main and consignment warehouses kept separate",
+        "Synced accounting panel"
+      ]
+    },
     "desktopScreens": [
-      { "label": "جستجوی شماره فنی کالا", "src": "/images/templates/wh3-desk-1.jpg" },
-      { "label": "فاکتور رسمی سازمانی", "src": "/images/templates/wh3-desk-2.jpg" }
+      {
+        "label": {
+          "fa": "جستجوی شماره فنی کالا",
+          "en": "Technical part number search"
+        },
+        "src": "/images/templates/wh3-desk-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "فاکتور رسمی سازمانی",
+          "en": "Official corporate invoice"
+        },
+        "src": "/images/templates/wh3-desk-2.jpg"
+      }
     ],
     "mobileScreens": [
-      { "label": "استعلام موجودی قطعه", "src": "/images/templates/wh3-mob-1.jpg" },
-      { "label": "ثبت فاکتور اعتباری", "src": "/images/templates/wh3-mob-2.jpg" }
+      {
+        "label": {
+          "fa": "استعلام موجودی قطعه",
+          "en": "Part stock enquiry"
+        },
+        "src": "/images/templates/wh3-mob-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "ثبت فاکتور اعتباری",
+          "en": "Credit invoice entry"
+        },
+        "src": "/images/templates/wh3-mob-2.jpg"
+      }
     ]
   },
   {
     "id": "wh-4",
-    "name": "مارکت‌پلیس هاب (Market Central)",
+    "name": {
+      "fa": "مارکت‌پلیس هاب (Market Central)",
+      "en": "Market Central"
+    },
     "category": "warehouse",
-    "tag": "انبار مرکزی چندتأمینی",
-    "planName": "پلن مارکت‌پلیس چندفروشندگی",
+    "tag": {
+      "fa": "انبار مرکزی چندتأمینی",
+      "en": "Central multi-supplier warehouse"
+    },
+    "planName": {
+      "fa": "پلن مارکت‌پلیس چندفروشندگی",
+      "en": "Multi-vendor marketplace plan"
+    },
     "priceMonthly": 2200000,
     "priceYearly": 21120000,
-    "discountBadge": "۲۰٪ تخفیف سالانه",
-    "desc": "طراحی هاب لجستیک با امکان نگهداری کالای تأمین‌کنندگان گوناگون در انبار متمرکز و ارسال خودکار به باربری.",
-    "features": [
-      "تفکیک انبار به ازای فروشنده",
-      "تخصیص اتوماتیک نزدیک‌ترین شعبه",
-      "ارزش‌گذاری ریالی راکد",
-      "تسویه حساب خودکار چندتأمینی"
-    ],
+    "discountBadge": {
+      "fa": "۲۰٪ تخفیف سالانه",
+      "en": "20% off annually"
+    },
+    "desc": {
+      "fa": "طراحی هاب لجستیک با امکان نگهداری کالای تأمین‌کنندگان گوناگون در انبار متمرکز و ارسال خودکار به باربری.",
+      "en": "A logistics hub that stores goods from several suppliers in one central warehouse and hands outgoing orders to the courier automatically."
+    },
+    "features": {
+      "fa": [
+        "تفکیک انبار به ازای فروشنده",
+        "تخصیص اتوماتیک نزدیک‌ترین شعبه",
+        "ارزش‌گذاری ریالی راکد",
+        "تسویه حساب خودکار چندتأمینی"
+      ],
+      "en": [
+        "Warehouse separation per seller",
+        "Automatic allocation to the nearest branch",
+        "Valuation of slow-moving stock in rials",
+        "Automatic multi-supplier settlement"
+      ]
+    },
     "desktopScreens": [
-      { "label": "پنل تأمین‌کننده و شارژ انبار", "src": "/images/templates/wh4-desk-1.jpg" },
-      { "label": "مانیتورینگ سفارشات خروجی", "src": "/images/templates/wh4-desk-2.jpg" }
+      {
+        "label": {
+          "fa": "پنل تأمین‌کننده و شارژ انبار",
+          "en": "Supplier panel and warehouse top-up"
+        },
+        "src": "/images/templates/wh4-desk-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "مانیتورینگ سفارشات خروجی",
+          "en": "Outgoing order monitoring"
+        },
+        "src": "/images/templates/wh4-desk-2.jpg"
+      }
     ],
     "mobileScreens": [
-      { "label": "پنل تحویل انباردار", "src": "/images/templates/wh4-mob-1.jpg" },
-      { "label": "سبد خرید چندفروشگاهی", "src": "/images/templates/wh4-mob-2.jpg" }
+      {
+        "label": {
+          "fa": "پنل تحویل انباردار",
+          "en": "Warehouse keeper delivery panel"
+        },
+        "src": "/images/templates/wh4-mob-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "سبد خرید چندفروشگاهی",
+          "en": "Multi-store shopping cart"
+        },
+        "src": "/images/templates/wh4-mob-2.jpg"
+      }
     ]
   },
   {
     "id": "light-1",
-    "name": "فلش چابک (Flash Direct)",
+    "name": {
+      "fa": "فلش چابک (Flash Direct)",
+      "en": "Flash Direct"
+    },
     "category": "light",
-    "tag": "بدون انبارداری • خرید فوری",
-    "planName": "پلن سبک و دانلودی (لایت)",
+    "tag": {
+      "fa": "بدون انبارداری • راه‌اندازی فوری",
+      "en": "No warehousing • instant setup"
+    },
+    "planName": {
+      "fa": "پلن سبک و دانلودی (لایت)",
+      "en": "Light download plan"
+    },
     "priceMonthly": 790000,
     "priceYearly": 7580000,
-    "discountBadge": "۲۵٪ تخفیف سالانه",
-    "desc": "برای بیزینس‌هایی که دغدغه انبار و موجودی فیزیکی ندارند (محصولات دیجیتال، خدماتی، تک‌محصولی یا تأمین آنی). بدون کدهای سنگین انبارداری با سرعت فوق‌العاده.",
-    "features": [
-      "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
-      "بدون لودینگ لاگ انبارداری",
-      "امتیاز ۱۰۰ در تست سرعت",
-      "اتصال سریع به درگاه بانکی"
-    ],
+    "discountBadge": {
+      "fa": "۲۵٪ تخفیف سالانه",
+      "en": "25% off annually"
+    },
+    "desc": {
+      "fa": "برای بیزینس‌هایی که دغدغه انبار و موجودی فیزیکی ندارند (محصولات دیجیتال، خدماتی، تک‌محصولی یا تأمین آنی). بدون کدهای سنگین انبارداری با سرعت فوق‌العاده.",
+      "en": "For businesses without a warehouse or physical stock (digital products, services, single products or instant sourcing). No heavy warehousing features, and very fast."
+    },
+    "features": {
+      "fa": [
+        "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
+        "بدون لودینگ لاگ انبارداری",
+        "امتیاز ۱۰۰ در تست سرعت"
+      ],
+      "en": [
+        "One-step checkout in 30 seconds",
+        "No warehousing log loading",
+        "Score of 100 in speed tests"
+      ]
+    },
     "desktopScreens": [
-      { "label": "صفحه فرود متمرکز خرید", "src": "/images/templates/light-desk-1.jpg" },
-      { "label": "فرم تسویه حساب سریع", "src": "/images/templates/light-desk-2.jpg" }
+      {
+        "label": {
+          "fa": "صفحه فرود متمرکز خرید",
+          "en": "Focused purchase landing page"
+        },
+        "src": "/images/templates/light-desk-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "فرم تسویه حساب سریع",
+          "en": "Quick checkout form"
+        },
+        "src": "/images/templates/light-desk-2.jpg"
+      }
     ],
     "mobileScreens": [
-      { "label": "خرید با یک کلیک", "src": "/images/templates/light-mob-1.jpg" },
-      { "label": "فاکتور پیامکی آنی", "src": "/images/templates/light-mob-2.jpg" }
+      {
+        "label": {
+          "fa": "خرید با یک کلیک",
+          "en": "One-click purchase"
+        },
+        "src": "/images/templates/light-mob-1.jpg"
+      },
+      {
+        "label": {
+          "fa": "فاکتور پیامکی آنی",
+          "en": "Instant SMS invoice"
+        },
+        "src": "/images/templates/light-mob-2.jpg"
+      }
     ]
   }
 ]
