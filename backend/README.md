@@ -20,7 +20,7 @@ backend/
 | جدول | مصرف در فرانت‌اند |
 | --- | --- |
 | `SiteSettings` (تک‌رکورد) | `src/lib/site-config.ts` — نام، دامنه، تلفن‌ها، آدرس، ساعت، شبکه‌های اجتماعی، آمار |
-| `PageMetas` | عنوان/توضیح/کلیدواژه/OG/noindex هر صفحه (۸ کلید: home…payment) |
+| `PageMetas` | عنوان/توضیح/کلیدواژه/OG/noindex هر صفحه (۸ کلید: home…payment). برچسب/تیتر/زیرتیتر فقط برای صفحهٔ اصلی است و در پنل فقط همان صفحه نمایش داده می‌شود؛ H1 بقیهٔ صفحه‌ها در فرانت‌اند استاتیک است. |
 | `PortfolioCategories` | فیلترهای صفحهٔ نمونه‌کارها |
 | `PortfolioProjects` | `src/data/portfolio.json` کامل (گالری، فیچرها، آمار، challenge/solution) |
 | `Services`, `ProcessSteps` | سکشن سرویس‌ها و فرآیند همکاری صفحهٔ اصلی |

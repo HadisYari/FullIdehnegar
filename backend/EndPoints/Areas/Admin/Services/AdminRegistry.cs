@@ -35,6 +35,14 @@ public sealed class AdminRegistry
 
     private static List<AdminFieldSpec> Fields() => new();
 
+    /// <summary>
+    /// Eyebrow, heading and subheading of a page are read by the home page only. The other
+    /// pages keep their visible copy in the front end, so the panel offers these fields
+    /// for the home page (and for a new row, before its page key is chosen) only.
+    /// </summary>
+    private static bool ShowsHeroCopy(object row) =>
+        row is not PageMeta page || string.IsNullOrEmpty(page.PageKey) || page.PageKey == "home";
+
     private static AdminColumnSpec Column(string property, string label, bool isImage = false, bool isBool = false, int maxWidth = 0) =>
         new() { Property = property, Label = label, IsImage = isImage, IsBool = isBool, MaxWidth = maxWidth };
 
@@ -598,9 +606,9 @@ public sealed class AdminRegistry
                 .AddPair("Title", "عنوان سئو (فارسی)", "SEO title (English)", maxLength: 220)
                 .AddPair("Description", "توضیح متا (فارسی)", "Meta description (English)", AdminFieldKind.Textarea)
                 .AddPair("Keywords", "کلمات کلیدی (فارسی)", "Keywords (English)", maxLength: 500)
-                .AddPair("Eyebrow", "برچسب بالای تیتر", "Hero eyebrow", maxLength: 200)
-                .AddPair("Heading", "تیتر اصلی صفحه", "Hero heading", maxLength: 300)
-                .AddPair("Subheading", "زیرتیتر صفحه", "Hero subheading", AdminFieldKind.Textarea)
+                .AddPair("Eyebrow", "برچسب بالای تیتر", "Hero eyebrow", maxLength: 200, showWhen: ShowsHeroCopy)
+                .AddPair("Heading", "تیتر اصلی صفحه", "Hero heading", maxLength: 300, showWhen: ShowsHeroCopy)
+                .AddPair("Subheading", "زیرتیتر صفحه", "Hero subheading", AdminFieldKind.Textarea, showWhen: ShowsHeroCopy)
                 .AddPair("CtaPrimary", "متن دکمه اصلی", "Primary CTA", maxLength: 150)
                 .AddPair("CtaSecondary", "متن دکمه دوم", "Secondary CTA", maxLength: 150)
                 .AddField(AdminFieldExtensions.Image("OgImage", "تصویر اشتراک‌گذاری (OG)"))
@@ -626,7 +634,8 @@ public static class AdminFieldExtensions
         string? help = null,
         string column = "col-12 col-lg-6",
         string? optionsKey = null,
-        AdminRepeaterColumn[]? columns = null) => new()
+        AdminRepeaterColumn[]? columns = null,
+        Func<object, bool>? showWhen = null) => new()
         {
             Property = property,
             Label = label,
@@ -637,6 +646,7 @@ public static class AdminFieldExtensions
             Column = column,
             OptionsKey = optionsKey,
             Columns = columns,
+            ShowWhen = showWhen,
         };
 
     public static AdminFieldSpec Text(string property, string label, bool required = false, int maxLength = 300, string? help = null) =>
@@ -685,10 +695,11 @@ public static class AdminFieldExtensions
         string labelEn,
         AdminFieldKind kind = AdminFieldKind.Text,
         bool required = false,
-        int maxLength = 300)
+        int maxLength = 300,
+        Func<object, bool>? showWhen = null)
     {
-        fields.Add(Field(property + "Fa", labelFa, kind, required, maxLength));
-        fields.Add(Field(property + "En", labelEn, kind, required, maxLength));
+        fields.Add(Field(property + "Fa", labelFa, kind, required, maxLength, showWhen: showWhen));
+        fields.Add(Field(property + "En", labelEn, kind, required, maxLength, showWhen: showWhen));
         return fields;
     }
 

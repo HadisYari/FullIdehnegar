@@ -52,6 +52,12 @@ public sealed class AdminFieldSpec
 
     public AdminRepeaterColumn[]? Columns { get; init; }
 
+    /// <summary>
+    /// Optional rule on the row being edited. When it returns false the field is neither
+    /// shown nor bound, so the stored value is kept. Used for copy that only some pages read.
+    /// </summary>
+    public Func<object, bool>? ShowWhen { get; init; }
+
     /// <summary>Bootstrap grid width of the field inside the form.</summary>
     public string Column { get; init; } = "col-12 col-lg-6";
 
