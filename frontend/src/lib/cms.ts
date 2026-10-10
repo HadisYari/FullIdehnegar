@@ -627,7 +627,7 @@ export type ContactPayload = {
   inquiryType?: string;
 };
 
-export type InquiryResult = { success?: boolean; message?: string; emailSent?: boolean };
+export type InquiryResult = { ok?: boolean; emailSent?: boolean };
 
 /**
  * ثبت پیام تماس در دیتابیس + ارسال ایمیل توسط بک‌اند.

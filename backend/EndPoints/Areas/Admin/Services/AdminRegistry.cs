@@ -579,8 +579,10 @@ public sealed class AdminRegistry
                 .AddPair("Heading", "تیتر اصلی صفحه (فارسی)", "Hero heading (English)", maxLength: 300,
                     help: "برای شکستن خط از \\n و برای بخش گرادیانی از |متن| استفاده کنید.")
                 .AddPair("Subheading", "زیرتیتر صفحه (فارسی)", "Hero subheading (English)", AdminFieldKind.Textarea)
-                .AddPair("CtaPrimary", "متن دکمه اصلی (فارسی)", "Primary button (English)", maxLength: 200)
-                .AddPair("CtaSecondary", "متن دکمه دوم (فارسی)", "Secondary button (English)", maxLength: 200)
+                .AddPair("CtaPrimary", "متن دکمه اصلی (فارسی)", "Primary button (English)", maxLength: 200,
+                    help: "خالی بگذارید تا دکمه از متن پیش‌فرض قالب استفاده شود.")
+                .AddPair("CtaSecondary", "متن دکمه دوم (فارسی)", "Secondary button (English)", maxLength: 200,
+                    help: "خالی بگذارید تا دکمه از متن پیش‌فرض قالب استفاده شود.")
                 .AddField(AdminFieldExtensions.Image("OgImage", "تصویر اشتراک‌گذاری (OG)"))
                 .AddField(AdminFieldExtensions.Select("ChangeFrequency", "دوره تغییر (sitemap)", "change-frequency"))
                 .AddField(AdminFieldExtensions.Money("Priority", "اولویت (۰ تا ۱)"))
