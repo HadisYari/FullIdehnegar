@@ -24,23 +24,6 @@ public sealed class ContactRequest
     public string? Company { get; set; }
 }
 
-/// <summary>Body of POST /api/public/store-orders — the store-builder checkout intent.</summary>
-public sealed class StoreOrderRequest
-{
-    public string FullName { get; set; } = string.Empty;
-    public string Mobile { get; set; } = string.Empty;
-    public string? StoreName { get; set; }
-    public string? Domain { get; set; }
-    public string? TemplateId { get; set; }
-    public string? Plan { get; set; }
-    public string Cycle { get; set; } = "yearly";
-    public decimal Amount { get; set; }
-    public string Gateway { get; set; } = "shaparak";
-    public bool RulesAccepted { get; set; }
-    public string Locale { get; set; } = "fa";
-    public string? Company { get; set; }
-}
-
 /// <summary>Write endpoints of the public API (contact form + checkout intent).</summary>
 [ApiController]
 [Route("api/public")]
@@ -119,51 +102,6 @@ public sealed class InquiryApiController : ControllerBase
         await repo.SaveChangesAsync(cancellationToken);
 
         return Accepted(new { ok = true, id = entity.Id, emailSent = entity.EmailSent });
-    }
-
-    [HttpPost("store-orders")]
-    [EnableRateLimiting(PublicRateLimiting.Policy)]
-    public async Task<IActionResult> StoreOrder([FromBody] StoreOrderRequest request, CancellationToken cancellationToken)
-    {
-        if (!ModelState.IsValid)
-        {
-            return ValidationProblem(ModelState);
-        }
-
-        if (!request.RulesAccepted || string.IsNullOrWhiteSpace(request.FullName) || string.IsNullOrWhiteSpace(request.Mobile))
-        {
-            return ValidationProblem("نام، شماره تماس و پذیرش قوانین الزامی است.");
-        }
-
-        var order = new StoreOrder
-        {
-            FullName = request.FullName.Trim(),
-            Mobile = request.Mobile.Trim(),
-            StoreName = Trim(request.StoreName, 200),
-            DesiredDomain = Trim(request.Domain, 200),
-            TemplateCode = Trim(request.TemplateId, 60),
-            PlanName = Trim(request.Plan, 300),
-            BillingCycle = request.Cycle == "monthly" ? "monthly" : "yearly",
-            Amount = request.Amount < 0 ? 0 : request.Amount,
-            Gateway = request.Gateway is "zarinpal" ? "zarinpal" : "shaparak",
-            Status = "pending",
-            Locale = request.Locale is "en" ? "en" : "fa",
-            CreatedAtUtc = DateTime.UtcNow,
-        };
-
-        var repo = _provider.For<StoreOrder>();
-        await repo.AddAsync(order, cancellationToken);
-        await repo.SaveChangesAsync(cancellationToken);
-
-        // The gateway handshake is owned by the payment provider; the panel keeps
-        // the intent so sales can follow up and mark the subscription as paid.
-        return Accepted(new
-        {
-            ok = true,
-            id = order.Id,
-            reference = order.Id.ToString("N")[..10].ToUpperInvariant(),
-            status = order.Status,
-        });
     }
 
     private static string? Trim(string? value, int max)

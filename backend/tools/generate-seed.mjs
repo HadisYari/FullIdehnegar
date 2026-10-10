@@ -123,7 +123,6 @@ const pageFiles = {
   contact: "app/(site)/[locale]/contact/page.tsx",
   "store-builder": "app/(site)/[locale]/store-builder/page.tsx",
   "gold-app": "app/(site)/[locale]/gold-app/page.tsx",
-  payment: "app/(site)/[locale]/payment/page.tsx",
 };
 
 const layoutSource = read(fe, "app/(site)/[locale]/layout.tsx");
@@ -159,7 +158,7 @@ const MISSING_SEO = {
       en: "Cloud Store Builder | Subscriptions with Instant Delivery",
     },
     description: {
-      fa: "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال به درگاه شاپرک.",
+      fa: "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال مستقیم به درگاه شاپرک.",
       en: "Pick a storefront template with full warehouse management or the lightweight plan — activated instantly after payment on Shaparak.",
     },
   },
@@ -171,13 +170,6 @@ const MISSING_SEO = {
     description: {
       fa: "نرم‌افزار نرخ لحظه‌ای طلا، سکه و ارز با نمایشگر مخصوص مغازه‌های طلا و جواهر؛ به‌روزرسانی خودکار از اطلاعیه‌های رسمی اتحادیه.",
       en: "Real-time gold, coin and currency rates for Android and shop TVs, synced with official union announcements.",
-    },
-  },
-  payment: {
-    title: { fa: "تسویه حساب و فعال‌سازی اشتراک", en: "Checkout & Subscription Activation" },
-    description: {
-      fa: "تکمیل اطلاعات و پرداخت امن اشتراک فروشگاه‌ساز ایده‌نگار.",
-      en: "Complete your details and pay securely to activate your store subscription.",
     },
   },
 };
@@ -214,7 +206,7 @@ const pageMetas = Object.entries(pageFiles).map(([key, file], index) => {
     ctaSecondaryFa: null,
     ctaSecondaryEn: null,
     ogImage: key === "home" ? "/images/portfolio/smartexport-ai.jpg" : null,
-    noIndex: key === "payment",
+    noIndex: false,
     changeFrequency: defaults.changeFrequency ?? "monthly",
     priority: defaults.priority ?? (key === "services" || key === "portfolio" || key === "store-builder" ? 0.9 : 0.8),
     sortOrder: index,
@@ -424,7 +416,7 @@ const inquiryTypesRows = inquiryTypes.fa.map((item, index) => ({
   isPublished: true,
 }));
 
-/* ───────────────────────────────── store builder / payment ───────────────────── */
+/* ───────────────────────────────── store builder ─────────────────────────────── */
 
 // The store templates and plans live in the data files that the front end falls
 // back to when the API is unavailable (lib/store.ts), so they are the single source.
@@ -432,34 +424,23 @@ const templates = JSON.parse(read(fe, "data", "store-templates.json"));
 
 const storeTemplates = templates.map((tpl, index) => ({
   code: tpl.id,
-  name: tpl.name,
+  name: tpl.name.fa,
+  nameEn: tpl.name.en,
   category: tpl.category,
-  tag: tpl.tag ?? null,
-  planName: tpl.planName,
+  tag: tpl.tag.fa || null,
+  tagEn: tpl.tag.en || null,
+  planName: tpl.planName.fa,
+  planNameEn: tpl.planName.en,
   priceMonthly: tpl.priceMonthly,
   priceYearly: tpl.priceYearly,
-  discountBadge: tpl.discountBadge ?? null,
-  description: tpl.desc ?? null,
-  features: tpl.features ?? [],
-  desktopScreens: (tpl.desktopScreens ?? []).map((s) => ({ label: s.label, src: s.src })),
-  mobileScreens: (tpl.mobileScreens ?? []).map((s) => ({ label: s.label, src: s.src })),
-  sortOrder: index,
-  isPublished: true,
-}));
-
-const tiers = JSON.parse(read(fe, "data", "store-plans.json"));
-
-const storePlans = tiers.map((tier, index) => ({
-  code: tier.id,
-  name: tier.name,
-  badge: tier.badge ?? null,
-  tagline: tier.tagline ?? null,
-  isPopular: Boolean(tier.isPopular),
-  monthlyPrice: tier.monthlyPrice,
-  yearlyPrice: tier.yearlyPrice,
-  setupTime: tier.setupTime ?? null,
-  features: tier.features ?? [],
-  limitations: tier.limitations ?? [],
+  discountBadge: tpl.discountBadge.fa || null,
+  discountBadgeEn: tpl.discountBadge.en || null,
+  description: tpl.desc.fa || null,
+  descriptionEn: tpl.desc.en || null,
+  features: tpl.features.fa,
+  featuresEn: tpl.features.en,
+  desktopScreens: tpl.desktopScreens.map((s) => ({ label: s.label.fa, labelEn: s.label.en, src: s.src })),
+  mobileScreens: tpl.mobileScreens.map((s) => ({ label: s.label.fa, labelEn: s.label.en, src: s.src })),
   sortOrder: index,
   isPublished: true,
 }));
@@ -669,7 +650,6 @@ const pageSectionSources = [
   { pageKey: "services", file: ["app", "(site)", "[locale]", "services", "page.tsx"], marker: "const fallbackSections" },
   { pageKey: "contact", file: ["components", "sections", "contact-section.tsx"], marker: "const fallbackSections" },
   { pageKey: "store-builder", file: ["components", "store-builder", "store-builder-client.tsx"], marker: "const fallbackSections" },
-  { pageKey: "payment", file: ["components", "payment", "payment-client.tsx"], marker: "const fallbackSections" },
 ];
 
 const pageSections = pageSectionSources.flatMap(({ pageKey, file, marker }) => {
@@ -734,7 +714,6 @@ const dataset = {
   faqItems,
   inquiryTypes: inquiryTypesRows,
   storeTemplates,
-  storePlans,
   appDownloadLinks: downloadButtons,
 };
 

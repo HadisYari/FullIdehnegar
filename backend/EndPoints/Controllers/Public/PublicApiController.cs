@@ -103,7 +103,6 @@ public sealed class SiteApiController : PublicApiControllerBase
         var faqs = await Repo<FaqItem>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var inquiryTypes = await Repo<InquiryType>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var templates = await Repo<StoreTemplate>().Query().Published().Ordered().ToListAsync(cancellationToken);
-        var plans = await Repo<StorePlan>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var downloads = await Repo<AppDownloadLink>().Query().Published().Ordered().ToListAsync(cancellationToken);
 
         var take = Math.Clamp(featuredTake, 1, 24);
@@ -131,7 +130,6 @@ public sealed class SiteApiController : PublicApiControllerBase
             Faqs = faqs.Select(faq => faq.ToDto()).ToList(),
             InquiryTypes = inquiryTypes.Select(type => type.ToDto()).ToList(),
             StoreTemplates = templates.Select(template => template.ToDto()).ToList(),
-            StorePlans = plans.Select(plan => plan.ToDto()).ToList(),
             AppDownloadLinks = downloads.Select(download => download.ToDto()).ToList(),
             GeneratedAtUtc = DateTime.UtcNow,
         };
@@ -395,13 +393,6 @@ public sealed class SectionsApiController : PublicApiControllerBase
 
         var items = await query.OrderBy(template => template.SortOrder).ToListAsync(cancellationToken);
         return items.Select(template => template.ToDto()).ToList();
-    }
-
-    [HttpGet("store-plans")]
-    public async Task<ActionResult<IReadOnlyList<StorePlanDto>>> StorePlans(CancellationToken cancellationToken)
-    {
-        var items = await Repo<StorePlan>().Query().Published().Ordered().ToListAsync(cancellationToken);
-        return items.Select(plan => plan.ToDto()).ToList();
     }
 
     [HttpGet("app-download-links")]

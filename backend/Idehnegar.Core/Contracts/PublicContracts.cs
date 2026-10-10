@@ -81,7 +81,7 @@ public sealed class ProjectStatDto
 
 public sealed class LabeledImageDto
 {
-    public string Label { get; set; } = string.Empty;
+    public LocalizedText Label { get; set; } = new(string.Empty, string.Empty);
     public string Src { get; set; } = string.Empty;
 }
 
@@ -199,36 +199,6 @@ public sealed class InquiryTypeDto
     public string? Icon { get; set; }
 }
 
-public sealed class StoreTemplateDto
-{
-    public string Id { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public string Category { get; set; } = "warehouse";
-    public string? Tag { get; set; }
-    public string PlanName { get; set; } = string.Empty;
-    public decimal PriceMonthly { get; set; }
-    public decimal PriceYearly { get; set; }
-    public string? DiscountBadge { get; set; }
-    public string? Desc { get; set; }
-    public IReadOnlyList<string> Features { get; set; } = Array.Empty<string>();
-    public IReadOnlyList<LabeledImageDto> DesktopScreens { get; set; } = Array.Empty<LabeledImageDto>();
-    public IReadOnlyList<LabeledImageDto> MobileScreens { get; set; } = Array.Empty<LabeledImageDto>();
-}
-
-public sealed class StorePlanDto
-{
-    public string Id { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public string? Badge { get; set; }
-    public string? Tagline { get; set; }
-    public bool IsPopular { get; set; }
-    public decimal MonthlyPrice { get; set; }
-    public decimal YearlyPrice { get; set; }
-    public string? SetupTime { get; set; }
-    public IReadOnlyList<string> Features { get; set; } = Array.Empty<string>();
-    public IReadOnlyList<string> Limitations { get; set; } = Array.Empty<string>();
-}
-
 public sealed class AppDownloadLinkDto
 {
     public LocalizedText Title { get; set; } = new(string.Empty, string.Empty);
@@ -267,7 +237,22 @@ public sealed class SiteBootstrapDto
     public IReadOnlyList<FaqDto> Faqs { get; set; } = Array.Empty<FaqDto>();
     public IReadOnlyList<InquiryTypeDto> InquiryTypes { get; set; } = Array.Empty<InquiryTypeDto>();
     public IReadOnlyList<StoreTemplateDto> StoreTemplates { get; set; } = Array.Empty<StoreTemplateDto>();
-    public IReadOnlyList<StorePlanDto> StorePlans { get; set; } = Array.Empty<StorePlanDto>();
     public IReadOnlyList<AppDownloadLinkDto> AppDownloadLinks { get; set; } = Array.Empty<AppDownloadLinkDto>();
     public DateTime GeneratedAtUtc { get; set; } = DateTime.UtcNow;
+}
+
+public sealed class StoreTemplateDto
+{
+    public string Id { get; set; } = string.Empty;
+    public LocalizedText Name { get; set; } = new(string.Empty, string.Empty);
+    public string Category { get; set; } = "warehouse";
+    public LocalizedText Tag { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedText PlanName { get; set; } = new(string.Empty, string.Empty);
+    public decimal PriceMonthly { get; set; }
+    public decimal PriceYearly { get; set; }
+    public LocalizedText DiscountBadge { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedText Desc { get; set; } = new(string.Empty, string.Empty);
+    public LocalizedList Features { get; set; } = new(Array.Empty<string>(), Array.Empty<string>());
+    public IReadOnlyList<LabeledImageDto> DesktopScreens { get; set; } = Array.Empty<LabeledImageDto>();
+    public IReadOnlyList<LabeledImageDto> MobileScreens { get; set; } = Array.Empty<LabeledImageDto>();
 }

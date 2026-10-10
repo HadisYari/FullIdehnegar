@@ -509,55 +509,32 @@ public sealed class AdminRegistry
             Fields = Fields()
                 .AddField(AdminFieldExtensions.Code("Code", "کد قالب", help: "مثل wh-1 — در آدرس صفحه پرداخت استفاده می‌شود."))
                 .AddField(AdminFieldExtensions.Text("Name", "نام قالب", required: true, maxLength: 300))
+                .AddField(AdminFieldExtensions.Text("NameEn", "نام قالب (انگلیسی)", required: true, maxLength: 300))
                 .AddField(AdminFieldExtensions.Select("Category", "دسته قالب", "store-template-category", required: true))
                 .AddField(AdminFieldExtensions.Text("Tag", "برچسب کوتاه", maxLength: 300))
+                .AddField(AdminFieldExtensions.Text("TagEn", "برچسب کوتاه (انگلیسی)", maxLength: 300))
                 .AddField(AdminFieldExtensions.Text("PlanName", "نام پلن", required: true, maxLength: 300))
+                .AddField(AdminFieldExtensions.Text("PlanNameEn", "نام پلن (انگلیسی)", required: true, maxLength: 300))
                 .AddField(AdminFieldExtensions.Money("PriceMonthly", "قیمت ماهانه (تومان)"))
                 .AddField(AdminFieldExtensions.Money("PriceYearly", "قیمت سالانه (تومان)"))
                 .AddField(AdminFieldExtensions.Text("DiscountBadge", "برچسب تخفیف", maxLength: 120))
+                .AddField(AdminFieldExtensions.Text("DiscountBadgeEn", "برچسب تخفیف (انگلیسی)", maxLength: 120))
                 .AddField(AdminFieldExtensions.Long("Description", "توضیح قالب", 2000))
+                .AddField(AdminFieldExtensions.Long("DescriptionEn", "توضیح قالب (انگلیسی)", 2000))
                 .AddField(AdminFieldExtensions.Lines("FeaturesJson", "امکانات", "هر خط یک امکان."))
+                .AddField(AdminFieldExtensions.Lines("FeaturesEnJson", "امکانات (انگلیسی)", "هر خط یک امکان؛ به ترتیب همان امکانات فارسی."))
                 .AddField(AdminFieldExtensions.Repeater("DesktopScreensJson", "پیش‌نمایش دسکتاپ", new[]
                 {
                     new AdminRepeaterColumn("Label", "برچسب صفحه"),
+                    new AdminRepeaterColumn("LabelEn", "برچسب صفحه (انگلیسی)"),
                     new AdminRepeaterColumn("Src", "مسیر تصویر", AdminFieldKind.Image, 500),
                 }))
                 .AddField(AdminFieldExtensions.Repeater("MobileScreensJson", "پیش‌نمایش موبایل", new[]
                 {
                     new AdminRepeaterColumn("Label", "برچسب صفحه"),
+                    new AdminRepeaterColumn("LabelEn", "برچسب صفحه (انگلیسی)"),
                     new AdminRepeaterColumn("Src", "مسیر تصویر", AdminFieldKind.Image, 500),
                 }))
-                .AddPublish(),
-        },
-
-        new AdminEntityDefinition
-        {
-            RouteName = "StorePlan",
-            SearchProperty = "Name",
-            TitleFa = "پلن‌های اشتراک",
-            SingularFa = "پلن",
-            Icon = "ti ti-credit-card",
-            Group = "فروشگاه‌ساز",
-            RevalidateTags = new[] { "store", "payment" },
-            Gateway = sp => new EntityGateway<StorePlan>(sp.GetRequiredService<IGenericRepository<StorePlan>>()),
-            Columns = Columns(
-                Column("Code", "کد", maxWidth: 130),
-                Column("Name", "نام پلن"),
-                Column("MonthlyPrice", "ماهانه", maxWidth: 120),
-                Column("YearlyPrice", "سالانه", maxWidth: 120),
-                Column("IsPopular", "محبوب", isBool: true, maxWidth: 80),
-                Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
-            Fields = Fields()
-                .AddField(AdminFieldExtensions.Code("Code", "کد پلن", help: "مثل retail-smart"))
-                .AddField(AdminFieldExtensions.Text("Name", "نام پلن", required: true, maxLength: 300))
-                .AddField(AdminFieldExtensions.Text("Badge", "برچسب", maxLength: 200))
-                .AddField(AdminFieldExtensions.Long("Tagline", "زیرعنوان", 500))
-                .AddField(AdminFieldExtensions.Money("MonthlyPrice", "قیمت ماهانه (تومان)"))
-                .AddField(AdminFieldExtensions.Money("YearlyPrice", "قیمت سالانه (تومان)"))
-                .AddField(AdminFieldExtensions.Text("SetupTime", "زمان راه‌اندازی", maxLength: 200))
-                .AddField(AdminFieldExtensions.Check("IsPopular", "پلن پیشنهادی"))
-                .AddField(AdminFieldExtensions.Lines("FeaturesJson", "امکانات", "هر خط یک مورد."))
-                .AddField(AdminFieldExtensions.Lines("LimitationsJson", "محدودیت‌ها", "هر خط یک مورد."))
                 .AddPublish(),
         },
 
@@ -601,7 +578,7 @@ public sealed class AdminRegistry
                 Column("Priority", "اولویت", maxWidth: 80),
                 Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
             Fields = Fields()
-                .AddField(AdminFieldExtensions.Text("PageKey", "کلید صفحه", required: true, maxLength: 80, help: "home, about, services, portfolio, contact, store-builder, gold-app, payment"))
+                .AddField(AdminFieldExtensions.Text("PageKey", "کلید صفحه", required: true, maxLength: 80, help: "home, about, services, portfolio, contact, store-builder, gold-app"))
                 .AddField(AdminFieldExtensions.Text("Path", "مسیر (برای فارسی)", required: true, maxLength: 200, help: "مثل /about — نسخه انگلیسی خودکار /en افزوده می‌شود."))
                 .AddPair("Title", "عنوان سئو (فارسی)", "SEO title (English)", maxLength: 220)
                 .AddPair("Description", "توضیح متا (فارسی)", "Meta description (English)", AdminFieldKind.Textarea)
@@ -625,7 +602,7 @@ public sealed class AdminRegistry
             Group = "صفحات",
             Searchable = true,
             SearchProperty = "SectionKey",
-            RevalidateTags = new[] { "pages", "home", "about", "services", "portfolio", "contact", "store", "payment", "gold-app" },
+            RevalidateTags = new[] { "pages", "home", "about", "services", "portfolio", "contact", "store", "gold-app" },
             Gateway = sp => new EntityGateway<PageSection>(sp.GetRequiredService<IGenericRepository<PageSection>>()),
             Columns = Columns(
                 Column("PageKey", "صفحه", maxWidth: 120),

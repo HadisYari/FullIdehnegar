@@ -70,7 +70,6 @@ public static class DbInitializer
         db.FaqItems.AddRange(data.FaqItems);
         db.InquiryTypes.AddRange(data.InquiryTypes);
         db.StoreTemplates.AddRange(data.StoreTemplates);
-        db.StorePlans.AddRange(data.StorePlans);
         db.AppDownloadLinks.AddRange(data.AppDownloadLinks);
 
         await db.SaveChangesAsync(cancellationToken);

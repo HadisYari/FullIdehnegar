@@ -212,8 +212,6 @@
                                 @* دریافت‌ها *@
                                 <li class="menu-item
                 @(currentEntity.Contains("inbox/messages",
-                                                        StringComparison.OrdinalIgnoreCase) ||
-                                                      currentEntity.Contains("inbox/orders",
                                                         StringComparison.OrdinalIgnoreCase)
                                                         ? "active open" : "")">
 
@@ -235,16 +233,6 @@
                                             </a>
                                         </li>
 
-                                        <li class="menu-item
-                        @(currentEntity.Contains("inbox/orders",
-                                                                        StringComparison.OrdinalIgnoreCase)
-                                                                        ? "active" : "")">
-                                            <a class="menu-link fs-8"
-                                               href="/admin/inbox/orders">
-                                                <i class="menu-icon tf-icons ti ti-receipt"></i>
-                                                <div>سفارش‌های فروشگاه‌ساز</div>
-                                            </a>
-                                        </li>
                                     </ul>
                                 </li>
 

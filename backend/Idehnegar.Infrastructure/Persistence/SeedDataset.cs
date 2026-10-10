@@ -34,7 +34,6 @@ public sealed class SeedDataset
     public List<FaqItem> FaqItems { get; set; } = new();
     public List<InquiryType> InquiryTypes { get; set; } = new();
     public List<StoreTemplate> StoreTemplates { get; set; } = new();
-    public List<StorePlan> StorePlans { get; set; } = new();
     public List<AppDownloadLink> AppDownloadLinks { get; set; } = new();
 
     public static SeedDataset Load()

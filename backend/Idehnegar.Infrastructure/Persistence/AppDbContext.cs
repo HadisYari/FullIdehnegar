@@ -54,13 +54,9 @@ public class AppDbContext : DbContext
 
     public DbSet<StoreTemplate> StoreTemplates => Set<StoreTemplate>();
 
-    public DbSet<StorePlan> StorePlans => Set<StorePlan>();
-
     public DbSet<AppDownloadLink> AppDownloadLinks => Set<AppDownloadLink>();
 
     public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
-
-    public DbSet<StoreOrder> StoreOrders => Set<StoreOrder>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

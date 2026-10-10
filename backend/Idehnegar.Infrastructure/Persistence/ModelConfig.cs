@@ -305,23 +305,11 @@ public static class ModelConfig
             entity.Property(e => e.PriceMonthly).HasPrecision(18, 2);
             entity.Property(e => e.PriceYearly).HasPrecision(18, 2);
             entity.Property(e => e.FeaturesJson).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.FeaturesEnJson).HasColumnType("nvarchar(max)");
             entity.Property(e => e.DesktopScreensJson).HasColumnType("nvarchar(max)");
             entity.Property(e => e.MobileScreensJson).HasColumnType("nvarchar(max)");
             entity.HasIndex(e => e.Code).IsUnique().HasDatabaseName("UX_StoreTemplates_Code");
             entity.HasIndex(e => new { e.IsPublished, e.Category, e.SortOrder }).HasDatabaseName("IX_StoreTemplates_Published_Category");
-        });
-
-        modelBuilder.Entity<StorePlan>(entity =>
-        {
-            entity.ToTable("StorePlans");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Code).HasMaxLength(60).IsRequired();
-            entity.Property(e => e.Name).HasMaxLength(300).IsRequired();
-            entity.Property(e => e.MonthlyPrice).HasPrecision(18, 2);
-            entity.Property(e => e.YearlyPrice).HasPrecision(18, 2);
-            entity.Property(e => e.FeaturesJson).HasColumnType("nvarchar(max)");
-            entity.Property(e => e.LimitationsJson).HasColumnType("nvarchar(max)");
-            entity.HasIndex(e => e.Code).IsUnique().HasDatabaseName("UX_StorePlans_Code");
         });
 
         modelBuilder.Entity<AppDownloadLink>(entity =>
@@ -349,18 +337,5 @@ public static class ModelConfig
             entity.HasIndex(e => e.IsArchived).HasDatabaseName("IX_ContactMessages_Archived");
         });
 
-        modelBuilder.Entity<StoreOrder>(entity =>
-        {
-            entity.ToTable("StoreOrders");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.FullName).HasMaxLength(200).IsRequired();
-            entity.Property(e => e.Mobile).HasMaxLength(60).IsRequired();
-            entity.Property(e => e.BillingCycle).HasMaxLength(20).IsRequired();
-            entity.Property(e => e.Gateway).HasMaxLength(30).IsRequired();
-            entity.Property(e => e.Status).HasMaxLength(20).IsRequired();
-            entity.Property(e => e.Amount).HasPrecision(18, 2);
-            entity.HasIndex(e => e.CreatedAtUtc).IsDescending().HasDatabaseName("IX_StoreOrders_Created");
-            entity.HasIndex(e => e.Status).HasDatabaseName("IX_StoreOrders_Status");
-        });
     }
 }

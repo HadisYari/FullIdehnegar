@@ -27,12 +27,18 @@ export async function generateMetadata({
   });
 }
 
-export default async function StoreBuilderPage() {
+export default async function StoreBuilderPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const lang = locale === "en" ? "en" : "fa";
   // قالب‌ها از /api/public/store-templates — fallback: src/data/store-templates.json
   const [templates, sections] = await Promise.all([
     getStoreTemplates(),
     loadPageSections("store-builder"),
   ]);
 
-  return <StoreBuilderClient templates={templates} sections={sections} />;
+  return <StoreBuilderClient templates={templates} sections={sections} locale={lang} />;
 }

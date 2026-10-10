@@ -232,19 +232,25 @@ export type ProcessStepDto = {
   deliverables: { fa: string[]; en: string[] };
 };
 
+/** فهرست دوزبانه (مثل امکانات قالب). */
+export type LocalizedList = { fa: string[]; en: string[] };
+
+/** تصویر برچسب‌دار (صفحه‌های نمایشی قالب) — برچسب دوزبانه است. */
+export type StoreScreenDto = { label: LocalizedText; src: string };
+
 export type StoreTemplateDto = {
   id: string;
-  name: string;
+  name: LocalizedText;
   category: string;
-  tag?: string | null;
-  planName: string;
+  tag: LocalizedText;
+  planName: LocalizedText;
   priceMonthly: number;
   priceYearly: number;
-  discountBadge?: string | null;
-  desc?: string | null;
-  features?: string[];
-  desktopScreens?: { label: string; src: string }[];
-  mobileScreens?: { label: string; src: string }[];
+  discountBadge: LocalizedText;
+  desc: LocalizedText;
+  features: LocalizedList;
+  desktopScreens: StoreScreenDto[];
+  mobileScreens: StoreScreenDto[];
 };
 
 export type StorePlanDto = {

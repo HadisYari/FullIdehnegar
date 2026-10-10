@@ -166,7 +166,7 @@ public static class ContentMapper
 
     private static LabeledImageDto ToDto(LabeledImage image) => new()
     {
-        Label = image.Label,
+        Label = Text(image.Label, image.LabelEn),
         Src = image.Src,
     };
 
@@ -321,31 +321,17 @@ public static class ContentMapper
     public static StoreTemplateDto ToDto(this StoreTemplate template) => new()
     {
         Id = template.Code,
-        Name = template.Name,
+        Name = Text(template.Name, template.NameEn),
         Category = template.Category,
-        Tag = template.Tag,
-        PlanName = template.PlanName,
+        Tag = Text(template.Tag, template.TagEn),
+        PlanName = Text(template.PlanName, template.PlanNameEn),
         PriceMonthly = template.PriceMonthly,
         PriceYearly = template.PriceYearly,
-        DiscountBadge = template.DiscountBadge,
-        Desc = template.Description,
-        Features = template.Features,
+        DiscountBadge = Text(template.DiscountBadge, template.DiscountBadgeEn),
+        Desc = Text(template.Description, template.DescriptionEn),
+        Features = new LocalizedList(template.Features, template.FeaturesEn),
         DesktopScreens = template.DesktopScreens.Select(ToDto).ToList(),
         MobileScreens = template.MobileScreens.Select(ToDto).ToList(),
-    };
-
-    public static StorePlanDto ToDto(this StorePlan plan) => new()
-    {
-        Id = plan.Code,
-        Name = plan.Name,
-        Badge = plan.Badge,
-        Tagline = plan.Tagline,
-        IsPopular = plan.IsPopular,
-        MonthlyPrice = plan.MonthlyPrice,
-        YearlyPrice = plan.YearlyPrice,
-        SetupTime = plan.SetupTime,
-        Features = plan.Features,
-        Limitations = plan.Limitations,
     };
 
     public static AppDownloadLinkDto ToDto(this AppDownloadLink link) => new()

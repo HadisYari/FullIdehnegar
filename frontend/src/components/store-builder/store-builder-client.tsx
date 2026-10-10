@@ -5,8 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
-import type { PageSectionDto, StoreTemplateDto } from "@/lib/cms";
-import { resolveSection, type LocalSection } from "@/lib/page-sections";
+import type { LocalizedList, LocalizedText, PageSectionDto, StoreTemplateDto } from "@/lib/cms";
+import { resolveSection } from "@/lib/page-sections";
+import { localeHref } from "@/lib/i18n/paths";
+import type { Locale } from "@/lib/i18n/dictionaries";
 
 /* ──────────────────────────────────────────────────────────
    موج متحرک بالای سکشن سرمه‌ای
@@ -67,26 +69,46 @@ function LiquidWaveBottom() {
 }
 
 /* کپی ثابت متن‌های بخش‌های این صفحه (فارسی). سید داده بک‌اند از همین literal ساخته می‌شود. */
-const fallbackSections: Record<string, LocalSection> = {
+const fallbackSections = {
   intro: {
-    body: "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.",
+    fa: {
+      body: "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.",
+    },
+    en: {
+      body: "Choose the template and architecture your business needs, review the previews, and activate your subscription through the secure Shaparak gateway.",
+    },
   },
   "final-cta": {
-    title: "آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟",
-    body: "با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.",
+    fa: {
+      title: "آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟",
+      body: "با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.",
+    },
+    en: {
+      title: "Ready to launch your online store?",
+      body: "After online payment, your store license and server infrastructure are configured and delivered automatically within 10 minutes. 7-day money-back guarantee if you are not satisfied.",
+    },
   },
 };
 
 export function StoreBuilderClient({
   templates,
   sections,
+  locale = "fa",
 }: {
   templates: StoreTemplateDto[];
   /** بلوک‌های متنی از /api/public/page-sections/store-builder — fallback: fallbackSections */
   sections?: PageSectionDto[];
+  locale?: Locale;
 }) {
-  const intro = resolveSection(sections, "intro", "fa", fallbackSections.intro);
-  const finalCta = resolveSection(sections, "final-cta", "fa", fallbackSections["final-cta"]);
+  const isFa = locale === "fa";
+  /** متن ثابت دوزبانه: فارسی برای / و انگلیسی برای /en */
+  const tr = (fa: string, en: string) => (isFa ? fa : en);
+  const numberLocale = isFa ? "fa-IR" : "en-US";
+  const pick = (value?: LocalizedText | null) => (value ? (isFa ? value.fa : value.en || value.fa) : "");
+  const pickList = (value?: LocalizedList | null): string[] =>
+    value ? (isFa ? value.fa : value.en?.length ? value.en : value.fa) : [];
+  const intro = resolveSection(sections, "intro", locale, fallbackSections.intro[locale]);
+  const finalCta = resolveSection(sections, "final-cta", locale, fallbackSections["final-cta"][locale]);
 
   const [activeCategory, setActiveCategory] = useState<"warehouse" | "light">("warehouse");
   const [activeTemplateId, setActiveTemplateId] = useState<string>(templates[0]?.id ?? "wh-1");
@@ -126,13 +148,13 @@ export function StoreBuilderClient({
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/20 bg-[#e6304c]/10 px-3.5 py-1 text-xs font-bold text-[#e6304c]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e6304c] animate-pulse" />
-              فروشگاه‌ساز ابری • فعال‌سازی آنی پس از پرداخت
+              {tr("فروشگاه‌ساز ابری • فعال‌سازی آنی پس از پرداخت", "Cloud store builder • instant activation after payment")}
             </div>
 
             <h1 className="mt-4 text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              انتخاب قالب و خرید اشتراک فروشگاه <br />
+              {tr("انتخاب قالب و خرید اشتراک فروشگاه", "Choose a template and subscribe to your store")} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]">
-                تحویل آنی با اتصال مستقیم به درگاه پرداخت
+                {tr("تحویل آنی با اتصال مستقیم به درگاه پرداخت", "Instant delivery with a direct gateway connection")}
               </span>
             </h1>
 
@@ -151,7 +173,7 @@ export function StoreBuilderClient({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                پرداخت ماهانه
+                {tr("پرداخت ماهانه", "Monthly billing")}
               </button>
               <button
                 type="button"
@@ -162,9 +184,9 @@ export function StoreBuilderClient({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <span>پرداخت سالانه</span>
+                <span>{tr("پرداخت سالانه", "Yearly billing")}</span>
                 <span className="bg-[#e6304c] text-white text-[10px] px-1.5 py-0.5 rounded-full">
-                  تخفیف ویژه
+                  {tr("تخفیف ویژه", "Special offer")}
                 </span>
               </button>
             </div>
@@ -185,11 +207,11 @@ export function StoreBuilderClient({
                     : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:-translate-y-0.5"
                 }`}
               >
-                <span>📦 {templates.filter((t) => t.category === "warehouse").length} قالب با انبارداری جامع</span>
+                <span>📦 {templates.filter((t) => t.category === "warehouse").length} {tr("قالب با انبارداری جامع", "templates with full warehousing")}</span>
                 <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                   activeCategory === "warehouse" ? "bg-[#e6304c] text-white" : "bg-slate-300 text-slate-700"
                 }`}>
-                  سازمانی
+                  {tr("سازمانی", "Enterprise")}
                 </span>
               </button>
 
@@ -207,11 +229,11 @@ export function StoreBuilderClient({
                     : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:-translate-y-0.5"
                 }`}
               >
-                <span>⚡ {templates.filter((t) => t.category === "light").length} قالب بدون انبارداری</span>
+                <span>⚡ {templates.filter((t) => t.category === "light").length} {tr("قالب بدون انبارداری", "templates without warehousing")}</span>
                 <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                   activeCategory === "light" ? "bg-[#0f0f52] text-white" : "bg-slate-300 text-slate-700"
                 }`}>
-                  خرید فوری
+                  {tr("خرید فوری", "Instant purchase")}
                 </span>
               </button>
             </div>
@@ -234,10 +256,10 @@ export function StoreBuilderClient({
               <div className="flex items-center justify-between mb-3 text-xs text-rose-300">
                 <span className="font-bold flex items-center gap-1.5">
                   <span className="animate-bounce">👇</span>
-                  قالب دلخواه را برای خرید اشتراک انتخاب کنید:
+                  {tr("قالب دلخواه را برای خرید اشتراک انتخاب کنید:", "Choose the template you want to subscribe to:")}
                 </span>
                 <span className="text-white/60 hidden sm:inline">
-                  قیمت دوره {billingCycle === "yearly" ? "یک‌ساله" : "یک‌ماهه"}
+                  {tr("قیمت دوره", "Price for")} {billingCycle === "yearly" ? tr("یک‌ساله", "1 year") : tr("یک‌ماهه", "1 month")}
                 </span>
               </div>
 
@@ -264,21 +286,21 @@ export function StoreBuilderClient({
                           <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
                             isActive ? "bg-white/20 text-white" : "bg-white/10 text-slate-400"
                           }`}>
-                            تمپلیت ۰{idx + 1}
+                            {tr("تمپلیت ۰", "Template 0")}{idx + 1}
                           </span>
                           {isActive && (
                             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
                           )}
                         </div>
                         <span className="text-xs sm:text-sm font-black line-clamp-1 group-hover:text-white block">
-                          {t.name}
+                          {pick(t.name)}
                         </span>
                       </div>
 
                       <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
-                        <span className="text-white/70">اشتراک:</span>
+                        <span className="text-white/70">{tr("اشتراک:", "Subscription:")}</span>
                         <span className="font-bold font-mono text-amber-300">
-                          {displayPrice.toLocaleString("fa-IR")} تومان
+                          {displayPrice.toLocaleString(numberLocale)} {tr("تومان", "Toman")}
                         </span>
                       </div>
                     </button>
@@ -297,46 +319,46 @@ export function StoreBuilderClient({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 px-3 py-1 text-xs font-bold">
-                      {currentTemplate.tag}
+                      {pick(currentTemplate.tag)}
                     </span>
-                    <span className="text-xs text-white/40">آماده تحویل</span>
+                    <span className="text-xs text-white/40">{tr("آماده تحویل", "Ready to deliver")}</span>
                   </div>
 
-                  {currentTemplate.discountBadge && billingCycle === "yearly" && (
+                  {pick(currentTemplate.discountBadge) && billingCycle === "yearly" && (
                     <span className="text-[11px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-lg">
-                      {currentTemplate.discountBadge}
+                      {pick(currentTemplate.discountBadge)}
                     </span>
                   )}
                 </div>
 
                 <h2 className="mt-3 text-2xl sm:text-3xl font-black text-white">
-                  {currentTemplate.name}
+                  {pick(currentTemplate.name)}
                 </h2>
 
                 <p className="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {currentTemplate.desc}
+                  {pick(currentTemplate.desc)}
                 </p>
 
                 {/* کارت قیمت و صورت‌حساب سریع */}
                 <div className="mt-4 p-4 rounded-2xl bg-black/30 border border-white/10 flex items-center justify-between">
                   <div>
-                    <span className="text-[11px] text-slate-400 block">مبلغ اشتراک ({billingCycle === "yearly" ? "سالانه" : "ماهانه"}):</span>
+                    <span className="text-[11px] text-slate-400 block">{tr("مبلغ اشتراک", "Subscription amount")} ({billingCycle === "yearly" ? tr("سالانه", "yearly") : tr("ماهانه", "monthly")}):</span>
                     <div className="flex items-baseline gap-1 mt-0.5">
                       <span className="text-2xl font-black text-amber-300 font-mono">
-                        {currentPrice.toLocaleString("fa-IR")}
+                        {currentPrice.toLocaleString(numberLocale)}
                       </span>
-                      <span className="text-xs text-slate-300">تومان</span>
+                      <span className="text-xs text-slate-300">{tr("تومان", "Toman")}</span>
                     </div>
                   </div>
                   <div className="text-end">
                     <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md border border-emerald-500/20">
-                      ✓ تحویل و فعال‌سازی فوری
+                      ✓ {tr("تحویل و فعال‌سازی فوری", "Delivery and instant activation")}
                     </span>
                   </div>
                 </div>
 
                 <div className="mt-4 space-y-2">
-                  {(currentTemplate.features ?? []).map((feat) => (
+                  {pickList(currentTemplate.features).map((feat) => (
                     <div key={feat} className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
                         ✓
@@ -351,7 +373,7 @@ export function StoreBuilderClient({
               <div className="pt-5 border-t border-white/10 space-y-4">
 
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-300 font-bold">نمایشگر دستگاه:</span>
+                  <span className="text-xs text-slate-300 font-bold">{tr("نمایشگر دستگاه:", "Device preview:")}</span>
                   <div className="inline-flex p-1 rounded-xl bg-black/40 border border-white/15">
                     <button
                       type="button"
@@ -365,7 +387,7 @@ export function StoreBuilderClient({
                           : "text-slate-400 hover:text-white"
                       }`}
                     >
-                      <span>🖥️ دسکتاپ</span>
+                      <span>🖥️ {tr("دسکتاپ", "Desktop")}</span>
                     </button>
                     <button
                       type="button"
@@ -379,7 +401,7 @@ export function StoreBuilderClient({
                           : "text-slate-400 hover:text-white"
                       }`}
                     >
-                      <span>📱 موبایل</span>
+                      <span>📱 {tr("موبایل", "Mobile")}</span>
                     </button>
                   </div>
                 </div>
@@ -388,10 +410,10 @@ export function StoreBuilderClient({
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs text-slate-300 font-bold">
-                      عکس بخش‌های این تمپلیت:
+                      {tr("عکس بخش‌های این تمپلیت:", "Screens of this template:")}
                     </span>
                     <span className="text-[10px] text-rose-300 animate-pulse">
-                      کلیک برای تغییر عکس 🖱️
+                      {tr("کلیک برای تغییر عکس 🖱️", "Click a screen to switch 🖱️")}
                     </span>
                   </div>
 
@@ -410,7 +432,7 @@ export function StoreBuilderClient({
                           }`}
                         >
                           <span className={`h-2 w-2 rounded-full ${isScreenActive ? "bg-[#e6304c]" : "bg-white/40"}`} />
-                          <span>{s.label}</span>
+                          <span>{pick(s.label)}</span>
                         </button>
                       );
                     })}
@@ -423,13 +445,13 @@ export function StoreBuilderClient({
 
                   <div className="flex items-center justify-between px-1 text-[11px] text-slate-400">
                     <span className="flex items-center gap-1">
-                      🔒 پرداخت امن تحت شبکه شاپرک
+                      🔒 {tr("پرداخت امن تحت شبکه شاپرک", "Secure payment via the Shaparak network")}
                     </span>
                     <Link
-                      href={`/contact?template=${currentTemplate.id}`}
+                      href={`${localeHref(locale, "/contact")}?template=${currentTemplate.id}`}
                       className="text-rose-300 hover:text-white underline underline-offset-4"
                     >
-                      نیاز به دمو قبل از خرید دارید؟
+                      {tr("نیاز به دمو قبل از خرید دارید؟", "Need a demo before you buy?")}
                     </Link>
                   </div>
                 </div>
@@ -448,7 +470,7 @@ export function StoreBuilderClient({
                       <span className="h-2.5 w-2.5 rounded-full bg-rose-500" />
                       <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
                       <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                      <span className="ms-2 font-bold text-slate-200">{activeScreen?.label}</span>
+                      <span className="ms-2 font-bold text-slate-200">{pick(activeScreen?.label)}</span>
                     </div>
                     <span>1920 × 1080</span>
                   </div>
@@ -458,9 +480,9 @@ export function StoreBuilderClient({
                     {/* <Image src={activeScreen.src} alt={activeScreen.label} fill className="object-cover" /> */}
                     <div className="flex flex-col items-center gap-2 text-slate-400">
                       <span className="text-3xl">🖥️</span>
-                      <span className="text-sm font-bold text-white">{activeScreen?.label}</span>
+                      <span className="text-sm font-bold text-white">{pick(activeScreen?.label)}</span>
                       <span className="text-xs text-slate-500 font-mono">
-                        مسیر: {activeScreen?.src}
+                        {tr("مسیر:", "Path:")} {activeScreen?.src}
                       </span>
                     </div>
                   </div>
@@ -474,9 +496,9 @@ export function StoreBuilderClient({
                     {/* <Image src={activeScreen.src} alt={activeScreen.label} fill className="object-cover" /> */}
                     <div className="flex flex-col items-center gap-2 text-slate-400">
                       <span className="text-3xl">📱</span>
-                      <span className="text-xs font-bold text-white">{activeScreen?.label}</span>
+                      <span className="text-xs font-bold text-white">{pick(activeScreen?.label)}</span>
                       <span className="text-[10px] text-slate-500 font-mono">
-                        مسیر: {activeScreen?.src}
+                        {tr("مسیر:", "Path:")} {activeScreen?.src}
                       </span>
                     </div>
                   </div>
@@ -484,7 +506,7 @@ export function StoreBuilderClient({
               )}
 
               <span className="mt-3 text-[11px] text-slate-400">
-                در حال نمایش: <strong className="text-white">{activeScreen?.label}</strong> ({deviceMode === "desktop" ? "نسخه عریض دسکتاپ" : "نسخه موبایل"})
+                {tr("در حال نمایش:", "Now showing:")} <strong className="text-white">{pick(activeScreen?.label)}</strong> ({deviceMode === "desktop" ? tr("نسخه عریض دسکتاپ", "wide desktop version") : tr("نسخه موبایل", "mobile version")})
               </span>
 
             </div>
@@ -515,10 +537,10 @@ export function StoreBuilderClient({
             <div className="mt-6 flex flex-wrap justify-center gap-3">
              
               <Link
-                href="/contact"
+                href={localeHref(locale, "/contact")}
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-xs cursor-pointer"
               >
-                <span>درخواست مشاوره اختصاصی</span>
+                <span>{tr("درخواست مشاوره اختصاصی", "Request a private consultation")}</span>
               </Link>
             </div>
           </Reveal>
