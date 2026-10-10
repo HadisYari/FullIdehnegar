@@ -18,13 +18,13 @@
 
 ```bash
 # در frontend/.env.local
-CMS_API_URL=http://localhost:5100   # پورت backend/EndPoints (launchSettings.json)
+CMS_API_URL=http://localhost:44375   # پورت backend/EndPoints (launchSettings.json)
 CMS_REVALIDATE_SECRET=…             # همان مقدار Site:RevalidateSecret بک‌اند
 CMS_REVALIDATE_SECONDS=60
 CMS_TIMEOUT_MS=4000
 ```
 
-- پنل مدیریت محتوا روی خود بک‌اند است: `http://localhost:5100/admin`.
+- پنل مدیریت محتوا روی خود بک‌اند است: `http://localhost:44375/admin`.
 - پس از هر ذخیره در پنل، بک‌اند `POST /api/revalidate` را صدا می‌زند تا کش ISR
   فرانت همان تگ‌ها را تازه کند.
 - فرم تماس (`POST /api/contact`) اول در بک‌اند (SQL Server + ایمیل) ثبت می‌شود

@@ -38,10 +38,13 @@ public static class DependencyInjection
     }
 
     /// <summary>Runs migrations (or creates the schema) and seeds the content.</summary>
-    public static Task InitializeDatabaseAsync(this IServiceProvider services, ILogger logger, CancellationToken cancellationToken = default)
+    public static async Task InitializeDatabaseAsync(this IServiceProvider services, ILogger logger)
     {
+        // The scope (and with it the AppDbContext) must stay alive until the work is
+        // actually finished — returning the pending task would dispose the context
+        // mid-flight and cancel every in-flight connection.
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        return DbInitializer.InitializeAsync(db, logger, cancellationToken);
+        await DbInitializer.InitializeAsync(db, logger);
     }
 }

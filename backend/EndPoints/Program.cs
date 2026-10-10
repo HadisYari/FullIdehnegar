@@ -127,7 +127,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseResponseCompression();
 app.UseIdehnegarSecurityHeaders();
 
