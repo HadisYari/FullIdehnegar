@@ -89,11 +89,7 @@ export function StoreBuilderClient({ templates }: { templates: StoreTemplateDto[
       ? currentTemplate?.priceYearly ?? 0
       : currentTemplate?.priceMonthly ?? 0;
 
-  const paymentHref = currentTemplate
-    ? `/payment?templateId=${currentTemplate.id}&plan=${encodeURIComponent(
-        currentTemplate.planName
-      )}&cycle=${billingCycle}&amount=${currentPrice}`
-    : "/payment";
+   
 
   if (!currentTemplate) return null;
 
@@ -401,13 +397,7 @@ export function StoreBuilderClient({ templates }: { templates: StoreTemplateDto[
 
                 {/* دکمه‌های اکشن: اتصال به پرداخت + درخواست مشاوره */}
                 <div className="pt-3 space-y-2">
-                  <Link
-                    href={paymentHref}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#e6304c] to-rose-600 px-6 py-4 text-xs sm:text-sm font-black text-white shadow-xl shadow-[#e6304c]/40 hover:from-[#ff3b59] hover:to-rose-500 hover:-translate-y-0.5 transition-all cursor-pointer ring-2 ring-rose-400/30"
-                  >
-                    <span>💳 خرید اشتراک و اتصال به درگاه پرداخت ({currentPrice.toLocaleString("fa-IR")} تومان)</span>
-                    <span>←</span>
-                  </Link>
+                  
 
                   <div className="flex items-center justify-between px-1 text-[11px] text-slate-400">
                     <span className="flex items-center gap-1">
@@ -501,13 +491,7 @@ export function StoreBuilderClient({ templates }: { templates: StoreTemplateDto[
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link
-                href={paymentHref}
-                className="inline-flex items-center gap-2 rounded-xl bg-[#e6304c] px-7 py-3.5 text-xs sm:text-sm font-black text-white shadow-lg shadow-[#e6304c]/30 hover:bg-[#ff3b59] hover:-translate-y-0.5 transition-all cursor-pointer"
-              >
-                <span>ورود به درگاه و خرید اشتراک ({currentTemplate.name})</span>
-                <span>←</span>
-              </Link>
+             
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-xs cursor-pointer"
