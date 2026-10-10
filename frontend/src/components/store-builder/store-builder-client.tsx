@@ -72,20 +72,20 @@ function LiquidWaveBottom() {
 const fallbackSections = {
   intro: {
     fa: {
-      body: "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.",
+      body: "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و برای راه‌اندازی فروشگاه با تیم ایده‌نگار در تماس باشید.",
     },
     en: {
-      body: "Choose the template and architecture your business needs, review the previews, and activate your subscription through the secure Shaparak gateway.",
+      body: "Choose the template and architecture your business needs, review the previews, and contact our team to set up your store.",
     },
   },
   "final-cta": {
     fa: {
       title: "آماده راه‌اندازی فروشگاه اینترنتی خود هستید؟",
-      body: "با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.",
+      body: "پس از هماهنگی با تیم ایده‌نگار، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود.",
     },
     en: {
       title: "Ready to launch your online store?",
-      body: "After online payment, your store license and server infrastructure are configured and delivered automatically within 10 minutes. 7-day money-back guarantee if you are not satisfied.",
+      body: "After we agree on the details with the Idehnegar team, your store license and server infrastructure are configured and delivered automatically within 10 minutes.",
     },
   },
 };
@@ -148,13 +148,13 @@ export function StoreBuilderClient({
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/20 bg-[#e6304c]/10 px-3.5 py-1 text-xs font-bold text-[#e6304c]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#e6304c] animate-pulse" />
-              {tr("فروشگاه‌ساز ابری • فعال‌سازی آنی پس از پرداخت", "Cloud store builder • instant activation after payment")}
+              {tr("فروشگاه‌ساز ابری • راه‌اندازی سریع", "Cloud store builder • fast setup")}
             </div>
 
             <h1 className="mt-4 text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-              {tr("انتخاب قالب و خرید اشتراک فروشگاه", "Choose a template and subscribe to your store")} <br />
+              {tr("انتخاب قالب فروشگاه", "Choose a store template")} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]">
-                {tr("تحویل آنی با اتصال مستقیم به درگاه پرداخت", "Instant delivery with a direct gateway connection")}
+                {tr("راه‌اندازی سریع با پشتیبانی پیشگامان ایده‌نگار", "Fast setup with Idehnegar support")}
               </span>
             </h1>
 
@@ -162,7 +162,7 @@ export function StoreBuilderClient({
               {intro.body}
             </p>
 
-            {/* سوییچر دوره پرداخت ماهانه / سالانه */}
+            {/* سوییچر دوره ماهانه / سالانه */}
             <div className="mt-6 inline-flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 shadow-inner">
               <button
                 type="button"
@@ -173,7 +173,7 @@ export function StoreBuilderClient({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                {tr("پرداخت ماهانه", "Monthly billing")}
+                {tr("ماهانه", "Monthly")}
               </button>
               <button
                 type="button"
@@ -184,7 +184,7 @@ export function StoreBuilderClient({
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <span>{tr("پرداخت سالانه", "Yearly billing")}</span>
+                <span>{tr("سالانه", "Yearly")}</span>
                 <span className="bg-[#e6304c] text-white text-[10px] px-1.5 py-0.5 rounded-full">
                   {tr("تخفیف ویژه", "Special offer")}
                 </span>
@@ -233,7 +233,7 @@ export function StoreBuilderClient({
                 <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                   activeCategory === "light" ? "bg-[#0f0f52] text-white" : "bg-slate-300 text-slate-700"
                 }`}>
-                  {tr("خرید فوری", "Instant purchase")}
+                  {tr("راه‌اندازی فوری", "Instant setup")}
                 </span>
               </button>
             </div>
@@ -242,7 +242,7 @@ export function StoreBuilderClient({
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          ۲. استودیوی تعاملی و درگاه پرداخت
+          ۲. استودیوی تعاملی
          ══════════════════════════════════════════════════════════ */}
       <section className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 bg-[#0f0f52] text-white">
 
@@ -256,7 +256,7 @@ export function StoreBuilderClient({
               <div className="flex items-center justify-between mb-3 text-xs text-rose-300">
                 <span className="font-bold flex items-center gap-1.5">
                   <span className="animate-bounce">👇</span>
-                  {tr("قالب دلخواه را برای خرید اشتراک انتخاب کنید:", "Choose the template you want to subscribe to:")}
+                  {tr("قالب دلخواه را انتخاب کنید:", "Choose the template you want:")}
                 </span>
                 <span className="text-white/60 hidden sm:inline">
                   {tr("قیمت دوره", "Price for")} {billingCycle === "yearly" ? tr("یک‌ساله", "1 year") : tr("یک‌ماهه", "1 month")}
@@ -313,7 +313,7 @@ export function StoreBuilderClient({
           {/* پنل استودیو */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/[0.04] border border-white/15 rounded-3xl p-5 sm:p-8 backdrop-blur-md shadow-2xl">
 
-            {/* ستون راست: توضیحات، قیمت، دکمه پرداخت */}
+            {/* ستون راست: توضیحات و قیمت */}
             <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-6">
               <div>
                 <div className="flex items-center justify-between">
@@ -339,7 +339,7 @@ export function StoreBuilderClient({
                   {pick(currentTemplate.desc)}
                 </p>
 
-                {/* کارت قیمت و صورت‌حساب سریع */}
+                {/* کارت قیمت */}
                 <div className="mt-4 p-4 rounded-2xl bg-black/30 border border-white/10 flex items-center justify-between">
                   <div>
                     <span className="text-[11px] text-slate-400 block">{tr("مبلغ اشتراک", "Subscription amount")} ({billingCycle === "yearly" ? tr("سالانه", "yearly") : tr("ماهانه", "monthly")}):</span>
@@ -439,19 +439,16 @@ export function StoreBuilderClient({
                   </div>
                 </div>
 
-                {/* دکمه‌های اکشن: اتصال به پرداخت + درخواست مشاوره */}
+                {/* دکمه‌های اکشن: درخواست دمو و مشاوره */}
                 <div className="pt-3 space-y-2">
                   
 
-                  <div className="flex items-center justify-between px-1 text-[11px] text-slate-400">
-                    <span className="flex items-center gap-1">
-                      🔒 {tr("پرداخت امن تحت شبکه شاپرک", "Secure payment via the Shaparak network")}
-                    </span>
+                  <div className="flex items-center justify-start px-1 text-[11px] text-slate-400">
                     <Link
                       href={`${localeHref(locale, "/contact")}?template=${currentTemplate.id}`}
                       className="text-rose-300 hover:text-white underline underline-offset-4"
                     >
-                      {tr("نیاز به دمو قبل از خرید دارید؟", "Need a demo before you buy?")}
+                      {tr("نیاز به دمو یا مشاوره دارید؟", "Need a demo or consultation?")}
                     </Link>
                   </div>
                 </div>
@@ -519,7 +516,7 @@ export function StoreBuilderClient({
       </section>
 
       {/* ══════════════════════════════════════════════════════════
-          ۳. سکشن پایانی CTA و تسویه‌حساب نهایی
+          ۳. سکشن پایانی CTA
          ══════════════════════════════════════════════════════════ */}
       <section className="relative pt-24 pb-24 sm:pt-32 sm:pb-32 bg-gradient-to-t from-slate-100 via-rose-50/20 to-white">
         <Container className="relative z-10 max-w-3xl mx-auto text-center">

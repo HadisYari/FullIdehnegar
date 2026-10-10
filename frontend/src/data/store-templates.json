@@ -302,8 +302,8 @@
     },
     "category": "light",
     "tag": {
-      "fa": "بدون انبارداری • خرید فوری",
-      "en": "No warehousing • instant purchase"
+      "fa": "بدون انبارداری • راه‌اندازی فوری",
+      "en": "No warehousing • instant setup"
     },
     "planName": {
       "fa": "پلن سبک و دانلودی (لایت)",
@@ -323,14 +323,12 @@
       "fa": [
         "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
         "بدون لودینگ لاگ انبارداری",
-        "امتیاز ۱۰۰ در تست سرعت",
-        "اتصال سریع به درگاه بانکی"
+        "امتیاز ۱۰۰ در تست سرعت"
       ],
       "en": [
         "One-step checkout in 30 seconds",
         "No warehousing log loading",
-        "Score of 100 in speed tests",
-        "Fast connection to the bank gateway"
+        "Score of 100 in speed tests"
       ]
     },
     "desktopScreens": [

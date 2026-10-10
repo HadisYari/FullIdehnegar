@@ -192,10 +192,10 @@
     {
       "pageKey": "store-builder",
       "path": "/store-builder",
-      "titleFa": "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار",
-      "titleEn": "Cloud Store Builder | Instant Subscription Delivery | Idehnegar",
-      "descriptionFa": "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال مستقیم به درگاه شاپرک.",
-      "descriptionEn": "Pick a store template with full warehouse management or a light version; instant activation after payment via Shaparak gateway.",
+      "titleFa": "فروشگاه‌ساز ابری | قالب‌های فروشگاه اینترنتی | پیشگامان ایده‌نگار",
+      "titleEn": "Cloud Store Builder | Store Templates | Idehnegar",
+      "descriptionFa": "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید و برای راه‌اندازی با تیم ایده‌نگار در تماس باشید.",
+      "descriptionEn": "Pick a store template with full warehouse management or a light version, then contact our team to get started.",
       "keywordsFa": "",
       "keywordsEn": "",
       "eyebrowFa": null,
@@ -1597,8 +1597,8 @@
       "titleEn": null,
       "subtitleFa": null,
       "subtitleEn": null,
-      "bodyFa": "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و اشتراک خود را با درگاه ایمن شاپرک فعال نمایید.",
-      "bodyEn": "Choose the template and architecture your business needs, review the previews, and activate your subscription through the secure Shaparak gateway.",
+      "bodyFa": "قالب و معماری مورد نیاز کسب‌وکار خود را انتخاب کنید، پیش‌نمایش را بررسی کرده و برای راه‌اندازی فروشگاه با تیم ایده‌نگار در تماس باشید.",
+      "bodyEn": "Choose the template and architecture your business needs, review the previews, and contact our team to set up your store.",
       "items": [],
       "sortOrder": 0,
       "isPublished": true
@@ -1612,8 +1612,8 @@
       "titleEn": "Ready to launch your online store?",
       "subtitleFa": null,
       "subtitleEn": null,
-      "bodyFa": "با پرداخت آنلاین، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود. ضمانت بازگشت وجه تا ۷ روز در صورت عدم رضایت.",
-      "bodyEn": "After online payment, your store license and server infrastructure are configured and delivered automatically within 10 minutes. 7-day money-back guarantee if you are not satisfied.",
+      "bodyFa": "پس از هماهنگی با تیم ایده‌نگار، لایسنس فروشگاه و زیرساخت سرور شما در کمتر از ۱۰ دقیقه به‌صورت اتوماتیک کانفیگ و تحویل داده می‌شود.",
+      "bodyEn": "After we agree on the details with the Idehnegar team, your store license and server infrastructure are configured and delivered automatically within 10 minutes.",
       "items": [],
       "sortOrder": 1,
       "isPublished": true
@@ -2598,8 +2598,8 @@
       "name": "فلش چابک (Flash Direct)",
       "nameEn": "Flash Direct",
       "category": "light",
-      "tag": "بدون انبارداری • خرید فوری",
-      "tagEn": "No warehousing • instant purchase",
+      "tag": "بدون انبارداری • راه‌اندازی فوری",
+      "tagEn": "No warehousing • instant setup",
       "planName": "پلن سبک و دانلودی (لایت)",
       "planNameEn": "Light download plan",
       "priceMonthly": 790000,
@@ -2611,14 +2611,12 @@
       "features": [
         "تسویه حساب تک‌مرحله‌ای در ۳۰ ثانیه",
         "بدون لودینگ لاگ انبارداری",
-        "امتیاز ۱۰۰ در تست سرعت",
-        "اتصال سریع به درگاه بانکی"
+        "امتیاز ۱۰۰ در تست سرعت"
       ],
       "featuresEn": [
         "One-step checkout in 30 seconds",
         "No warehousing log loading",
-        "Score of 100 in speed tests",
-        "Fast connection to the bank gateway"
+        "Score of 100 in speed tests"
       ],
       "desktopScreens": [
         {

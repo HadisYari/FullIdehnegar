@@ -127,11 +127,11 @@ export function HomeCtaSection({
                   </Link>
 
                   <Link
-                    href={localeHref(locale, "/payment")}
+                    href={localeHref(locale, "/store-builder")}
                     className="inline-flex items-center gap-2 rounded-2xl border-2 border-slate-200 bg-white px-7 py-3.5 text-sm font-bold text-slate-800 shadow-xs transition-all duration-300 hover:border-[#0f0f52] hover:bg-slate-50"
                   >
                     {/* <span>{isFa ? "مشاهده پرونده پروژه‌ها" : "View Case Studies"}</span> */}
-                    <span>خرید اشتراک فروشگاه ساز</span>
+                    <span>{locale === "fa" ? "مشاهده فروشگاه‌ساز" : "View Store Builder"}</span>
                   </Link>
                 </div>
               </Reveal>

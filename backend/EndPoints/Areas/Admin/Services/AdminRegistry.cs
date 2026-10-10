@@ -507,7 +507,7 @@ public sealed class AdminRegistry
                 Column("PriceMonthly", "ماهانه (تومان)", maxWidth: 130),
                 Column("IsPublished", "منتشر", isBool: true, maxWidth: 70)),
             Fields = Fields()
-                .AddField(AdminFieldExtensions.Code("Code", "کد قالب", help: "مثل wh-1 — در آدرس صفحه پرداخت استفاده می‌شود."))
+                .AddField(AdminFieldExtensions.Code("Code", "کد قالب", help: "مثل wh-1 — شناسهٔ یکتای قالب."))
                 .AddField(AdminFieldExtensions.Text("Name", "نام قالب", required: true, maxLength: 300))
                 .AddField(AdminFieldExtensions.Text("NameEn", "نام قالب (انگلیسی)", required: true, maxLength: 300))
                 .AddField(AdminFieldExtensions.Select("Category", "دسته قالب", "store-template-category", required: true))

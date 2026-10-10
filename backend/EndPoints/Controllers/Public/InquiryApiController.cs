@@ -24,7 +24,7 @@ public sealed class ContactRequest
     public string? Company { get; set; }
 }
 
-/// <summary>Write endpoints of the public API (contact form + checkout intent).</summary>
+/// <summary>Write endpoints of the public API (contact form).</summary>
 [ApiController]
 [Route("api/public")]
 [Produces("application/json")]

@@ -226,12 +226,12 @@ export function HeroSection({
               </Link>
 
               <Link
-                href={localeHref(locale, "/payment")}
+                href={localeHref(locale, "/store-builder")}
                 className="group inline-flex h-14 items-center justify-center gap-2 rounded-2xl border-2 border-slate-200 bg-white backdrop-blur-sm px-9 text-base font-bold text-slate-800 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-slate-50 hover:shadow-md"
               >
                 {/* <Monitor className="h-4 w-4 text-slate-400 transition-colors group-hover:text-[#e6304c]" /> */}
                 {/* {dict.hero.ctaSecondary} */}
-            خرید اشتراک فروشگاه ساز
+            {locale === "en" ? "View Store Builder" : "مشاهده فروشگاه‌ساز"}
               </Link>
             </motion.div>
 

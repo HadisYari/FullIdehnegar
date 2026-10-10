@@ -202,7 +202,7 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
    `contact-form.tsx` import نشده‌اند. `testimonials-section.tsx` روی صفحهٔ اصلی
    mount شده و نظرات را از `GET /api/public/testimonials` می‌گیرد.
 5. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
-   `device-mockup.tsx`، `ProcessSection.tsx`، `payment/page.tsx` و یک کامنت JSX
+   `device-mockup.tsx`، `ProcessSection.tsx` و یک کامنت JSX
    در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.
 6. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
    از کشیدن ریپو: `cd backend && dotnet build BackendIdehnegar.sln`.

@@ -154,12 +154,12 @@ const seoDefaults = {
 const MISSING_SEO = {
   "store-builder": {
     title: {
-      fa: "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار",
-      en: "Cloud Store Builder | Subscriptions with Instant Delivery",
+      fa: "فروشگاه‌ساز ابری | قالب‌های فروشگاه اینترنتی | پیشگامان ایده‌نگار",
+      en: "Cloud Store Builder | Store Templates | Idehnegar",
     },
     description: {
-      fa: "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال مستقیم به درگاه شاپرک.",
-      en: "Pick a storefront template with full warehouse management or the lightweight plan — activated instantly after payment on Shaparak.",
+      fa: "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید و برای راه‌اندازی با تیم ایده‌نگار در تماس باشید.",
+      en: "Pick a store template with full warehouse management or a light version, then contact our team to get started.",
     },
   },
   "gold-app": {

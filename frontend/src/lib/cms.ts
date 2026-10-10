@@ -28,7 +28,6 @@ export const CmsTag = {
   about: "about",
   contact: "contact",
   store: "store",
-  payment: "payment",
   goldApp: "gold-app",
   sitemap: "sitemap",
 } as const;
@@ -251,19 +250,6 @@ export type StoreTemplateDto = {
   features: LocalizedList;
   desktopScreens: StoreScreenDto[];
   mobileScreens: StoreScreenDto[];
-};
-
-export type StorePlanDto = {
-  id: string;
-  name: string;
-  badge?: string | null;
-  tagline?: string | null;
-  isPopular: boolean;
-  monthlyPrice: number;
-  yearlyPrice: number;
-  setupTime?: string | null;
-  features?: string[];
-  limitations?: string[];
 };
 
 export type AppDownloadLinkDto = {
@@ -621,10 +607,6 @@ export function loadStoreTemplates(category?: string): Promise<StoreTemplateDto[
   return cmsFetch<StoreTemplateDto[]>(`/api/public/store-templates${suffix}`, [], { tags: [CmsTag.store] });
 }
 
-export function loadStorePlans(): Promise<StorePlanDto[]> {
-  return cmsFetch<StorePlanDto[]>("/api/public/store-plans", [], { tags: [CmsTag.store, CmsTag.payment] });
-}
-
 export function loadAppDownloadLinks(): Promise<AppDownloadLinkDto[]> {
   return cmsFetch<AppDownloadLinkDto[]>("/api/public/app-download-links", [], { tags: [CmsTag.goldApp] });
 }
@@ -653,35 +635,4 @@ export type InquiryResult = { success?: boolean; message?: string; emailSent?: b
  */
 export function submitContact(payload: ContactPayload): Promise<InquiryResult | null> {
   return cmsPost<ContactPayload, InquiryResult>("/api/public/contact", payload);
-}
-
-/**
- * بدنهٔ POST /api/public/store-orders — دقیقاً همان قرارداد StoreOrderRequest
- * در بک‌اند (InquiryApiController): FullName/Mobile/StoreName/Domain/TemplateId/
- * Plan/Cycle/Amount/Gateway/RulesAccepted/Locale + هانی‌پات Company.
- */
-export type StoreOrderPayload = {
-  fullName: string;
-  mobile: string;
-  storeName: string;
-  domain?: string;
-  templateId?: string;
-  plan?: string;
-  cycle?: string;
-  amount?: number;
-  gateway?: string;
-  rulesAccepted: boolean;
-  locale?: string;
-  /** هانی‌پات: ربات‌ها پرش می‌کنند، کاربر واقعی هرگز نمی‌بیند. */
-  company?: string;
-};
-
-export type StoreOrderResult = InquiryResult & {
-  id?: string;
-  reference?: string;
-  status?: string;
-};
-
-export function submitStoreOrder(payload: StoreOrderPayload): Promise<StoreOrderResult | null> {
-  return cmsPost<StoreOrderPayload, StoreOrderResult>("/api/public/store-orders", payload);
 }

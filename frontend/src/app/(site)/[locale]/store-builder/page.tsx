@@ -19,11 +19,11 @@ export async function generateMetadata({
   return withPageMeta("store-builder", locale === "fa" ? "fa" : "en", {
     path: "/store-builder",
     title: isFa
-      ? "فروشگاه‌ساز ابری | خرید اشتراک و تحویل آنی | پیشگامان ایده‌نگار"
-      : "Cloud Store Builder | Instant Subscription Delivery | Idehnegar",
+      ? "فروشگاه‌ساز ابری | قالب‌های فروشگاه اینترنتی | پیشگامان ایده‌نگار"
+      : "Cloud Store Builder | Store Templates | Idehnegar",
     description: isFa
-      ? "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید؛ فعال‌سازی آنی پس از پرداخت و اتصال مستقیم به درگاه شاپرک."
-      : "Pick a store template with full warehouse management or a light version; instant activation after payment via Shaparak gateway.",
+      ? "قالب فروشگاه اینترنتی خود را با انبارداری جامع یا نسخه سبک انتخاب کنید و برای راه‌اندازی با تیم ایده‌نگار در تماس باشید."
+      : "Pick a store template with full warehouse management or a light version, then contact our team to get started.",
   });
 }
 
