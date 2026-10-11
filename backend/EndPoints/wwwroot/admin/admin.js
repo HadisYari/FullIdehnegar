@@ -313,6 +313,21 @@
 		Array.prototype.forEach.call(document.querySelectorAll('[data-repeater]'), initRepeater);
 	}
 
+	/* ─────────── نمایش/مخفی کردن رمز (فیلدهای kind=Secret) ─────────── */
+	function initSecretToggles() {
+		Array.prototype.forEach.call(document.querySelectorAll('[data-secret-toggle]'), function (button) {
+			var selector = button.getAttribute('data-secret-toggle');
+			var input = selector ? document.querySelector(selector) : null;
+			if (!input) return;
+
+			button.addEventListener('click', function () {
+				var hidden = input.type === 'password';
+				input.type = hidden ? 'text' : 'password';
+				button.classList.toggle('active', hidden);
+			});
+		});
+	}
+
 	/* ─────────────────────────── کمک‌ورودی‌ها ─────────────────────────── */
 	function initCounters() {
 		Array.prototype.forEach.call(document.querySelectorAll('textarea[maxlength], input[maxlength]'), function (field) {
@@ -356,6 +371,7 @@
 		initSidebar();
 		initConfirmations();
 		initRepeaters();
+		initSecretToggles();
 		initCounters();
 		initPathPreviews();
 	});

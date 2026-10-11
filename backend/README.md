@@ -11,7 +11,7 @@ backend/
 └─ tools/generate-seed.mjs    تولید seed.json از داده‌های frontend/src
 ```
 
-## ۱. مدل داده (۲۶ جدول، همگی در schema `dbo`)
+## ۱. مدل داده (۲۵ جدول، همگی در schema `dbo`)
 
 اصل طراحی: **جدول‌ها آینهٔ چیزی‌اند که فرانت‌اند واقعاً استفاده می‌کند** — بدون
 جدول اضافی؛ و برای روان‌بودن ورود داده، هر صفحهٔ سایت تا جای ممکن در **یک جدول**
@@ -33,6 +33,7 @@ backend/
 | `StoreTemplates` | قالب‌های صفحهٔ فروشگاه‌ساز؛ نام، توضیح، برچسب، امکانات و تصاویر به فارسی و انگلیسی (`NameEn`, `DescriptionEn`, `FeaturesEnJson`, …) |
 | `AppDownloadLinks` | لینک‌های دانلود اپ طلا |
 | `ContactMessages` | خروجی فرم تماس (فقط نوشتنی) |
+| `Users` | حساب‌های ورود به پنل: `Username` (یکتا)، `Password` (متن ساده، بدون هش)، `FullName`، `Role` و `LastLoginAtUtc`. `IsPublished` یعنی «اجازهٔ ورود». اولین رکورد خودکار از `Admin:Default*` ساخته می‌شود |
 
 قواعد مشترک:
 
@@ -85,16 +86,35 @@ dotnet run
 node tools/generate-seed.mjs   # خروجی: Idehnegar.Infrastructure/SeedData/seed.json
 ```
 
-رمز پنل در configuration است (نه در دیتابیس):
+### ورود به پنل از جدول `Users`
 
-```bash
-cd EndPoints
-dotnet run -- hash-password "YourStrong#Pass"   # خروجی = Admin:PasswordSha256
-```
+حساب‌های پنل در جدول `Users` دیتابیس هستند (نام کاربری، رمز عبور، نام، نقش) و
+`AccountController` هم فقط از همین جدول لاگین می‌گیرد. مطابق خواستهٔ پروژه رمز
+عبور **هش نمی‌شود** و به‌صورت متن ساده ذخیره می‌شود تا در صفحهٔ `/admin/User`
+قابل خواندن و ویرایش باشد؛ فقط مقایسهٔ آن با `CryptographicOperations.FixedTimeEquals`
+و به‌صورت زمان‌ثابت انجام می‌شود.
 
-`Admin:Username` + `Admin:PasswordSha256` را در `appsettings.Production.json`
-بگذارید. در محیط Development در صورت خالی بودن، متغیر `IDEHNEGAR_ADMIN_PASSWORD`
-پذیرفته می‌شود (فقط برای تست لوکال).
+اولین مدیر (وقتی جدول خالی است) خودکار از این کلیدها ساخته می‌شود:
+
+| کلید | توضیح |
+| --- | --- |
+| `Admin:DefaultUsername` | نام کاربری اولین مدیر (پیش‌فرض `admin`) |
+| `Admin:DefaultPassword` | رمز متن‌ساده اولین مدیر |
+| `Admin:DefaultName` | نام نمایشی اولین مدیر |
+
+برای نصب‌های قدیمی، اگر `Admin:DefaultPassword` خالی باشد مقدار
+`Admin:PasswordSha256` (که در عمل متن سادهٔ رمز بود) خوانده می‌شود. پس از اولین
+ساخت، بقیهٔ کاربران از پنل (`/admin/User`) اضافه می‌شوند.
+
+نقش‌ها (`Users.Role`) با policyهای پنل هماهنگ‌اند:
+
+| نقش | دسترسی |
+| --- | --- |
+| `Administrator` | همهٔ پنل، شامل `/admin/User` (مدیریت کاربران) |
+| `Editor` | محتوا، صندوق پیام‌ها و تنظیمات — بدون مدیریت کاربران |
+
+صفحهٔ ورود کپچای عددی دارد (SVG ساده، بدون وابستگی بیرونی) که کدش در Session
+نگه داشته می‌شود و هر تلاش فقط یک‌بار آن را مصرف می‌کند.
 
 ## ۳. API عمومی (`/api/public/*`)
 
@@ -131,15 +151,19 @@ TypeScript فرانت‌اند (`PortfolioItem`…) یک‌به‌یک جور د
   `ContentController` با مسیر `[Route("admin/{entity}")]` برای همهٔ جدول‌ها
   Index/create/edit/save/delete/toggle/move را می‌سازد و `Content/Form.cshtml`
   همهٔ نوع فیلدها را رندر می‌کند:
-  `Text, Textarea, Number, Decimal, Checkbox, Select, Image, LineList, TagList, Repeater, Slug, Code`.
+  `Text, Textarea, Number, Decimal, Checkbox, Select, Image, LineList, TagList, Repeater, Slug, Code, Secret`.
 - **ورود داده روان:** لیست‌ها (امکانات، گالری…) به‌صورت «هر خط یک مورد» یا با
   Repeater ردیفی پر می‌شوند؛ ترتیب نمایش با دکمه‌های ↑/↓؛ انتشار با یک کلیک روی
   badge وضعیت؛ تصویر با Drag & Drop در همان فرم (`wwwroot/Panel/custome/js/file-uploader.js`).
 - **قفل امنیتی:** کوکی احراز هویت، `[ValidateAntiForgeryToken]` روی همهٔ POSTها
-  (توکن از هدر `RequestVerificationToken` هم پذیرفته می‌شود)، مقایسهٔ رمز با
-  `CryptographicOperations.FixedTimeEquals`، تأخیر ۷۰۰ms در صورت خطا، محافظت در
-  برابر open-redirect، و هدرهای `X-Robots-Tag: noindex` + `X-Frame-Options: SAMEORIGIN`
-  برای همهٔ مسیرهای `/admin`.
+  (توکن از هدر `RequestVerificationToken` هم پذیرفته می‌شود)، کپچای عددی در صفحهٔ
+  ورود (`/admin/account/captcha`)، rate limit جداگانهٔ ورود (۱۲ تلاش در ۵ دقیقه)،
+  مقایسهٔ رمز با `CryptographicOperations.FixedTimeEquals`، تأخیر ۷۰۰ms در صورت
+  خطا، محافظت در برابر open-redirect، و هدرهای `X-Robots-Tag: noindex` +
+  `X-Frame-Options: SAMEORIGIN` برای همهٔ مسیرهای `/admin`.
+- **کاربران:** `/admin/User` (جدول `Users`) — افزودن/ویرایش نام کاربری، رمز
+  متن‌ساده، نام و نقش؛ فقط برای نقش `Administrator`. کاربر نمی‌تواند حساب خودش را
+  حذف کند و ورود هر کاربر با تیک «فعال» کنترل می‌شود.
 - **صندوق‌ها:** `/admin/inbox/messages` (بایگانی، حذف).
 - **تنظیمات:** `/admin/site-settings` (اطلاعات شرکت + سئوی صفحه‌ها در یک صفحهٔ گروه‌بندی‌شده).
 

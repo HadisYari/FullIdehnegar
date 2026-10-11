@@ -9,7 +9,16 @@ namespace Idehnegar.Infrastructure.Persistence;
 /// </summary>
 public static class DbInitializer
 {
-    public static async Task InitializeAsync(AppDbContext db, ILogger logger)
+    /// <summary>
+    /// مایگریشن‌ها را اجرا/ساختار را می‌سازد، محتوا را seed می‌کند و در پایان
+    /// مطمئن می‌شود اولین حساب مدیر در جدول <c>Users</c> وجود دارد.
+    /// </summary>
+    public static async Task InitializeAsync(
+        AppDbContext db,
+        ILogger logger,
+        string? adminUsername = null,
+        string? adminPassword = null,
+        string? adminFullName = null)
     {
         logger.LogInformation("Database connection: {ConnectionString}", db.Database.GetConnectionString());
         // Warm-up: the very first connection at process start can be slow (instance
@@ -57,7 +66,61 @@ public static class DbInitializer
                     "Migration/ensure-created step failed (its existence check connects to 'master'); continuing with content seeding on the existing schema.");
             }
             await SeedAsync(db, logger);
+
+            // جدول کاربران پنل: اولین مدیر از configuration ساخته می‌شود تا
+            // دسترسی به پنل پس از خالی‌شدن/ساخت دیتابیس از دست نرود.
+            await EnsureDefaultAdminAsync(db, adminUsername, adminPassword, adminFullName, logger);
         });
+    }
+
+    /// <summary>
+    /// اگر جدول <c>Users</c> خالی باشد، یک حساب مدیر با نقش
+    /// <see cref="UserRoles.Administrator"/> می‌سازد. مقادیر خالی نادیده گرفته
+    /// می‌شوند و خطا فقط لاگ می‌شود (استارت برنامه هرگز به‌خاطر آن متوقف نمی‌شود).
+    /// </summary>
+    public static async Task EnsureDefaultAdminAsync(
+        AppDbContext db,
+        string? username,
+        string? password,
+        string? fullName,
+        ILogger logger)
+    {
+        try
+        {
+            if (await db.Users.AnyAsync())
+            {
+                logger.LogInformation("Users: already has rows — skipping the default administrator seed.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                logger.LogWarning(
+                    "Users is empty and Admin:DefaultUsername / Admin:DefaultPassword are not configured — no one can sign in to the panel yet.");
+                return;
+            }
+
+            var name = string.IsNullOrWhiteSpace(fullName) ? username.Trim() : fullName.Trim();
+
+            db.Users.Add(new User
+            {
+                Username = username.Trim(),
+                // مطابق خواستهٔ پروژه، رمز به‌صورت متن ساده ذخیره می‌شود.
+                Password = password,
+                FullName = name,
+                Role = UserRoles.Administrator,
+                IsPublished = true,
+                CreatedAtUtc = DateTime.UtcNow,
+            });
+
+            await db.SaveChangesAsync();
+            logger.LogInformation(
+                "Users: default administrator '{Username}' was created (the table was empty).", username.Trim());
+        }
+        catch (Exception exception)
+        {
+            logger.LogWarning(exception, "Users: the default administrator account could not be ensured.");
+        }
     }
     private static async Task SeedAsync(AppDbContext db, ILogger logger)
     {

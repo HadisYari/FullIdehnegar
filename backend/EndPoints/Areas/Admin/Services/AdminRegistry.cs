@@ -1,4 +1,5 @@
 using EndPoints.Areas.Admin.Models;
+using EndPoints.Infrastructure;
 using Idehnegar.Core.Entities;
 using Idehnegar.Core.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -626,6 +627,41 @@ public sealed class AdminRegistry
                     new AdminRepeaterColumn("Href", "آدرس لینک (اختیاری)", MaxLength: 1000),
                 }))
                 .AddPublish(),
+        },
+
+        // ───────────────────── کاربران پنل (جدول Users) ─────────────────────
+        // همین جدول است که ورود به پنل از آن خوانده می‌شود؛ پس نام کاربری، رمز
+        // عبور (متن ساده، بدون هش)، نام و نقش در همین صفحه ویرایش می‌شوند.
+        new AdminEntityDefinition
+        {
+            RouteName = "User",
+            TitleFa = "کاربران پنل",
+            SingularFa = "کاربر",
+            Icon = "ti ti-users",
+            Group = "کاربران",
+            Searchable = true,
+            SearchProperty = "Username",
+            // مدیریت کاربران فقط برای نقش Administrator — همان policy در Program.cs ثبت شده است.
+            Policy = AdminPolicies.Users,
+            Gateway = sp => new EntityGateway<User>(sp.GetRequiredService<IGenericRepository<User>>()),
+            Columns = Columns(
+                Column("Username", "نام کاربری", maxWidth: 160),
+                Column("FullName", "نام و نام خانوادگی"),
+                Column("Role", "نقش", maxWidth: 140),
+                Column("Password", "رمز عبور (متن ساده)", maxWidth: 160),
+                Column("LastLoginAtUtc", "آخرین ورود", maxWidth: 160),
+                Column("IsPublished", "فعال", isBool: true, maxWidth: 70)),
+            Fields = Fields()
+                .AddField(AdminFieldExtensions.Field("Username", "نام کاربری", AdminFieldKind.Text,
+                    required: true, maxLength: 60, help: "با همین نام کاربری وارد پنل می‌شوید و باید یکتا باشد.", column: "col-12 col-lg-4"))
+                .AddField(AdminFieldExtensions.Field("FullName", "نام و نام خانوادگی",
+                    required: true, maxLength: 200, help: "در نوار بالای پنل نمایش داده می‌شود.", column: "col-12 col-lg-4"))
+                .AddField(AdminFieldExtensions.Select("Role", "نقش", "user-roles", required: true))
+                .AddField(AdminFieldExtensions.Field("Password", "رمز عبور", AdminFieldKind.Secret,
+                    required: true, maxLength: 200,
+                    help: "مطابق خواستهٔ پروژه بدون هش و به‌صورت متن ساده در جدول Users ذخیره می‌شود.", column: "col-12 col-lg-6"))
+                .AddField(AdminFieldExtensions.Check("IsPublished", "فعال (اجازهٔ ورود)",
+                    "بدون تیک، ورود این کاربر ممکن نیست.")),
         },
     };
 }
