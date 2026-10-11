@@ -5,6 +5,7 @@ using Idehnegar.Core.Entities;
 using Idehnegar.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EndPoints.Areas.Admin.Controllers;
 

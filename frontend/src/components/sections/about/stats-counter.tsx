@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import type { AboutStatDto } from "@/lib/cms";
+import { resolveText } from "./about-copy";
 
 const statsData = {
   fa: [
@@ -57,8 +59,16 @@ function AnimatedNumber({
   );
 }
 
-export function StatsCounter({ locale }: { locale: Locale }) {
-  const stats = statsData[locale];
+export function StatsCounter({ locale, items }: { locale: Locale; items?: AboutStatDto[] }) {
+  const stats: { value: number; suffix: string; label: string; icon: string }[] =
+    items && items.length > 0
+      ? items.map((item) => ({
+          value: item.value,
+          suffix: item.suffix ?? "",
+          label: resolveText(item.label, locale, ""),
+          icon: item.icon ?? "",
+        }))
+      : statsData[locale];
 
   return (
     <section className="relative -mt-16 z-20 sm:-mt-20">

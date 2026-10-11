@@ -7,7 +7,25 @@ import { Container } from "../container";
 import { localeHref } from "@/lib/i18n/paths";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
 import type { PortfolioItem } from "@/lib/portfolio";
+import type { PageSectionDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
+import { SplitTitle } from "@/components/split-title";
 import { Sparkles, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+
+/* کپی ثابت عنوان بخش (fallback). سید داده بک‌اند از همین literal ساخته می‌شود.
+   عنوان می‌تواند چند خط داشته باشد (\n) و بخش گرادیانی با | | مشخص می‌شود. */
+const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
+  "portfolio-preview": {
+    fa: {
+      eyebrow: "نمونه‌کارها",
+      title: "خلق تجربیات دیجیتال در\n|مقیاس واقعی|",
+    },
+    en: {
+      eyebrow: "Portfolio",
+      title: "Curated Works in\n|Real Scale|",
+    },
+  },
+};
 
 /* ──────────────────────────────────────────────────────────
    موج متحرک ورودی بالا (سفید به سرمه‌ای #0f0f52)
@@ -395,14 +413,18 @@ export function PortfolioPreviewSection({
   items,
   locale,
   dict,
+  sections,
 }: {
   items: PortfolioItem[];
   locale: Locale;
   dict: Dictionary;
+  /** بلوک عنوان از /api/public/page-sections/home — fallback: fallbackSections */
+  sections?: PageSectionDto[];
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
   const isRtl = locale === "fa";
+  const copy = resolveSection(sections, "portfolio-preview", locale, fallbackSections["portfolio-preview"][locale]);
 
   const headerVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -446,14 +468,14 @@ export function PortfolioPreviewSection({
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-[#e6304c]/40 bg-[#e6304c]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-rose-300 backdrop-blur-md shadow-lg shadow-[#e6304c]/15">
               <Sparkles className="h-3.5 w-3.5 text-[#e6304c]" />
-              <span>{dict.portfolio?.eyebrow || "نمونه‌کارها و پروژه‌ها"}</span>
+              <span>{copy.eyebrow}</span>
             </span>
 
             <h2 className="mt-4 text-balance text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
-              {isRtl ? "خلق تجربیات دیجیتال در " : "Curated Works in "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200">
-                {isRtl ? "مقیاس واقعی" : "Real Scale"}
-              </span>
+              <SplitTitle
+                title={copy.title}
+                accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200"
+              />
             </h2>
 
             {/* خط دکوراتیو کوچک */}

@@ -99,6 +99,28 @@
             <div class="form-text">هر خط در سایت به‌صورت یک مورد مستقل نمایش داده می‌شود.</div>
         }
     }
+    else if (Model.Kind == AdminFieldKind.Secret)
+    {
+        <label class="form-label" for="@inputId">@Model.Label
+        @if (Model.Required)
+        {
+            <span class="text-danger" title="پر کردن این فیلد الزامی است">*</span>
+        }
+    </label>
+        <div class="input-group">
+            <input class="@css" id="@inputId" name="@Model.Property" type="password"
+                   value="@Model.Value" maxlength="@Model.MaxLength" dir="ltr"
+                   required="@Model.Required" autocomplete="new-password" spellcheck="false" />
+            <button class="btn btn-outline-secondary" type="button"
+                    data-secret-toggle="#@inputId" title="نمایش / مخفی کردن" aria-label="نمایش / مخفی کردن">
+                <i class="ti ti-eye"></i>
+            </button>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Help))
+        {
+            <div class="form-text">@Model.Help</div>
+        }
+    }
     else
     {
         <label class="form-label" for="@inputId">@Model.Label

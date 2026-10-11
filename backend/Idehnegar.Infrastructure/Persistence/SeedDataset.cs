@@ -17,6 +17,15 @@ public sealed class SeedDataset
     public List<PortfolioCategory> PortfolioCategories { get; set; } = new();
     public List<PortfolioProject> PortfolioProjects { get; set; } = new();
     public List<Service> Services { get; set; } = new();
+    public List<HomeServiceCard> HomeServiceCards { get; set; } = new();
+    public List<AboutSection> AboutSections { get; set; } = new();
+    public List<CoreValue> CoreValues { get; set; } = new();
+    public List<Certification> Certifications { get; set; } = new();
+    public List<LifecycleStep> LifecycleSteps { get; set; } = new();
+    public List<PhilosophyPrinciple> PhilosophyPrinciples { get; set; } = new();
+    public List<TechStackGroup> TechStackGroups { get; set; } = new();
+    public List<AboutStat> AboutStats { get; set; } = new();
+    public List<PageSection> PageSections { get; set; } = new();
     public List<ProcessStep> ProcessSteps { get; set; } = new();
     public List<Client> Clients { get; set; } = new();
     public List<Testimonial> Testimonials { get; set; } = new();
@@ -25,7 +34,6 @@ public sealed class SeedDataset
     public List<FaqItem> FaqItems { get; set; } = new();
     public List<InquiryType> InquiryTypes { get; set; } = new();
     public List<StoreTemplate> StoreTemplates { get; set; } = new();
-    public List<StorePlan> StorePlans { get; set; } = new();
     public List<AppDownloadLink> AppDownloadLinks { get; set; } = new();
 
     public static SeedDataset Load()

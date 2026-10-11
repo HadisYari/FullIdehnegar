@@ -4,9 +4,10 @@ import { Container } from "@/components/container";
 import { PortfolioFilterGrid } from "@/components/portfolio-filter-grid";
 import { JsonLd } from "@/components/json-ld";
 import { getPortfolioItems } from "@/lib/portfolio";
-import { loadCategories, loadSiteConfig, withPageMeta } from "@/lib/cms";
+import { loadCategories, loadPageMeta, loadSiteConfig, withPageMeta } from "@/lib/cms";
 import { getDictionary, locales, type Locale } from "@/lib/i18n/dictionaries";
 import { categories as localCategories } from "@/lib/categories";
+import { SplitTitle } from "@/components/split-title";
 import { Sparkles } from "lucide-react";
 
 export function generateStaticParams() {
@@ -80,7 +81,24 @@ export default async function PortfolioPage({
   const locale = rawLocale as Locale;
   const dict = getDictionary(locale);
   const isFa = locale === "fa";
-  const [items, config] = await Promise.all([getPortfolioItems(), loadSiteConfig()]);
+  const [items, config, pageMeta] = await Promise.all([
+    getPortfolioItems(),
+    loadSiteConfig(),
+    loadPageMeta("portfolio"),
+  ]);
+
+  // متن هیرو از جدول PageMeta (پنل مدیریت) — fallback: متن‌های همین صفحه.
+  const heroEyebrow =
+    (pageMeta && (pageMeta.eyebrow[locale] || pageMeta.eyebrow.fa)) ||
+    (isFa ? "ویترین پروژه‌های عملیاتی" : "Curated Case Studies");
+  const heroHeading =
+    (pageMeta && (pageMeta.heading[locale] || pageMeta.heading.fa)) ||
+    (isFa ? "نمونه‌کارها و |پروژه‌های شاخص|" : "Our Featured |Projects|");
+  const heroSubheading =
+    (pageMeta && (pageMeta.subheading[locale] || pageMeta.subheading.fa)) ||
+    (isFa
+      ? "مجموعه‌ای از پرتال‌های سازمانی، وب‌سایت‌های اختصاصی و سامانه‌های نرم‌افزاری مقیاس‌پذیر."
+      : "Enterprise portals, scalable web apps, and bespoke platforms engineered by Idehnegar.");
 
   // دسته‌بندی‌ها از /api/public/categories — fallback: lib/categories
   const remoteCategories = await loadCategories();
@@ -119,20 +137,18 @@ export default async function PortfolioPage({
         <Container className="relative z-10 text-center max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-mono text-rose-300 backdrop-blur-md">
             <Sparkles className="h-3 w-3 text-[#e6304c]" />
-            <span>{isFa ? "ویترین پروژه‌های عملیاتی" : "Curated Case Studies"}</span>
+            <span>{heroEyebrow}</span>
           </div>
 
           <h1 className="mt-3 text-2xl sm:text-4xl font-black tracking-tight text-white">
-            {isFa ? "نمونه‌کارها و " : "Our Featured "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200">
-              {isFa ? "پروژه‌های شاخص" : "Projects"}
-            </span>
+            <SplitTitle
+              title={heroHeading}
+              accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200"
+            />
           </h1>
 
           <p className="mt-2 text-xs sm:text-sm text-white/70 leading-relaxed max-w-lg mx-auto">
-            {isFa
-              ? "مجموعه‌ای از پرتال‌های سازمانی، وب‌سایت‌های اختصاصی و سامانه‌های نرم‌افزاری مقیاس‌پذیر."
-              : "Enterprise portals, scalable web apps, and bespoke platforms engineered by Idehnegar."}
+            {heroSubheading}
           </p>
         </Container>
       </section>

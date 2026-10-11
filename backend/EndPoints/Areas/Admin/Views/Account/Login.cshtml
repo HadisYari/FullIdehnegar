@@ -1,77 +1,155 @@
 @model EndPoints.Areas.Admin.Controllers.LoginViewModel
 @{
-    Layout = null;
-    var notConfigured = ViewData["PanelNotConfigured"] as string;
+	Layout = null;
+	var notConfigured = ViewData["PanelNotConfigured"] as string;
 }
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html class="light-style layout-wide customizer-hide" data-assets-path="/Panel/assets/" data-template="horizontal-menu-template" data-theme="theme-default" dir="rtl" lang="fa">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>ورود به پنل | پیشگامان ایده‌نگار</title>
-    <link rel="icon" type="image/png" href="~/Panel/brand/favicon.png" />
-    <link rel="stylesheet" href="~/Panel/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="~/Panel/assets/vendor/css/theme-default.css" />
-    <link rel="stylesheet" href="~/Panel/assets/css/rtl.css" />
-    <link rel="stylesheet" href="~/Panel/assets/vendor/fonts/tabler-icons.css" />
-    <link rel="stylesheet" href="~/Panel/assets/fonts/farsi-fonts/font.css" />
-    <link rel="stylesheet" href="~/admin/admin.css" asp-append-version="true" />
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
+	<title>@ViewData["Title"]</title>
+
+	<link href="/Panel/assets/img/favicon/favicon.ico" rel="icon" type="image/x-icon" />
+	<link href="/Panel/assets/vendor/fonts/fontawesome.css" rel="stylesheet" />
+	<link href="/Panel/assets/vendor/fonts/tabler-icons.css" rel="stylesheet" />
+	<link href="/Panel/assets/vendor/fonts/flag-icons.css" rel="stylesheet" />
+	<link class="template-customizer-core-css" href="/Panel/assets/vendor/css/rtl/core.css" rel="stylesheet" />
+	<link class="template-customizer-theme-css" href="/Panel/assets/vendor/css/rtl/theme-default.css" rel="stylesheet" />
+	<link href="/Panel/assets/css/demo.css" rel="stylesheet" />
+	<link href="/Panel/assets/vendor/libs/node-waves/node-waves.css" rel="stylesheet" />
+	<link href="/Panel/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="/Panel/assets/vendor/css/pages/page-auth.css" rel="stylesheet" />
+	<link href="/Panel/assets/css/rtl.css" rel="stylesheet" />
+	<link href="/Panel/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
 </head>
-<body class="admin-login-body">
-<main class="admin-login-wrap">
-    <div class="card admin-login-card">
-        <div class="card-body p-4 p-sm-5">
-            <div class="text-center mb-4">
-                <img src="~/Panel/brand/logo.png" alt="پیشگامان ایده‌نگار" class="admin-login-logo" />
-                <h1 class="h4 mt-3 mb-1">پنل مدیریت محتوا</h1>
-                <p class="text-muted mb-0">برای وارد شدن به بخش مدیریت، وارد شوید.</p>
-            </div>
+<body>
+	<div class="container-xxl">
+		<div class="authentication-wrapper authentication-basic container-p-y">
+			<div class="authentication-inner py-4">
+				<div class="card">
+					<div class="card-body">
+						<div class="app-brand justify-content-center mb-4 mt-2">
+							<a class="app-brand-link gap-2" href="/">
+								<span class="app-brand-logo demo">
+									<img src="/Panel/brand/logo.png" width="150" alt="Logo" />
+								</span>
+							</a>
+						</div>
+						<div class="text-center mb-4">
 
-            @if (!string.IsNullOrWhiteSpace(notConfigured))
-            {
-                <div class="alert alert-warning small" role="alert">@notConfigured</div>
-            }
+							<h1 class="h4 mt-3 mb-1">ورود به پنل مدیریت</h1>
+							<p class="text-muted mb-0">با نام کاربری و رمز عبور حساب خود وارد شوید.</p>
+						</div>
 
-            <form method="post" action="/admin/account/login" autocomplete="off">
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+						@if (!string.IsNullOrWhiteSpace(notConfigured))
+						{
+							<div class="alert alert-warning small" role="alert">@notConfigured</div>
+						}
 
-                <div class="mb-3">
-                    <label class="form-label" for="loginUsername">نام کاربری</label>
-                    <div class="input-group input-group-merge">
-                        <span class="input-group-text"><i class="ti ti-user"></i></span>
-                        <input id="loginUsername" name="Username" type="text" class="form-control"
-                               value="@Model.Username" autocomplete="username" required maxlength="60" autofocus />
-                    </div>
-                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.Username)</span>
-                </div>
+						@Html.ValidationSummary(false, "", new { @class = "alert alert-danger small py-2" })
 
-                <div class="mb-3">
-                    <label class="form-label" for="loginPassword">رمز عبور</label>
-                    <div class="input-group input-group-merge">
-                        <span class="input-group-text"><i class="ti ti-lock"></i></span>
-                        <input id="loginPassword" name="Password" type="password" class="form-control"
-                               autocomplete="current-password" required />
-                    </div>
-                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.Password)</span>
-                </div>
+						<form method="post" action="/admin/account/login" autocomplete="off">
+							@Html.AntiForgeryToken()
+							<input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
 
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="loginRemember" name="RememberMe" value="true" />
-                    <label class="form-check-label" for="loginRemember">مرا به خاطر بسپار</label>
-                </div>
+							<div class="mb-3">
+								<label class="form-label" for="loginUsername">نام کاربری</label>
+								<div class="input-group input-group-merge">
+									<span class="input-group-text"><i class="ti ti-user"></i></span>
+									<input id="loginUsername" name="Username" type="text" class="form-control admin-latin"
+										   value="@Model.Username" autocomplete="username" required maxlength="60" autofocus
+										   placeholder="نام کاربری" />
+								</div>
+								<span class="text-danger small">@Html.ValidationMessageFor(m => m.Username)</span>
+							</div>
 
-                <button type="submit" class="btn btn-primary w-100 mb-3">
-                    <i class="ti ti-login-2"></i> ورود به پنل
-                </button>
+							<div class="mb-3">
+								<label class="form-label" for="loginPassword">رمز عبور</label>
+								<div class="input-group input-group-merge">
+									<span class="input-group-text"><i class="ti ti-lock"></i></span>
+									<input id="loginPassword" name="Password" type="password" class="form-control admin-latin"
+										   autocomplete="current-password" required placeholder="رمز عبور" />
+									<button class="btn btn-outline-secondary" type="button" id="loginPasswordToggle"
+											title="نمایش / مخفی کردن رمز" aria-label="نمایش / مخفی کردن رمز">
+										<i class="ti ti-eye"></i>
+									</button>
+								</div>
+								<span class="text-danger small">@Html.ValidationMessageFor(m => m.Password)</span>
+							</div>
 
-                <p class="text-center text-muted small mb-0">
-                    این صفحه فقط برای مدیران سایت است و در نتایج جست‌وجو نمایش داده نمی‌شود.
-                </p>
-            </form>
-        </div>
-    </div>
-</main>
+							<div class="mb-3">
+								<label class="form-label" for="loginCaptcha">کد امنیتی تصویر</label>
+								<div class="row g-2 align-items-center">
+									<div class="col-12 col-sm">
+										<div class="input-group input-group-merge">
+											<span class="input-group-text"><i class="ti ti-shield-check"></i></span>
+											<input id="loginCaptcha" name="Captcha" type="text" class="form-control admin-latin"
+												   maxlength="10" required autocomplete="off" inputmode="numeric"
+												   placeholder="عدد چهاررقمی" />
+										</div>
+									</div>
+									<div class="col-12 col-sm-auto">
+										<div class="admin-login-captcha">
+											<img id="loginCaptchaImage" src="/admin/account/captcha"
+												 alt="کد امنیتی" width="170" height="60" />
+											<button type="button" class="btn btn-sm btn-icon btn-label-secondary"
+													id="loginCaptchaRefresh" title="تصویر جدید" aria-label="کد امنیتی جدید">
+												<i class="ti ti-refresh"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<span class="text-danger small">@Html.ValidationMessageFor(m => m.Captcha)</span>
+								<div class="form-text">عدد داخل تصویر را وارد کنید؛ با هر بار ورود، کد تازه‌ای ساخته می‌شود.</div>
+							</div>
+
+							<div class="form-check mb-4">
+								<input class="form-check-input" type="checkbox" id="loginRemember" name="RememberMe" value="true" />
+								<label class="form-check-label" for="loginRemember">مرا به خاطر بسپار</label>
+							</div>
+
+							<button type="submit" class="btn btn-primary w-100 mb-3">
+								<i class="ti ti-login-2"></i> ورود به پنل
+							</button>
+
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+		(function () {
+			'use strict';
+
+			// کپچا: با دکمه (یا کلیک روی تصویر) یک کد تازه گرفته می‌شود.
+			var image = document.getElementById('loginCaptchaImage');
+			var refresh = document.getElementById('loginCaptchaRefresh');
+			if (image && refresh) {
+				var reload = function () {
+					image.setAttribute('src', '/admin/account/captcha?t=' + Date.now());
+				};
+				refresh.addEventListener('click', reload);
+				image.addEventListener('click', reload);
+			}
+
+			// نمایش/مخفی کردن رمز عبور.
+			var toggle = document.getElementById('loginPasswordToggle');
+			var password = document.getElementById('loginPassword');
+			if (toggle && password) {
+				toggle.addEventListener('click', function () {
+					var hidden = password.type === 'password';
+					password.type = hidden ? 'text' : 'password';
+					toggle.classList.toggle('active', hidden);
+				});
+			}
+		})();
+	</script>
 </body>
 </html>

@@ -34,8 +34,6 @@ public sealed class DashboardController : Controller
             .ToListAsync(cancellationToken);
         var unread = await _provider.For<ContactMessage>().Query()
             .CountAsync(message => !message.IsArchived, cancellationToken);
-        var pendingOrders = await _provider.For<StoreOrder>().Query()
-            .CountAsync(order => order.Status == "pending", cancellationToken);
 
         var model = new AdminDashboardModel
         {
@@ -45,7 +43,6 @@ public sealed class DashboardController : Controller
             Testimonials = testimonials,
             Clients = clients,
             UnreadMessages = unread,
-            PendingOrders = pendingOrders,
             LastContentUpdateUtc = projects
                 .Select(project => project.UpdatedAtUtc ?? project.CreatedAtUtc)
                 .DefaultIfEmpty()

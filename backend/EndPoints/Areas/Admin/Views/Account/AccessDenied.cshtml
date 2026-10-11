@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "دسترسی غیرمجاز";
+    var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+    var returnUrl = Context.Request.Query["ReturnUrl"].ToString();
+}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-7">
+        <div class="card text-center">
+            <div class="card-body p-4 p-sm-5">
+                <div class="admin-denied-icon mb-3"><i class="ti ti-lock-off"></i></div>
+                <h4 class="mb-2">دسترسی غیرمجاز</h4>
+                <p class="text-muted mb-1">
+                    نقش شما (@UserRoles.Label(role)) اجازهٔ دیدن این بخش از پنل را ندارد.
+                </p>
+                @if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    <p class="text-muted small admin-latin" dir="ltr">@returnUrl</p>
+                }
+
+                <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+                    <a class="btn btn-primary" href="/admin">
+                        <i class="ti ti-smart-home"></i> بازگشت به پیش‌خوان
+                    </a>
+                    <form method="post" action="/admin/account/logout" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-label-secondary">
+                            <i class="ti ti-logout"></i> خروج از حساب
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

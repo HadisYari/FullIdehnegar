@@ -134,3 +134,69 @@ public class Testimonial : ContentEntity
     [MaxLength(2000)]
     public string QuoteEn { get; set; } = string.Empty;
 }
+
+/// <summary>
+/// One card of the home "services" grid (<c>services-section.tsx</c>). These are a
+/// marketing layer separate from the six services of the services page: each card
+/// carries its code label, colour theme, KPI row and technology chips.
+/// </summary>
+public class HomeServiceCard : ContentEntity
+{
+    /// <summary>Monospace code label shown on the card, e.g. <c>EXP // 01</c>.</summary>
+    [MaxLength(40)]
+    public string Code { get; set; } = string.Empty;
+
+    /// <summary>lucide-react icon name (Sparkles, Cpu, Zap …).</summary>
+    [MaxLength(40)]
+    public string? IconName { get; set; }
+
+    [MaxLength(300)]
+    public string TitleFa { get; set; } = string.Empty;
+
+    [MaxLength(300)]
+    public string TitleEn { get; set; } = string.Empty;
+
+    [MaxLength(1000)]
+    public string DescriptionFa { get; set; } = string.Empty;
+
+    [MaxLength(1000)]
+    public string DescriptionEn { get; set; } = string.Empty;
+
+    /// <summary>Accent colour (hex) of the icon, the KPI value and the progress bar.</summary>
+    [MaxLength(20)]
+    public string? Color { get; set; }
+
+    /// <summary>Soft background colour (hex) of the icon tile.</summary>
+    [MaxLength(20)]
+    public string? SoftColor { get; set; }
+
+    /// <summary>CSS colour of the blurred glow behind the card.</summary>
+    [MaxLength(60)]
+    public string? GlowColor { get; set; }
+
+    [MaxLength(200)]
+    public string? FeatureTitleFa { get; set; }
+
+    [MaxLength(200)]
+    public string? FeatureTitleEn { get; set; }
+
+    [MaxLength(100)]
+    public string? FeatureValueFa { get; set; }
+
+    [MaxLength(100)]
+    public string? FeatureValueEn { get; set; }
+
+    /// <summary>Width of the KPI progress bar, e.g. <c>92%</c>.</summary>
+    [MaxLength(10)]
+    public string? Progress { get; set; }
+
+    /// <summary>JSON array of technology chips shown at the bottom of the card.</summary>
+    public string? TagsJson { get; set; }
+
+    [NotMapped]
+    public List<string> Tags
+    {
+        get => Idehnegar.Core.Json.JsonList.ReadStrings(TagsJson);
+        set => TagsJson = Idehnegar.Core.Json.JsonList.Write(value);
+    }
+}

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using EndPoints.Models;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EndPoints.Controllers;
@@ -42,8 +43,8 @@ public class HomeController : Controller
     [ActionName("StatusCode")]
     public IActionResult StatusCodePage(int code)
     {
-        var originalPath = HttpContext.Features.Get<Microsoft.AspNetCore.Builder.IStatusCodeReExecuteFeature>()?.OriginalPath;
-
+        var originalPath = HttpContext.Features
+    .Get<IStatusCodeReExecuteFeature>()?.OriginalPath;
         // JSON clients (the Next.js data layer) must never receive an HTML error page.
         if (originalPath is not null && originalPath.StartsWith("/api", StringComparison.OrdinalIgnoreCase))
         {

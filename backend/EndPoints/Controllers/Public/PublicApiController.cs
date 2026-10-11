@@ -94,6 +94,7 @@ public sealed class SiteApiController : PublicApiControllerBase
         var categories = await Repo<PortfolioCategory>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var projects = await Repo<PortfolioProject>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var services = await Repo<Service>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var homeServiceCards = await Repo<HomeServiceCard>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var steps = await Repo<ProcessStep>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var clients = await Repo<Client>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var testimonials = await Repo<Testimonial>().Query().Published().Ordered().ToListAsync(cancellationToken);
@@ -102,7 +103,6 @@ public sealed class SiteApiController : PublicApiControllerBase
         var faqs = await Repo<FaqItem>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var inquiryTypes = await Repo<InquiryType>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var templates = await Repo<StoreTemplate>().Query().Published().Ordered().ToListAsync(cancellationToken);
-        var plans = await Repo<StorePlan>().Query().Published().Ordered().ToListAsync(cancellationToken);
         var downloads = await Repo<AppDownloadLink>().Query().Published().Ordered().ToListAsync(cancellationToken);
 
         var take = Math.Clamp(featuredTake, 1, 24);
@@ -121,6 +121,7 @@ public sealed class SiteApiController : PublicApiControllerBase
             Categories = categories.Select(category => category.ToDto()).ToList(),
             FeaturedProjects = featured.Select(project => project.ToDto()).ToList(),
             Services = services.Select(service => service.ToDto()).ToList(),
+            HomeServiceCards = homeServiceCards.Select(card => card.ToDto()).ToList(),
             ProcessSteps = steps.Select(step => step.ToDto()).ToList(),
             Clients = clients.Select(client => client.ToDto()).ToList(),
             Testimonials = testimonials.Select(testimonial => testimonial.ToDto()).ToList(),
@@ -129,7 +130,6 @@ public sealed class SiteApiController : PublicApiControllerBase
             Faqs = faqs.Select(faq => faq.ToDto()).ToList(),
             InquiryTypes = inquiryTypes.Select(type => type.ToDto()).ToList(),
             StoreTemplates = templates.Select(template => template.ToDto()).ToList(),
-            StorePlans = plans.Select(plan => plan.ToDto()).ToList(),
             AppDownloadLinks = downloads.Select(download => download.ToDto()).ToList(),
             GeneratedAtUtc = DateTime.UtcNow,
         };
@@ -287,6 +287,49 @@ public sealed class SectionsApiController : PublicApiControllerBase
         return items.Select(service => service.ToDto()).ToList();
     }
 
+    [HttpGet("home-services")]
+    public async Task<ActionResult<IReadOnlyList<HomeServiceCardDto>>> HomeServices(CancellationToken cancellationToken)
+    {
+        var items = await Repo<HomeServiceCard>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        return items.Select(card => card.ToDto()).ToList();
+    }
+
+    /// <summary>Every copy block and repeated item of one page (for example <c>home</c>, <c>about</c>, <c>gold-app</c>).</summary>
+    [HttpGet("page-sections/{pageKey}")]
+    public async Task<ActionResult<IReadOnlyList<PageSectionDto>>> PageSections(string pageKey, CancellationToken cancellationToken)
+    {
+        var sections = await Repo<PageSection>().Query().Published()
+            .Where(section => section.PageKey == pageKey)
+            .Ordered()
+            .ToListAsync(cancellationToken);
+
+        return sections.Select(section => section.ToDto()).ToList();
+    }
+
+    /// <summary>Every block of the about page in one response (keeps the page to a single request).</summary>
+    [HttpGet("about-content")]
+    public async Task<ActionResult<AboutContentDto>> AboutContent(CancellationToken cancellationToken)
+    {
+        var sections = await Repo<AboutSection>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var values = await Repo<CoreValue>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var certifications = await Repo<Certification>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var lifecycle = await Repo<LifecycleStep>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var philosophy = await Repo<PhilosophyPrinciple>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var techStack = await Repo<TechStackGroup>().Query().Published().Ordered().ToListAsync(cancellationToken);
+        var stats = await Repo<AboutStat>().Query().Published().Ordered().ToListAsync(cancellationToken);
+
+        return new AboutContentDto
+        {
+            Sections = sections.Select(section => section.ToDto()).ToList(),
+            CoreValues = values.Select(value => value.ToDto()).ToList(),
+            Certifications = certifications.Select(item => item.ToDto()).ToList(),
+            LifecycleSteps = lifecycle.Select(step => step.ToDto()).ToList(),
+            PhilosophyPrinciples = philosophy.Select(item => item.ToDto()).ToList(),
+            TechStackGroups = techStack.Select(group => group.ToDto()).ToList(),
+            Stats = stats.Select(stat => stat.ToDto()).ToList(),
+        };
+    }
+
     [HttpGet("process-steps")]
     public async Task<ActionResult<IReadOnlyList<ProcessStepDto>>> ProcessSteps(CancellationToken cancellationToken)
     {
@@ -350,13 +393,6 @@ public sealed class SectionsApiController : PublicApiControllerBase
 
         var items = await query.OrderBy(template => template.SortOrder).ToListAsync(cancellationToken);
         return items.Select(template => template.ToDto()).ToList();
-    }
-
-    [HttpGet("store-plans")]
-    public async Task<ActionResult<IReadOnlyList<StorePlanDto>>> StorePlans(CancellationToken cancellationToken)
-    {
-        var items = await Repo<StorePlan>().Query().Published().Ordered().ToListAsync(cancellationToken);
-        return items.Select(plan => plan.ToDto()).ToList();
     }
 
     [HttpGet("app-download-links")]

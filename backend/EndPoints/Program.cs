@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using EndPoints.Infrastructure;
+using Idehnegar.Core.Entities;
 using Idehnegar.Infrastructure;
 using Idehnegar.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,13 +9,6 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// `dotnet run -- hash-password <plain>` prints the Admin:PasswordSha256 value.
-if (args.Length >= 2 && string.Equals(args[0], "hash-password", StringComparison.OrdinalIgnoreCase))
-{
-    Console.WriteLine(PasswordHasher.Sha256Hex(args[1]));
-    return;
-}
 
 // ── Configuration ───────────────────────────────────────────────────────────
 builder.Services.Configure<SiteOptions>(builder.Configuration.GetSection(SiteOptions.SectionName));
@@ -48,7 +42,7 @@ builder.Services
     .AddCookie(options =>
     {
         options.LoginPath = "/admin/account/login";
-        options.AccessDeniedPath = "/admin/account/login";
+        options.AccessDeniedPath = "/admin/account/denied";
         options.Cookie.Name = "IdehnegarAdmin";
         options.Cookie.HttpOnly = true;
         options.Cookie.SameSite = SameSiteMode.Lax;
@@ -59,9 +53,30 @@ builder.Services
     });
 
 builder.Services.AddAuthorization(options =>
-    options.AddPolicy(AdminPolicies.Panel, policy => policy.RequireAuthenticatedUser()));
+{
+    // هماهنگ با [Authorize(Policy = AdminPolicies.Panel)] روی همهٔ کنترلرهای پنل:
+    // نقش‌های ثبت‌شده در جدول Users همان‌هایی هستند که این policy می‌پذیرد.
+    options.AddPolicy(AdminPolicies.Panel, policy =>
+        policy.RequireAuthenticatedUser().RequireRole(UserRoles.Administrator, UserRoles.Editor));
+
+    // صفحه/بخش مدیریت کاربران فقط برای مدیر ارشد.
+    options.AddPolicy(AdminPolicies.Users, policy =>
+        policy.RequireAuthenticatedUser().RequireRole(UserRoles.Administrator));
+});
 
 builder.Services.AddPublicRateLimiting();
+
+// کپچای عددی صفحهٔ ورود در Session نگه داشته می‌شود (سمت سرور، یک‌بارمصرف).
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "IdehnegarAdminCaptcha";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+});
 
 builder.Services.AddResponseCompression(options =>
 {
@@ -83,7 +98,7 @@ builder.Services.AddCors(options => options.AddPolicy("frontend", policy =>
         policy.WithOrigins(frontendOrigins.Where(origin => !string.IsNullOrWhiteSpace(origin)).ToArray())
             .WithMethods("GET", "POST", "OPTIONS")
             .WithHeaders("Content-Type", "X-Revalidate-Secret")
-            .MaxAge(600);
+            .SetPreflightMaxAge(TimeSpan.FromMinutes(600));
     }
     else
     {
@@ -116,6 +131,12 @@ if (app.Configuration.GetValue("Site:MigrateOnStartup", true))
         logger.LogError(exception, "Database initialisation failed — the site still starts so the API can be probed.");
     }
 }
+else
+{
+    // ساختار دیتابیس بیرون از برنامه ساخته می‌شود؛ فقط اولین حساب مدیر بررسی می‌شود.
+    var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("Database");
+    await app.Services.EnsureAdminAccountAsync(logger);
+}
 
 // ── Pipeline ────────────────────────────────────────────────────────────────
 app.UseForwardedHeaders();
@@ -127,7 +148,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseResponseCompression();
 app.UseIdehnegarSecurityHeaders();
 
@@ -148,6 +169,7 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseRouting();
 app.UseCors("frontend");
 app.UseRateLimiter();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

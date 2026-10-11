@@ -41,7 +41,7 @@ public sealed class AdminFieldModel
     public IReadOnlyList<AdminOption> Options { get; set; } = Array.Empty<AdminOption>();
     public IReadOnlyList<AdminRepeaterColumn> Columns { get; set; } = Array.Empty<AdminRepeaterColumn>();
 
-    public bool IsText => Kind is AdminFieldKind.Text or AdminFieldKind.Code or AdminFieldKind.Slug;
+    public bool IsText => Kind is AdminFieldKind.Text or AdminFieldKind.Code or AdminFieldKind.Slug or AdminFieldKind.Secret;
     public bool IsMultiline => Kind is AdminFieldKind.Textarea or AdminFieldKind.LineList;
     public bool IsNumber => Kind is AdminFieldKind.Number or AdminFieldKind.Decimal;
     public bool IsJsonEditor => Kind is AdminFieldKind.LineList or AdminFieldKind.TagList or AdminFieldKind.Repeater;
@@ -53,7 +53,7 @@ public sealed class AdminFieldModel
     /// The panel is RTL, but slugs, urls, colors and English copy must be typed
     /// left-to-right, otherwise the caret behaviour is confusing.
     /// </summary>
-    public bool IsLatinInput => Kind is AdminFieldKind.Image or AdminFieldKind.Code or AdminFieldKind.Slug
+    public bool IsLatinInput => Kind is AdminFieldKind.Image or AdminFieldKind.Code or AdminFieldKind.Slug or AdminFieldKind.Secret
         || Property.EndsWith("En", StringComparison.Ordinal)
         || Property.EndsWith("Json", StringComparison.Ordinal)
         || Property.Contains("Url", StringComparison.OrdinalIgnoreCase)
@@ -65,7 +65,9 @@ public sealed class AdminFieldModel
         || Property.Contains("Slug", StringComparison.OrdinalIgnoreCase)
         || Property.Contains("Color", StringComparison.OrdinalIgnoreCase)
         || Property.Contains("Gradient", StringComparison.OrdinalIgnoreCase)
-        || Property.Contains("Monogram", StringComparison.OrdinalIgnoreCase);
+        || Property.Contains("Monogram", StringComparison.OrdinalIgnoreCase)
+        // نام کاربری پنل همیشه لاتین تایپ می‌شود.
+        || Property.Contains("Username", StringComparison.OrdinalIgnoreCase);
 }
 
 /// <summary>Dashboard tiles.</summary>
@@ -77,7 +79,6 @@ public sealed class AdminDashboardModel
     public int Testimonials { get; set; }
     public int Clients { get; set; }
     public int UnreadMessages { get; set; }
-    public int PendingOrders { get; set; }
     public DateTime? LastContentUpdateUtc { get; set; }
     public List<AdminMessagePreview> LatestMessages { get; set; } = new();
 }

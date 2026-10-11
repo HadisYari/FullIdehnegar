@@ -1,7 +1,7 @@
 @model EndPoints.Areas.Admin.Models.AdminFieldModel
 @{
     // Mirrors the contract of wwwroot/Panel/custome/js/file-uploader.js.
-    var accept = ".jpg,.jpeg,.png,.webp,.svg,.ico,.gif";
+    var accept = ".jpg,.jpeg,.png,.gif,.webp,.avif,.svg,.ico"; // must match UploadController.AllowedExtensions
     var maxSize = 6 * 1024 * 1024;
 }
 <div class="file-uploader" data-fu-accept="@accept" data-fu-max-size="@maxSize">

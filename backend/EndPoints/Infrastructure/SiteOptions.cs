@@ -21,15 +21,34 @@ public sealed class SiteOptions
     public string RevalidateSecret { get; set; } = string.Empty;
 }
 
-/// <summary>Section "Admin" — the single account allowed into the content panel.</summary>
+/// <summary>
+/// Section "Admin" — SMTP and session knobs plus the seed of the first panel
+/// account. The accounts themselves live in the <c>Users</c> table of the
+/// database: <c>Admin:DefaultUsername</c> / <c>Admin:DefaultPassword</c> only
+/// create that first administrator row while the table is still empty.
+/// </summary>
 public sealed class AdminOptions
 {
     public const string SectionName = "Admin";
 
+    /// <summary>Legacy name of the first administrator (kept for older deployments).</summary>
     public string Username { get; set; } = "admin";
 
-    /// <summary>SHA-256 hex of the password (generate with: dotnet run -- hash &lt;password&gt;).</summary>
+    /// <summary>
+    /// کلید قدیمی رمز مدیر: قبلاً هش SHA-256 بود، اما پروژه از آن به‌عنوان متن
+    /// ساده استفاده می‌کرد؛ اکنون فقط به‌عنوان مقدار جانشین برای
+    /// <c>Admin:DefaultPassword</c> خوانده می‌شود.
+    /// </summary>
     public string PasswordSha256 { get; set; } = string.Empty;
+
+    /// <summary>نام کاربری اولین مدیر (وقتی جدول Users خالی است).</summary>
+    public string DefaultUsername { get; set; } = "admin";
+
+    /// <summary>رمز عبور اولین مدیر — همان‌طور که در جدول Users ذخیره می‌شود، متن ساده.</summary>
+    public string DefaultPassword { get; set; } = string.Empty;
+
+    /// <summary>نام نمایشی اولین مدیر.</summary>
+    public string DefaultName { get; set; } = "مدیر سایت";
 
     public int SessionHours { get; set; } = 8;
 

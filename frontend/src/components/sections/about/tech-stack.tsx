@@ -4,6 +4,8 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import type { AboutSectionDto, TechStackGroupDto } from "@/lib/cms";
+import { resolveText } from "./about-copy";
 
 const categories = {
   fa: {
@@ -54,8 +56,25 @@ const categories = {
   },
 };
 
-export function TechStack({ locale }: { locale: Locale }) {
-  const t = categories[locale];
+export function TechStack({
+  locale,
+  items,
+  copy,
+}: {
+  locale: Locale;
+  items?: TechStackGroupDto[];
+  copy?: AboutSectionDto;
+}) {
+  const fallback = categories[locale];
+  const t: { title: string; heading: string; subtitle: string; groups: { label: string; items: string[] }[] } = {
+    title: resolveText(copy?.eyebrow, locale, fallback.title),
+    heading: resolveText(copy?.title, locale, fallback.heading),
+    subtitle: resolveText(copy?.subtitle, locale, fallback.subtitle),
+    groups:
+      items && items.length > 0
+        ? items.map((group) => ({ label: resolveText(group.label, locale, ""), items: group.items }))
+        : fallback.groups,
+  };
 
   return (
     <section className="relative overflow-hidden py-20 sm:py-28">

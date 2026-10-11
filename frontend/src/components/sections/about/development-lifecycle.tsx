@@ -4,6 +4,8 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/container";
 import type { Locale } from "@/lib/i18n/dictionaries";
+import type { AboutSectionDto, LifecycleStepDto } from "@/lib/cms";
+import { resolveText } from "./about-copy";
 
 const steps = {
   fa: [
@@ -22,16 +24,37 @@ const steps = {
   ]
 };
 
-export function DevelopmentLifecycle({ locale }: { locale: Locale }) {
-  const currentSteps = steps[locale];
+export function DevelopmentLifecycle({
+  locale,
+  items,
+  copy,
+}: {
+  locale: Locale;
+  items?: LifecycleStepDto[];
+  copy?: AboutSectionDto;
+}) {
+  const currentSteps: { num: string; name: string; desc: string }[] =
+    items && items.length > 0
+      ? items.map((item) => ({
+          num: item.number,
+          name: resolveText(item.name, locale, ""),
+          desc: resolveText(item.desc, locale, ""),
+        }))
+      : steps[locale];
+  const eyebrow = resolveText(copy?.eyebrow, locale, "PIPELINE");
+  const heading = resolveText(
+    copy?.title,
+    locale,
+    locale === "fa" ? "فرایند توسعه و تحویل محصول" : "How We Engineer & Deliver",
+  );
 
   return (
     <section className="border-y border-border/40 bg-muted/20 py-24">
       <Container>
         <div className="mb-14 max-w-xl">
-          <span className="font-mono text-xs font-semibold text-primary-500">PIPELINE</span>
+          <span className="font-mono text-xs font-semibold text-primary-500">{eyebrow}</span>
           <h2 className="mt-2 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
-            {locale === "fa" ? "فرایند توسعه و تحویل محصول" : "How We Engineer & Deliver"}
+            {heading}
           </h2>
         </div>
 

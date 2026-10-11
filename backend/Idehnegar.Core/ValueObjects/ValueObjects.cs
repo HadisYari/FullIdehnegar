@@ -26,6 +26,8 @@ public sealed class ProjectStat
 public sealed class LabeledImage
 {
     public string Label { get; set; } = string.Empty;
+
+    public string LabelEn { get; set; } = string.Empty;
     public string Src { get; set; } = string.Empty;
 }
 

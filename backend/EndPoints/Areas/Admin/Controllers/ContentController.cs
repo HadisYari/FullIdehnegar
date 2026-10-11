@@ -5,7 +5,9 @@ using Idehnegar.Core.Entities;
 using Idehnegar.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace EndPoints.Areas.Admin.Controllers;
 
@@ -20,22 +22,49 @@ namespace EndPoints.Areas.Admin.Controllers;
 public sealed class ContentController : Controller
 {
     private const string SuccessKey = "Admin:Flash";
+    private const string WarningKey = "Admin:Warning";
 
     private readonly AdminRegistry _registry;
     private readonly IRepositoryProvider _provider;
     private readonly SiteNotifier _notifier;
+    private readonly IAuthorizationService _authorization;
     private readonly ILogger<ContentController> _logger;
 
     public ContentController(
         AdminRegistry registry,
         IRepositoryProvider provider,
         SiteNotifier notifier,
+        IAuthorizationService authorization,
         ILogger<ContentController> logger)
     {
         _registry = registry;
         _provider = provider;
         _notifier = notifier;
+        _authorization = authorization;
         _logger = logger;
+    }
+
+    /// <summary>
+    /// نگهبان نقش‌ها: برخی جدول‌ها policy اختصاصی دارند (مثلاً Users فقط برای
+    /// Administrator). چون همهٔ صفحه‌ها از همین کنترلر عبور می‌کنند، بررسی در یک
+    /// جا انجام می‌شود و با نقش ذخیره‌شده در جدول کاربران هم‌خوان است.
+    /// </summary>
+    public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    {
+        if (context.ActionArguments.TryGetValue("entity", out var value)
+            && value is string entity
+            && _registry.Find(entity) is { Policy: { Length: > 0 } policy }
+            && !(await _authorization.AuthorizeAsync(User, policy)).Succeeded)
+        {
+            _logger.LogWarning(
+                "Access to the {Entity} screen was denied for {User} by policy {Policy}.",
+                entity, User.Identity?.Name, policy);
+
+            context.Result = Forbid();
+            return;
+        }
+
+        await next();
     }
 
     [HttpGet("")]
@@ -211,7 +240,16 @@ public sealed class ContentController : Controller
             return NotFound();
         }
 
-        await Gateway(definition).DeleteAsync(id, cancellationToken);
+        var gateway = Gateway(definition);
+
+        // کاربر نباید حساب خودش را حذف کند؛ وگرنه دسترسی‌اش به پنل قطع می‌شود.
+        if (gateway.ClrType == typeof(User) && User.FindFirstValue(ClaimTypes.NameIdentifier) == id.ToString())
+        {
+            TempData[WarningKey] = "حساب کاربری خودتان را نمی‌توانید حذف کنید. برای خروج، از دکمهٔ خروج استفاده کنید.";
+            return RedirectToAction(nameof(Index), new { entity });
+        }
+
+        await gateway.DeleteAsync(id, cancellationToken);
         await _notifier.RevalidateAsync(definition.RevalidateTags, cancellationToken);
         TempData[SuccessKey] = $"{definition.SingularFa} حذف شد.";
 
@@ -296,6 +334,10 @@ public sealed class ContentController : Controller
                 options.Add(new AdminOption("bazaar", "سبک بازار (سبز)"));
                 options.Add(new AdminOption("direct", "سبک مستقیم (سرمه‌ای)"));
                 options.Add(new AdminOption("anchor", "سبک طلایی (لنگر)"));
+                break;
+            case "user-roles":
+                options.Add(new AdminOption(UserRoles.Administrator, $"{UserRoles.Label(UserRoles.Administrator)} — دسترسی کامل (شامل کاربران)"));
+                options.Add(new AdminOption(UserRoles.Editor, $"{UserRoles.Label(UserRoles.Editor)} — فقط محتوا و پیام‌ها"));
                 break;
             case "change-frequency":
                 options.Add(new AdminOption("daily", "daily"));

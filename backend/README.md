@@ -11,7 +11,7 @@ backend/
 └─ tools/generate-seed.mjs    تولید seed.json از داده‌های frontend/src
 ```
 
-## ۱. مدل داده (۱۷ جدول، همگی در schema `dbo`)
+## ۱. مدل داده (۲۵ جدول، همگی در schema `dbo`)
 
 اصل طراحی: **جدول‌ها آینهٔ چیزی‌اند که فرانت‌اند واقعاً استفاده می‌کند** — بدون
 جدول اضافی؛ و برای روان‌بودن ورود داده، هر صفحهٔ سایت تا جای ممکن در **یک جدول**
@@ -20,15 +20,20 @@ backend/
 | جدول | مصرف در فرانت‌اند |
 | --- | --- |
 | `SiteSettings` (تک‌رکورد) | `src/lib/site-config.ts` — نام، دامنه، تلفن‌ها، آدرس، ساعت، شبکه‌های اجتماعی، آمار |
-| `PageMetas` | عنوان/توضیح/کلیدواژه/OG/noindex هر صفحه (۸ کلید: home…payment) |
+| `PageMetas` | عنوان/توضیح/کلیدواژه/OG/noindex هر صفحه (۷ کلید: home…store-builder، gold-app). برچسب/تیتر/زیرتیتر فقط برای صفحهٔ اصلی است و در پنل فقط همان صفحه نمایش داده می‌شود؛ H1 بقیهٔ صفحه‌ها در فرانت‌اند استاتیک است. ستون‌های `CtaPrimary`/`CtaSecondary` در جدول مانده‌اند، اما دیگر در پنل ویرایش نمی‌شوند و فرانت‌اند هم نمی‌خواندشان. |
 | `PortfolioCategories` | فیلترهای صفحهٔ نمونه‌کارها |
 | `PortfolioProjects` | `src/data/portfolio.json` کامل (گالری، فیچرها، آمار، challenge/solution) |
 | `Services`, `ProcessSteps` | سکشن سرویس‌ها و فرآیند همکاری صفحهٔ اصلی |
+| `HomeServiceCards` | کارت‌های گرید «خدمات» صفحهٔ اصلی (جدا از شش خدمت صفحهٔ خدمات) |
 | `Clients`, `Testimonials`, `Milestones`, `TeamDisciplines` | لوگوی مشتریان، نظرات، تایم‌لاین درباره ما، تیم |
+| `AboutSections` | متن (eyebrow/عنوان/زیرعنوان) هر بلوک صفحهٔ درباره ما، با کلید `values`، `certifications`، `lifecycle`، `philosophy`، `tech-stack` |
+| `CoreValues`, `Certifications`, `LifecycleSteps`, `PhilosophyPrinciples`, `TechStackGroups`, `AboutStats` | آیتم‌های بلوک‌های درباره ما: ارزش‌ها (مسیر SVG آیکون)، تاییدیه‌ها، مراحل توسعه، اصول مهندسی، گروه‌های فناوری (`ItemsJson`)، آمار |
+| `PageSections` | متن و آیتم‌های بلوک‌های صفحه‌های دیگر، با کلید (`PageKey`, `SectionKey`) یکتا: `gold-app` (`hero`, `hero-badge`, `platform`, `desktop`, `mobile`, `value`, `cta`)، `about` (`manifesto`, `team`, `quick-links`)، `home` (`cta`, `cta-sla`, `testimonials`)، `services` (`quick-access`)، `contact` (`intro`, `hubs`, `hubs-hours`, `hubs-amenities`, `discovery`, `faq`)، `store-builder` (`intro`, `final-cta`). عنوان/زیرعنوان/متن دوزبانه و `ItemsJson` (بولت، کارت یا لینک، با آیکون، `Href` و `Value` اختیاری مثل ساعت یا عدد) |
 | `FaqItems`, `InquiryTypes` | سوالات متداول و نوع درخواست‌های فرم تماس |
-| `StoreTemplates`, `StorePlan` | صفحهٔ فروشگاه‌ساز و پلن‌های پرداخت |
+| `StoreTemplates` | قالب‌های صفحهٔ فروشگاه‌ساز؛ نام، توضیح، برچسب، امکانات و تصاویر به فارسی و انگلیسی (`NameEn`, `DescriptionEn`, `FeaturesEnJson`, …) |
 | `AppDownloadLinks` | لینک‌های دانلود اپ طلا |
-| `ContactMessages`, `StoreOrders` | خروجی فرم تماس و فرم سفارش (فقط نوشتنی) |
+| `ContactMessages` | خروجی فرم تماس (فقط نوشتنی) |
+| `Users` | حساب‌های ورود به پنل: `Username` (یکتا)، `Password` (متن ساده، بدون هش)، `FullName`، `Role` و `LastLoginAtUtc`. `IsPublished` یعنی «اجازهٔ ورود». اولین رکورد خودکار از `Admin:Default*` ساخته می‌شود |
 
 قواعد مشترک:
 
@@ -81,16 +86,35 @@ dotnet run
 node tools/generate-seed.mjs   # خروجی: Idehnegar.Infrastructure/SeedData/seed.json
 ```
 
-رمز پنل در configuration است (نه در دیتابیس):
+### ورود به پنل از جدول `Users`
 
-```bash
-cd EndPoints
-dotnet run -- hash-password "YourStrong#Pass"   # خروجی = Admin:PasswordSha256
-```
+حساب‌های پنل در جدول `Users` دیتابیس هستند (نام کاربری، رمز عبور، نام، نقش) و
+`AccountController` هم فقط از همین جدول لاگین می‌گیرد. مطابق خواستهٔ پروژه رمز
+عبور **هش نمی‌شود** و به‌صورت متن ساده ذخیره می‌شود تا در صفحهٔ `/admin/User`
+قابل خواندن و ویرایش باشد؛ فقط مقایسهٔ آن با `CryptographicOperations.FixedTimeEquals`
+و به‌صورت زمان‌ثابت انجام می‌شود.
 
-`Admin:Username` + `Admin:PasswordSha256` را در `appsettings.Production.json`
-بگذارید. در محیط Development در صورت خالی بودن، متغیر `IDEHNEGAR_ADMIN_PASSWORD`
-پذیرفته می‌شود (فقط برای تست لوکال).
+اولین مدیر (وقتی جدول خالی است) خودکار از این کلیدها ساخته می‌شود:
+
+| کلید | توضیح |
+| --- | --- |
+| `Admin:DefaultUsername` | نام کاربری اولین مدیر (پیش‌فرض `admin`) |
+| `Admin:DefaultPassword` | رمز متن‌ساده اولین مدیر |
+| `Admin:DefaultName` | نام نمایشی اولین مدیر |
+
+برای نصب‌های قدیمی، اگر `Admin:DefaultPassword` خالی باشد مقدار
+`Admin:PasswordSha256` (که در عمل متن سادهٔ رمز بود) خوانده می‌شود. پس از اولین
+ساخت، بقیهٔ کاربران از پنل (`/admin/User`) اضافه می‌شوند.
+
+نقش‌ها (`Users.Role`) با policyهای پنل هماهنگ‌اند:
+
+| نقش | دسترسی |
+| --- | --- |
+| `Administrator` | همهٔ پنل، شامل `/admin/User` (مدیریت کاربران) |
+| `Editor` | محتوا، صندوق پیام‌ها و تنظیمات — بدون مدیریت کاربران |
+
+صفحهٔ ورود کپچای عددی دارد (SVG ساده، بدون وابستگی بیرونی) که کدش در Session
+نگه داشته می‌شود و هر تلاش فقط یک‌بار آن را مصرف می‌کند.
 
 ## ۳. API عمومی (`/api/public/*`)
 
@@ -113,9 +137,8 @@ X-Robots-Tag: noindex, nofollow
 | `GET /api/public/portfolio?category=&featured=&take=` | لیست پروژه‌ها |
 | `GET /api/public/portfolio/{slug}` | جزئیات یک پروژه |
 | `GET /api/public/portfolio/{slug}/related?take=3` | پروژه‌های مرتبط |
-| `GET /api/public/services` `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
+| `GET /api/public/services` `home-services` `about-content` (همهٔ بلوک‌های درباره ما در یک پاسخ) `page-sections/{pageKey}` (متن و آیتم‌های بلوک‌های یک صفحه) `process-steps` `clients` `testimonials` `milestones` `team` `faqs` `inquiry-types` `store-templates` `store-plans` `app-download-links` | محتوای سکشن‌ها |
 | `POST /api/public/contact` | ذخیرهٔ پیام + ایمیل (rate limited) |
-| `POST /api/public/store-orders` | ثبت سفارش فروشگاه‌ساز (rate limited) |
 | `GET /api/public/health` | سلامت + تعداد رکوردها (بدون کش) |
 
 خروجی JSON `camelCase` است و فیلدهای null حذف می‌شوند تا با interfaceهای
@@ -128,16 +151,20 @@ TypeScript فرانت‌اند (`PortfolioItem`…) یک‌به‌یک جور د
   `ContentController` با مسیر `[Route("admin/{entity}")]` برای همهٔ جدول‌ها
   Index/create/edit/save/delete/toggle/move را می‌سازد و `Content/Form.cshtml`
   همهٔ نوع فیلدها را رندر می‌کند:
-  `Text, Textarea, Number, Decimal, Checkbox, Select, Image, LineList, TagList, Repeater, Slug, Code`.
+  `Text, Textarea, Number, Decimal, Checkbox, Select, Image, LineList, TagList, Repeater, Slug, Code, Secret`.
 - **ورود داده روان:** لیست‌ها (امکانات، گالری…) به‌صورت «هر خط یک مورد» یا با
   Repeater ردیفی پر می‌شوند؛ ترتیب نمایش با دکمه‌های ↑/↓؛ انتشار با یک کلیک روی
   badge وضعیت؛ تصویر با Drag & Drop در همان فرم (`wwwroot/Panel/custome/js/file-uploader.js`).
 - **قفل امنیتی:** کوکی احراز هویت، `[ValidateAntiForgeryToken]` روی همهٔ POSTها
-  (توکن از هدر `RequestVerificationToken` هم پذیرفته می‌شود)، مقایسهٔ رمز با
-  `CryptographicOperations.FixedTimeEquals`، تأخیر ۷۰۰ms در صورت خطا، محافظت در
-  برابر open-redirect، و هدرهای `X-Robots-Tag: noindex` + `X-Frame-Options: SAMEORIGIN`
-  برای همهٔ مسیرهای `/admin`.
-- **صندوق‌ها:** `/admin/inbox/messages` و `/admin/inbox/orders` (بایگانی، حذف، تغییر وضعیت سفارش).
+  (توکن از هدر `RequestVerificationToken` هم پذیرفته می‌شود)، کپچای عددی در صفحهٔ
+  ورود (`/admin/account/captcha`)، rate limit جداگانهٔ ورود (۱۲ تلاش در ۵ دقیقه)،
+  مقایسهٔ رمز با `CryptographicOperations.FixedTimeEquals`، تأخیر ۷۰۰ms در صورت
+  خطا، محافظت در برابر open-redirect، و هدرهای `X-Robots-Tag: noindex` +
+  `X-Frame-Options: SAMEORIGIN` برای همهٔ مسیرهای `/admin`.
+- **کاربران:** `/admin/User` (جدول `Users`) — افزودن/ویرایش نام کاربری، رمز
+  متن‌ساده، نام و نقش؛ فقط برای نقش `Administrator`. کاربر نمی‌تواند حساب خودش را
+  حذف کند و ورود هر کاربر با تیک «فعال» کنترل می‌شود.
+- **صندوق‌ها:** `/admin/inbox/messages` (بایگانی، حذف).
 - **تنظیمات:** `/admin/site-settings` (اطلاعات شرکت + سئوی صفحه‌ها در یک صفحهٔ گروه‌بندی‌شده).
 
 ### Revalidation (ISR)
@@ -152,7 +179,7 @@ body: { "secret": "…", "tags": ["portfolio","home","sitemap"] }
 سمت فرانت‌اند `frontend/src/app/api/revalidate/route.ts` بعد از بررسی رمز،
 `revalidateTag(tag, { expire: 0 })` را برای همان تگ‌ها اجرا می‌کند. تگ‌ها بین
 پنل و فرانت مشترک‌اند: `settings, pages, home, portfolio, services, about,
-contact, store, payment, gold-app, sitemap`.
+contact, store, gold-app, sitemap`.
 
 ## ۵. اتصال فرانت‌اند
 
@@ -160,7 +187,7 @@ contact, store, payment, gold-app, sitemap`.
 
 ```bash
 cd frontend
-echo 'CMS_API_URL=http://localhost:5000' >> .env.local
+echo 'CMS_API_URL=http://localhost:5100' >> .env.local   # پورت launchSettings.json
 echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:RevalidateSecret
 ```
 
@@ -179,17 +206,25 @@ echo 'CMS_REVALIDATE_SECRET=…' >> .env.local   # همان مقدار Site:Reva
 
 ### کارهای باقی‌مانده (دانسته و عمدی)
 
-1. بعضی سکشن‌های صفحهٔ اصلی (`ServicesSection`, `ProcessSection`,
-   `ClientsSection`, `TestimonialsSection`) هنوز دادهٔ داخل فایل خودشان را
-   نشان می‌دهند. وصل‌کردنشان مکانیکی است: یک prop اختیاری با مقدار پیش‌فرض
-   فعلی بگیرید و در `page.tsx` از `loadServices()/loadProcessSteps()/…` پاس
-   دهید (تایپ‌ها در `lib/cms.ts` آماده‌اند).
-2. `pages/store-builder`, `gold-app`, `payment` هنوز `withPageMeta` ندارند.
-3. سه خطای از قبل موجود در `npm run lint` (state-in-effect در
-   `device-mockup.tsx`، `ProcessSection.tsx`، `payment/page.tsx` و یک کامنت JSX
-   در `services/page.tsx`) به این تغییرات مربوط نیستند و دست‌نخورده مانده‌اند.
-4. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
+1. هیروی همهٔ صفحات (eyebrow / H1 / زیرتیتر / دکمه‌های CTA) از جدول `PageMetas`
+   خوانده می‌شود؛ متن تیترها قرارداد `\n` (خط جدید) و `|متن|` (بخش گرادیانی) را
+   می‌پذیرد (`frontend/src/components/split-title.tsx`). عنوان سکشن‌های صفحهٔ اصلی
+   (فرایند، مشتریان، پیش‌نمایش نمونه‌کارها، کارت پایانی فرایند) و هدر تایم‌لاین و
+   کپسول‌های هیروی درباره ما از `PageSections` می‌آیند. برچسب‌های کوتاه UI
+   (دکمه‌ها، تب‌ها، فیلدهای فرم) و متون دکوراتیو کوچک ثابت‌اند.
+2. `bootstrap` هنوز توسط فرانت فراخوانی نمی‌شود و کنار اندپوینت‌های تکی است.
+3. `about-hero.tsx` و `page-hero.tsx` در هیچ صفحه‌ای import نشده‌اند (طرح‌های جایگزین).
+   `testimonials-section.tsx` روی صفحهٔ اصلی mount شده و نظرات را از
+   `GET /api/public/testimonials` می‌گیرد.
+4. پنج خطای از قبل موجود در `npm run lint` (state-in-effect در `device-mockup.tsx` و
+   `ProcessSection.tsx`، کامنت JSX در `services/page.tsx` و دو `any` در
+   `project-info-card.tsx` و `services-section.tsx`) به این تغییرات مربوط نیستند.
+5. کد C# در این محیط **کامپایل نشده** (دسترسی به nuget.org نبود). اولین کار بعد
    از کشیدن ریپو: `cd backend && dotnet build BackendIdehnegar.sln`.
+6. برای توسعهٔ فرانت بدون دات‌نت/SQL Server می‌توان از استند-این API استفاده کرد که
+   همان قرارداد `/api/public/*` را روی `SeedData/seed.json` پیاده‌سازی می‌کند:
+   `node backend/tools/dev-api.mjs` (روی پورت 5100). در محیط واقعی خود `EndPoints`
+   را روی همان پورت اجرا کنید.
 
 ## ۶. SEO در بک‌اند
 

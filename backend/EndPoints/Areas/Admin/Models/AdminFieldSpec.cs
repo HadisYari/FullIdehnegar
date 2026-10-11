@@ -1,3 +1,5 @@
+using EndPoints.Areas.Admin.Services;
+
 namespace EndPoints.Areas.Admin.Models;
 
 /// <summary>How a property of an entity is edited in the panel.</summary>
@@ -20,6 +22,11 @@ public enum AdminFieldKind
     Slug,
     /// <summary>Slug of a portfolio category, edited as a plain code.</summary>
     Code,
+    /// <summary>
+    /// رمز عبور: مثل متن ذخیره می‌شود (بدون هش — منطق این پروژه) ولی در فرم
+    /// پنل با type=password و دکمهٔ نمایش/مخفی نمایش داده می‌شود.
+    /// </summary>
+    Secret,
 }
 
 public sealed record AdminOption(string Value, string Label);
@@ -49,6 +56,12 @@ public sealed class AdminFieldSpec
     public string? OptionsKey { get; init; }
 
     public AdminRepeaterColumn[]? Columns { get; init; }
+
+    /// <summary>
+    /// Optional rule on the row being edited. When it returns false the field is neither
+    /// shown nor bound, so the stored value is kept. Used for copy that only some pages read.
+    /// </summary>
+    public Func<object, bool>? ShowWhen { get; init; }
 
     /// <summary>Bootstrap grid width of the field inside the form.</summary>
     public string Column { get; init; } = "col-12 col-lg-6";
@@ -80,6 +93,13 @@ public sealed class AdminEntityDefinition
     public required string Icon { get; init; }
 
     public required Func<IServiceProvider, IEntityGateway> Gateway { get; init; }
+
+    /// <summary>
+    /// Policy لازم برای باز کردن صفحه‌های این جدول. خالی یعنی هر کاربر پنل.
+    /// جدول کاربران با <see cref="EndPoints.Infrastructure.AdminPolicies.Users"/>
+    /// فقط برای نقش Administrator باز می‌شود.
+    /// </summary>
+    public string? Policy { get; init; }
 
     public IReadOnlyList<AdminFieldSpec> Fields { get; init; } = Array.Empty<AdminFieldSpec>();
 

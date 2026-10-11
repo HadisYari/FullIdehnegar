@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using Idehnegar.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,35 @@ public static class ModelConfig
         ConfigureSite(modelBuilder);
         ConfigurePortfolio(modelBuilder);
         ConfigureHome(modelBuilder);
+        ConfigureAbout(modelBuilder);
+        ConfigurePageSections(modelBuilder);
         ConfigurePages(modelBuilder);
         ConfigureStore(modelBuilder);
         ConfigureInquiries(modelBuilder);
+        ConfigureUsers(modelBuilder);
+        // در آخر: خودکار کردن کلید اصلی همهٔ جدولها
+        ConfigureGeneratedKeys(modelBuilder);
+    }
+
+
+
+    /// <summary>حساب‌های ورود به پنل — جدول Users.</summary>
+    private static void ConfigureUsers(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Username).HasMaxLength(60).IsRequired();
+            // رمز عبور عمداً بدون هش ذخیره می‌شود (خواستهٔ پروژه).
+            entity.Property(e => e.Password).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.FullName).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.Role).HasMaxLength(40).IsRequired();
+
+            // ورود با نام کاربری انجام می‌شود؛ پس یکتا و ایندکس‌شده است.
+            entity.HasIndex(e => e.Username).IsUnique().HasDatabaseName("UX_Users_Username");
+            entity.HasIndex(e => e.IsPublished).HasDatabaseName("IX_Users_IsPublished");
+        });
     }
 
     private static void ConfigureSite(ModelBuilder modelBuilder)
@@ -74,8 +101,126 @@ public static class ModelConfig
         });
     }
 
+    private static void ConfigureAbout(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AboutSection>(entity =>
+        {
+            entity.ToTable("AboutSections");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Key).HasMaxLength(40).IsRequired();
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.HasIndex(e => e.Key).IsUnique().HasDatabaseName("UX_AboutSections_Key");
+        });
+
+        modelBuilder.Entity<CoreValue>(entity =>
+        {
+            entity.ToTable("CoreValues");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.IconPath).HasMaxLength(1000);
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(1000).IsRequired();
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_CoreValues_Published_Sort");
+        });
+
+        modelBuilder.Entity<Certification>(entity =>
+        {
+            entity.ToTable("Certifications");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.OrganizationFa).HasMaxLength(400).IsRequired();
+            entity.Property(e => e.OrganizationEn).HasMaxLength(400).IsRequired();
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_Certifications_Published_Sort");
+        });
+
+        modelBuilder.Entity<LifecycleStep>(entity =>
+        {
+            entity.ToTable("LifecycleSteps");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.NumberLabel).HasMaxLength(10).IsRequired();
+            entity.Property(e => e.NameFa).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.NameEn).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(500).IsRequired();
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_LifecycleSteps_Published_Sort");
+        });
+
+        modelBuilder.Entity<PhilosophyPrinciple>(entity =>
+        {
+            entity.ToTable("PhilosophyPrinciples");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.IconName).HasMaxLength(40);
+            entity.Property(e => e.TagFa).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.TagEn).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.CodeSnippet).HasMaxLength(300);
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_PhilosophyPrinciples_Published_Sort");
+        });
+
+        modelBuilder.Entity<TechStackGroup>(entity =>
+        {
+            entity.ToTable("TechStackGroups");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.LabelFa).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.LabelEn).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.ItemsJson).HasColumnType("nvarchar(max)");
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_TechStackGroups_Published_Sort");
+        });
+
+        modelBuilder.Entity<AboutStat>(entity =>
+        {
+            entity.ToTable("AboutStats");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Suffix).HasMaxLength(10);
+            entity.Property(e => e.LabelFa).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.LabelEn).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.Icon).HasMaxLength(20);
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_AboutStats_Published_Sort");
+        });
+    }
+
+    private static void ConfigurePageSections(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PageSection>(entity =>
+        {
+            entity.ToTable("PageSections");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.PageKey).HasMaxLength(40).IsRequired();
+            entity.Property(e => e.SectionKey).HasMaxLength(60).IsRequired();
+            entity.Property(e => e.EyebrowFa).HasMaxLength(200);
+            entity.Property(e => e.EyebrowEn).HasMaxLength(200);
+            entity.Property(e => e.TitleFa).HasMaxLength(300);
+            entity.Property(e => e.TitleEn).HasMaxLength(300);
+            entity.Property(e => e.SubtitleFa).HasMaxLength(1000);
+            entity.Property(e => e.SubtitleEn).HasMaxLength(1000);
+            entity.Property(e => e.BodyFa).HasMaxLength(2000);
+            entity.Property(e => e.BodyEn).HasMaxLength(2000);
+            entity.Property(e => e.ItemsJson).HasColumnType("nvarchar(max)");
+            entity.HasIndex(e => new { e.PageKey, e.SectionKey }).IsUnique().HasDatabaseName("UX_PageSections_Page_Section");
+        });
+    }
+
     private static void ConfigureHome(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<HomeServiceCard>(entity =>
+        {
+            entity.ToTable("HomeServiceCards");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Code).HasMaxLength(40).IsRequired();
+            entity.Property(e => e.TitleFa).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.TitleEn).HasMaxLength(300).IsRequired();
+            entity.Property(e => e.DescriptionFa).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.DescriptionEn).HasMaxLength(1000).IsRequired();
+            entity.Property(e => e.TagsJson).HasColumnType("nvarchar(max)");
+            entity.HasIndex(e => new { e.IsPublished, e.SortOrder }).HasDatabaseName("IX_HomeServiceCards_Published_Sort");
+        });
+
         modelBuilder.Entity<Service>(entity =>
         {
             entity.ToTable("Services");
@@ -185,23 +330,11 @@ public static class ModelConfig
             entity.Property(e => e.PriceMonthly).HasPrecision(18, 2);
             entity.Property(e => e.PriceYearly).HasPrecision(18, 2);
             entity.Property(e => e.FeaturesJson).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.FeaturesEnJson).HasColumnType("nvarchar(max)");
             entity.Property(e => e.DesktopScreensJson).HasColumnType("nvarchar(max)");
             entity.Property(e => e.MobileScreensJson).HasColumnType("nvarchar(max)");
             entity.HasIndex(e => e.Code).IsUnique().HasDatabaseName("UX_StoreTemplates_Code");
             entity.HasIndex(e => new { e.IsPublished, e.Category, e.SortOrder }).HasDatabaseName("IX_StoreTemplates_Published_Category");
-        });
-
-        modelBuilder.Entity<StorePlan>(entity =>
-        {
-            entity.ToTable("StorePlans");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Code).HasMaxLength(60).IsRequired();
-            entity.Property(e => e.Name).HasMaxLength(300).IsRequired();
-            entity.Property(e => e.MonthlyPrice).HasPrecision(18, 2);
-            entity.Property(e => e.YearlyPrice).HasPrecision(18, 2);
-            entity.Property(e => e.FeaturesJson).HasColumnType("nvarchar(max)");
-            entity.Property(e => e.LimitationsJson).HasColumnType("nvarchar(max)");
-            entity.HasIndex(e => e.Code).IsUnique().HasDatabaseName("UX_StorePlans_Code");
         });
 
         modelBuilder.Entity<AppDownloadLink>(entity =>
@@ -229,18 +362,32 @@ public static class ModelConfig
             entity.HasIndex(e => e.IsArchived).HasDatabaseName("IX_ContactMessages_Archived");
         });
 
-        modelBuilder.Entity<StoreOrder>(entity =>
+    }
+
+    // در آخر: خودکار کردن کلید اصلی همهٔ جدولها
+    /// <summary>
+    /// مقدار پیشفرض ستون Id در دیتابیس. با این تنظیم، SQL Server خودش GUID میزند
+    /// (برای درج دستی در SSMS لازم نیست Id بنویسید) و EF هم وقتی مقدار Id خالی
+    /// (Guid.Empty) باشد ستون را در INSERT نمیفرستد.
+    /// </summary>
+    public const string GeneratedIdSql = "NEWSEQUENTIALID()";
+
+    private static void ConfigureGeneratedKeys(ModelBuilder modelBuilder)
+    {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            entity.ToTable("StoreOrders");
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.FullName).HasMaxLength(200).IsRequired();
-            entity.Property(e => e.Mobile).HasMaxLength(60).IsRequired();
-            entity.Property(e => e.BillingCycle).HasMaxLength(20).IsRequired();
-            entity.Property(e => e.Gateway).HasMaxLength(30).IsRequired();
-            entity.Property(e => e.Status).HasMaxLength(20).IsRequired();
-            entity.Property(e => e.Amount).HasPrecision(18, 2);
-            entity.HasIndex(e => e.CreatedAtUtc).IsDescending().HasDatabaseName("IX_StoreOrders_Created");
-            entity.HasIndex(e => e.Status).HasDatabaseName("IX_StoreOrders_Status");
-        });
+            var primaryKey = entityType.FindPrimaryKey();
+            var idProperty = primaryKey?.Properties
+                .FirstOrDefault(property => property.Name == nameof(ContentEntity.Id) && property.ClrType == typeof(Guid));
+
+            if (idProperty is null)
+            {
+                continue;
+            }
+
+            modelBuilder.Entity(entityType.ClrType)
+                .Property<Guid>(nameof(ContentEntity.Id))
+                .HasDefaultValueSql(GeneratedIdSql);
+        }
     }
 }

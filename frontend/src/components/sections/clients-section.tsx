@@ -2,8 +2,24 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
+import type { Locale } from "@/lib/i18n/dictionaries";
+import type { PageSectionDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
 import { LiquidWaveTop } from "../LiquidWaveTop";
+
+/* کپی ثابت عنوان بخش (fallback). سید داده بک‌اند از همین literal ساخته می‌شود. */
+const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
+  clients: {
+    fa: {
+      eyebrow: "مشتریان و کارفرمایان",
+      title: "مورد اعتماد سازمان‌ها و صنایع پیشرو",
+    },
+    en: {
+      eyebrow: "Clients & Partners",
+      title: "Trusted by leading organizations and industries",
+    },
+  },
+};
 
 /* ──────────────────────────────────────────────────────────
    موج نرم و دایره‌ای بالای بخش (مخصوص پس‌زمینه سرمه‌ای)
@@ -55,15 +71,17 @@ function fillArray<T>(arr: T[], minLength = 16): T[] {
 
 export function ClientsSection({
   locale,
-  dict,
   clients,
+  sections,
 }: {
   locale: Locale;
-  dict: Dictionary;
   /** مشتریان از /api/public/clients — fallback: دادهٔ همراه مخزن */
   clients?: ClientItem[];
+  /** بلوک عنوان از /api/public/page-sections/home — fallback: fallbackSections */
+  sections?: PageSectionDto[];
 }) {
   const list = clients && clients.length > 0 ? clients : locale === "fa" ? clientsFa : clientsEn;
+  const copy = resolveSection(sections, "clients", locale, fallbackSections.clients[locale]);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
@@ -91,7 +109,7 @@ export function ClientsSection({
           <div className="flex items-center gap-2">
             <span className="h-1 w-4 rounded-full bg-[#e6304c]" />
             <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/60">
-              {dict.clients?.eyebrow || "مشتریان و شرکای کلیدی"}
+              {copy.eyebrow}
             </span>
           </div>
 
@@ -101,7 +119,7 @@ export function ClientsSection({
             transition={{ duration: 0.5 }}
             className="mt-2 text-lg font-black text-white sm:text-xl lg:text-2xl"
           >
-            {dict.clients?.title || "سازمان‌های همکار و ارگان‌های رسمی"}
+            {copy.title}
           </motion.h2>
         </div>
 

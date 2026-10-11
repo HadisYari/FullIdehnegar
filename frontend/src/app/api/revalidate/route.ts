@@ -16,7 +16,6 @@ const ALLOWED_TAGS = new Set([
   "about",
   "contact",
   "store",
-  "payment",
   "gold-app",
   "sitemap",
 ]);

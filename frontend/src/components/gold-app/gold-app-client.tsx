@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
-import type { AppDownloadLinkDto } from "@/lib/cms";
+import type { AppDownloadLinkDto, PageSectionDto } from "@/lib/cms";
+import { resolveSection } from "@/lib/page-sections";
 
 /* موج متحرک بالای بخش سرمه‌ای */
 function LiquidWaveTop() {
@@ -77,11 +78,78 @@ function toLinkViews(links: AppDownloadLinkDto[]): LinkView[] {
 
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 
-export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
+/*
+ * متن محلی صفحه. وقتی API در دسترس است، متن از جدول PageSection خوانده می‌شود؛
+ * این مقادیر فقط پشتیبان‌اند. seed هم از همین‌جا ردیف‌ها را می‌سازد.
+ */
+const fallbackSections = {
+  hero: {
+    eyebrow: "سامانه نرخ لحظه‌ای طلا، سکه و ارز",
+    title: "دسترسی آنی به نرخ رسمی طلا",
+    subtitle: "روی تلفن همراه و تابلوی مغازه",
+    body: "با این سامانه، قیمت‌های رسمی اتحادیه طلا و جواهر (شامل مظنه آبشده، انواع مسکوکات، انس جهانی و ارزها) را بدون تاخیر ثانیه‌ای در گوشی همراه خود داشته باشید و همزمان روی تلویزیون مغازه به عنوان تابلوی دیجیتال نمایش دهید.",
+  },
+  "hero-badge": {
+    title: "اطلاعیه رسمی اتحادیه",
+    body: "به‌روزرسانی خودکار و لحظه‌ای",
+  },
+  platform: {
+    eyebrow: "DUAL PLATFORM DISPLAY",
+    title: "یک نرم‌افزار، دو کاربرد اساسی",
+    body: "برای مشاهده پیش‌نمایش هر بخش، حالت مورد نظرتان را انتخاب کنید:",
+  },
+  desktop: {
+    eyebrow: "ویژه مانیتور و تلویزیون طلافروشی‌ها",
+    title: "تابلوی دیجیتال قیمت طلا و سکه",
+    body: "طراحی عریض با چیدمان شبکه‌ای و فونت‌های بزرگ خوانا، ویژه اتصال به تلویزیون یا کامپیوتر مغازه. مشتریان شما در یک نگاه تمام نرخ‌های آبشده، سکه‌ها، انس و ارزها را مشاهده می‌کنند.",
+    items: [
+      { title: "تفکیک قیمت خرید از مشتری و کمترین فروش" },
+      { title: "نمایش ساعت و تاریخ شمسی رسمی با آخرین زمان به‌روزرسانی" },
+      { title: "بخش اختصاصی حدیث روز و اطلاعیه‌های رسمی صنف" },
+    ],
+  },
+  mobile: {
+    eyebrow: "همیشه همراه، در هر زمان و مکان",
+    title: "اپلیکیشن نسخه موبایل (اندروید)",
+    body: "با اپلیکیشن موبایل، قیمت لحظه‌ای طلا، سکه امامی، نیم و ربع، مثقال ۱۷ و نرخ لحظه‌ای دلار و یورو را در جیب خود داشته باشید و از نوسانات ناگهانی بازار جا نمانید.",
+    items: [
+      { title: "نمایش فلش‌های نوسان صعودی و نزولی قیمت" },
+      { title: "بخش مظنه و ارز (انس جهانی، دلار، یک مثقال)" },
+      { title: "مصرف اینترنت بسیار کم با سرعت لود زیر ثانیه" },
+    ],
+  },
+  value: {
+    eyebrow: "مزایای خرید اشتراک",
+    title: "چرا طلافروشان و فعالان بازار به این اشتراک نیاز دارند؟",
+    body: "اطمینان از درستی نرخ‌ها در زمان نوسان‌های شدید بازار، از هر ضرر احتمالی در معاملات جلوگیری می‌کند.",
+    items: [
+      { icon: "⚡", title: "بدون تاخیر ثانیه‌ای", description: "متصل به وب‌سرویس مستقیم و پایدار بدون تاخیر و بدون نیاز به فیلترشکن برای تمام استان‌ها و شهرها." },
+      { icon: "📺", title: "یک اشتراک برای موبایل و تابلو", description: "با تهیه یک لایسنس، هم روی گوشی شخصی و هم روی تلویزیون یا تابلوی مغازه دسترسی همزمان خواهید داشت." },
+      { icon: "🛡️", title: "پشتیبانی ایده‌نگار", description: "تضمین پایداری سرور و ارتقای مداوم برنامه توسط تیم مهندسی نرم‌افزار ایده‌نگار." },
+    ],
+  },
+  cta: {
+    title: "دانلود کنید و اشتراک تابلوی خود را فعال نمایید",
+    body: "هم‌اکنون نسخه اندروید را دانلود کنید و جهت تهیه لایسنس و فعال‌سازی تابلوی مغازه با پشتیبانی تماس بگیرید.",
+  },
+};
+
+export function GoldAppClient({ links, sections }: { links: AppDownloadLinkDto[]; sections?: PageSectionDto[] }) {
   // مدیریت سوییچ بین نمای دسکتاپ (تابلو) و موبایل
   const [activeView, setActiveView] = useState<"desktop" | "mobile">("desktop");
 
   const linkViews = toLinkViews(links);
+
+  // متن بخش‌ها: از API (در صورت وجود) یا متن محلی بالا
+  const s = {
+    hero: resolveSection(sections, "hero", "fa", fallbackSections.hero),
+    heroBadge: resolveSection(sections, "hero-badge", "fa", fallbackSections["hero-badge"]),
+    platform: resolveSection(sections, "platform", "fa", fallbackSections.platform),
+    desktop: resolveSection(sections, "desktop", "fa", fallbackSections.desktop),
+    mobile: resolveSection(sections, "mobile", "fa", fallbackSections.mobile),
+    value: resolveSection(sections, "value", "fa", fallbackSections.value),
+    cta: resolveSection(sections, "cta", "fa", fallbackSections.cta),
+  };
   const bazaarLink = linkViews.find((link) => link.variant === "bazaar");
 
   return (
@@ -123,8 +191,8 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
                   <div className="absolute -bottom-4 -end-4 rounded-2xl border border-amber-400/50 bg-white/95 px-4 py-2.5 shadow-xl backdrop-blur-md z-20 flex items-center gap-2.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-ping" />
                     <div>
-                      <div className="text-xs font-black text-slate-900">اطلاعیه رسمی اتحادیه</div>
-                      <div className="text-[10px] text-emerald-600 font-bold">به‌روزرسانی خودکار و لحظه‌ای</div>
+                      <div className="text-xs font-black text-slate-900">{s.heroBadge.title}</div>
+                      <div className="text-[10px] text-emerald-600 font-bold">{s.heroBadge.body}</div>
                     </div>
                   </div>
 
@@ -137,18 +205,18 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
               <Reveal>
                 <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-xs font-bold text-amber-800">
                   <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
-                  سامانه نرخ لحظه‌ای طلا، سکه و ارز
+                  {s.hero.eyebrow}
                 </div>
 
                 <h1 className="mt-4 text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-                  دسترسی آنی به نرخ رسمی طلا <br />
+                  {s.hero.title} <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-600 to-[#0f0f52]">
-                    روی تلفن همراه و تابلوی مغازه
+                    {s.hero.subtitle}
                   </span>
                 </h1>
 
                 <p className="mt-5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  با این سامانه، قیمت‌های رسمی اتحادیه طلا و جواهر (شامل مظنه آبشده، انواع مسکوکات، انس جهانی و ارزها) را بدون تاخیر ثانیه‌ای در گوشی همراه خود داشته باشید و همزمان روی تلویزیون مغازه به عنوان تابلوی دیجیتال نمایش دهید.
+                  {s.hero.body}
                 </p>
 
                 {/* دکمه‌های مستقیم دانلود — از /api/public/app-download-links */}
@@ -208,13 +276,13 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
         <Container className="relative z-10">
           <Reveal className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
-              DUAL PLATFORM DISPLAY
+              {s.platform.eyebrow}
             </span>
             <h2 className="mt-2 text-2xl sm:text-4xl font-black text-white">
-              یک نرم‌افزار، دو کاربرد اساسی
+              {s.platform.title}
             </h2>
             <p className="mt-3 text-xs sm:text-sm text-slate-300">
-              برای مشاهده پیش‌نمایش هر بخش، حالت مورد نظرتان را انتخاب کنید:
+              {s.platform.body}
             </p>
 
             {/* سوییچ دوگانه دسکتاپ (تابلو) و موبایل */}
@@ -254,27 +322,27 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-5 space-y-4 text-start">
                   <span className="rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 px-3 py-1 text-xs font-bold">
-                    ویژه مانیتور و تلویزیون طلافروشی‌ها
+                    {s.desktop.eyebrow}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-white">
-                    تابلوی دیجیتال قیمت طلا و سکه
+                    {s.desktop.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    طراحی عریض با چیدمان شبکه‌ای و فونت‌های بزرگ خوانا، ویژه اتصال به تلویزیون یا کامپیوتر مغازه. مشتریان شما در یک نگاه تمام نرخ‌های آبشده، سکه‌ها، انس و ارزها را مشاهده می‌کنند[cite: 3].
+                    {s.desktop.body}
                   </p>
                   
                   <div className="space-y-2 pt-2">
                     <div className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>تفکیک قیمت خرید از مشتری و کمترین فروش[cite: 3]</span>
+                      <span>{s.desktop.items[0]?.title}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>نمایش ساعت و تاریخ شمسی رسمی با آخرین زمان به‌روزرسانی[cite: 3]</span>
+                      <span>{s.desktop.items[1]?.title}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>بخش اختصاصی حدیث روز و اطلاعیه‌های رسمی صنف[cite: 3]</span>
+                      <span>{s.desktop.items[2]?.title}</span>
                     </div>
                   </div>
                 </div>
@@ -309,27 +377,27 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-6 space-y-4 text-start">
                   <span className="rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 px-3 py-1 text-xs font-bold">
-                    همیشه همراه، در هر زمان و مکان
+                    {s.mobile.eyebrow}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-white">
-                    اپلیکیشن نسخه موبایل (اندروید)
+                    {s.mobile.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    با اپلیکیشن موبایل، قیمت لحظه‌ای طلا، سکه امامی، نیم و ربع، مثقال ۱۷ و نرخ لحظه‌ای دلار و یورو را در جیب خود داشته باشید و از نوسانات ناگهانی بازار جا نمانید.
+                    {s.mobile.body}
                   </p>
                   
                   <div className="space-y-2 pt-2">
                     <div className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>نمایش فلش‌های نوسان صعودی و نزولی قیمت[cite: 2]</span>
+                      <span>{s.mobile.items[0]?.title}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>بخش مظنه و ارز (انس جهانی، دلار، یک مثقال)[cite: 2]</span>
+                      <span>{s.mobile.items[1]?.title}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-slate-200">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>مصرف اینترنت بسیار کم با سرعت لود زیر ثانیه</span>
+                      <span>{s.mobile.items[2]?.title}</span>
                     </div>
                   </div>
 
@@ -375,44 +443,44 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
         <Container>
           <Reveal className="text-center max-w-2xl mx-auto mb-14">
             <span className="inline-block rounded-full bg-amber-500/10 text-amber-700 border border-amber-500/20 px-4 py-1 text-xs font-bold mb-3">
-              مزایای خرید اشتراک
+              {s.value.eyebrow}
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
-              چرا طلافروشان و فعالان بازار به این اشتراک نیاز دارند؟
+              {s.value.title}
             </h2>
             <p className="mt-3 text-xs sm:text-sm text-slate-600">
-              اطمینان از درستی نرخ‌ها در زمان نوسان‌های شدید بازار، از هر ضرر احتمالی در معاملات جلوگیری می‌کند.
+              {s.value.body}
             </p>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Reveal className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all">
               <div className="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl font-bold mb-4">
-                ⚡
+                {s.value.items[0]?.icon}
               </div>
-              <h3 className="text-base font-bold text-slate-900">بدون تاخیر ثانیه‌ای</h3>
+              <h3 className="text-base font-bold text-slate-900">{s.value.items[0]?.title}</h3>
               <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-                متصل به وب‌سرویس مستقیم و پایدار بدون تاخیر و بدون نیاز به فیلترشکن برای تمام استان‌ها و شهرها.
+                {s.value.items[0]?.description}
               </p>
             </Reveal>
 
             <Reveal delay={60} className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all">
               <div className="h-12 w-12 rounded-2xl bg-[#0f0f52]/10 text-[#0f0f52] flex items-center justify-center text-2xl font-bold mb-4">
-                📺
+                {s.value.items[1]?.icon}
               </div>
-              <h3 className="text-base font-bold text-slate-900">یک اشتراک برای موبایل و تابلو</h3>
+              <h3 className="text-base font-bold text-slate-900">{s.value.items[1]?.title}</h3>
               <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-                با تهیه یک لایسنس، هم روی گوشی شخصی و هم روی تلویزیون یا تابلوی مغازه دسترسی همزمان خواهید داشت[cite: 2, 3].
+                {s.value.items[1]?.description}
               </p>
             </Reveal>
 
             <Reveal delay={120} className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm hover:shadow-xl hover:border-amber-400 transition-all">
               <div className="h-12 w-12 rounded-2xl bg-[#e6304c]/10 text-[#e6304c] flex items-center justify-center text-2xl font-bold mb-4">
-                🛡️
+                {s.value.items[2]?.icon}
               </div>
-              <h3 className="text-base font-bold text-slate-900">پشتیبانی ایده‌نگار</h3>
+              <h3 className="text-base font-bold text-slate-900">{s.value.items[2]?.title}</h3>
               <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-                تضمین پایداری سرور و ارتقای مداوم برنامه توسط تیم مهندسی نرم‌افزار ایده‌نگار.
+                {s.value.items[2]?.description}
               </p>
             </Reveal>
           </div>
@@ -429,10 +497,10 @@ export function GoldAppClient({ links }: { links: AppDownloadLinkDto[] }) {
               ✨
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
-              دانلود کنید و اشتراک تابلوی خود را فعال نمایید
+              {s.cta.title}
             </h2>
             <p className="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mx-auto">
-              هم‌اکنون نسخه اندروید را دانلود کنید و جهت تهیه لایسنس و فعال‌سازی تابلوی مغازه با پشتیبانی تماس بگیرید.
+              {s.cta.body}
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">

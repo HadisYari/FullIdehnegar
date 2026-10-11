@@ -87,12 +87,15 @@ public class InquiryType : ContentEntity
 /// <summary>Storefront template card of the /store-builder page.</summary>
 public class StoreTemplate : ContentEntity
 {
-    /// <summary>Stable id used in the payment URL (wh-1, light-1 …).</summary>
+    /// <summary>Stable id used in the store-builder URL (wh-1, light-1 …).</summary>
     [MaxLength(60)]
     public string Code { get; set; } = string.Empty;
 
     [MaxLength(300)]
     public string Name { get; set; } = string.Empty;
+
+    [MaxLength(300)]
+    public string NameEn { get; set; } = string.Empty;
 
     /// <summary>warehouse | light — the switcher on top of the page.</summary>
     [MaxLength(30)]
@@ -102,7 +105,13 @@ public class StoreTemplate : ContentEntity
     public string? Tag { get; set; }
 
     [MaxLength(300)]
+    public string? TagEn { get; set; }
+
+    [MaxLength(300)]
     public string PlanName { get; set; } = string.Empty;
+
+    [MaxLength(300)]
+    public string PlanNameEn { get; set; } = string.Empty;
 
     /// <summary>Monthly price in Toman.</summary>
     public decimal PriceMonthly { get; set; }
@@ -113,10 +122,18 @@ public class StoreTemplate : ContentEntity
     [MaxLength(120)]
     public string? DiscountBadge { get; set; }
 
+    [MaxLength(120)]
+    public string? DiscountBadgeEn { get; set; }
+
     [MaxLength(2000)]
     public string? Description { get; set; }
 
+    [MaxLength(2000)]
+    public string? DescriptionEn { get; set; }
+
     public string? FeaturesJson { get; set; }
+
+    public string? FeaturesEnJson { get; set; }
 
     public string? DesktopScreensJson { get; set; }
 
@@ -127,6 +144,13 @@ public class StoreTemplate : ContentEntity
     {
         get => Idehnegar.Core.Json.JsonList.ReadStrings(FeaturesJson);
         set => FeaturesJson = Idehnegar.Core.Json.JsonList.Write(value);
+    }
+
+    [NotMapped]
+    public List<string> FeaturesEn
+    {
+        get => Idehnegar.Core.Json.JsonList.ReadStrings(FeaturesEnJson);
+        set => FeaturesEnJson = Idehnegar.Core.Json.JsonList.Write(value);
     }
 
     [NotMapped]
@@ -144,45 +168,3 @@ public class StoreTemplate : ContentEntity
     }
 }
 
-/// <summary>A subscription tier offered on the /payment page.</summary>
-public class StorePlan : ContentEntity
-{
-    [MaxLength(60)]
-    public string Code { get; set; } = string.Empty;
-
-    [MaxLength(300)]
-    public string Name { get; set; } = string.Empty;
-
-    [MaxLength(200)]
-    public string? Badge { get; set; }
-
-    [MaxLength(500)]
-    public string? Tagline { get; set; }
-
-    public bool IsPopular { get; set; }
-
-    public decimal MonthlyPrice { get; set; }
-
-    public decimal YearlyPrice { get; set; }
-
-    [MaxLength(200)]
-    public string? SetupTime { get; set; }
-
-    public string? FeaturesJson { get; set; }
-
-    public string? LimitationsJson { get; set; }
-
-    [NotMapped]
-    public List<string> Features
-    {
-        get => Idehnegar.Core.Json.JsonList.ReadStrings(FeaturesJson);
-        set => FeaturesJson = Idehnegar.Core.Json.JsonList.Write(value);
-    }
-
-    [NotMapped]
-    public List<string> Limitations
-    {
-        get => Idehnegar.Core.Json.JsonList.ReadStrings(LimitationsJson);
-        set => LimitationsJson = Idehnegar.Core.Json.JsonList.Write(value);
-    }
-}

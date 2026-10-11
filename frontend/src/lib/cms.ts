@@ -28,12 +28,11 @@ export const CmsTag = {
   about: "about",
   contact: "contact",
   store: "store",
-  payment: "payment",
   goldApp: "gold-app",
   sitemap: "sitemap",
 } as const;
 
-type LocalizedText = { fa: string; en: string };
+export type LocalizedText = { fa: string; en: string };
 
 export type SiteSettingsDto = {
   domain: string;
@@ -152,6 +151,75 @@ export type ServiceDto = {
   visualIndex: number;
 };
 
+/** کارت خدمات صفحه اصلی (جدا از شش خدمت صفحه خدمات). */
+export type HomeServiceCardDto = {
+  id: string;
+  code: string;
+  icon?: string | null;
+  title: LocalizedText;
+  desc: LocalizedText;
+  color?: string | null;
+  softColor?: string | null;
+  glowColor?: string | null;
+  featureTitle?: LocalizedText | null;
+  featureValue?: LocalizedText | null;
+  progress?: string | null;
+  tags: string[];
+};
+
+/* صفحه درباره ما: متن هر بلوک و آیتم‌های جدولی (GET /api/public/about-content) */
+export type AboutSectionDto = {
+  key: string;
+  eyebrow?: LocalizedText | null;
+  title: LocalizedText;
+  subtitle?: LocalizedText | null;
+};
+export type CoreValueDto = {
+  id: string;
+  iconPath?: string | null;
+  title: LocalizedText;
+  desc: LocalizedText;
+};
+export type CertificationDto = {
+  id: string;
+  icon?: string | null;
+  title: LocalizedText;
+  organization: LocalizedText;
+  colorClass?: string | null;
+  borderClass?: string | null;
+};
+export type LifecycleStepDto = {
+  id: string;
+  number: string;
+  name: LocalizedText;
+  desc: LocalizedText;
+};
+export type PhilosophyPrincipleDto = {
+  id: string;
+  icon?: string | null;
+  tag: LocalizedText;
+  title: LocalizedText;
+  desc: LocalizedText;
+  codeSnippet?: string | null;
+};
+export type TechStackGroupDto = { id: string; label: LocalizedText; items: string[] };
+export type AboutStatDto = {
+  id: string;
+  value: number;
+  suffix?: string | null;
+  label: LocalizedText;
+  icon?: string | null;
+};
+export type AboutContentDto = {
+  sections: AboutSectionDto[];
+  coreValues: CoreValueDto[];
+  certifications: CertificationDto[];
+  lifecycleSteps: LifecycleStepDto[];
+  philosophyPrinciples: PhilosophyPrincipleDto[];
+  techStackGroups: TechStackGroupDto[];
+  stats: AboutStatDto[];
+};
+
 export type ProcessStepDto = {
   id: string;
   icon?: string | null;
@@ -163,32 +231,25 @@ export type ProcessStepDto = {
   deliverables: { fa: string[]; en: string[] };
 };
 
+/** فهرست دوزبانه (مثل امکانات قالب). */
+export type LocalizedList = { fa: string[]; en: string[] };
+
+/** تصویر برچسب‌دار (صفحه‌های نمایشی قالب) — برچسب دوزبانه است. */
+export type StoreScreenDto = { label: LocalizedText; src: string };
+
 export type StoreTemplateDto = {
   id: string;
-  name: string;
+  name: LocalizedText;
   category: string;
-  tag?: string | null;
-  planName: string;
+  tag: LocalizedText;
+  planName: LocalizedText;
   priceMonthly: number;
   priceYearly: number;
-  discountBadge?: string | null;
-  desc?: string | null;
-  features?: string[];
-  desktopScreens?: { label: string; src: string }[];
-  mobileScreens?: { label: string; src: string }[];
-};
-
-export type StorePlanDto = {
-  id: string;
-  name: string;
-  badge?: string | null;
-  tagline?: string | null;
-  isPopular: boolean;
-  monthlyPrice: number;
-  yearlyPrice: number;
-  setupTime?: string | null;
-  features?: string[];
-  limitations?: string[];
+  discountBadge: LocalizedText;
+  desc: LocalizedText;
+  features: LocalizedList;
+  desktopScreens: StoreScreenDto[];
+  mobileScreens: StoreScreenDto[];
 };
 
 export type AppDownloadLinkDto = {
@@ -473,6 +534,46 @@ export function loadServices(): Promise<ServiceDto[]> {
   return cmsFetch<ServiceDto[]>("/api/public/services", [], { tags: [CmsTag.services, CmsTag.home] });
 }
 
+export function loadHomeServiceCards(): Promise<HomeServiceCardDto[]> {
+  return cmsFetch<HomeServiceCardDto[]>("/api/public/home-services", [], { tags: [CmsTag.home] });
+}
+
+/** Whole about page in one request; null when the CMS is offline (components then use their local copy). */
+export function loadAboutContent(): Promise<AboutContentDto | null> {
+  return cmsFetch<AboutContentDto | null>("/api/public/about-content", null, { tags: [CmsTag.about] });
+}
+
+/* بلوک‌های محتوایی صفحات (تیتر، متن و آیتم‌های فهرست/کارت) — GET /api/public/page-sections/{pageKey} */
+export type PageSectionItemDto = {
+  icon: string | null;
+  title: LocalizedText;
+  description: LocalizedText | null;
+  href: string | null;
+  /** Optional short badge (time, figure, status). */
+  value: LocalizedText | null;
+};
+
+export type PageSectionDto = {
+  key: string;
+  eyebrow: LocalizedText | null;
+  title: LocalizedText | null;
+  subtitle: LocalizedText | null;
+  body: LocalizedText | null;
+  items: PageSectionItemDto[];
+};
+
+/** Every block of one page; [] when the CMS is offline (components then use their local copy). */
+export function loadPageSections(pageKey: string): Promise<PageSectionDto[]> {
+  return cmsFetch<PageSectionDto[]>(`/api/public/page-sections/${encodeURIComponent(pageKey)}`, [], {
+    tags: [CmsTag.pages],
+  });
+}
+
+/** Section copy (eyebrow/title/subtitle) of one about block, by key. */
+export function aboutSection(content: AboutContentDto | null, key: string): AboutSectionDto | undefined {
+  return content?.sections.find((section) => section.key === key);
+}
+
 export function loadProcessSteps(): Promise<ProcessStepDto[]> {
   return cmsFetch<ProcessStepDto[]>("/api/public/process-steps", [], { tags: [CmsTag.home] });
 }
@@ -506,10 +607,6 @@ export function loadStoreTemplates(category?: string): Promise<StoreTemplateDto[
   return cmsFetch<StoreTemplateDto[]>(`/api/public/store-templates${suffix}`, [], { tags: [CmsTag.store] });
 }
 
-export function loadStorePlans(): Promise<StorePlanDto[]> {
-  return cmsFetch<StorePlanDto[]>("/api/public/store-plans", [], { tags: [CmsTag.store, CmsTag.payment] });
-}
-
 export function loadAppDownloadLinks(): Promise<AppDownloadLinkDto[]> {
   return cmsFetch<AppDownloadLinkDto[]>("/api/public/app-download-links", [], { tags: [CmsTag.goldApp] });
 }
@@ -530,7 +627,7 @@ export type ContactPayload = {
   inquiryType?: string;
 };
 
-export type InquiryResult = { success?: boolean; message?: string; emailSent?: boolean };
+export type InquiryResult = { ok?: boolean; emailSent?: boolean };
 
 /**
  * ثبت پیام تماس در دیتابیس + ارسال ایمیل توسط بک‌اند.
@@ -538,35 +635,4 @@ export type InquiryResult = { success?: boolean; message?: string; emailSent?: b
  */
 export function submitContact(payload: ContactPayload): Promise<InquiryResult | null> {
   return cmsPost<ContactPayload, InquiryResult>("/api/public/contact", payload);
-}
-
-/**
- * بدنهٔ POST /api/public/store-orders — دقیقاً همان قرارداد StoreOrderRequest
- * در بک‌اند (InquiryApiController): FullName/Mobile/StoreName/Domain/TemplateId/
- * Plan/Cycle/Amount/Gateway/RulesAccepted/Locale + هانی‌پات Company.
- */
-export type StoreOrderPayload = {
-  fullName: string;
-  mobile: string;
-  storeName: string;
-  domain?: string;
-  templateId?: string;
-  plan?: string;
-  cycle?: string;
-  amount?: number;
-  gateway?: string;
-  rulesAccepted: boolean;
-  locale?: string;
-  /** هانی‌پات: ربات‌ها پرش می‌کنند، کاربر واقعی هرگز نمی‌بیند. */
-  company?: string;
-};
-
-export type StoreOrderResult = InquiryResult & {
-  id?: string;
-  reference?: string;
-  status?: string;
-};
-
-export function submitStoreOrder(payload: StoreOrderPayload): Promise<StoreOrderResult | null> {
-  return cmsPost<StoreOrderPayload, StoreOrderResult>("/api/public/store-orders", payload);
 }

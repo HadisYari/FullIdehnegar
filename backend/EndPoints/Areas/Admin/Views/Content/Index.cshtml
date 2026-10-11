@@ -8,19 +8,18 @@
 
 <div class="admin-page-head">
     <div>
-        <h1 class="admin-page-title"><i class="@Model.Icon"></i> @Model.TitleFa</h1>
-        <p class="admin-page-subtitle">@Model.Rows.Count @Model.SingularFa — ترتیب نمایش در سایت با دکمه‌های بالا/پایین تنظیم می‌شود.</p>
-    </div>
-    <a class="btn btn-primary" href="@(baseUrl)/create">
+        <h6 class="admin-page-title mt-2"><i class="@Model.Icon"></i> @Model.TitleFa</h6>
+     </div>
+    <a class="btn btn-primary mb-2" href="@(baseUrl)/create">
         <i class="ti ti-plus"></i> افزودن @Model.SingularFa
     </a>
 </div>
 
 @if (Model.Searchable)
 {
-    <form method="get" action="@baseUrl" class="admin-search">
-        <div class="input-group">
-            <input type="search" class="form-control" name="q" value="@search" placeholder="جست‌وجو در @Model.TitleFa…" aria-label="جست‌وجو" />
+    <form method="get" action="@baseUrl" class="admin-search p-0">
+        <div class="input-group mt-3">
+            <input type="search" class="form-control mb-2 col-md-12" name="q" value="@search" placeholder="جست‌وجو در @Model.TitleFa…" aria-label="جست‌وجو" />
             <button class="btn btn-label-secondary" type="submit"><i class="ti ti-search"></i></button>
             @if (!string.IsNullOrWhiteSpace(search))
             {

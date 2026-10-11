@@ -5,8 +5,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
+import { SplitTitle } from "@/components/split-title";
 import { siteConfig, type SiteConfig } from "@/lib/site-config";
 import type { Dictionary, Locale } from "@/lib/i18n/dictionaries";
+import type { PageSectionDto } from "@/lib/cms";
+import { resolveSection, type LocalSection } from "@/lib/page-sections";
 import {
   Phone,
   Mail,
@@ -201,24 +204,130 @@ const fallbackFaqsEn: FaqView[] = [
   },
 ];
 
+/* کپی ثابت بخش‌های تماس (fallback). سید داده بک‌اند از همین literal ساخته می‌شود. */
+const fallbackSections: Record<string, Record<Locale, LocalSection>> = {
+  intro: {
+    fa: { body: "ما همیشه مشتاق گفتگو پیرامون معماری‌های نوین، توسعه پلتفرم‌های پرسرعت و ارتقای محصولات دیجیتال شما هستیم. برای هماهنگی جلسات مشاوره یا بررسی پروپوزال، مستقیماً با تیم ما در ارتباط باشید." },
+    en: { body: "We are eager to explore scalable architectures, high-throughput web systems, and your next software milestones. Connect directly with our team." },
+  },
+  hubs: {
+    fa: { eyebrow: "STUDIO INTERACTIVE HUBS", title: "درگاه‌های تعاملی و دسترسی پردیس ایده‌نگار" },
+    en: { eyebrow: "STUDIO INTERACTIVE HUBS", title: "Interactive Studio Access Portals" },
+  },
+  "hubs-hours": {
+    fa: {
+      eyebrow: "Operations Desk",
+      title: "ساعت کاری و پذیرش",
+      items: [
+        { title: "شنبه تا چهارشنبه", description: "جلسات و مشاوره حضوری", value: "۰۹:۰۰ — ۱۸:۰۰" },
+        { title: "پنج‌شنبه‌ها", description: "اسپرینت‌های فشرده", value: "۰۹:۰۰ — ۱۳:۰۰" },
+        { title: "پایش اضطراری زیرساخت", value: "۲۴/۷ فعال" },
+      ],
+    },
+    en: {
+      eyebrow: "Operations Desk",
+      title: "Working Hours",
+      items: [
+        { title: "Sat - Wed", description: "On-site Discovery", value: "09:00 — 18:00" },
+        { title: "Thursdays", description: "Sprint Reviews", value: "09:00 — 13:00" },
+        { title: "Emergency Cloud SLA", value: "24/7 Active" },
+      ],
+    },
+  },
+  "hubs-amenities": {
+    fa: {
+      eyebrow: "Executive Space",
+      title: "امکانات پردیس ایده‌نگار",
+      items: [
+        { icon: "car", title: "پارکینگ اختصاصی هوشمند", description: "رزرو آنی در روز جلسه حضوری" },
+        { icon: "shield-check", title: "اتاق جلسات مجهز به ارائه ۴K", description: "بررسی زنده و آکوستیک کدها" },
+        { icon: "lock", title: "تعهد محرمانگی ایده (NDA)", description: "امضای رسمی پیش از شروع جلسه" },
+      ],
+    },
+    en: {
+      eyebrow: "Executive Space",
+      title: "HQ Amenities",
+      items: [
+        { icon: "car", title: "Reserved Client Parking", description: "Guaranteed spot during workshop" },
+        { icon: "shield-check", title: "Conference Room & Tech Hub", description: "Live code review & projection" },
+        { icon: "lock", title: "Strict NDA Protection", description: "Full IP & confidentiality pact" },
+      ],
+    },
+  },
+  discovery: {
+    fa: {
+      eyebrow: "HQ GEOSPATIAL RADAR",
+      title: "میزبان جلسات فنی و استراتژیک شما هستیم",
+      body: "برای جلسات امکان‌سنجی نرم‌افزار، مشاوره حضوری در حوزه معماری پلتفرم‌ها و شناخت فرآیند توسعه، با هماهنگی قبلی پذیرای شما در دفتر مرکزی ایده‌نگار هستیم.",
+    },
+    en: {
+      eyebrow: "HQ GEOSPATIAL RADAR",
+      title: "Hosting Your Technical Discovery Sessions",
+      body: "Schedule an on-site architecture workshop with our engineering leads to review your technical roadmap and project milestones.",
+    },
+  },
+  faq: {
+    fa: {
+      title: "مشتاق شنیدن صدای شما هستیم",
+      subtitle: "پرسش‌های پرتکرار در آغاز همکاری",
+      body: "در این بخش به سوالات متداول مدیران و کارفرمایان درباره فرآیند برآورد و استانداردهای مهندسی پاسخ داده‌ایم.",
+    },
+    en: {
+      title: "We Are Eager to Hear From You",
+      subtitle: "Frequently Asked Questions",
+      body: "Transparent answers regarding our engineering standards, scoping process, and delivery pipelines.",
+    },
+  },
+};
+
+const ICON_MAP: Record<string, typeof Car> = { car: Car, "shield-check": ShieldCheck, lock: Lock };
+const AMENITY_TONES = [
+  "bg-amber-400/20 text-amber-300",
+  "bg-[#e6304c]/20 text-rose-300",
+  "bg-cyan-400/20 text-cyan-300",
+];
+
 export function ContactPageCanvas({
   locale,
   dict,
   config,
   faqs: faqsProp,
   inquiryTypes,
+  sections,
+  hero,
 }: {
   locale: Locale;
   dict: Dictionary;
+  /** بخش‌های متنی صفحه از /api/public/page-sections/contact — fallback: fallbackSections */
+  sections?: PageSectionDto[];
   /** تنظیمات تماس از جدول SiteSetting — fallback: siteConfig */
   config?: SiteConfig;
   /** سوالات متداول از /api/public/faqs — fallback: دادهٔ محلی */
   faqs?: FaqView[];
   /** حوزه‌های پروژه از /api/public/inquiry-types — fallback: دادهٔ محلی */
   inquiryTypes?: InquiryTypeView[];
+  /** متن هیرو از جدول PageMeta — fallback: متن‌های همین صفحه */
+  hero?: { eyebrow?: string; heading?: string; subheading?: string };
 }) {
   const isFa = locale === "fa";
   const cfg = config ?? siteConfig;
+
+  // متن هیرو: PageMeta اولویت دارد، در نبودش متن‌های همین صفحه
+  const heroEyebrow = hero?.eyebrow?.trim() || (isFa ? "درگاه ارتباط مستقیم" : "DIRECT ENGAGEMENT DESK");
+  const heroHeading = hero?.heading?.trim() || (isFa ? "|با ما در ارتباط باشید|" : "|Connect With Us|");
+  const heroSubheading =
+    hero?.subheading?.trim() ||
+    (isFa ? "استودیو مهندسی نرم‌افزار پیشگامان ایده‌نگار" : "Idehnegar Software Engineering Studio");
+
+  // متن بخش‌ها: CMS اولویت دارد، در نبودش fallbackSections
+  const copy = {
+    intro: resolveSection(sections, "intro", locale, fallbackSections.intro[locale]),
+    hubs: resolveSection(sections, "hubs", locale, fallbackSections.hubs[locale]),
+    hours: resolveSection(sections, "hubs-hours", locale, fallbackSections["hubs-hours"][locale]),
+    amenities: resolveSection(sections, "hubs-amenities", locale, fallbackSections["hubs-amenities"][locale]),
+    discovery: resolveSection(sections, "discovery", locale, fallbackSections.discovery[locale]),
+    faq: resolveSection(sections, "faq", locale, fallbackSections.faq[locale]),
+  };
 
   // ساعت زنده دفتر
   const [timeString, setTimeString] = useState("");
@@ -395,24 +504,23 @@ export function ContactPageCanvas({
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-md">
                   <span className="h-2 w-2 rounded-full bg-[#e6304c] animate-ping" />
                   <span className="font-mono text-xs font-semibold tracking-wider text-rose-300">
-                    {isFa ? "درگاه ارتباط مستقیم" : "DIRECT ENGAGEMENT DESK"}
+                    {heroEyebrow}
                   </span>
                 </div>
 
                 <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.25]">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200">
-                    {isFa ? "با ما در ارتباط باشید" : "Connect With Us"}
-                  </span>
+                  <SplitTitle
+                    title={heroHeading}
+                    accentClass="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-400 to-amber-200"
+                  />
                 </h1>
 
                 <h2 className="mt-3 text-lg sm:text-2xl font-bold text-white/90">
-                  {isFa ? "استودیو مهندسی نرم‌افزار پیشگامان ایده‌نگار" : "Idehnegar Software Engineering Studio"}
+                  {heroSubheading}
                 </h2>
 
                 <p className="mt-4 text-xs sm:text-sm sm:leading-relaxed text-white/75 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  {isFa
-                    ? "ما همیشه مشتاق گفتگو پیرامون معماری‌های نوین، توسعه پلتفرم‌های پرسرعت و ارتقای محصولات دیجیتال شما هستیم. برای هماهنگی جلسات مشاوره یا بررسی پروپوزال، از راه‌های مستقیم زیر با ما همراه باشید."
-                    : "We are eager to explore scalable architectures, high-throughput web systems, and your next software milestones. Connect directly with our team."}
+                  {copy.intro.body}
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
@@ -484,10 +592,10 @@ export function ContactPageCanvas({
           {/* هدر کوچک داک */}
           <div className="mb-10 text-center max-w-xl mx-auto">
             <span className="font-mono text-[11px] font-black uppercase tracking-widest text-[#e6304c] bg-[#e6304c]/10 border border-[#e6304c]/20 px-3.5 py-1 rounded-full">
-              STUDIO INTERACTIVE HUBS
+              {copy.hubs.eyebrow}
             </span>
             <h3 className="mt-3 text-2xl sm:text-3xl font-black text-slate-900">
-              {isFa ? "درگاه‌های تعاملی و دسترسی پردیس ایده‌نگار" : "Interactive Studio Access Portals"}
+              {copy.hubs.title}
             </h3>
           </div>
 
@@ -507,8 +615,8 @@ export function ContactPageCanvas({
                       <Clock className="h-4 w-4" />
                     </div>
                     <div>
-                      <span className="block text-[10px] font-mono text-rose-300 uppercase">Operations Desk</span>
-                      <h4 className="text-sm font-bold text-white">{isFa ? "ساعت کاری و پذیرش" : "Working Hours"}</h4>
+                      <span className="block text-[10px] font-mono text-rose-300 uppercase">{copy.hours.eyebrow}</span>
+                      <h4 className="text-sm font-bold text-white">{copy.hours.title}</h4>
                     </div>
                   </div>
                   
@@ -523,36 +631,24 @@ export function ContactPageCanvas({
 
                 {/* تایم‌لاین رنگی و پیشرفت روزها */}
                 <div className="mt-5 space-y-3 font-mono text-xs">
-                  {/* شنبه تا ۴شنبه */}
-                  <div className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center justify-between">
-                    <div className="space-y-1">
-                      <span className="text-[11px] text-white/80 font-bold block">{isFa ? "شنبه تا چهارشنبه" : "Sat - Wed"}</span>
-                      <span className="text-[10px] text-slate-400">{isFa ? "جلسات و مشاوره حضوری" : "On-site Discovery"}</span>
+                  {copy.hours.items.map((item) => (
+                    <div
+                      key={item.title}
+                      className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center justify-between gap-3"
+                    >
+                      <div className="space-y-1">
+                        <span className="text-[11px] text-white/80 font-bold block">{item.title}</span>
+                        {item.description && (
+                          <span className="text-[10px] text-slate-400">{item.description}</span>
+                        )}
+                      </div>
+                      {item.value && (
+                        <span className="text-xs font-bold text-rose-300 bg-[#e6304c]/20 border border-[#e6304c]/30 px-2.5 py-1 rounded-lg">
+                          {item.value}
+                        </span>
+                      )}
                     </div>
-                    <span className="text-xs font-bold text-rose-300 bg-[#e6304c]/20 border border-[#e6304c]/30 px-2.5 py-1 rounded-lg">
-                      ۰۹:۰۰ — ۱۸:۰۰
-                    </span>
-                  </div>
-
-                  {/* پنج‌شنبه‌ها */}
-                  <div className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center justify-between">
-                    <div className="space-y-1">
-                      <span className="text-[11px] text-white/80 font-bold block">{isFa ? "پنج‌شنبه‌ها" : "Thursdays"}</span>
-                      <span className="text-[10px] text-slate-400">{isFa ? "اسپرینت‌های فشرده" : "Sprint Reviews"}</span>
-                    </div>
-                    <span className="text-xs font-bold text-amber-300 bg-amber-400/10 border border-amber-400/20 px-2.5 py-1 rounded-lg">
-                      ۰۹:۰۰ — ۱۳:۰۰
-                    </span>
-                  </div>
-
-                  {/* جمعه‌ها */}
-                  <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-2.5 flex items-center justify-between text-[11px]">
-                    <span className="text-emerald-300 flex items-center gap-1.5">
-                      <Zap className="h-3.5 w-3.5 text-emerald-400" />
-                      {isFa ? "پایش اضطراری زیرساخت" : "Emergency Cloud SLA"}
-                    </span>
-                    <span className="text-emerald-400 font-bold">۲۴/۷ فعال</span>
-                  </div>
+                  ))}
                 </div>
               </div>
             </Reveal>
@@ -661,8 +757,8 @@ export function ContactPageCanvas({
                         <Building2 className="h-4 w-4" />
                       </div>
                       <div>
-                        <span className="block text-[10px] font-mono text-amber-300 uppercase">Executive Space</span>
-                        <h4 className="text-sm font-bold text-white">{isFa ? "امکانات پردیس ایده‌نگار" : "HQ Amenities"}</h4>
+                        <span className="block text-[10px] font-mono text-amber-300 uppercase">{copy.amenities.eyebrow}</span>
+                        <h4 className="text-sm font-bold text-white">{copy.amenities.title}</h4>
                       </div>
                     </div>
                     <span className="rounded-full bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 text-[10px] font-mono font-bold text-amber-300">
@@ -672,35 +768,25 @@ export function ContactPageCanvas({
 
                   {/* ۳ پاد امکانات رفاهی */}
                   <div className="mt-5 space-y-2.5 text-xs">
-                    <div className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center gap-3 transition-colors hover:bg-white/10">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-300">
-                        <Car className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <span className="font-bold text-white block text-xs">{isFa ? "پارکینگ اختصاصی هوشمند" : "Reserved Client Parking"}</span>
-                        <span className="text-[10px] text-slate-400">{isFa ? "رزرو آنی در روز جلسه حضوری" : "Guaranteed spot during workshop"}</span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center gap-3 transition-colors hover:bg-white/10">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#e6304c]/20 text-rose-300">
-                        <ShieldCheck className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <span className="font-bold text-white block text-xs">{isFa ? "اتاق جلسات مجهز به ارائه ۴K" : "Conference Room & Tech Hub"}</span>
-                        <span className="text-[10px] text-slate-400">{isFa ? "بررسی زنده و آکوستیک کدها" : "Live code review & projection"}</span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center gap-3 transition-colors hover:bg-white/10">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-cyan-400/20 text-cyan-300">
-                        <Lock className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <span className="font-bold text-white block text-xs">{isFa ? "تعهد محرمانگی ایده (NDA)" : "Strict NDA Protection"}</span>
-                        <span className="text-[10px] text-slate-400">{isFa ? "امضای رسمی پیش از شروع جلسه" : "Full IP & confidentiality pact"}</span>
-                      </div>
-                    </div>
+                    {copy.amenities.items.map((item, index) => {
+                      const Icon = (item.icon && ICON_MAP[item.icon]) || Sparkles;
+                      return (
+                        <div
+                          key={item.title}
+                          className="rounded-2xl bg-white/5 border border-white/5 p-3 flex items-center gap-3 transition-colors hover:bg-white/10"
+                        >
+                          <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${AMENITY_TONES[index % AMENITY_TONES.length]}`}>
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="font-bold text-white block text-xs">{item.title}</span>
+                            {item.description && (
+                              <span className="text-[10px] text-slate-400">{item.description}</span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -745,19 +831,15 @@ export function ContactPageCanvas({
               <div className="flex-1 text-white text-center lg:text-start space-y-6">
                 <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3.5 py-1.5 font-mono text-xs text-cyan-300 backdrop-blur-md">
                   <span className="h-2 w-2 rounded-full bg-[#e6304c] animate-ping" />
-                  <span>HQ GEOSPATIAL RADAR</span>
+                  <span>{copy.discovery.eyebrow}</span>
                 </div>
 
                 <h3 className="text-2xl sm:text-4xl font-black leading-tight text-white">
-                  {isFa
-                    ? "میزبان جلسات فنی و استراتژیک شما هستیم"
-                    : "Hosting Your Technical Discovery Sessions"}
+                  {copy.discovery.title}
                 </h3>
 
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md">
-                  {isFa
-                    ? "برای جلسات امکان‌سنجی نرم‌افزار، مشاوره حضوری در حوزه معماری پلتفرم‌ها و شناخت فرآیند توسعه، با هماهنگی قبلی پذیرای شما در دفتر مرکزی ایده‌نگار هستیم."
-                    : "Schedule an on-site architecture workshop with our engineering leads to review your technical roadmap and project milestones."}
+                  {copy.discovery.body}
                 </p>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md max-w-md text-start flex items-start gap-3">
@@ -959,16 +1041,14 @@ export function ContactPageCanvas({
             <div className="text-center mb-12">
               <h3 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-slate-900">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e6304c] via-rose-600 to-[#0f0f52]">
-                  {isFa ? "مشتاق شنیدن صدای شما هستیم" : "We Are Eager to Hear From You"}
+                  {copy.faq.title}
                 </span>
               </h3>
               <p className="mt-2 text-base font-bold text-slate-800">
-                {isFa ? "پرسش‌های پرتکرار در آغاز همکاری" : "Frequently Asked Questions"}
+                {copy.faq.subtitle}
               </p>
               <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-lg mx-auto leading-relaxed">
-                {isFa
-                  ? "در این بخش به سوالات متداول مدیران و کارفرمایان درباره فرآیند برآورد و استانداردهای مهندسی پاسخ داده‌ایم."
-                  : "Transparent answers regarding our engineering standards, scoping process, and delivery pipelines."}
+                {copy.faq.body}
               </p>
             </div>
 
