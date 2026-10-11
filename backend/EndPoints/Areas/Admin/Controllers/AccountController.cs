@@ -43,9 +43,7 @@ public sealed class LoginViewModel
 [AllowAnonymous]
 public sealed class AccountController : Controller
 {
-    private const string EmptyUsersMessage =
-        "هنوز هیچ حساب فعالی در جدول Users ثبت نشده است، بنابراین ورود امکان‌پذیر نیست. "
-        + "اولین مدیر به‌صورت خودکار از روی Admin:DefaultUsername و Admin:DefaultPassword در appsettings ساخته می‌شود.";
+    private const string EmptyUsersMessage = "ورود به پنل ادمین";
 
     private readonly IRepositoryProvider _provider;
     private readonly AdminOptions _options;

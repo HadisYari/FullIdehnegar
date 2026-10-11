@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using Idehnegar.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,11 @@ public static class ModelConfig
         ConfigureStore(modelBuilder);
         ConfigureInquiries(modelBuilder);
         ConfigureUsers(modelBuilder);
+        // در آخر: خودکار کردن کلید اصلی همهٔ جدولها
+        ConfigureGeneratedKeys(modelBuilder);
     }
+
+
 
     /// <summary>حساب‌های ورود به پنل — جدول Users.</summary>
     private static void ConfigureUsers(ModelBuilder modelBuilder)
@@ -357,5 +362,32 @@ public static class ModelConfig
             entity.HasIndex(e => e.IsArchived).HasDatabaseName("IX_ContactMessages_Archived");
         });
 
+    }
+
+    // در آخر: خودکار کردن کلید اصلی همهٔ جدولها
+    /// <summary>
+    /// مقدار پیشفرض ستون Id در دیتابیس. با این تنظیم، SQL Server خودش GUID میزند
+    /// (برای درج دستی در SSMS لازم نیست Id بنویسید) و EF هم وقتی مقدار Id خالی
+    /// (Guid.Empty) باشد ستون را در INSERT نمیفرستد.
+    /// </summary>
+    public const string GeneratedIdSql = "NEWSEQUENTIALID()";
+
+    private static void ConfigureGeneratedKeys(ModelBuilder modelBuilder)
+    {
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var primaryKey = entityType.FindPrimaryKey();
+            var idProperty = primaryKey?.Properties
+                .FirstOrDefault(property => property.Name == nameof(ContentEntity.Id) && property.ClrType == typeof(Guid));
+
+            if (idProperty is null)
+            {
+                continue;
+            }
+
+            modelBuilder.Entity(entityType.ClrType)
+                .Property<Guid>(nameof(ContentEntity.Id))
+                .HasDefaultValueSql(GeneratedIdSql);
+        }
     }
 }
