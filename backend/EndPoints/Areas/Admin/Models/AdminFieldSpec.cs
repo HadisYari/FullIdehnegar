@@ -22,6 +22,11 @@ public enum AdminFieldKind
     Slug,
     /// <summary>Slug of a portfolio category, edited as a plain code.</summary>
     Code,
+    /// <summary>
+    /// رمز عبور: مثل متن ذخیره می‌شود (بدون هش — منطق این پروژه) ولی در فرم
+    /// پنل با type=password و دکمهٔ نمایش/مخفی نمایش داده می‌شود.
+    /// </summary>
+    Secret,
 }
 
 public sealed record AdminOption(string Value, string Label);
@@ -88,6 +93,13 @@ public sealed class AdminEntityDefinition
     public required string Icon { get; init; }
 
     public required Func<IServiceProvider, IEntityGateway> Gateway { get; init; }
+
+    /// <summary>
+    /// Policy لازم برای باز کردن صفحه‌های این جدول. خالی یعنی هر کاربر پنل.
+    /// جدول کاربران با <see cref="EndPoints.Infrastructure.AdminPolicies.Users"/>
+    /// فقط برای نقش Administrator باز می‌شود.
+    /// </summary>
+    public string? Policy { get; init; }
 
     public IReadOnlyList<AdminFieldSpec> Fields { get; init; } = Array.Empty<AdminFieldSpec>();
 

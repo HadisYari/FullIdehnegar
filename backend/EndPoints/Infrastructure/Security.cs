@@ -4,30 +4,24 @@ using System.Text;
 namespace EndPoints.Infrastructure;
 
 /// <summary>
-/// Password hashing for the admin account. The hash lives in configuration
-/// (exactly like the front end's ADMIN_PASSWORD_HASH) so no credential is ever
-/// stored in the content database.
+/// مقایسهٔ رمزهای پنل. رمز در جدول <c>Users</c> به‌صورت متن ساده ذخیره می‌شود
+/// (به‌خواستهٔ پروژه، بدون هش)، اما خودِ مقایسه با زمان ثابت انجام می‌گیرد تا
+/// کسی نتواند با کرنومتر رمز را حرف‌به‌حرف حدس بزند.
 /// </summary>
-public static class PasswordHasher
+public static class PlainTextPassword
 {
-    public static string Sha256Hex(string input)
+    /// <summary>مقایسهٔ زمان-ثابت رمز واردشده با مقدار ذخیره‌شده.</summary>
+    public static bool Matches(string? candidate, string? stored)
     {
-        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(input));
-        return Convert.ToHexString(bytes).ToLowerInvariant();
-    }
-
-    /// <summary>Constant-time comparison of a candidate password against the stored hash.</summary>
-    public static bool Verify(string password, string expectedHash)
-    {
-        if (string.IsNullOrWhiteSpace(expectedHash))
+        if (string.IsNullOrEmpty(stored))
         {
             return false;
         }
 
-        var candidate = Encoding.ASCII.GetBytes(Sha256Hex(password));
-        var expected = Encoding.ASCII.GetBytes(expectedHash.Trim().ToLowerInvariant());
+        var left = Encoding.UTF8.GetBytes(stored);
+        var right = Encoding.UTF8.GetBytes(candidate ?? string.Empty);
 
-        return candidate.Length == expected.Length && CryptographicOperations.FixedTimeEquals(candidate, expected);
+        return CryptographicOperations.FixedTimeEquals(left, right);
     }
 }
 

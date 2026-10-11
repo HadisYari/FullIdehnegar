@@ -41,10 +41,42 @@ public static class DependencyInjection
     public static async Task InitializeDatabaseAsync(this IServiceProvider services, ILogger logger)
     {
         // The scope (and with it the AppDbContext) must stay alive until the work is
-        // actually finished � returning the pending task would dispose the context
+        // actually finished — returning the pending task would dispose the context
         // mid-flight and cancel every in-flight connection.
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        await DbInitializer.InitializeAsync(db, logger);
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+        await DbInitializer.InitializeAsync(
+            db,
+            logger,
+            AdminSeedSettings.Username(configuration),
+            AdminSeedSettings.Password(configuration),
+            AdminSeedSettings.FullName(configuration));
+    }
+
+    /// <summary>
+    /// وقتی مایگریشن در استارت اجرا نمی‌شود (<c>Site:MigrateOnStartup = false</c>)
+    /// فقط وجود اولین حساب مدیر بررسی می‌شود تا ورود به پنل قفل نشود.
+    /// </summary>
+    public static async Task EnsureAdminAccountAsync(this IServiceProvider services, ILogger logger)
+    {
+        try
+        {
+            using var scope = services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+            await DbInitializer.EnsureDefaultAdminAsync(
+                db,
+                AdminSeedSettings.Username(configuration),
+                AdminSeedSettings.Password(configuration),
+                AdminSeedSettings.FullName(configuration),
+                logger);
+        }
+        catch (Exception exception)
+        {
+            logger.LogWarning(exception, "The default administrator account could not be checked.");
+        }
     }
 }

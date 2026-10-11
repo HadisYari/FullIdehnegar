@@ -130,10 +130,14 @@
 								 
 
 									<li>
-										<a class="dropdown-item" href="/Authentication/SignOut" target="_blank">
-											<i class="ti ti-logout me-2 ti-sm"></i>
-											<span class="align-middle">خروج از حساب</span>
-										</a>
+										@* خروج واقعی پنل: POST با توکن ضدجعل به AccountController.Logout *@
+										<form method="post" action="/admin/account/logout">
+											@Html.AntiForgeryToken()
+											<button type="submit" class="dropdown-item">
+												<i class="ti ti-logout me-2 ti-sm"></i>
+												<span class="align-middle">خروج از حساب</span>
+											</button>
+										</form>
 									</li>
 								</ul>
 							</li>

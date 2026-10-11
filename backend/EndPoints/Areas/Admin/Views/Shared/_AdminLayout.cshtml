@@ -1,8 +1,32 @@
+@using Microsoft.AspNetCore.Authorization
 @inject AdminRegistry Registry
+@inject IAuthorizationService Authorization
 @{
     var flash = TempData["Admin:Flash"] as string;
+    var warning = TempData["Admin:Warning"] as string;
     var userName = User.Identity?.Name ?? "admin";
+    var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
     var currentEntity = ViewData["Entity"] as string ?? Context.Request.Path.Value ?? string.Empty;
+
+    // جدول‌هایی که policy اختصاصی دارند فقط برای نقش‌های مجاز در منو دیده می‌شوند
+    // (مثلاً «کاربران پنل» تنها برای مدیر ارشد است) — همان policy کنترلرها.
+    var visibleGroups = new List<(string Title, List<AdminEntityDefinition> Items)>();
+    foreach (var group in Registry.Groups)
+    {
+        var allowed = new List<AdminEntityDefinition>();
+        foreach (var candidate in group)
+        {
+            if (candidate.Policy is null || (await Authorization.AuthorizeAsync(User, candidate.Policy)).Succeeded)
+            {
+                allowed.Add(candidate);
+            }
+        }
+
+        if (allowed.Count > 0)
+        {
+            visibleGroups.Add((group.Key, allowed));
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -47,6 +71,9 @@
     <link href="~/panel/assets/vendor/libs/select2/select2.css" rel="stylesheet" />
 
     <link href="~/Panel/PersionDataPiker/Mh1PersianDatePicker.css" rel="stylesheet" />
+
+    @* استایل و رفتارهای اختصاصی پنل ایده‌نگار (همان‌هایی که صفحهٔ ورود هم استفاده می‌کند) *@
+    <link href="~/admin/admin.css" asp-append-version="true" rel="stylesheet" />
 </head>
 <body  >
     <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
@@ -122,8 +149,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block mb-1"> @User.Identity.Name  </span>
-                                                    @* <small class="text-muted"> @User</small> *@
+                                                    <span class="fw-semibold d-block mb-1">@userName</span>
+                                                    <small class="text-muted">@UserRoles.Label(userRole)</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -134,10 +161,14 @@
 
 
                                     <li>
-                                        <a class="dropdown-item" href="/Authentication/SignOut" target="_blank">
-                                            <i class="ti ti-logout me-2 ti-sm"></i>
-                                            <span class="align-middle">خروج از حساب</span>
-                                        </a>
+                                        @* خروج واقعی پنل: POST با توکن ضدجعل به AccountController.Logout *@
+                                        <form method="post" action="/admin/account/logout">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="ti ti-logout me-2 ti-sm"></i>
+                                                <span class="align-middle">خروج از حساب</span>
+                                            </button>
+                                        </form>
                                     </li>
                                 </ul>
                             </li>
@@ -173,11 +204,11 @@
                                     </a>
                                 </li>
 
-                                @* گروه‌های داینامیک *@
-                                @foreach (var group in Registry.Groups)
+                                @* گروه‌های داینامیک (فقط مواردی که نقش کاربر اجازهٔ دیدنشان را دارد) *@
+                                @foreach (var group in visibleGroups)
                                 {
                                     <li class="menu-item menu-has-sub
-                        @(group.Any(item =>
+                        @(group.Items.Any(item =>
                                                                 currentEntity.Contains(item.RouteName,
                                                                     StringComparison.OrdinalIgnoreCase))
                                                                 ? "active open" : "")">
@@ -185,11 +216,11 @@
                                     <a href="javascript:void(0);"
                                        class="menu-link fs-8 menu-toggle">
                                         <i class="menu-icon tf-icons ti ti-folder"></i>
-                                        <div>@group.Key</div>
+                                        <div>@group.Title</div>
                                     </a>
 
                                         <ul class="menu-sub">
-                                        @foreach (var definition in group.OrderBy(
+                                        @foreach (var definition in group.Items.OrderBy(
                                                                                 item => item.TitleFa,
                                                                                 StringComparer.CurrentCulture))
                                             {
@@ -285,9 +316,17 @@
                                 </div>
                             }
 
-                            @if (ViewData["PanelWarning"] is string warning)
+                            @if (!string.IsNullOrWhiteSpace(warning))
                             {
-                                <div class="alert alert-warning" role="alert">@warning</div>
+                                <div class="alert alert-warning alert-dismissible admin-flash" role="alert">
+                                    @warning
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="بستن"></button>
+                                </div>
+                            }
+
+                            @if (ViewData["PanelWarning"] is string warningMessage)
+                            {
+                                <div class="alert alert-warning" role="alert">@warningMessage</div>
                             }
 
                             @RenderBody()
@@ -348,6 +387,9 @@
     <script src="~/panel/custome/js/api-services.js"></script>
     <!-- کامپوننت سراسری آپلود فایل -->
     <script src="~/panel/custome/js/file-uploader.js"></script>
+
+    <!-- رفتارهای مشترک پنل: Repeater، تأیید حذف، نمایش/مخفی رمز (کامنت Form.cshtml) -->
+    <script src="~/admin/admin.js" asp-append-version="true"></script>
 
     <script>
         // فعال‌سازی تب بر اساس پارامتر ?tab= در آدرس (برای صفحات Master-Detail)

@@ -58,6 +58,9 @@ public class AppDbContext : DbContext
 
     public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
 
+    /// <summary>حساب‌های ورود به پنل (نام کاربری، رمز، نام و نقش).</summary>
+    public DbSet<User> Users => Set<User>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

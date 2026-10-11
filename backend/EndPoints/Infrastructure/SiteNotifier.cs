@@ -6,7 +6,11 @@ namespace EndPoints.Infrastructure;
 /// <summary>Authorization policy name used by every admin controller.</summary>
 public static class AdminPolicies
 {
+    /// <summary>دسترسی به خود پنل: نقش‌های Administrator و Editor (جدول Users).</summary>
     public const string Panel = "IdehnegarAdminPanel";
+
+    /// <summary>مدیریت کاربران پنل: فقط نقش Administrator.</summary>
+    public const string Users = "IdehnegarAdminUsers";
 }
 
 /// <summary>

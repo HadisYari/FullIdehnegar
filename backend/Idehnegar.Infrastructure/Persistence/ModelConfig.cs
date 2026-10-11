@@ -19,6 +19,26 @@ public static class ModelConfig
         ConfigurePages(modelBuilder);
         ConfigureStore(modelBuilder);
         ConfigureInquiries(modelBuilder);
+        ConfigureUsers(modelBuilder);
+    }
+
+    /// <summary>حساب‌های ورود به پنل — جدول Users.</summary>
+    private static void ConfigureUsers(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Username).HasMaxLength(60).IsRequired();
+            // رمز عبور عمداً بدون هش ذخیره می‌شود (خواستهٔ پروژه).
+            entity.Property(e => e.Password).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.FullName).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.Role).HasMaxLength(40).IsRequired();
+
+            // ورود با نام کاربری انجام می‌شود؛ پس یکتا و ایندکس‌شده است.
+            entity.HasIndex(e => e.Username).IsUnique().HasDatabaseName("UX_Users_Username");
+            entity.HasIndex(e => e.IsPublished).HasDatabaseName("IX_Users_IsPublished");
+        });
     }
 
     private static void ConfigureSite(ModelBuilder modelBuilder)

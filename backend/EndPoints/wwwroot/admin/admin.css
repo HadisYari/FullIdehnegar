@@ -1,1 +1,115 @@
- 
+/*
+ * admin.css — استایل‌های اختصاصی پنل مدیریت ایده‌نگار
+ * ---------------------------------------------------------------
+ * قالب اصلی پنل (Sneat) از /Panel/assets/vendor/css می‌آید؛ این فایل فقط
+ * چیزهایی را اضافه می‌کند که در قالب نیستند — صفحهٔ ورود با همان زبان بصری
+ * چیدمان پنل (_AdminLayout).
+ */
+
+/* ─────────────────────────── صفحهٔ ورود ─────────────────────────── */
+
+body.admin-login-body {
+	min-height: 100vh;
+	margin: 0;
+	padding: 2.5rem 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #f8f7fa 0%, #eef0f8 45%, #e4e8f4 100%);
+	color: #4c4e64;
+}
+
+.admin-login-wrap {
+	width: 100%;
+	max-width: 468px;
+}
+
+.admin-login-card {
+	border: 0;
+	border-radius: 0.85rem;
+	box-shadow: 0 6px 32px rgba(76, 78, 100, 0.18);
+	background-color: #fff;
+}
+
+.admin-login-logo {
+	height: 68px;
+	width: auto;
+	max-width: 100%;
+}
+
+.admin-login-card .form-label {
+	font-weight: 600;
+	font-size: 0.8125rem;
+}
+
+.admin-login-card .input-group-text {
+	background-color: #fff;
+}
+
+.admin-login-card .btn-primary {
+	padding-top: 0.55rem;
+	padding-bottom: 0.55rem;
+	font-weight: 600;
+}
+
+.admin-login-footer {
+	opacity: 0.8;
+}
+
+/* کپچای عددی: تصویر + دکمهٔ تصویر جدید */
+.admin-login-captcha {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.admin-login-captcha img {
+	width: 170px;
+	height: 60px;
+	border-radius: 0.5rem;
+	border: 1px solid #e6e6ee;
+	background-color: #fff;
+	cursor: pointer;
+	user-select: none;
+}
+
+.admin-login-captcha .btn-icon {
+	height: 60px;
+	width: 2.5rem;
+	border-radius: 0.5rem;
+}
+
+@media (max-width: 575.98px) {
+	.admin-login-captcha {
+		justify-content: flex-start;
+	}
+
+	.admin-login-captcha img {
+		width: 150px;
+	}
+}
+
+/* حالت شب پنل (data-bs-theme را config.js روی <html> می‌گذارد) */
+html[data-bs-theme='dark'] body.admin-login-body {
+	background: linear-gradient(135deg, #232333 0%, #2b2c40 100%);
+	color: #cbcbe2;
+}
+
+html[data-bs-theme='dark'] .admin-login-card {
+	background-color: #2b2c40;
+	box-shadow: 0 6px 32px rgba(0, 0, 0, 0.45);
+}
+
+html[data-bs-theme='dark'] .admin-login-card .input-group-text,
+html[data-bs-theme='dark'] .admin-login-captcha img {
+	background-color: #232333;
+	border-color: #3b3c55;
+}
+
+/* ─────────────────────────── کارت «دسترسی غیرمجاز» ─────────────────────────── */
+
+.admin-denied-icon {
+	font-size: 3rem;
+	line-height: 1;
+	color: #ff9f43;
+}
